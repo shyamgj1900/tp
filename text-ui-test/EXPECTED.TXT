@@ -9,5 +9,6 @@ Here are the list of commands:
 cap - Opens the CAP calculator
 view [module code] - View the module details
 info [su/modreg/plagiarism] - View information about SU, ModReg, or the Plagiarism Policy
+Your CAP for this semester will be 4.19 if you get your desired grades!
 This command is not recognised, please try again...
 Bye! Thank you for using Kolinux
