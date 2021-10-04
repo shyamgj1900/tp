@@ -23,7 +23,7 @@ public class CalculateCapCommand extends Command {
         try {
             return Integer.parseInt(String.valueOf(module.charAt(0)));
         } catch (NumberFormatException exception) {
-            String errorMessage = "Invalid module found";
+            String errorMessage = "Invalid module info found: " + module;
             throw new KolinuxException(errorMessage);
         }
     }
@@ -53,7 +53,7 @@ public class CalculateCapCommand extends Command {
         case "F":
             return 0.0;
         default:
-            String errorMessage = "Invalid module found";
+            String errorMessage = "Invalid module info found: " + module;
             throw new KolinuxException(errorMessage);
         }
     }
@@ -76,14 +76,13 @@ public class CalculateCapCommand extends Command {
 
     @Override
     public CommandResult executeCommand() throws KolinuxException {
-        String capMessage;
         int moduleCount = modules.size();
         if (moduleCount == 0) {
-            capMessage = "Please enter modules into the command.";
-        } else {
-            String cap = getCap();
-            capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
+            String errorMessage = "Please enter module credits and grades in the command (eg. 4A+)";
+            throw new KolinuxException(errorMessage);
         }
+        String cap = getCap();
+        String capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
         return new CommandResult(capMessage);
     }
 }
