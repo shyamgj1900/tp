@@ -52,7 +52,7 @@ public class CalculateCapCommand extends Command {
         return ((cap * totalMc) + (gradePoint * mc)) / (totalMc + mc);
     }
     
-    private double getCap() {
+    private String getCap() {
         int moduleCount = modules.size();
         int totalMc = 0;
         double cap = 0;
@@ -62,7 +62,7 @@ public class CalculateCapCommand extends Command {
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
         }
-        return cap;
+        return String.format("%.2f", cap);
     }    
 
     @Override
@@ -72,7 +72,7 @@ public class CalculateCapCommand extends Command {
         if (moduleCount == 0) {
             capMessage = "Please enter modules.";
         } else {
-            String cap = Double.toString(getCap());
+            String cap = getCap();
             capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
         }
         return new CommandResult(capMessage);
