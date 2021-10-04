@@ -13,7 +13,6 @@ public class JsonReader {
     public static String filePath = "data/moduleDetails.json";
 
     public static void main(String[] args) {
-
         try {
             Gson gson = new Gson();
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
