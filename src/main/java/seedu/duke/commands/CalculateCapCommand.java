@@ -23,7 +23,8 @@ public class CalculateCapCommand extends Command {
         try {
             return Integer.parseInt(String.valueOf(module.charAt(0)));
         } catch (NumberFormatException exception) {
-            throw new KolinuxException("Invalid module found");
+            String errorMessage = "Invalid module found";
+            throw new KolinuxException(errorMessage);
         }
     }
     
@@ -52,7 +53,8 @@ public class CalculateCapCommand extends Command {
         case "F":
             return 0.0;
         default:
-            throw new KolinuxException("Invalid module found");
+            String errorMessage = "Invalid module found";
+            throw new KolinuxException(errorMessage);
         }
     }
 
