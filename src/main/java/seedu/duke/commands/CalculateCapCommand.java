@@ -1,5 +1,7 @@
 package seedu.duke.commands;
 
+import seedu.duke.exceptions.KolinuxException;
+
 import java.util.ArrayList;
 
 public class CalculateCapCommand extends Command {
@@ -11,17 +13,21 @@ public class CalculateCapCommand extends Command {
         if (commandDescriptions.length == 1) {
             return;
         }
-        int moduleCount = Integer.parseInt(commandDescriptions[1]);
+        int moduleCount = commandDescriptions.length - 1;
         for (int i = 0; i < moduleCount; i++) {
-            modules.add(commandDescriptions[i + 2]);
+            modules.add(commandDescriptions[i + 1]);
         }
     }
     
-    private int getMc(String module) {
-        return Integer.parseInt(String.valueOf(module.charAt(0)));
+    private int getMc(String module) throws KolinuxException {
+        try {
+            return Integer.parseInt(String.valueOf(module.charAt(0)));
+        } catch (NumberFormatException exception) {
+            throw new KolinuxException("Invalid module found");
+        }
     }
     
-    private double getGradePoint(String module) {
+    private double getGradePoint(String module) throws KolinuxException {
         String grade = module.substring(1);
         switch (grade) {
         case "A+":
@@ -46,8 +52,7 @@ public class CalculateCapCommand extends Command {
         case "F":
             return 0.0;
         default:
-            // Will change to throw an error later
-            return 0.0;
+            throw new KolinuxException("Invalid module found");
         }
     }
 
@@ -55,7 +60,7 @@ public class CalculateCapCommand extends Command {
         return ((cap * totalMc) + (gradePoint * mc)) / (totalMc + mc);
     }
     
-    private String getCap() {
+    private String getCap() throws KolinuxException {
         int totalMc = 0;
         double cap = 0;
         for (String module : modules) {
@@ -68,7 +73,7 @@ public class CalculateCapCommand extends Command {
     }    
 
     @Override
-    public CommandResult executeCommand() {
+    public CommandResult executeCommand() throws KolinuxException {
         String capMessage;
         int moduleCount = modules.size();
         if (moduleCount == 0) {
