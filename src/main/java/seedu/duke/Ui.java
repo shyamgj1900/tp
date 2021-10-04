@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import seedu.duke.commands.CommandResult;
+import seedu.duke.exceptions.KolinuxException;
 
 public class Ui {
 
@@ -17,6 +18,10 @@ public class Ui {
     }
 
     public void showResultToUser(CommandResult result) {
-        System.out.println(result);
+        System.out.println(result.getFeedbackToUser());
+    }
+
+    public void showErrorMessage(KolinuxException exception) {
+        System.out.println(exception.getMessage());
     }
 }

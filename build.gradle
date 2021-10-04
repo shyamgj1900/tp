@@ -10,8 +10,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
-    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.1'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.8.1'
+    implementation group: 'com.google.code.gson', name: 'gson' , version: '2.8.8'
 }
 
 test {
@@ -44,3 +45,4 @@ checkstyle {
 run{
     standardInput = System.in
 }
+
