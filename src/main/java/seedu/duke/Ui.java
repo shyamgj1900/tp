@@ -12,7 +12,7 @@ public class Ui {
                 + "|  _   _) _ \\| || |  _ \\| | | ( \\ / )\n"
                 + "| |  \\ \\ |_| | || | | | | |_| |) X (\n"
                 + "|_|   \\_)___/ \\_)_|_| |_|____/(_/ \\_)";
-        String greetMessage = "Welcome to Kolinux v0.0!";
+        String greetMessage = "Welcome to Kolinux! Enter \"help\" to the list of commands";
         System.out.println(logo + "\n" + greetMessage);
     }
 
