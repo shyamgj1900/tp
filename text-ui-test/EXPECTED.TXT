@@ -4,6 +4,10 @@
 |  _   _) _ \| || |  _ \| | | ( \ / )
 | |  \ \ |_| | || | | | | |_| |) X (
 |_|   \_)___/ \_)_|_| |_|____/(_/ \_)
-Welcome to Kolinux v0.0!
+Welcome to Kolinux! Enter "help" to the list of commands
+Here are the list of commands:
+cap - Opens the CAP calculator
+view [module code] - View the module details
+info [su/modreg/plagiarism] - View information about SU, ModReg, or the Plagiarism Policy
 This command is not recognised, please try again...
 Bye! Thank you for using Kolinux
