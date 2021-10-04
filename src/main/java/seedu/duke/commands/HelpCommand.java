@@ -7,7 +7,7 @@ public class HelpCommand extends Command {
         String helpMessage = "Here are the list of commands:\n"
                 + "cap - Opens the CAP calculator\n"
                 + "view [module code] - View the module details\n"
-                + "info [su/modreg/plagiarism] - View information about SU, ModReg, or the Plagiarism Policy\n";
+                + "info [su/modreg/plagiarism] - View information about SU, ModReg, or the Plagiarism Policy";
         return new CommandResult(helpMessage);
     }
 }
