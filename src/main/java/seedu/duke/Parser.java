@@ -2,6 +2,7 @@ package seedu.duke;
 
 import seedu.duke.commands.Command;
 import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
 
 public class Parser {
@@ -13,6 +14,8 @@ public class Parser {
         String argument = trimmedInput.replaceFirst(commandWord, "").trim();
 
         switch (commandWord.toLowerCase()) {
+        case "help":
+            return new HelpCommand();
         case "bye":
             return new ExitCommand();
         default:
