@@ -44,5 +44,4 @@ public class ModuleDetails {
         return faculty;
     }
 
-
 }
