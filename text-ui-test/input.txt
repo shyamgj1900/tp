@@ -1,3 +1,4 @@
 help
+cap 4 4B+ 6A- 4B+ 2B+
 invalid command
 bye
