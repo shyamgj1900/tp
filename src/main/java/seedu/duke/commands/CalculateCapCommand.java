@@ -8,6 +8,9 @@ public class CalculateCapCommand extends Command {
     public CalculateCapCommand(String input) {
         modules = new ArrayList<>();
         String[] commandDescriptions = input.split(" ");
+        if (commandDescriptions.length == 1) {
+            return;
+        }
         int moduleCount = Integer.parseInt(commandDescriptions[1]);
         for (int i = 0; i < moduleCount; i++) {
             modules.add(commandDescriptions[i + 2]);
@@ -69,7 +72,7 @@ public class CalculateCapCommand extends Command {
         String capMessage;
         int moduleCount = modules.size();
         if (moduleCount == 0) {
-            capMessage = "Please enter modules.";
+            capMessage = "Please enter modules into the command.";
         } else {
             String cap = getCap();
             capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
