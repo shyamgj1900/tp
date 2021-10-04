@@ -2,13 +2,13 @@ package seedu.duke.commands;
 
 public class CommandResult {
 
-    private String result;
+    private String feedbackToUser;
 
-    public CommandResult(String result) {
-        this.result = result;
+    public CommandResult(String feedbackToUser) {
+        this.feedbackToUser = feedbackToUser;
     }
 
-    public String toString() {
-        return result;
+    public String getFeedbackToUser() {
+        return feedbackToUser;
     }
 }
