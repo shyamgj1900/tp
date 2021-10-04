@@ -53,12 +53,11 @@ public class CalculateCapCommand extends Command {
     }
     
     private String getCap() {
-        int moduleCount = modules.size();
         int totalMc = 0;
         double cap = 0;
-        for (int i = 0; i < moduleCount; i++) {
-            int mc = getMc(modules.get(i));
-            double gradePoint = getGradePoint(modules.get(i));
+        for (String module : modules) {
+            int mc = getMc(module);
+            double gradePoint = getGradePoint(module);
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
         }
