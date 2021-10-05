@@ -12,19 +12,26 @@ public class JsonReader {
 
     public static String filePath = "data/moduleDetails.json";
 
-    public static void main(String[] args) {
+    public static List<ModuleDetails> readModuleDb() {
         try {
             Gson gson = new Gson();
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            List<ModuleDetails> modules = gson.fromJson(reader, new TypeToken<List<ModuleDetails>>() {}.getType());
+            List<ModuleDetails> modules = gson.fromJson(reader, new TypeToken<List<ModuleDetails>>() {
+            }.getType());
             System.out.println(modules.get(0).getModuleCode() + " " + modules.get(0).getTitle());
             System.out.println(modules.get(0).getFaculty());
             System.out.println(modules.get(0).getDescription());
             System.out.println(modules.get(0).getModuleCredit());
             System.out.println(modules.get(0).getDepartment());
+            return modules;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public static void main(String[] args) {
+
     }
 
 }
