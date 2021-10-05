@@ -1,7 +1,10 @@
 package seedu.duke.planner;
 
+import seedu.duke.exceptions.KolinuxException;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class Event {
 
@@ -10,10 +13,16 @@ public class Event {
     private LocalTime startTime;
     private LocalTime endTime;
 
-    public Event(String[] parsedArguments) {
-        this.description = parsedArguments[0];
-        this.date = LocalDate.parse(parsedArguments[1]);
-        this.startTime = LocalTime.parse(parsedArguments[2]);
-        this.endTime = LocalTime.parse(parsedArguments[3]);
+    public Event(String[] parsedArguments) throws KolinuxException {
+        try {
+            this.description = parsedArguments[0];
+            this.date = LocalDate.parse(parsedArguments[1]);
+            this.startTime = LocalTime.parse(parsedArguments[2]);
+            this.endTime = LocalTime.parse(parsedArguments[3]);
+        } catch (DateTimeParseException e) {
+            throw new KolinuxException("Please provide a valid date and time!");
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            throw new KolinuxException("Please double check the format of your input!");
+        }
     }
 }
