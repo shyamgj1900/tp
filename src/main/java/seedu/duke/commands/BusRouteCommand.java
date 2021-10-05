@@ -56,14 +56,12 @@ public class BusRouteCommand extends Command {
         while (s.hasNext()) {
             Vertices.add(s.nextLine());
         }
-
         for (String V : Vertices) {
             String[] vertex = V.split(" ");
             g.addEdge(Integer.parseInt(vertex[0]), Integer.parseInt((vertex[1])));
         }
-
         for (int i = 0; i < 2; i++) {
-            if(i == 0) {
+            if (i == 0) {
                 System.out.println("Enter starting point");
             } else {
                 System.out.println("Enter final destination");
@@ -72,15 +70,13 @@ public class BusRouteCommand extends Command {
             command = myCommand.nextLine();
             location[i] = command;
             vertexCode[i] = getLocations(command);
-            if(vertexCode[0] < 0 || vertexCode[1] < 0) {
+            if(vertexCode[i] < 0) {
                 throw new KolinuxException("Enter valid bus stop name");
             }
         }
-
         int u = vertexCode[0];
         int v = vertexCode[1];
-
-        if (g.isReachable(u, v)) {
+        if (g.isConnected(u, v)) {
             return new CommandResult("There is a bus service from " + location[0] + " to " + location[1]);
         }
         else {
