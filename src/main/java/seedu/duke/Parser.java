@@ -6,11 +6,14 @@ import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
 import seedu.duke.commands.PlannerCommand;
+import seedu.duke.commands.BusRouteCommand;
+import java.io.FileNotFoundException;
 import seedu.duke.commands.ViewModuleInfoCommand;
+
 
 public class Parser {
 
-    public static Command parseCommand(String input) {
+    public static Command parseCommand(String input) throws FileNotFoundException {
 
         String trimmedInput = input.trim();
         String commandWord = trimmedInput.split(" ", 2)[0];
@@ -21,6 +24,8 @@ public class Parser {
             return new HelpCommand();
         case "cap":
             return new CalculateCapCommand(input);
+        case "bus":
+            return new BusRouteCommand();
         case "view":
             return new ViewModuleInfoCommand(argument);
         case "planner":
