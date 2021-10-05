@@ -4,43 +4,37 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Graph {
-    private int V;
+    private int v;
     private LinkedList<Integer> adj[];
 
     public Graph(int v) {
-        V = v;
+        this.v = v;
         adj = new LinkedList[v];
         for (int i = 0; i < v; i++)
-            adj[i] = new LinkedList();
+            adj[i] = new LinkedList<>();
     }
 
     public void addEdge(int v, int w) {
         adj[v].add(w);
     }
 
-    public Boolean isReachable(int s, int d) {
-        LinkedList<Integer>temp;
-        boolean[] visited = new boolean[V];
+    public Boolean isConnected(int u, int v) {
+        int vertex;
+        boolean[] visited = new boolean[this.v];
         LinkedList<Integer> queue = new LinkedList<Integer>();
-
-        visited[s]=true;
-        queue.add(s);
-
+        visited[u]=true;
+        queue.add(u);
         Iterator<Integer> i;
-        while (queue.size()!=0) {
-            s = queue.poll();
-            int n;
-            i = adj[s].listIterator();
-
+        while (queue.size() != 0) {
+            u = queue.poll();
+            i = adj[u].listIterator();
             while (i.hasNext()) {
-                n = i.next();
-                if (n==d) {
+                vertex = i.next();
+                if (vertex == v) {
                     return true;
-                }
-
-                if (!visited[n]) {
-                    visited[n] = true;
-                    queue.add(n);
+                } else if (!visited[vertex]) {
+                    visited[vertex] = true;
+                    queue.add(vertex);
                 }
             }
         }
