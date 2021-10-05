@@ -11,4 +11,12 @@ view [module code] - View the module details
 info [su/modreg/plagiarism] - View information about SU, ModReg, or the Plagiarism Policy
 Your CAP for this semester will be 4.19 if you get your desired grades!
 This command is not recognised, please try again...
+CS2101: Effective Communication for Computing Professionals
+Department: Center for Engl Lang Comms
+Faculty: Computing
+Credits: 4
+This module aims to equip students with the skills needed to communicate technical information to technical and nontechnical audiences, and to create comprehensible software documentation. A student-centric approach will
+be adopted to encourage independent and collaborative learning while engaging students in team-based projects. Students will learn interpersonal and intercultural
+communication skills as well as hone their oral and written communication skills. Assessment modes include a variety of oral and written communication tasks such as reports, software guides, oral presentations, software demonstrations and project blogs.
+Please enter a valid module code
 Bye! Thank you for using Kolinux
