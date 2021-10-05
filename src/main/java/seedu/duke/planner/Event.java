@@ -25,4 +25,8 @@ public class Event {
             throw new KolinuxException("Please double check the format of your input!");
         }
     }
+
+    public String toData() {
+        return description + "|" + date.toString() + "|" + startTime.toString() + "|" + endTime.toString();
+    }
 }
