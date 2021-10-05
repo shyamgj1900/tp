@@ -9,12 +9,7 @@ public class ModuleDb {
         moduleDetailsMap = JsonReader.readModuleDb();
     }
 
-    public static void viewModuleInfo(String code) {
-        ModuleDetails module = moduleDetailsMap.get(code);
-        if (module == null) {
-            System.out.println("Please enter a valid module code");
-        } else {
-            System.out.println(module);
-        }
+    public static ModuleDetails getModuleInfo(String code) {
+        return moduleDetailsMap.get(code);
     }
 }

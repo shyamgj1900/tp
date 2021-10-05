@@ -46,7 +46,7 @@ public class ModuleDetails {
 
     @Override
     public String toString() {
-        return moduleCode + ": " + title + "\n" + department + "\n" + faculty + "\n"
+        return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
                 + "Credits: " + moduleCredit + "\n" + description;
     }
 
