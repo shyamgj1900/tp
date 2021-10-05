@@ -5,6 +5,7 @@ import seedu.duke.commands.Command;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
+import seedu.duke.commands.PlannerCommand;
 import seedu.duke.commands.ViewModuleInfoCommand;
 
 public class Parser {
@@ -12,7 +13,7 @@ public class Parser {
     public static Command parseCommand(String input) {
 
         String trimmedInput = input.trim();
-        String commandWord = trimmedInput.split(" ")[0];
+        String commandWord = trimmedInput.split(" ", 2)[0];
         String argument = trimmedInput.replaceFirst(commandWord, "").trim();
 
         switch (commandWord.toLowerCase()) {
@@ -22,10 +23,20 @@ public class Parser {
             return new CalculateCapCommand(input);
         case "view":
             return new ViewModuleInfoCommand(argument);
+        case "planner":
+            return parsePlannerArgument(argument);
         case "bye":
             return new ExitCommand();
         default:
             return new InvalidCommand();
         }
+    }
+
+    public static Command parsePlannerArgument(String subInput) {
+
+        String subCommand = subInput.split(" ", 2)[0];
+        String argument = subInput.replaceFirst(subCommand, "").trim();
+        String[] parsedArguments = argument.split("/");
+        return new PlannerCommand(subCommand, parsedArguments);
     }
 }
