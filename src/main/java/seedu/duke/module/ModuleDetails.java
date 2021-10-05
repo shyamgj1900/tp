@@ -44,4 +44,10 @@ public class ModuleDetails {
         return faculty;
     }
 
+    @Override
+    public String toString() {
+        return moduleCode + ": " + title + "\n" + department + "\n" + faculty + "\n"
+                + "Credits: " + moduleCredit + "\n" + description;
+    }
+
 }
