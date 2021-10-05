@@ -5,6 +5,7 @@ import seedu.duke.commands.CommandResult;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.exceptions.KolinuxException;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Kolinux {
@@ -23,8 +24,9 @@ public class Kolinux {
                 if (command instanceof ExitCommand) {
                     break;
                 }
-            } catch (KolinuxException exception) {
-                ui.showErrorMessage(exception);
+            } catch (KolinuxException | FileNotFoundException exception) {
+                assert exception instanceof KolinuxException;
+                ui.showErrorMessage((KolinuxException) exception);
             }
         }
     }
