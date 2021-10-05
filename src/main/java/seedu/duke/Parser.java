@@ -5,6 +5,7 @@ import seedu.duke.commands.Command;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
+import seedu.duke.commands.ViewModuleInfoCommand;
 
 public class Parser {
 
@@ -19,6 +20,8 @@ public class Parser {
             return new HelpCommand();
         case "cap":
             return new CalculateCapCommand(input);
+        case "view":
+            return new ViewModuleInfoCommand(argument);
         case "bye":
             return new ExitCommand();
         default:
