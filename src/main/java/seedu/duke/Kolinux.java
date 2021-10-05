@@ -4,6 +4,7 @@ import seedu.duke.commands.Command;
 import seedu.duke.commands.CommandResult;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.exceptions.KolinuxException;
+import seedu.duke.module.ModuleDb;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -33,6 +34,7 @@ public class Kolinux {
 
     public void run() {
         ui.greetUser();
+        ModuleDb.initModuleDb();
         runCommandInLoop();
     }
 }
