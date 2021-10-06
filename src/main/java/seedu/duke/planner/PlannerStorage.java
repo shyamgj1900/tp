@@ -6,8 +6,7 @@ import java.io.IOException;
 
 public class PlannerStorage {
 
-    private String filePath = "resources/planner.txt";
-    private File file = new File(filePath);
+    private File file = new File("planner.txt");
 
     public void writeFile(String eventData) {
         try {
