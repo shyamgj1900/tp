@@ -6,7 +6,6 @@ import seedu.duke.planner.Planner;
 
 public class PlannerCommand extends Command {
 
-    private Planner planner = new Planner();
     private String subCommand;
     private String[] parsedArguments;
 
@@ -22,8 +21,12 @@ public class PlannerCommand extends Command {
         switch (subCommand) {
         case "add":
             Event event = new Event(parsedArguments);
-            planner.addEvent(event);
+            Planner.addEvent(event);
             return new CommandResult(addedEvent);
+        case "list":
+            String date = parsedArguments[0];
+            String scheduleList = Planner.listEvents(date);
+            return new CommandResult(date + scheduleList);
         default:
             throw new KolinuxException(invalidArgument);
         }

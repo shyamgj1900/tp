@@ -26,7 +26,15 @@ public class Event {
         }
     }
 
+    public String getDate() {
+        return date.toString();
+    }
+
     public String toData() {
         return description + "|" + date.toString() + "|" + startTime.toString() + "|" + endTime.toString();
+    }
+
+    public String toString() {
+        return startTime + " - " + endTime + " " + description;
     }
 }

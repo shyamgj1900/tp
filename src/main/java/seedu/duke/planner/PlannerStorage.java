@@ -6,9 +6,9 @@ import java.io.IOException;
 
 public class PlannerStorage {
 
-    private File file = new File("planner.txt");
+    private static File file = new File("planner.txt");
 
-    public void writeFile(String eventData) {
+    public static void writeFile(String eventData) {
         try {
             FileWriter writer = new FileWriter(file, true);
             writer.append(eventData + "\n");
