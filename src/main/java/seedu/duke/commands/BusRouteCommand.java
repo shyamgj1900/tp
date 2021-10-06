@@ -1,10 +1,15 @@
 package seedu.duke.commands;
 
+import seedu.duke.Main;
 import seedu.duke.exceptions.KolinuxException;
 import seedu.duke.routes.Graph;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,10 +56,16 @@ public class BusRouteCommand extends Command {
 
     @Override
     public CommandResult executeCommand() throws KolinuxException, FileNotFoundException {
-        File f = new File("resources/Edges.txt");
-        Scanner s = new Scanner(f);
-        while (s.hasNext()) {
-            vertices.add(s.nextLine());
+
+        try {
+            InputStream inputStream = Main.class.getResourceAsStream("/Edges.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                vertices.add(line);
+            }
+        } catch (IOException e) {
+            throw new FileNotFoundException();
         }
         for (String v : vertices) {
             String[] vertex = v.split(" ");
