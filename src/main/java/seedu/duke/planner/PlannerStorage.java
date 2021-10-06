@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class PlannerStorage {
 
-    private static File file = new File("planner.txt");
+    private static File file = new File("./planner.txt");
 
     private static void createFile() {
         try {
@@ -41,5 +41,15 @@ public class PlannerStorage {
             createFile();
         }
         return null;
+    }
+
+    public static void clearFile() {
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write("");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

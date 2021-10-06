@@ -17,6 +17,7 @@ public class PlannerCommand extends Command {
     @Override
     public CommandResult executeCommand() throws KolinuxException {
         String addedEvent = "An event has been added to your schedule successfully!";
+        String clearEvent = "All the events in your schedule has been cleared.";
         String invalidArgument = "Planner does not recognise this command...";
         switch (subCommand) {
         case "add":
@@ -27,6 +28,9 @@ public class PlannerCommand extends Command {
             String date = parsedArguments[0];
             String scheduleList = Planner.listEvents(date);
             return new CommandResult(date + scheduleList);
+        case "clear":
+            Planner.clearEvent();
+            return new CommandResult(clearEvent);
         default:
             throw new KolinuxException(invalidArgument);
         }

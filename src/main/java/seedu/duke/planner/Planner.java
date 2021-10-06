@@ -40,4 +40,9 @@ public class Planner {
         }
         return scheduleList;
     }
+
+    public static void clearEvent() {
+        schedule.clear();
+        PlannerStorage.clearFile();
+    }
 }

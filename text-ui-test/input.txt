@@ -1,6 +1,11 @@
+planner clear
 help
 cap 4B+ 6A- 4B+ 2B+
 invalid command
 view CS2101
 view invalid_module
+planner add CG2028 lab/2021-10-05/15:00/18:00
+planner add Project Meeting/2021-10-05/19:00/23:00
+planner add GEA1000 Tutorial/2021-10-07/09:00/12:00
+planner list 2021-10-05
 bye
