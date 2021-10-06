@@ -1,4 +1,6 @@
 help
 cap 4B+ 6A- 4B+ 2B+
 invalid command
+view CS2101
+view invalid_module
 bye
