@@ -1,76 +1,36 @@
 package seedu.duke.commands;
 
-import seedu.duke.Main;
 import seedu.duke.exceptions.KolinuxException;
 import seedu.duke.routes.Graph;
+import seedu.duke.routes.Route;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BusRouteCommand extends Command {
     private String command = "";
     private String[] location;
-    private int[] vertexCode;
-    private Graph graph;
-    ArrayList<String> vertices;
+    private int[] vertexCodeAOne;
+    private int[] vertexCodeDOne;
+    private Graph graphAOne;
+    private Graph graphDOne;
+    private Route route;
+    ArrayList<String> verticesAOne;
+    ArrayList<String> verticesDOne;
 
-    public BusRouteCommand() throws FileNotFoundException {
+    public BusRouteCommand() {
         location = new String[2];
-        vertexCode = new int[2];
-        graph = new Graph(10);
-        vertices = new ArrayList<>();
+        vertexCodeAOne = new int[2];
+        vertexCodeDOne = new int[2];
+        graphAOne = new Graph(13);
+        graphDOne = new Graph(13);
+        route = new Route();
+        verticesAOne = new ArrayList<>();
+        verticesDOne = new ArrayList<>();
     }
 
-    private static int getLocations(String command) {
-        switch (command.toLowerCase()) {
-        case "kr bus terminal":
-            return 0;
-        case "lt13":
-            return 1;
-        case "as 5":
-            return 2;
-        case "com 2":
-            return 3;
-        case "biz 2":
-            return 4;
-        case "opp tcoms":
-            return 5;
-        case "opp pgp":
-            return 6;
-        case "kr mrt":
-            return 7;
-        case "lt27":
-            return 8;
-        case "uhall":
-            return 9;
-        default:
-            return -1;
-        }
-    }
-
-    @Override
-    public CommandResult executeCommand() throws KolinuxException, FileNotFoundException {
-
-        try {
-            InputStream inputStream = Main.class.getResourceAsStream("/Edges.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                vertices.add(line);
-            }
-        } catch (IOException e) {
-            throw new FileNotFoundException();
-        }
-        for (String v : vertices) {
-            String[] vertex = v.split(" ");
-            graph.addEdge(Integer.parseInt(vertex[0]), Integer.parseInt((vertex[1])));
-        }
+    private void getLocations(int[] u, int[] v) throws KolinuxException {
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
                 System.out.println("Enter starting point");
@@ -80,17 +40,39 @@ public class BusRouteCommand extends Command {
             Scanner myCommand = new Scanner(System.in);
             command = myCommand.nextLine();
             location[i] = command;
-            vertexCode[i] = getLocations(command);
-            if (vertexCode[i] < 0) {
+            vertexCodeAOne[i] = route.getStopNameAOne(command);
+            vertexCodeDOne[i] = route.getStopNameDOne(command);
+            if (vertexCodeAOne[i] < 0 && vertexCodeDOne[i] < 0) {
                 throw new KolinuxException("Enter valid bus stop name");
             }
         }
-        int u = vertexCode[0];
-        int v = vertexCode[1];
-        if (graph.isConnected(u, v)) {
-            return new CommandResult("There is a bus service from " + location[0] + " to " + location[1]);
+        u[0] = vertexCodeAOne[0];
+        v[0] = vertexCodeAOne[1];
+        u[1] = vertexCodeDOne[0];
+        v[1] = vertexCodeDOne[1];
+    }
+
+    @Override
+    public CommandResult executeCommand() throws KolinuxException, FileNotFoundException {
+        String[] filePaths = {"/routeA1.txt", "/routeD1.txt"};
+        route.readNodesFromFile(verticesAOne, filePaths[0]);
+        route.readNodesFromFile(verticesDOne, filePaths[1]);
+        route.setRoute(verticesAOne, graphAOne);
+        route.setRoute(verticesDOne, graphDOne);
+        int[] u = new int[2];
+        int[] v = new int[2];
+        getLocations(u, v);
+        String startLocation = location[0].toUpperCase();
+        String endLocation = location[0].toUpperCase();
+        if (u[0] >= 0 && v[0] >= 0 && graphAOne.isConnected(u[0], v[0])) {
+            String message = "Bus A1 goes from " + startLocation + " to " + endLocation;
+            return new CommandResult(message);
+        } else if (u[1] >= 0 && v[1] >= 0 && graphDOne.isConnected(u[1], v[1])) {
+            String message = "Bus D1 goes from " + startLocation + " to " + endLocation;
+            return new CommandResult(message);
         } else {
-            return new CommandResult("There is no bus service from " + location[0] + " to " + location[1]);
+            String message = "There is no bus service from " + startLocation + " to " + endLocation;
+            return new CommandResult(message);
         }
     }
 }
