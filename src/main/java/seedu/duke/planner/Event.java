@@ -1,5 +1,6 @@
 package seedu.duke.planner;
 
+import seedu.duke.Parser;
 import seedu.duke.exceptions.KolinuxException;
 
 import java.time.LocalDate;
@@ -26,7 +27,24 @@ public class Event {
         }
     }
 
+    public Event(String data) {
+
+        String[] parsedArguments = data.split("\\|");
+        this.description = parsedArguments[0];
+        this.date = LocalDate.parse(parsedArguments[1]);
+        this.startTime = LocalTime.parse(parsedArguments[2]);
+        this.endTime = LocalTime.parse(parsedArguments[3]);
+    }
+
+    public String getDate() {
+        return date.toString();
+    }
+
     public String toData() {
         return description + "|" + date.toString() + "|" + startTime.toString() + "|" + endTime.toString();
+    }
+
+    public String toString() {
+        return startTime + " - " + endTime + " " + description;
     }
 }
