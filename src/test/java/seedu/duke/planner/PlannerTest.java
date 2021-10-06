@@ -22,9 +22,9 @@ public class PlannerTest {
 
     @Test
     public void addEvent_invalidEventDateInput_eventNotAdded() {
-        Planner.clearEvent();
         try {
             Event invalidEvent = new Event(invalidEventDateArguments);
+            Planner.addEvent(invalidEvent);
         } catch (Exception e) {
             assertEquals("Please provide a valid date and time!", e.getMessage());
         }
@@ -32,9 +32,9 @@ public class PlannerTest {
 
     @Test
     public void addEvent_invalidEventFormatInput_eventNotAdded() {
-        Planner.clearEvent();
         try {
             Event invalidEvent = new Event(invalidEventFormatArguments);
+            Planner.addEvent(invalidEvent);
         } catch (Exception e) {
             assertEquals("Please double check the format of your input!", e.getMessage());
         }
