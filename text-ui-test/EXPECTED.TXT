@@ -19,9 +19,18 @@ CS2101: Effective Communication for Computing Professionals
 Department: Center for Engl Lang Comms
 Faculty: Computing
 Credits: 4
-This module aims to equip students with the skills needed to communicate technical information to technical and nontechnical audiences, and to create comprehensible software documentation. A student-centric approach will
-be adopted to encourage independent and collaborative learning while engaging students in team-based projects. Students will learn interpersonal and intercultural
-communication skills as well as hone their oral and written communication skills. Assessment modes include a variety of oral and written communication tasks such as reports, software guides, oral presentations, software demonstrations and project blogs.
+This module aims to equip students with the skills
+needed to communicate technical information to technical
+and nontechnical audiences, and to create comprehensible
+software documentation. A student-centric approach
+will be adopted to encourage independent and collaborative
+learning while engaging students in team-based projects.
+Students will learn interpersonal and intercultural
+communication skills as well as hone their oral and
+written communication skills. Assessment modes include
+a variety of oral and written communication tasks
+such as reports, software guides, oral presentations,
+software demonstrations and project blogs.
 Please enter a valid module code
 An event has been added to your schedule successfully!
 An event has been added to your schedule successfully!
