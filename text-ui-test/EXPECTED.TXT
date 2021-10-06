@@ -5,6 +5,7 @@
 | |  \ \ |_| | || | | | | |_| |) X (
 |_|   \_)___/ \_)_|_| |_|____/(_/ \_)
 Welcome to Kolinux! Enter "help" to view the list of commands
+All the events in your schedule has been cleared.
 Here are the list of commands:
 1. cap MC_AND_GRADES  - Calculates the total cap for the semester
 2. view MODULE_CODE - View the module details
@@ -22,4 +23,10 @@ This module aims to equip students with the skills needed to communicate technic
 be adopted to encourage independent and collaborative learning while engaging students in team-based projects. Students will learn interpersonal and intercultural
 communication skills as well as hone their oral and written communication skills. Assessment modes include a variety of oral and written communication tasks such as reports, software guides, oral presentations, software demonstrations and project blogs.
 Please enter a valid module code
+An event has been added to your schedule successfully!
+An event has been added to your schedule successfully!
+An event has been added to your schedule successfully!
+2021-10-05
+15:00 - 18:00 CG2028 lab
+19:00 - 23:00 Project Meeting
 Bye! Thank you for using Kolinux
