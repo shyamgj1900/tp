@@ -55,19 +55,22 @@ public class BusRouteCommand extends Command {
     @Override
     public CommandResult executeCommand() throws KolinuxException, FileNotFoundException {
         String[] filePaths = {"/routeA1.txt", "/routeD1.txt"};
-        int[] u = new int[2];
-        int[] v = new int[2];
         route.readNodesFromFile(verticesAOne, filePaths[0]);
         route.readNodesFromFile(verticesDOne, filePaths[1]);
         route.setRoute(verticesAOne, graphAOne);
         route.setRoute(verticesDOne, graphDOne);
+        int[] u = new int[2];
+        int[] v = new int[2];
         getLocations(u, v);
         if (u[0] >= 0 && v[0] >= 0 && graphAOne.isConnected(u[0], v[0])) {
-            return new CommandResult("Bus A1 goes from " + location[0].toUpperCase() + " to " + location[1].toUpperCase());
+            String message = "Bus A1 goes from " + location[0].toUpperCase() + " to " + location[1].toUpperCase();
+            return new CommandResult(message);
         } else if (u[1] >= 0 && v[1] >= 0 && graphDOne.isConnected(u[1], v[1])) {
-            return new CommandResult("Bus D1 goes from " + location[0].toUpperCase() + " to " + location[1].toUpperCase());
+            String message = "Bus D1 goes from " + location[0].toUpperCase() + " to " + location[1].toUpperCase();
+            return new CommandResult(message);
         } else {
-            return new CommandResult("There is no bus service from " + location[0].toUpperCase() + " to " + location[1].toUpperCase());
+            String message = "There is no bus service from " + location[0].toUpperCase() + " to " + location[1].toUpperCase();
+            return new CommandResult(message);
         }
     }
 }
