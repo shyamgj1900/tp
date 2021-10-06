@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class JsonReader {
 
-    public static String filePath = "data/moduleDetails.json";
+    public static String filePath = "./data/moduleDetails.json";
 
     public static Map<String, ModuleDetails> readModuleDb() {
         try {
