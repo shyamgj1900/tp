@@ -4,11 +4,14 @@
 |  _   _) _ \| || |  _ \| | | ( \ / )
 | |  \ \ |_| | || | | | | |_| |) X (
 |_|   \_)___/ \_)_|_| |_|____/(_/ \_)
-Welcome to Kolinux! Enter "help" to the list of commands
+Welcome to Kolinux! Enter "help" to view the list of commands
 Here are the list of commands:
-cap - Opens the CAP calculator
-view [module code] - View the module details
-info [su/modreg/plagiarism] - View information about SU, ModReg, or the Plagiarism Policy
+1. cap MC_AND_GRADES  - Calculates the total cap for the semester
+2. view MODULE_CODE - View the module details
+3. bus routes - Check for a NUS bus route from stop to another
+4. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+5. help - View this menu again
+6. bye - Exit Kolinux
 Your CAP for this semester will be 4.19 if you get your desired grades!
 This command is not recognised, please try again...
 CS2101: Effective Communication for Computing Professionals
