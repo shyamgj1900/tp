@@ -1,5 +1,6 @@
 package seedu.duke.planner;
 
+import seedu.duke.Parser;
 import seedu.duke.exceptions.KolinuxException;
 
 import java.time.LocalDate;
@@ -24,6 +25,15 @@ public class Event {
         } catch (NullPointerException | IndexOutOfBoundsException e) {
             throw new KolinuxException("Please double check the format of your input!");
         }
+    }
+
+    public Event(String data) {
+
+        String[] parsedArguments = data.split("\\|");
+        this.description = parsedArguments[0];
+        this.date = LocalDate.parse(parsedArguments[1]);
+        this.startTime = LocalTime.parse(parsedArguments[2]);
+        this.endTime = LocalTime.parse(parsedArguments[3]);
     }
 
     public String getDate() {

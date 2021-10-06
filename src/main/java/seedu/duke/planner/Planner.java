@@ -7,6 +7,20 @@ public class Planner {
 
     private static ArrayList<Event> schedule = new ArrayList<>();
 
+    public static void initPlanner() {
+
+        ArrayList<String> fileLines;
+        if ((fileLines = PlannerStorage.readFile()) == null) {
+            return;
+        }
+
+        Event event;
+        for (String fileLine : fileLines) {
+            event = new Event(fileLine);
+            schedule.add(event);
+        }
+    }
+
     public static void addEvent(Event event) {
         schedule.add(event);
         PlannerStorage.writeFile(event.toData());
