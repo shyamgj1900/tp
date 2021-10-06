@@ -51,7 +51,7 @@ public class BusRouteCommand extends Command {
 
     @Override
     public CommandResult executeCommand() throws KolinuxException, FileNotFoundException {
-        File f = new File("data/Edges.txt");
+        File f = new File("resources/Edges.txt");
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
             vertices.add(s.nextLine());
