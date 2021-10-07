@@ -5,16 +5,16 @@ import seedu.duke.exceptions.KolinuxException;
 
 public class Ui {
 
-    public void greetUser() {
+    private static final String LOGO = "\n"
+            + "(_)   | |    | |(_)\n"
+            + " _____| |___ | | _ ____  _   _ _   _\n"
+            + "|  _   _) _ \\| || |  _ \\| | | ( \\ / )\n"
+            + "| |  \\ \\ |_| | || | | | | |_| |) X (\n"
+            + "|_|   \\_)___/ \\_)_|_| |_|____/(_/ \\_)";
+    private static final String GREET_MESSAGE = "Welcome to Kolinux! Enter \"help\" to view the list of commands";
 
-        String logo = "\n"
-                + "(_)   | |    | |(_)\n"
-                + " _____| |___ | | _ ____  _   _ _   _\n"
-                + "|  _   _) _ \\| || |  _ \\| | | ( \\ / )\n"
-                + "| |  \\ \\ |_| | || | | | | |_| |) X (\n"
-                + "|_|   \\_)___/ \\_)_|_| |_|____/(_/ \\_)";
-        String greetMessage = "Welcome to Kolinux! Enter \"help\" to view the list of commands";
-        System.out.println(logo + "\n" + greetMessage);
+    public void greetUser() {
+        System.out.println(LOGO + "\n" + GREET_MESSAGE);
     }
 
     public void showResultToUser(CommandResult result) {
