@@ -24,7 +24,7 @@ public class BusRouteTest {
     @Test
     public void enterEdges_testPath_validPath() {
         Graph graph = new Graph(5);
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             graph.addEdge(vertices[i][0], vertices[i][1]);
         }
         assertEquals(true, graph.isConnected(0, 3));
@@ -33,7 +33,7 @@ public class BusRouteTest {
     @Test
     public void enterEdges_testPath_invalidPath() {
         Graph graph = new Graph(5);
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             graph.addEdge(vertices[i][0], vertices[i][1]);
         }
         assertEquals(false, graph.isConnected(3, 1));
