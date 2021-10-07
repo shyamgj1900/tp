@@ -6,17 +6,16 @@ Kolinux is built to help NUS Computer Engineering freshmen to better integrate i
 by allowing them to manage their work and learn more about NUS, all in 1 platform. It is optimized 
 for CLI users so that they can access the information that they require faster by typing in commands.
 
-* Quick Start
-* List of Commands
-  * Notes about command format
-* Features
-  * `planner`
-    * `planner add`
-  * `bus`
-  * `view`
-  * `cap`
-  * `help`
-  * `bye`
+* [Quick Start](#quick-start)
+* [List of Commands](#list-of-commands)
+* [Features](#features)
+  * [`planner`](##adding-to-planner-planner-add)
+    * [`planner add`](##adding-to-planner-planner-add)
+  * [`bus`](#finding-nus-bus-route-between-2-points-bus)
+  * [`cap`](#calculating-total-cap-cap)
+  * [`view`](#viewing-module-details-view)
+  * [`help`](#viewing-menu-help)
+  * [`bye`](##exiting-kolinux-bye)
 
 ## Quick Start
 
