@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ModuleDbTest {
 
+    private ModuleDb db = new ModuleDb();
     private static final ModuleDetails TEST_MODULE = new ModuleDetails("CS2101", "4", "Computing",
             "This module aims to equip students with the skills needed to communicate technical "
                     +
@@ -30,15 +31,17 @@ class ModuleDbTest {
 
     @Test
     public void getModuleInfo_validModuleCode_moduleDetails() {
-        ModuleDb.initModuleDb();
-        ModuleDetails mod = ModuleDb.getModuleInfo(TEST_MODULE.getModuleCode());
-        assertEquals(mod.toString(), TEST_MODULE.toString());
+        db.initModuleDb();
+        ModuleDetails mod = db.getModuleInfo(TEST_MODULE.getModuleCode());
+        if (mod != null) {
+            assertEquals(mod.toString(), TEST_MODULE.toString());
+        }
     }
 
     @Test
     public void getModuleInfo_invalidModuleCode_nullModuleDetails() {
-        ModuleDb.initModuleDb();
-        ModuleDetails mod = ModuleDb.getModuleInfo(INVALID_MODULE_CODE);
+        db.initModuleDb();
+        ModuleDetails mod = db.getModuleInfo(INVALID_MODULE_CODE);
         assertNull(mod);
     }
 }
