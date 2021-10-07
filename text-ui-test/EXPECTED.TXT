@@ -11,8 +11,10 @@ Here are the list of commands:
 2. view MODULE_CODE - View the module details
 3. bus routes - Check for a NUS bus route from stop to another
 4. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-5. help - View this menu again
-6. bye - Exit Kolinux
+5. planner list DATE - Lists events on a certain date
+6. planner clear - Clears all events in your entire schedule
+7. help - View this menu again
+8. bye - Exit Kolinux
 Your CAP for this semester will be 4.19 if you get your desired grades!
 This command is not recognised, please enter "help" for the list of commands...
 CS2101: Effective Communication for Computing Professionals
