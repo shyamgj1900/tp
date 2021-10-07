@@ -1,9 +1,9 @@
 package seedu.duke.module;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +14,27 @@ import seedu.duke.Main;
 
 public class JsonReader {
 
-    public InputStream inputStream = Main.class.getResourceAsStream("/moduleDetails.json");
+    public static InputStream inputStream = Main.class.getResourceAsStream("/moduleDetails.json");
 
-    public Map<String, ModuleDetails> readModuleDb() {
+    public static ArrayList<ModuleDetails> readJsonData() {
         Gson gson = new Gson();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        List<ModuleDetails> modules = gson.fromJson(reader, new TypeToken<List<ModuleDetails>>() {
+        ArrayList<ModuleDetails> modules = gson.fromJson(reader, new TypeToken<ArrayList<ModuleDetails>>() {
         }.getType());
 
-        Map<String, ModuleDetails> moduleDetailsMap = new HashMap<>();
-        for (ModuleDetails module : modules) {
-            moduleDetailsMap.put(module.getModuleCode(), module);
-        }
+        return modules;
+    }
 
+    public Map<String, ModuleDetails> readModuleDb() {
+
+        ArrayList<ModuleDetails> modules = readJsonData();
+
+        Map<String, ModuleDetails> moduleDetailsMap = new HashMap<>();
+        if (modules != null) {
+            for (ModuleDetails module : modules) {
+                moduleDetailsMap.put(module.getModuleCode(), module);
+            }
+        }
         return moduleDetailsMap;
     }
 
