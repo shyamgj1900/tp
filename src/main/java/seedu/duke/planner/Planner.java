@@ -1,22 +1,31 @@
 package seedu.duke.planner;
 
+import seedu.duke.exceptions.KolinuxException;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Planner {
 
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
+    private static final String PLANNER_CORRUPTED_ERROR =
+            "Some of the data is corrupted, your planner will be reset...";
 
-    public static void initPlanner() {
+    public static void initPlanner() throws KolinuxException {
         ArrayList<String> fileLines;
         if ((fileLines = PlannerStorage.readFile()) == null) {
             return;
         }
 
-        Event event;
-        for (String fileLine : fileLines) {
-            event = new Event(fileLine);
-            scheduleOfAllDates.add(event);
+        try {
+            Event event;
+            for (String fileLine : fileLines) {
+                event = new Event(fileLine);
+                scheduleOfAllDates.add(event);
+            }
+        } catch (KolinuxException exception) {
+            clearEvents();
+            throw new KolinuxException(PLANNER_CORRUPTED_ERROR);
         }
     }
 

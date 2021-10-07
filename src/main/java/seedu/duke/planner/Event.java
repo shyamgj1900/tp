@@ -31,12 +31,8 @@ public class Event {
         }
     }
 
-    public Event(String data) {
-        String[] parsedArguments = data.split("\\|");
-        this.description = parsedArguments[0];
-        this.date = LocalDate.parse(parsedArguments[1]);
-        this.startTime = LocalTime.parse(parsedArguments[2]);
-        this.endTime = LocalTime.parse(parsedArguments[3]);
+    public Event(String data) throws KolinuxException {
+        this(data.split("\\|"));
     }
 
     public String getDate() {
