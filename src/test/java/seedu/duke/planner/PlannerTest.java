@@ -15,6 +15,10 @@ public class PlannerTest {
             = new String[]{"Something worse", "2021-10-26", "07:00"};
     private static final String VALID_LIST
             = "\n15:00 - 15:15 Pop Quiz 3";
+    private static final String DATETIME_ERROR =
+            "Please provide a valid date and time! Format: yyyy-mm-dd";
+    private static final String FORMAT_ERROR =
+            "Please check the format of your input! Format: planner add DESCRIPTION/DATE/START_TIME/END_TIME";
 
     @Test
     public void addEvent_validEventInput_eventAdded() throws KolinuxException {
@@ -31,7 +35,7 @@ public class PlannerTest {
             Event invalidEvent = new Event(INVALID_EVENT_DATE_ARGUMENTS);
             Planner.addEvent(invalidEvent);
         } catch (KolinuxException e) {
-            assertEquals("Please provide a valid date and time!", e.getMessage());
+            assertEquals(DATETIME_ERROR, e.getMessage());
         }
     }
 
@@ -41,7 +45,7 @@ public class PlannerTest {
             Event invalidEvent = new Event(INVALID_EVENT_FORMAT_ARGUMENTS);
             Planner.addEvent(invalidEvent);
         } catch (KolinuxException e) {
-            assertEquals("Please double check the format of your input!", e.getMessage());
+            assertEquals(FORMAT_ERROR, e.getMessage());
         }
     }
 }
