@@ -9,13 +9,13 @@ for CLI users so that they can access the information that they require faster b
 * [Quick Start](#quick-start)
 * [List of Commands](#list-of-commands)
 * [Features](#features)
-  * [`planner`](##adding-to-planner-planner-add)
-    * [`planner add`](##adding-to-planner-planner-add)
+  * [`planner`](#adding-to-planner-planner-add)
+    * [`planner add`](#adding-to-planner-planner-add)
   * [`bus`](#finding-nus-bus-route-between-2-points-bus)
   * [`cap`](#calculating-total-cap-cap)
   * [`view`](#viewing-module-details-view)
   * [`help`](#viewing-menu-help)
-  * [`bye`](##exiting-kolinux-bye)
+  * [`bye`](#exiting-kolinux-bye)
 
 ## Quick Start
 
