@@ -4,6 +4,9 @@ import seedu.duke.exceptions.KolinuxException;
 import seedu.duke.planner.Event;
 import seedu.duke.planner.Planner;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class PlannerCommand extends Command {
 
     private String subCommand;
@@ -16,10 +19,20 @@ public class PlannerCommand extends Command {
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
                     + "planner list DATE\n"
                     + "planner clear";
+    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
 
     public PlannerCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
         this.parsedArguments = parsedArguments;
+    }
+
+    private String processDate(String date) throws KolinuxException {
+        try {
+            LocalDate.parse(date);
+        } catch (DateTimeParseException exception) {
+            throw new KolinuxException(INVALID_DATE_MESSAGE);
+        }
+        return date;
     }
 
     @Override
@@ -30,7 +43,7 @@ public class PlannerCommand extends Command {
             Planner.addEvent(event);
             return new CommandResult(ADD_EVENT_MESSAGE);
         case "list":
-            String date = parsedArguments[0];
+            String date = processDate(parsedArguments[0]);
             String eventList = Planner.listEvents(date);
             return new CommandResult(date + eventList);
         case "clear":
