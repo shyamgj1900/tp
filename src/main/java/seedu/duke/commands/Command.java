@@ -2,6 +2,8 @@ package seedu.duke.commands;
 
 import seedu.duke.exceptions.KolinuxException;
 
+import java.io.FileNotFoundException;
+
 public abstract class Command {
 
     protected String argument;
@@ -17,5 +19,5 @@ public abstract class Command {
         return argument.isEmpty();
     }
 
-    public abstract CommandResult executeCommand() throws KolinuxException;
+    public abstract CommandResult executeCommand() throws KolinuxException, FileNotFoundException;
 }
