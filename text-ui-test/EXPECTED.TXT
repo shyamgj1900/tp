@@ -14,7 +14,7 @@ Here are the list of commands:
 5. help - View this menu again
 6. bye - Exit Kolinux
 Your CAP for this semester will be 4.19 if you get your desired grades!
-This command is not recognised, please try again...
+This command is not recognised, please enter "help" for the list of commands...
 CS2101: Effective Communication for Computing Professionals
 Department: Center for Engl Lang Comms
 Faculty: Computing
