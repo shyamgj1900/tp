@@ -29,7 +29,7 @@ public class PlannerCommand extends Command {
             String scheduleList = Planner.listEvents(date);
             return new CommandResult(date + scheduleList);
         case "clear":
-            Planner.clearEvent();
+            Planner.clearEvents();
             return new CommandResult(clearEvent);
         default:
             throw new KolinuxException(invalidArgument);

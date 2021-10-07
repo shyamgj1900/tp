@@ -22,11 +22,11 @@ public class PlannerTest {
 
     @Test
     public void addEvent_validEventInput_eventAdded() throws KolinuxException {
-        Planner.clearEvent();
+        Planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
         Planner.addEvent(validEvent);
         assertEquals(VALID_LIST, Planner.listEvents("2021-10-26"));
-        Planner.clearEvent();
+        Planner.clearEvents();
     }
 
     @Test
@@ -34,8 +34,8 @@ public class PlannerTest {
         try {
             Event invalidEvent = new Event(INVALID_EVENT_DATE_ARGUMENTS);
             Planner.addEvent(invalidEvent);
-        } catch (KolinuxException e) {
-            assertEquals(DATETIME_ERROR, e.getMessage());
+        } catch (KolinuxException exception) {
+            assertEquals(DATETIME_ERROR, exception.getMessage());
         }
     }
 
@@ -44,8 +44,8 @@ public class PlannerTest {
         try {
             Event invalidEvent = new Event(INVALID_EVENT_FORMAT_ARGUMENTS);
             Planner.addEvent(invalidEvent);
-        } catch (KolinuxException e) {
-            assertEquals(FORMAT_ERROR, e.getMessage());
+        } catch (KolinuxException exception) {
+            assertEquals(FORMAT_ERROR, exception.getMessage());
         }
     }
 }

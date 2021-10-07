@@ -14,8 +14,8 @@ public class PlannerStorage {
     private static void createFile() {
         try {
             file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -24,8 +24,8 @@ public class PlannerStorage {
             FileWriter writer = new FileWriter(file, true);
             writer.append(eventData + "\n");
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -37,7 +37,7 @@ public class PlannerStorage {
                 fileLines.add(scanner.nextLine());
             }
             return fileLines;
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException exception) {
             createFile();
         }
         return null;
@@ -48,8 +48,8 @@ public class PlannerStorage {
             FileWriter writer = new FileWriter(file);
             writer.write("");
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }

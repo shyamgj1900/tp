@@ -32,7 +32,6 @@ public class Event {
     }
 
     public Event(String data) {
-
         String[] parsedArguments = data.split("\\|");
         this.description = parsedArguments[0];
         this.date = LocalDate.parse(parsedArguments[1]);
