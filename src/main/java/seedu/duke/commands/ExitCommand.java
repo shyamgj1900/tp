@@ -2,9 +2,10 @@ package seedu.duke.commands;
 
 public class ExitCommand extends Command {
 
+    private static final String EXIT_MESSAGE = "Bye! Thank you for using Kolinux";
+
     @Override
     public CommandResult executeCommand() {
-        String exitMessage = "Bye! Thank you for using Kolinux";
-        return new CommandResult(exitMessage);
+        return new CommandResult(EXIT_MESSAGE);
     }
 }
