@@ -6,6 +6,10 @@ Kolinux is built to help NUS Computer Engineering freshmen to better integrate i
 by allowing them to manage their work and learn more about NUS, all in 1 platform. It is optimized 
 for CLI users so that they can access the information that they require faster by typing in commands.
 
+Kolinux v1.0 offers a range of minimum features for freshmen. These features include a module viewer
+for freshmen to view information of a module, a CAP calculator, a planner for freshmen to organise 
+their activities for the day and a route finder for the NUS internal shuttle bus.
+
 * [Quick Start](#quick-start)
 * [List of Commands](#list-of-commands)
 * [Features](#features)
