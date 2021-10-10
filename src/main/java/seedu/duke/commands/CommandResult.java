@@ -1,6 +1,6 @@
 package seedu.duke.commands;
 
-/** Represents the result from the execution of a command */
+/** Represents the result from the execution of a command. */
 public class CommandResult {
 
     private String feedbackToUser;
