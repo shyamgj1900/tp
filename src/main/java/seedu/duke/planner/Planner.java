@@ -42,6 +42,10 @@ public class Planner {
                         .map((event) -> event.toString())
                         .collect(Collectors.toList());
 
+        if (filteredSchedule.isEmpty()) {
+            return "\nYou have no events planned for this date, just chill!";
+        }
+
         String filteredScheduleInString = "";
         for (String event : filteredSchedule) {
             filteredScheduleInString = filteredScheduleInString.concat("\n" + event);
