@@ -17,8 +17,7 @@ public class PlannerCommand extends Command {
     private static final String INVALID_ARGUMENT_MESSAGE =
             "This command is not recognised, you can try:\n"
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
-                    + "planner list DATE\n"
-                    + "planner clear";
+                    + "planner list DATE";
     private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
 
     public PlannerCommand(String subCommand, String[] parsedArguments) {
@@ -47,6 +46,7 @@ public class PlannerCommand extends Command {
             String eventList = Planner.listEvents(date);
             return new CommandResult(date + eventList);
         case "clear":
+            // Command only for testing purposes, not known to the user.
             Planner.clearEvents();
             return new CommandResult(CLEAR_EVENT_MESSAGE);
         default:
