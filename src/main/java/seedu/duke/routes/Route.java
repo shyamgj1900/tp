@@ -100,21 +100,21 @@ public class Route {
     public int getStopNameE(String command) {
        switch (command.toLowerCase()) {
        case "kent vale":
-           return 0;
+            return 0;
        case "ea":
-           return 1;
+            return 1;
        case "sd3":
-           return 2;
+            return 2;
        case "it":
-           return 3;
+            return 3;
        case "opp yih":
-           return 4;
+            return 4;
        case "utown":
-           return 5;
+            return 5;
        case "raffles hall":
-           return 6;
+            return 6;
        default:
-           return -1;
+            return -1;
        }
     }
 }
