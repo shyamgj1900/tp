@@ -1,11 +1,8 @@
 package seedu.duke.commands;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class HelpCommand extends Command {
-
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static final String HELP_MESSAGE = "Here are the list of commands:\n"
             + "1. cap MC_AND_GRADES  - Calculates the total cap for the semester\n"

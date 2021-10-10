@@ -7,11 +7,8 @@ import seedu.duke.planner.Planner;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PlannerCommand extends Command {
-
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private String subCommand;
     private String[] parsedArguments;
