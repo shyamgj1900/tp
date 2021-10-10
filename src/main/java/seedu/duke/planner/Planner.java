@@ -3,6 +3,7 @@ package seedu.duke.planner;
 import seedu.duke.exceptions.KolinuxException;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Planner {
@@ -14,6 +15,7 @@ public class Planner {
     public static void initPlanner() throws KolinuxException {
         ArrayList<String> fileLines;
         if ((fileLines = PlannerStorage.readFile()) == null) {
+            assert scheduleOfAllDates.isEmpty();
             return;
         }
 
@@ -25,6 +27,7 @@ public class Planner {
             }
         } catch (KolinuxException exception) {
             clearEvents();
+            assert scheduleOfAllDates.isEmpty();
             throw new KolinuxException(PLANNER_CORRUPTED_ERROR);
         }
     }
@@ -35,6 +38,9 @@ public class Planner {
     }
 
     public static String listEvents(String date) {
+
+        assert Pattern.matches("\\d\\d\\d\\d-\\d\\d-\\d\\d", date);
+
         ArrayList<String> filteredSchedule =
                 (ArrayList<String>) scheduleOfAllDates
                         .stream()
