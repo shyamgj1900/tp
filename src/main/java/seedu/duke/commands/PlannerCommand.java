@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 
+/** Represents the command that interacts with the Planner. */
 public class PlannerCommand extends Command {
 
     private String subCommand;
@@ -26,6 +27,13 @@ public class PlannerCommand extends Command {
         this.parsedArguments = parsedArguments;
     }
 
+    /**
+     * Checks if the date follows the format yyyy-mm-dd.
+     *
+     * @param date Date
+     * @return Same date in string if it follows the format
+     * @throws KolinuxException If the date does not follow the format
+     */
     private String processDate(String date) throws KolinuxException {
         try {
             LocalDate.parse(date);

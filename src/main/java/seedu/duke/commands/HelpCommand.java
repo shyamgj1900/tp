@@ -2,6 +2,7 @@ package seedu.duke.commands;
 
 import java.util.logging.Level;
 
+/** Represents the command to print the help menu to the user. */
 public class HelpCommand extends Command {
 
     private static final String HELP_MESSAGE = "Here are the list of commands:\n"
