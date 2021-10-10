@@ -17,6 +17,7 @@ public class Kolinux {
 
     private void initKolinux() {
         try {
+            KolinuxLogger.initLogger();
             db.initModuleDb();
             Planner.initPlanner();
         } catch (KolinuxException exception) {

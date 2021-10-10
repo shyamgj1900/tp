@@ -1,5 +1,7 @@
 package seedu.duke.commands;
 
+import java.util.logging.Level;
+
 public class HelpCommand extends Command {
 
     private static final String HELP_MESSAGE = "Here are the list of commands:\n"
@@ -8,12 +10,12 @@ public class HelpCommand extends Command {
             + "3. bus - Check for a NUS bus route from stop to another\n"
             + "4. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule\n"
             + "5. planner list DATE - Lists events on a certain date\n"
-            + "6. planner clear - Clears all events in your entire schedule\n"
-            + "7. help - View this menu again\n"
-            + "8. bye - Exit Kolinux";
+            + "6. help - View this menu again\n"
+            + "7. bye - Exit Kolinux";
 
     @Override
     public CommandResult executeCommand() {
+        logger.log(Level.INFO, "User needed help");
         return new CommandResult(HELP_MESSAGE);
     }
 }
