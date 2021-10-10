@@ -1,10 +1,15 @@
 package seedu.duke.commands;
 
+import java.util.logging.Level;
+
 public class InvalidCommand extends Command {
+
+    private static final String INVALID_COMMAND_MESSAGE =
+            "This command is not recognised, please enter \"help\" for the list of commands...";
 
     @Override
     public CommandResult executeCommand() {
-        String invalidCommandMessage = "This command is not recognised, please try again...";
-        return new CommandResult(invalidCommandMessage);
+        logger.log(Level.INFO, "User entered an invalid command");
+        return new CommandResult(INVALID_COMMAND_MESSAGE);
     }
 }

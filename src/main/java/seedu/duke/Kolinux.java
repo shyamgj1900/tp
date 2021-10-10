@@ -15,6 +15,16 @@ public class Kolinux {
     private Ui ui = new Ui();
     private ModuleDb db = new ModuleDb();
 
+    private void initKolinux() {
+        try {
+            KolinuxLogger.initLogger();
+            db.initModuleDb();
+            Planner.initPlanner();
+        } catch (KolinuxException exception) {
+            ui.showErrorMessage(exception);
+        }
+    }
+
     private void runCommandInLoop() {
 
         Scanner scanner = new Scanner(System.in);
@@ -36,8 +46,7 @@ public class Kolinux {
 
     public void run() {
         ui.greetUser();
-        db.initModuleDb();
-        Planner.initPlanner();
+        initKolinux();
         runCommandInLoop();
     }
 }

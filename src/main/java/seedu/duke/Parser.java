@@ -8,11 +8,20 @@ import seedu.duke.commands.InvalidCommand;
 import seedu.duke.commands.PlannerCommand;
 import seedu.duke.commands.BusRouteCommand;
 import java.io.FileNotFoundException;
+
 import seedu.duke.commands.ViewModuleInfoCommand;
 import seedu.duke.module.ModuleDb;
 
 
 public class Parser {
+
+    private static String[] trimAllElementsOfArray(String[] strings) {
+        String[] trimmedStrings = new String[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            trimmedStrings[i] = strings[i].trim();
+        }
+        return trimmedStrings;
+    }
 
     public static Command parseCommand(ModuleDb db, String input) throws FileNotFoundException {
 
@@ -42,7 +51,7 @@ public class Parser {
 
         String subCommand = subInput.split(" ", 2)[0];
         String argument = subInput.replaceFirst(subCommand, "").trim();
-        String[] parsedArguments = argument.split("/");
+        String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
         return new PlannerCommand(subCommand, parsedArguments);
     }
 }
