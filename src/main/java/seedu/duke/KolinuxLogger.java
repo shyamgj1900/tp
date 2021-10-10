@@ -1,0 +1,35 @@
+package seedu.duke;
+
+import java.io.IOException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+public class KolinuxLogger {
+
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    public static void initLogger() {
+
+        LogManager.getLogManager().reset();
+        logger.setLevel(Level.INFO);
+
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.SEVERE);
+        logger.addHandler(consoleHandler);
+
+        try {
+            FileHandler fileHandler = new FileHandler("./logger.log");
+            fileHandler.setFormatter(new SimpleFormatter());
+            fileHandler.setLevel(Level.ALL);
+            logger.addHandler(fileHandler);
+        } catch (IOException exception) {
+            logger.log(Level.SEVERE, "File logger encountered errors.", exception);
+        }
+
+        logger.log(Level.INFO, "User started Kolinux");
+    }
+}

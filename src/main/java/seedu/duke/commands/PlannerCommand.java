@@ -6,8 +6,12 @@ import seedu.duke.planner.Planner;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PlannerCommand extends Command {
+
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private String subCommand;
     private String[] parsedArguments;
@@ -40,16 +44,19 @@ public class PlannerCommand extends Command {
         case "add":
             Event event = new Event(parsedArguments);
             Planner.addEvent(event);
+            logger.log(Level.INFO, "User added an event to planner: " + event);
             return new CommandResult(ADD_EVENT_MESSAGE);
         case "list":
             String date = processDate(parsedArguments[0]);
             String eventList = Planner.listEvents(date);
+            logger.log(Level.INFO, "User listed events on " + date);
             return new CommandResult(date + eventList);
         case "clear":
             // Command only for testing purposes, not known to the user.
             Planner.clearEvents();
             return new CommandResult(CLEAR_EVENT_MESSAGE);
         default:
+            logger.log(Level.INFO, "User entered an invalid sub-command of Planner");
             throw new KolinuxException(INVALID_ARGUMENT_MESSAGE);
         }
     }
