@@ -3,6 +3,7 @@ package seedu.duke.commands;
 import seedu.duke.exceptions.KolinuxException;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class CalculateCapCommand extends Command {
     private ArrayList<String> modules;
@@ -79,10 +80,12 @@ public class CalculateCapCommand extends Command {
         int moduleCount = modules.size();
         if (moduleCount == 0) {
             String errorMessage = "Please enter module credits and grades in the command (eg. 4A+)";
+            logger.log(Level.INFO, "User entered an invalid CAP calculation command");
             throw new KolinuxException(errorMessage);
         }
         String cap = getCap();
         String capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
+        logger.log(Level.INFO, "User calculated CAP");
         return new CommandResult(capMessage);
     }
 }
