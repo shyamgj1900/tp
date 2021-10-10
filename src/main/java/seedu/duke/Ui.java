@@ -3,6 +3,7 @@ package seedu.duke;
 import seedu.duke.commands.CommandResult;
 import seedu.duke.exceptions.KolinuxException;
 
+/** Represents the user interface. */
 public class Ui {
 
     private static final String LOGO = "\n"

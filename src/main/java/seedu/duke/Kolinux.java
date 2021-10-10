@@ -10,6 +10,7 @@ import seedu.duke.planner.Planner;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/** Represents the operations to start and run Kolinux. */
 public class Kolinux {
 
     private Ui ui = new Ui();

@@ -11,7 +11,7 @@ import seedu.duke.commands.BusRouteCommand;
 import seedu.duke.commands.ViewModuleInfoCommand;
 import seedu.duke.module.ModuleDb;
 
-
+/** Represents the operations to parse information needed for the execution of a command. */
 public class Parser {
 
     /**
