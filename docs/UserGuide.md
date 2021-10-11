@@ -50,7 +50,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 |:-------------:	|:----------------------------------------------:	|:------------------------------------------:	     |
 | `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
-| `bus`         	| Check for a NUS bus route from stop to another 	| `bus`                                      	     |
+| `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
 | `cap`         	| Calculate the total cap given a set of grades     | `cap MC_GRADE`                             	     |
 | `view`        	| View module details                         	    | `view MODULE_CODE`                         	     |
 | `help`        	| View the different commands available          	| `help`                                     	     |
@@ -101,6 +101,24 @@ planner list 2021-10-10
 ```
 
 ### Check NUS bus route between 2 stops: `bus`
+
+Helps to find if there are bus routes between any 2 NUS bus stops. 
+
+Format: `bus /start_location /end_location`
+
+* Bus stop names are not case sensitive
+
+Example of usage:
+
+* `bus /pgp /museum`
+
+Expected Outcome:
+
+```
+Bus [D2] goes from PGP to MUSEUM
+```
+
+Note: ***Routes for buses A1, D1, D2 and E have been implemented so far***
 
 ### Calculate total CAP: `cap`
 
