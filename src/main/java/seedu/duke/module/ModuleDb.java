@@ -7,6 +7,7 @@ public class ModuleDb {
     private static Map<String, ModuleDetails> moduleDetailsMap;
 
     public static void initModuleDb() {
+        assert moduleDetailsMap.isEmpty() : "moduleDetailsMap is already initialized";
         moduleDetailsMap = jsonReader.readModuleDb();
     }
 

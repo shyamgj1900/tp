@@ -17,6 +17,8 @@ public class ModuleDetails {
         this.description = description;
         this.title = title;
         this.department = department;
+
+        assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
     public String getModuleCredit() {
