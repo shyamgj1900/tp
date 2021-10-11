@@ -3,6 +3,7 @@ package seedu.duke.commands;
 import seedu.duke.exceptions.KolinuxException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public abstract class Command {
@@ -28,5 +29,5 @@ public abstract class Command {
      * @throws KolinuxException If the arguments given are invalid
      * @throws FileNotFoundException If the file needed for execution is not found
      */
-    public abstract CommandResult executeCommand() throws KolinuxException, FileNotFoundException;
+    public abstract CommandResult executeCommand() throws KolinuxException, FileNotFoundException, IOException;
 }

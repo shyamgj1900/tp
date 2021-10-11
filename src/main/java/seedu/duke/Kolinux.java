@@ -8,6 +8,7 @@ import seedu.duke.module.ModuleDb;
 import seedu.duke.planner.Planner;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 /** Represents the operations to start and run Kolinux. */
@@ -46,6 +47,8 @@ public class Kolinux {
             } catch (KolinuxException | FileNotFoundException exception) {
                 assert exception instanceof KolinuxException;
                 ui.showErrorMessage((KolinuxException) exception);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
