@@ -39,7 +39,7 @@ public class Route {
 
     public int getStopNameAOne(String command) {
         assert command != null;
-        switch (command.toLowerCase()) {
+        switch (command.trim().toLowerCase()) {
         case "kr bus terminal":
             return 0;
         case "lt13":
@@ -73,7 +73,7 @@ public class Route {
 
     public int getStopNameDOne(String command) {
         assert command != null;
-        switch (command.toLowerCase()) {
+        switch (command.trim().toLowerCase()) {
         case "opp hssml":
             return 0;
         case "opp nuss":
@@ -105,9 +105,41 @@ public class Route {
         }
     }
 
+    public int getStopNameDTwo(String command) {
+        assert command != null;
+        switch (command.trim().toLowerCase()) {
+        case "pgp":
+            return 0;
+        case "kr mrt":
+            return 1;
+        case "lt27":
+            return 2;
+        case "uhall":
+            return 3;
+        case "opp uhc":
+            return 4;
+        case "museum":
+            return 5;
+        case "utown":
+            return 6;
+        case "uhc":
+            return 7;
+        case "opp uhall":
+            return 8;
+        case "s 17":
+            return 9;
+        case "opp kr mrt":
+            return 10;
+        case "pgpr":
+            return 11;
+        default:
+            return -1;
+        }
+    }
+
     public int getStopNameE(String command) {
         assert command != null;
-        switch (command.toLowerCase()) {
+        switch (command.trim().toLowerCase()) {
         case "kent vale":
             return 0;
         case "ea":
