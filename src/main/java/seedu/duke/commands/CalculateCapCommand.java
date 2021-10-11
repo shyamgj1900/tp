@@ -18,6 +18,7 @@ public class CalculateCapCommand extends Command {
         for (int i = 0; i < moduleCount; i++) {
             modules.add(commandDescriptions[i + 1]);
         }
+        assert !modules.isEmpty();
     }
     
     private int getMc(String module) throws KolinuxException {
@@ -71,6 +72,7 @@ public class CalculateCapCommand extends Command {
             double gradePoint = getGradePoint(module);
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
+            assert cap <= 5.0;
         }
         return String.format("%.2f", cap);
     }    
