@@ -17,7 +17,7 @@ public class DeleteModuleCommand extends Command {
     @Override
     public CommandResult executeCommand() {
         String message = ModuleList.deleteModuleByCode(code);
-        logger.log(Level.INFO, "User deleted module" + code + " from myModules list");
+        logger.log(Level.INFO, "User deleted module " + code + " from myModules list");
         return new CommandResult(message);
     }
 }
