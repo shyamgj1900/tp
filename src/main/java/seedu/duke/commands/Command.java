@@ -21,5 +21,12 @@ public abstract class Command {
         return argument.isEmpty();
     }
 
+    /**
+     * Executes the command with the arguments given by the user input.
+     *
+     * @return Result of execution
+     * @throws KolinuxException If the arguments given are invalid
+     * @throws FileNotFoundException If the file needed for execution is not found
+     */
     public abstract CommandResult executeCommand() throws KolinuxException, FileNotFoundException;
 }
