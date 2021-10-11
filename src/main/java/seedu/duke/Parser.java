@@ -10,6 +10,8 @@ import seedu.duke.commands.BusRouteCommand;
 import seedu.duke.commands.ViewModuleInfoCommand;
 import seedu.duke.commands.StoreModuleCommand;
 import seedu.duke.commands.DeleteModuleCommand;
+import seedu.duke.commands.TimetableCommand;
+import seedu.duke.exceptions.KolinuxException;
 
 /** Represents the operations to parse information needed for the execution of a command. */
 public class Parser {
@@ -35,7 +37,7 @@ public class Parser {
      * @param input User input
      * @return Command
      */
-    public static Command parseCommand(String input) {
+    public static Command parseCommand(String input) throws KolinuxException {
 
         String trimmedInput = input.trim();
         String commandWord = trimmedInput.split(" ", 2)[0];
@@ -55,36 +57,37 @@ public class Parser {
         case "delete_module":
             return new DeleteModuleCommand(argument);
         case "planner":
-            return parsePlannerArgument(argument);
+            return parseSubCommand(argument, "planner");
         case "bye":
             return new ExitCommand();
         case "timetable":
-            return parseTimetableArgument(argument);
+            return parseSubCommand(argument, "timetable");
         default:
             return new InvalidCommand();
         }
     }
 
     /**
-     * Processes the arguments when the command word is planner by separating the first word
-     * (sub-command) from the input. The rest of the input is separated into a String array
-     * using the "/" delimiter.
+     * Processes the arguments by separating the first word (sub-command) from the input.
+     * The rest of the input is separated into a String array using the "/" delimiter.
      *
      * @param subInput User input without the command word
-     * @return PlannerCommand
+     * @param commandWord User commandWord
+     * @return Command class according to commandWord
      */
-    private static Command parsePlannerArgument(String subInput) {
 
+    public static Command parseSubCommand(String subInput, String commandWord) throws KolinuxException {
         String subCommand = subInput.split(" ", 2)[0];
         String argument = subInput.replaceFirst(subCommand, "").trim();
         String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
-        return new PlannerCommand(subCommand, parsedArguments);
+        switch (commandWord) {
+        case "planner":
+            return new PlannerCommand(subCommand,parsedArguments);
+        case "timetable":
+            return new TimetableCommand(subCommand,parsedArguments);
+        default:
+            throw new KolinuxException("Invalid command");
+        }
     }
 
-    public static Command parseTimetableArgument(String input) {
-        String subCommand = input.split("", 2)[0];
-        String argument = input.replaceFirst(subCommand, "").trim();
-        String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
-        return new TimetableCommand(subCommand, parsedArguments);
-    }
 }

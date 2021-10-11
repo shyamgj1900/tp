@@ -5,6 +5,7 @@ import seedu.duke.commands.CommandResult;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.exceptions.KolinuxException;
 import seedu.duke.module.ModuleDb;
+import seedu.duke.module.timetable.Timetable;
 import seedu.duke.planner.Planner;
 
 import java.io.FileNotFoundException;
@@ -23,8 +24,9 @@ public class Kolinux {
             KolinuxLogger.initLogger();
             ModuleDb.initModuleDb();
             Planner.initPlanner();
-        } catch (KolinuxException exception) {
-            ui.showErrorMessage(exception);
+            Timetable.initTimetable();
+        } catch (KolinuxException | FileNotFoundException exception) {
+            ui.showErrorMessage((KolinuxException) exception);
         }
     }
 
