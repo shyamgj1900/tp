@@ -7,6 +7,7 @@ import seedu.duke.routes.Route;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/** Represent the command which interacts with the bus command. **/
 public class BusRouteCommand extends Command {
     private String[] splitInput;
     private String[] location;
@@ -42,16 +43,23 @@ public class BusRouteCommand extends Command {
         verticesE = new ArrayList<>();
     }
 
+    /**
+     * Converts the bus stop locations into bus stop numbers.
+     *
+     * @param u start vertex
+     * @param v final vertex
+     * @throws KolinuxException if the user command is not in the correct format
+     */
     private void getLocations(int[] u, int[] v) throws KolinuxException {
         for (int i = 0; i < 2; i++) {
             if (splitInput.length < 3) {
                 throw new KolinuxException("Enter starting point and final destination");
             }
             location[i] = splitInput[i + 1];
-            vertexCodeAOne[i] = route.getStopNameAOne(location[i]);
-            vertexCodeDOne[i] = route.getStopNameDOne(location[i]);
-            vertexCodeDTwo[i] = route.getStopNameDTwo(location[i]);
-            vertexCodeE[i] = route.getStopNameE(location[i]);
+            vertexCodeAOne[i] = route.getStopNumberAOne(location[i]);
+            vertexCodeDOne[i] = route.getStopNumberDOne(location[i]);
+            vertexCodeDTwo[i] = route.getStopNumberDTwo(location[i]);
+            vertexCodeE[i] = route.getStopNumberE(location[i]);
             if (vertexCodeAOne[i] < 0 && vertexCodeDOne[i] < 0 && vertexCodeE[i] < 0 && vertexCodeDTwo[i] < 0) {
                 throw new KolinuxException(location[i].trim() + " is not a valid bus stop name");
             }
@@ -66,6 +74,15 @@ public class BusRouteCommand extends Command {
         v[3] = vertexCodeE[1];
     }
 
+    /**
+     * Checks if 2 vertices are connected and gets the particular
+     * bus route.
+     *
+     * @param u start vertex
+     * @param v final vertex
+     * @param flag true if connected, false otherwise
+     * @param busNumbers buses of the connected bus stops
+     */
     private void checkConnection(int[] u, int []v, boolean[] flag, ArrayList<String> busNumbers) {
         if (u[0] >= 0 && v[0] >= 0 && graphAOne.isConnected(u[0], v[0])) {
             busNumbers.add("A1");

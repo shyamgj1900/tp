@@ -37,7 +37,7 @@ public class Route {
         }
     }
 
-    public int getStopNameAOne(String command) {
+    public int getStopNumberAOne(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
         case "kr bus terminal":
@@ -71,7 +71,7 @@ public class Route {
         }
     }
 
-    public int getStopNameDOne(String command) {
+    public int getStopNumberDOne(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
         case "opp hssml":
@@ -105,7 +105,7 @@ public class Route {
         }
     }
 
-    public int getStopNameDTwo(String command) {
+    public int getStopNumberDTwo(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
         case "pgp":
@@ -137,7 +137,7 @@ public class Route {
         }
     }
 
-    public int getStopNameE(String command) {
+    public int getStopNumberE(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
         case "kent vale":
