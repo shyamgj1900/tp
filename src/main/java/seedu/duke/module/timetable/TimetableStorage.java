@@ -7,7 +7,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TimetableStorage extends Timetable {
+import static seedu.duke.module.timetable.Timetable.days;
+import static seedu.duke.module.timetable.Timetable.moduleTimeline;
+import static seedu.duke.module.timetable.Timetable.INACCESSIBLE_PERIOD;
+import static seedu.duke.module.timetable.Timetable.INVALID_ADD_ARGUMENT;
+import static seedu.duke.module.timetable.Timetable.filePath;
+import static seedu.duke.module.timetable.Timetable.getIndex;
+import static seedu.duke.module.timetable.Timetable.timings;
+
+public class TimetableStorage {
 
     public static void loadContent(String[][] timetable, ArrayList<String> fileContents) throws KolinuxException {
         for (int i = 0; i < fileContents.size(); i++) {
