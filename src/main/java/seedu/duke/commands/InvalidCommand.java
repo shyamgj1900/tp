@@ -1,5 +1,8 @@
 package seedu.duke.commands;
 
+import java.util.logging.Level;
+
+/** Represents any command from the user input that is not recognised. */
 public class InvalidCommand extends Command {
 
     private static final String INVALID_COMMAND_MESSAGE =
@@ -7,6 +10,7 @@ public class InvalidCommand extends Command {
 
     @Override
     public CommandResult executeCommand() {
+        logger.log(Level.INFO, "User entered an invalid command");
         return new CommandResult(INVALID_COMMAND_MESSAGE);
     }
 }
