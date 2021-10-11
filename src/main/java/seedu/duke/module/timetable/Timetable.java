@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class Timetable {
 
-    public static String [][] timetable = new String[16][6];
-    public static ArrayList<String> moduleTimeline = new ArrayList<>();
+    public static String [][] timetableData = new String[16][6];
+    public static ArrayList<String> storageTimetable = new ArrayList<>();
     protected static String [] timings = new String [] { "0600", "0700", "0800", "0900", "1000", "1100",
         "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100" };
     protected static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
@@ -32,13 +32,13 @@ public class Timetable {
             while (s.hasNext()) {
                 fileContents.add(s.nextLine());
             }
-            TimetableStorage.loadContent(timetable, fileContents);
+            TimetableStorage.loadContent(timetableData, fileContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public static void addModule(String[] parsedArguments) throws KolinuxException {
+    public static void addLesson(String[] parsedArguments) throws KolinuxException {
         try {
             String description = parsedArguments[0];
             String day = parsedArguments[1].toLowerCase();
@@ -47,18 +47,18 @@ public class Timetable {
             int dayIndex = getIndex(day, days);
             int startIndex = getIndex(start, timings);
             int endIndex = getIndex(end, timings);
+            assert startIndex < endIndex : "Starting time should be earlier than ending time";
             if (startIndex == -1 || dayIndex == -1 || endIndex == -1 || startIndex > endIndex) {
                 throw new KolinuxException(INVALID_ADD_ARGUMENT);
             }
-            assert startIndex < endIndex : "Starting time should be earlier than ending time";
             for (int i = startIndex; i < endIndex; i++) {
-                if (timetable[i][dayIndex] == null) {
-                    timetable[i][dayIndex] = description;
+                if (timetableData[i][dayIndex] == null) {
+                    timetableData[i][dayIndex] = description;
                 } else {
                     throw new KolinuxException(INACCESSIBLE_PERIOD);
                 }
             }
-            moduleTimeline.add(day + "/" + description + "/" + start + "/" + end);
+            storageTimetable.add(day + "/" + description + "/" + start + "/" + end);
             TimetableStorage.saveToFile();
         } catch (IndexOutOfBoundsException | NullPointerException exception) {
             throw new KolinuxException(INVALID_ADD_ARGUMENT);
@@ -68,10 +68,10 @@ public class Timetable {
     public static void clearTimetable() {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 6; j++) {
-                timetable[i][j] = null;
+                timetableData[i][j] = null;
             }
         }
-        moduleTimeline.clear();
+        storageTimetable.clear();
         TimetableStorage.saveToFile();
     }
 

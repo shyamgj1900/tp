@@ -3,7 +3,6 @@ package seedu.duke.commands;
 import seedu.duke.exceptions.KolinuxException;
 import seedu.duke.module.timetable.Timetable;
 
-import java.sql.Time;
 import java.util.logging.Level;
 
 public class TimetableCommand extends Command {
@@ -20,7 +19,7 @@ public class TimetableCommand extends Command {
     public CommandResult executeCommand() throws KolinuxException {
         switch (subCommand) {
         case "add":
-            Timetable.addModule(parsedArguments);
+            Timetable.addLesson(parsedArguments);
             logger.log(Level.INFO, "User added a module to timetable");
             return new CommandResult("Module has been added to timetable");
         case "clear":
