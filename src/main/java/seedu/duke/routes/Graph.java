@@ -19,6 +19,14 @@ public class Graph {
         adj[v].add(w);
     }
 
+    /**
+     * Uses BFS to check if 2 nodes in a graph are connected with
+     * each other.
+     *
+     * @param u start vertex
+     * @param v final vertex
+     * @return true if connected, false otherwise
+     */
     public Boolean isConnected(int u, int v) {
         int vertex;
         boolean[] visited = new boolean[this.ver];

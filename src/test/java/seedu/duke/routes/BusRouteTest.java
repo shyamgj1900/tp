@@ -12,13 +12,13 @@ public class BusRouteTest {
     @Test
     public void enterStopName_checkStopName_validStopName() {
         Route route = new Route();
-        assertEquals(7, route.getStopNameDOne(validStopName[0]));
+        assertEquals(7, route.getStopNumberDOne(validStopName[0]));
     }
 
     @Test
     public void enterStopName_checkStopName_invalidStopName() {
         Route route = new Route();
-        assertEquals(-1, route.getStopNameDOne(invalidStopName));
+        assertEquals(-1, route.getStopNumberDOne(invalidStopName));
     }
 
     @Test
