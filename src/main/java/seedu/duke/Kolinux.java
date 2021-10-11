@@ -10,11 +10,15 @@ import seedu.duke.planner.Planner;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/** Represents the operations to start and run Kolinux. */
 public class Kolinux {
 
     private Ui ui = new Ui();
     private ModuleDb db = new ModuleDb();
 
+    /**
+     * Initializes Kolinux by starting the module information internal database, logger, and planner.
+     */
     private void initKolinux() {
         try {
             KolinuxLogger.initLogger();
@@ -25,6 +29,9 @@ public class Kolinux {
         }
     }
 
+    /**
+     * Infinite loop that executes user inputs repeatedly until the user prompts to exit the application.
+     */
     private void runCommandInLoop() {
 
         Scanner scanner = new Scanner(System.in);
@@ -44,6 +51,9 @@ public class Kolinux {
         }
     }
 
+    /**
+     * Greets the user, initializes databases, and runs user inputs in a loop.
+     */
     public void run() {
         ui.greetUser();
         initKolinux();
