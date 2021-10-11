@@ -75,7 +75,6 @@ public class Parser {
      * @param commandWord User commandWord
      * @return Command class according to commandWord
      */
-
     public static Command parseSubCommand(String subInput, String commandWord) throws KolinuxException {
         String subCommand = subInput.split(" ", 2)[0];
         String argument = subInput.replaceFirst(subCommand, "").trim();
