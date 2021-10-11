@@ -1,15 +1,8 @@
 package seedu.duke;
 
-import seedu.duke.commands.CalculateCapCommand;
-import seedu.duke.commands.Command;
-import seedu.duke.commands.ExitCommand;
-import seedu.duke.commands.HelpCommand;
-import seedu.duke.commands.InvalidCommand;
-import seedu.duke.commands.PlannerCommand;
-import seedu.duke.commands.BusRouteCommand;
 import java.io.FileNotFoundException;
 
-import seedu.duke.commands.ViewModuleInfoCommand;
+import seedu.duke.commands.*;
 import seedu.duke.module.ModuleDb;
 
 
@@ -42,6 +35,8 @@ public class Parser {
             return parsePlannerArgument(argument);
         case "bye":
             return new ExitCommand();
+        case "timetable":
+            return parseTimetableArgument(argument);
         default:
             return new InvalidCommand();
         }
@@ -53,5 +48,12 @@ public class Parser {
         String argument = subInput.replaceFirst(subCommand, "").trim();
         String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
         return new PlannerCommand(subCommand, parsedArguments);
+    }
+
+    public static Command parseTimetableArgument(String input) {
+        String subCommand = input.split("", 2)[0];
+        String argument = input.replaceFirst(subCommand, "").trim();
+        String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
+        return new TimetableCommand(subCommand, parsedArguments);
     }
 }
