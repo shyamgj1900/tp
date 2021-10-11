@@ -13,8 +13,10 @@ public class HelpCommand extends Command {
             + "5. delete_module MODULE_CODE - Delete a module from your module list\n"
             + "6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule\n"
             + "7. planner list DATE - Lists events on a certain date\n"
-            + "8. help - View this menu again\n"
-            + "9. bye - Exit Kolinux";
+            + "8. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable\n"
+            + "9. timetable clear - Remove all lessons from timetable\n"
+            + "10. help - View this menu again\n"
+            + "11. bye - Exit Kolinux";
 
     @Override
     public CommandResult executeCommand() {
