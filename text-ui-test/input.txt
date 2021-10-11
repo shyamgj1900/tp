@@ -16,5 +16,6 @@ planner add some random stuff
 planner add CS2101 OP2 Rehearsal/29 Oct 21/7pm/9pm
 planner list 2021-10-05
 timetable add CS1231 TUT/tuesday/1000/1200
+timetable add CS1231 TUT/tuesday/1200/1000
 timetable clear
 bye

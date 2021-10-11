@@ -51,5 +51,7 @@ Please provide a valid date and time! Format: yyyy-mm-dd
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
 Lesson has been added to timetable
+Please check the format of adding to timetable: timetable add DESCRIPTION/DAY/START_TIME/END_TIME
+e.g. timetable add CS1010 tut/Monday/1200/1400
 Timetable has been cleared completely
 Bye! Thank you for using Kolinux
