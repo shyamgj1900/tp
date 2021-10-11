@@ -7,9 +7,9 @@ import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
 import seedu.duke.commands.PlannerCommand;
 import seedu.duke.commands.BusRouteCommand;
-
 import seedu.duke.commands.ViewModuleInfoCommand;
-import seedu.duke.module.ModuleDb;
+import seedu.duke.commands.StoreModuleCommand;
+import seedu.duke.commands.DeleteModuleCommand;
 
 /** Represents the operations to parse information needed for the execution of a command. */
 public class Parser {
@@ -32,11 +32,10 @@ public class Parser {
      * Gets the command word from the user input, and calls the respective Command subsequently for
      * execution.
      *
-     * @param db Internal database of all module information
      * @param input User input
      * @return Command
      */
-    public static Command parseCommand(ModuleDb db, String input) {
+    public static Command parseCommand(String input) {
 
         String trimmedInput = input.trim();
         String commandWord = trimmedInput.split(" ", 2)[0];
@@ -50,7 +49,11 @@ public class Parser {
         case "bus":
             return new BusRouteCommand();
         case "view":
-            return new ViewModuleInfoCommand(db, argument);
+            return new ViewModuleInfoCommand(argument);
+        case "store_module":
+            return new StoreModuleCommand(argument);
+        case "delete_module":
+            return new DeleteModuleCommand(argument);
         case "planner":
             return parsePlannerArgument(argument);
         case "bye":
