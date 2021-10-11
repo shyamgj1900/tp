@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ModuleDetailsTest {
 
-    private static final ModuleDetails MODULE_DETAILS = new ModuleDetails("AC5001",
+    private static final ModuleDetails TEST_MODULE_DETAILS = new ModuleDetails("AC5001",
             "4", "Design and Environment","This module introduces "
             +
             "the architectural history of Singapore from the pre-colonial era to the contemporary "
@@ -26,7 +26,7 @@ public class ModuleDetailsTest {
     public void getModuleCode_testModuleCode_validModuleCode() {
         ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
         if (modules != null) {
-            assertEquals(modules.get(0).getModuleCode(), MODULE_DETAILS.getModuleCode());
+            assertEquals(modules.get(0).getModuleCode(), TEST_MODULE_DETAILS.getModuleCode());
         }
     }
 
@@ -34,7 +34,7 @@ public class ModuleDetailsTest {
     public void getModuleCredit_testModuleCredit_validModuleCredit() {
         ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
         if (modules != null) {
-            assertEquals(modules.get(0).getModuleCredit(), MODULE_DETAILS.getModuleCredit());
+            assertEquals(modules.get(0).getModuleCredit(), TEST_MODULE_DETAILS.getModuleCredit());
         }
     }
 
@@ -42,7 +42,7 @@ public class ModuleDetailsTest {
     public void getModuleDescription_testModuleDescription_validModuleDescription() {
         ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
         if (modules != null) {
-            assertNotEquals(modules.get(1).getDescription(), MODULE_DETAILS.getDescription());
+            assertNotEquals(modules.get(1).getDescription(), TEST_MODULE_DETAILS.getDescription());
         }
     }
 
@@ -50,7 +50,7 @@ public class ModuleDetailsTest {
     public void getModuleTitle_testModuleTitle_invalidModuleTitle() {
         ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
         if (modules != null) {
-            assertNotEquals(modules.get(20).getTitle(), MODULE_DETAILS.getTitle());
+            assertNotEquals(modules.get(20).getTitle(), TEST_MODULE_DETAILS.getTitle());
         }
     }
 
@@ -58,7 +58,7 @@ public class ModuleDetailsTest {
     public void getModuleDepartment_testModuleDepartment_validModuleDepartment() {
         ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
         if (modules != null) {
-            assertEquals(modules.get(0).getDepartment(), MODULE_DETAILS.getDepartment());
+            assertEquals(modules.get(0).getDepartment(), TEST_MODULE_DETAILS.getDepartment());
         }
     }
 
@@ -66,7 +66,7 @@ public class ModuleDetailsTest {
     public void getModuleFaculty_testModuleFaculty_validModuleFaculty() {
         ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
         if (modules != null) {
-            assertEquals(modules.get(0).getFaculty(), MODULE_DETAILS.getFaculty());
+            assertEquals(modules.get(0).getFaculty(), TEST_MODULE_DETAILS.getFaculty());
         }
     }
 
