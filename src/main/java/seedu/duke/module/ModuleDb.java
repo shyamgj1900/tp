@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public class ModuleDb {
     private static JsonReader jsonReader = new JsonReader();
-    private static HashMap<String, ModuleDetails> moduleDetailsMap;
+    private static HashMap<String, ModuleDetails> moduleDetailsMap = new HashMap<>();
 
     /**
      * Loads module information stored in a JSON file into a HashMap.

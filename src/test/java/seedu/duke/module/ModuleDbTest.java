@@ -1,6 +1,7 @@
 package seedu.duke.module;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -28,9 +29,14 @@ class ModuleDbTest {
 
     private static final String INVALID_MODULE_CODE = "x";
 
+
+    @BeforeAll
+    public static void setUp() {
+        ModuleDb.initModuleDb();
+    }
+
     @Test
     public void getModuleInfo_validModuleCode_moduleDetails() {
-        ModuleDb.initModuleDb();
         ModuleDetails mod = ModuleDb.getModuleInfo(TEST_MODULE.getModuleCode());
         if (mod != null) {
             assertEquals(mod.toString(), TEST_MODULE.toString());
@@ -39,7 +45,6 @@ class ModuleDbTest {
 
     @Test
     public void getModuleInfo_invalidModuleCode_nullModuleDetails() {
-        ModuleDb.initModuleDb();
         ModuleDetails mod = ModuleDb.getModuleInfo(INVALID_MODULE_CODE);
         assertNull(mod);
     }
