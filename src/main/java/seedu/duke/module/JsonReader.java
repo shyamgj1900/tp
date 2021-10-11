@@ -5,17 +5,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import seedu.duke.Main;
 
+/**
+ * JsonReader class facilitates reading module data from stored JSON files.
+ */
 public class JsonReader {
 
     public static InputStream inputStream = Main.class.getResourceAsStream("/moduleDetails.json");
 
+    /**
+     * Reads module data from a JSON into an ArrayList.
+     *
+     * @return Returns an ArrayList of ModuleDetails objects
+     */
     public static ArrayList<ModuleDetails> readJsonData() {
         Gson gson = new Gson();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -25,11 +31,17 @@ public class JsonReader {
         return modules;
     }
 
-    public Map<String, ModuleDetails> readModuleDb() {
+    /**
+     * Reads module data from a JSON into a HashMap where each module's code is a key and its
+     * ModuleDetails instance is the corresponding value.
+     *
+     * @return Returns a HashMap of ModuleDetails objects
+     */
+    public HashMap<String, ModuleDetails> readModuleDb() {
 
         ArrayList<ModuleDetails> modules = readJsonData();
 
-        Map<String, ModuleDetails> moduleDetailsMap = new HashMap<>();
+        HashMap<String, ModuleDetails> moduleDetailsMap = new HashMap<>();
         if (modules != null) {
             for (ModuleDetails module : modules) {
                 moduleDetailsMap.put(module.getModuleCode(), module);

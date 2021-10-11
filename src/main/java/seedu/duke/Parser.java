@@ -7,14 +7,21 @@ import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
 import seedu.duke.commands.PlannerCommand;
 import seedu.duke.commands.BusRouteCommand;
-import java.io.FileNotFoundException;
-
 import seedu.duke.commands.ViewModuleInfoCommand;
-import seedu.duke.module.ModuleDb;
+import seedu.duke.commands.StoreModuleCommand;
+import seedu.duke.commands.DeleteModuleCommand;
+import seedu.duke.commands.TimetableCommand;
+import seedu.duke.exceptions.KolinuxException;
 
-
+/** Represents the operations to parse information needed for the execution of a command. */
 public class Parser {
 
+    /**
+     * Removes leading and trailing white spaces from all the elements in a String array.
+     *
+     * @param strings Array of strings
+     * @return Array of strings with all elements trimmed
+     */
     private static String[] trimAllElementsOfArray(String[] strings) {
         String[] trimmedStrings = new String[strings.length];
         for (int i = 0; i < strings.length; i++) {
@@ -23,7 +30,14 @@ public class Parser {
         return trimmedStrings;
     }
 
-    public static Command parseCommand(ModuleDb db, String input) throws FileNotFoundException {
+    /**
+     * Gets the command word from the user input, and calls the respective Command subsequently for
+     * execution.
+     *
+     * @param input User input
+     * @return Command
+     */
+    public static Command parseCommand(String input) throws KolinuxException {
 
         String trimmedInput = input.trim();
         String commandWord = trimmedInput.split(" ", 2)[0];
@@ -35,23 +49,44 @@ public class Parser {
         case "cap":
             return new CalculateCapCommand(input);
         case "bus":
-            return new BusRouteCommand();
+            return new BusRouteCommand(input);
         case "view":
-            return new ViewModuleInfoCommand(db, argument);
+            return new ViewModuleInfoCommand(argument);
+        case "store_module":
+            return new StoreModuleCommand(argument);
+        case "delete_module":
+            return new DeleteModuleCommand(argument);
         case "planner":
-            return parsePlannerArgument(argument);
+            return parseSubCommand(argument, "planner");
         case "bye":
             return new ExitCommand();
+        case "timetable":
+            return parseSubCommand(argument, "timetable");
         default:
             return new InvalidCommand();
         }
     }
 
-    public static Command parsePlannerArgument(String subInput) {
-
+    /**
+     * Processes the arguments by separating the first word (sub-command) from the input.
+     * The rest of the input is separated into a String array using the "/" delimiter.
+     *
+     * @param subInput User input without the command word
+     * @param commandWord User commandWord
+     * @return Command class according to commandWord
+     */
+    public static Command parseSubCommand(String subInput, String commandWord) throws KolinuxException {
         String subCommand = subInput.split(" ", 2)[0];
         String argument = subInput.replaceFirst(subCommand, "").trim();
         String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
-        return new PlannerCommand(subCommand, parsedArguments);
+        switch (commandWord) {
+        case "planner":
+            return new PlannerCommand(subCommand,parsedArguments);
+        case "timetable":
+            return new TimetableCommand(subCommand,parsedArguments);
+        default:
+            throw new KolinuxException("Invalid command");
+        }
     }
+
 }

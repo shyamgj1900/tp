@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
+/** Represents an event in the schedule. */
 public class Event {
 
     private String description;
@@ -18,6 +19,12 @@ public class Event {
     private static final String FORMAT_ERROR =
             "Please check the format of your input! Format: planner add DESCRIPTION/DATE/START_TIME/END_TIME";
 
+    /**
+     * Constructs an event using the arguments given in the user input.
+     *
+     * @param parsedArguments Array of information of an event
+     * @throws KolinuxException If any of the information required is missing or in incorrect format.
+     */
     public Event(String[] parsedArguments) throws KolinuxException {
         try {
             this.description = parsedArguments[0];
@@ -31,6 +38,13 @@ public class Event {
         }
     }
 
+    /**
+     * Constructs an event using the data read from planner.txt. This constructor is only called to
+     * add previously saved events in planner.txt to the current active list.
+     *
+     * @param data Data line read from the file
+     * @throws KolinuxException If the data line is corrupted
+     */
     public Event(String data) throws KolinuxException {
         this(data.split("\\|"));
     }
@@ -39,6 +53,12 @@ public class Event {
         return date.toString();
     }
 
+    /**
+     * Converts the event to a data string that is stored in planner.txt.
+     * Note: This string is different from the one displayed to the user on the user interface.
+     *
+     * @return Data string
+     */
     public String toData() {
         return description + "|" + date.toString() + "|" + startTime.toString() + "|" + endTime.toString();
     }

@@ -10,10 +10,14 @@ Here are the list of commands:
 1. cap MC_AND_GRADES  - Calculates the total cap for the semester
 2. view MODULE_CODE - View the module details
 3. bus - Check for a NUS bus route from stop to another
-4. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-5. planner list DATE - Lists events on a certain date
-6. help - View this menu again
-7. bye - Exit Kolinux
+4. store_module MODULE_CODE - Add a module to your module list
+5. delete_module MODULE_CODE - Delete a module from your module list
+6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+7. planner list DATE - Lists events on a certain date
+8. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
+9. timetable clear - Remove all lessons from timetable
+10. help - View this menu again
+11. bye - Exit Kolinux
 Your CAP for this semester will be 4.19 if you get your desired grades!
 This command is not recognised, please enter "help" for the list of commands...
 CS2101: Effective Communication for Computing Professionals
@@ -33,6 +37,11 @@ a variety of oral and written communication tasks
 such as reports, software guides, oral presentations,
 software demonstrations and project blogs.
 Please enter a valid module code
+Successfully stored module: CS2113T
+CS2113T is already in the module list
+Please enter a valid module code
+Successfully deleted module: CS2113T
+CS2113T not found in the module list
 An event has been added to your schedule successfully!
 An event has been added to your schedule successfully!
 An event has been added to your schedule successfully!
@@ -41,4 +50,6 @@ Please provide a valid date and time! Format: yyyy-mm-dd
 2021-10-05
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
+Lesson has been added to timetable
+Timetable has been cleared completely
 Bye! Thank you for using Kolinux

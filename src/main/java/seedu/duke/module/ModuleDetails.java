@@ -1,5 +1,8 @@
 package seedu.duke.module;
 
+/**
+ * ModuleDetails class that stores all attributes of each module.
+ */
 public class ModuleDetails {
 
     private String moduleCode;
@@ -17,6 +20,8 @@ public class ModuleDetails {
         this.description = description;
         this.title = title;
         this.department = department;
+
+        assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
     public String getModuleCredit() {
@@ -43,6 +48,11 @@ public class ModuleDetails {
         return faculty;
     }
 
+    /**
+     * Returns a String object that is formatted for printing in CLI.
+     *
+     * @return The String representation of a module's details
+     */
     @Override
     public String toString() {
         int i = 50;

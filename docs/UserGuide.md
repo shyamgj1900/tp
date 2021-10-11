@@ -19,6 +19,9 @@ their activities for the day and a route finder for the NUS internal shuttle bus
   * [`bus`](#check-nus-bus-route-between-2-stops-bus)
   * [`cap`](#calculate-total-cap-cap)
   * [`view`](#view-module-details-view)
+  * [`timetable`](#add-lessons-to-timetable--timetable-add)
+    * [`timetable add`](#add-lessons-to-timetable--timetable-add)
+    * [`timetable clear`](#clear-timetable-timetable-clear)
   * [`help`](#view-menu-help)
   * [`bye`](#exit-kolinux-bye)
 
@@ -50,7 +53,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 |:-------------:	|:----------------------------------------------:	|:------------------------------------------:	     |
 | `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
-| `bus`         	| Check for a NUS bus route from stop to another 	| `bus`                                      	     |
+| `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
 | `cap`         	| Calculate the total cap given a set of grades     | `cap MC_GRADE`                             	     |
 | `view`        	| View module details                         	    | `view MODULE_CODE`                         	     |
 | `help`        	| View the different commands available          	| `help`                                     	     |
@@ -64,7 +67,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 Adds a new event to your schedule
 
-Format: `add DESCRIPTION/DATE/START_TIME/END_TIME`
+Format: `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
 * `START_TIME` and `END_TIME` needs to follow the following format: `hh:MM`
@@ -84,7 +87,7 @@ An event has been added to your schedule successfully!
 
 Lists events on a particular date
 
-Format: `planner add DATE`
+Format: `planner list DATE`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
 
@@ -101,6 +104,24 @@ planner list 2021-10-10
 ```
 
 ### Check NUS bus route between 2 stops: `bus`
+
+Helps to find if there are bus routes between any 2 NUS bus stops. 
+
+Format: `bus /start_location /end_location`
+
+* Bus stop names are not case sensitive
+
+Example of usage:
+
+* `bus /pgp /museum`
+
+Expected Outcome:
+
+```
+Bus [D2] goes from PGP to MUSEUM
+```
+
+Note: ***Routes for buses A1, D1, D2 and E have been implemented so far***
 
 ### Calculate total CAP: `cap`
 
@@ -147,6 +168,32 @@ fundamental programming constructs (variables, types,
 expressions, assignments, functions, control structures,
 etc.), fundamental data structures (arrays, strings,
 composite data types), basic sorting, and recursion.
+```
+### Add lessons to timetable : `timetable add`
+
+Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
+
+* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
+* `DAY` must be from between Monday to Friday where `DAY` is not case-sensitive
+  * i.e. `monday` is the same as `MONDAY`
+
+Example of usage:
+
+* `timetable add CS1010 TUT/Monday/1200/1400`
+* `timetable add CS2113T LEC/friday/1600/1800`
+
+Expected Outcome:
+```
+timetable add CS1010 TUT/Monday/1200/1400
+Lesson has been added to timetable
+```
+
+### Clear timetable: `timetable clear`
+
+Expected outcome:
+```
+timetable clear
+Timetable has been cleared completely
 ```
 
 ### View menu: `help`
