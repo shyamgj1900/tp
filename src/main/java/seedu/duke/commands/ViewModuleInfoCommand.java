@@ -6,8 +6,8 @@ import seedu.duke.module.ModuleDetails;
 public class ViewModuleInfoCommand extends Command {
     private ModuleDetails module;
 
-    public ViewModuleInfoCommand(ModuleDb db, String moduleCode) {
-        module = db.getModuleInfo(moduleCode);
+    public ViewModuleInfoCommand(String moduleCode) {
+        module = ModuleDb.getModuleInfo(moduleCode);
     }
 
     @Override

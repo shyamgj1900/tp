@@ -3,14 +3,14 @@ package seedu.duke.module;
 import java.util.Map;
 
 public class ModuleDb {
-    private JsonReader jsonReader = new JsonReader();
-    private Map<String, ModuleDetails> moduleDetailsMap;
+    private static JsonReader jsonReader = new JsonReader();
+    private static Map<String, ModuleDetails> moduleDetailsMap;
 
-    public void initModuleDb() {
+    public static void initModuleDb() {
         moduleDetailsMap = jsonReader.readModuleDb();
     }
 
-    public ModuleDetails getModuleInfo(String code) {
+    public static ModuleDetails getModuleInfo(String code) {
         return moduleDetailsMap.get(code);
     }
 }

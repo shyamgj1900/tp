@@ -12,7 +12,7 @@ public class ModuleList {
     }
 
     public static void storeModuleByCode(String code) {
-        ModuleDetails mod = db.getModuleInfo(code);
+        ModuleDetails mod = ModuleDb.getModuleInfo(code);
     }
 
 }
