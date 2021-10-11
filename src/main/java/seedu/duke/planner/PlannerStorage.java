@@ -7,10 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/** Represents the operations to interact with planner.txt. */
 public class PlannerStorage {
 
     private static File file = new File("./planner.txt");
 
+    /**
+     * Creates a file with the name planner.txt
+     */
     private static void createFile() {
         try {
             file.createNewFile();
@@ -19,6 +23,11 @@ public class PlannerStorage {
         }
     }
 
+    /**
+     * Writes to the file with the name planner.txt.
+     *
+     * @param eventData String to write to the file
+     */
     public static void writeFile(String eventData) {
         try {
             FileWriter writer = new FileWriter(file, true);
@@ -29,6 +38,11 @@ public class PlannerStorage {
         }
     }
 
+    /**
+     * Reads from the file with the name planner.txt
+     *
+     * @return Array list where each entry is a line from the file, null if the file does not exist.
+     */
     public static ArrayList<String> readFile() {
         ArrayList<String> fileLines = new ArrayList<>();
         try {
@@ -43,6 +57,9 @@ public class PlannerStorage {
         return null;
     }
 
+    /**
+     * Clears the contents of the file with the name planner.txt.
+     */
     public static void clearFile() {
         try {
             FileWriter writer = new FileWriter(file);
