@@ -4,6 +4,9 @@ import seedu.duke.module.ModuleList;
 
 import java.util.logging.Level;
 
+/**
+ * Represents the command that deletes a module from the myModules list.
+ */
 public class DeleteModuleCommand extends Command {
     private String code;
 

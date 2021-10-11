@@ -1,11 +1,17 @@
 package seedu.duke.module;
 
-import java.util.Map;
+import java.util.HashMap;
 
+/**
+ * ModuleDb class contains a HashMap that associates every module's code (key) with its modular information (value).
+ */
 public class ModuleDb {
     private static JsonReader jsonReader = new JsonReader();
-    private static Map<String, ModuleDetails> moduleDetailsMap;
+    private static HashMap<String, ModuleDetails> moduleDetailsMap;
 
+    /**
+     * Loads module information stored in a JSON file into a HashMap.
+     */
     public static void initModuleDb() {
         assert moduleDetailsMap.isEmpty() : "moduleDetailsMap is already initialized";
         moduleDetailsMap = jsonReader.readModuleDb();

@@ -5,6 +5,9 @@ import seedu.duke.module.ModuleDetails;
 
 import java.util.logging.Level;
 
+/**
+ * Represents the command that displays a module's information.
+ */
 public class ViewModuleInfoCommand extends Command {
     private ModuleDetails module;
 

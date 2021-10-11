@@ -4,6 +4,9 @@ import seedu.duke.module.ModuleList;
 
 import java.util.logging.Level;
 
+/**
+ * Represents the command that stores a module in the myModules list.
+ */
 public class StoreModuleCommand extends Command {
     private String code;
 
