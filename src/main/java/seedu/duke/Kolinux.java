@@ -26,8 +26,8 @@ public class Kolinux {
             ModuleDb.initModuleDb();
             Planner.initPlanner();
             Timetable.initTimetable();
-        } catch (KolinuxException | FileNotFoundException exception) {
-            ui.showErrorMessage((KolinuxException) exception);
+        } catch (KolinuxException exception) {
+            ui.showErrorMessage(exception);
         }
     }
 
@@ -46,11 +46,9 @@ public class Kolinux {
                 if (command instanceof ExitCommand) {
                     break;
                 }
-            } catch (KolinuxException | FileNotFoundException exception) {
+            } catch (KolinuxException | IOException exception) {
                 assert exception instanceof KolinuxException;
                 ui.showErrorMessage((KolinuxException) exception);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }

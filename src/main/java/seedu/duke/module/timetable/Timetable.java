@@ -15,13 +15,17 @@ public class Timetable {
     public static String filePath = "./timetable.txt";
     public static File file = new File(filePath);
 
-    public static void initTimetable() throws FileNotFoundException {
+    public static void initTimetable() {
         ArrayList<String> fileContents = new ArrayList<>();
-        Scanner s = new Scanner(file);
-        while (s.hasNext()) {
-            fileContents.add(s.nextLine());
+        try {
+            Scanner s = new Scanner(file);
+            while (s.hasNext()) {
+                fileContents.add(s.nextLine());
+            }
+            TimetableStorage.loadContent(timetable, fileContents);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        TimetableStorage.loadContent(timetable, fileContents);
     }
 
     public static void addModule(String[] parsedArguments) {
