@@ -27,10 +27,10 @@ public class TimetableStorage {
             int dayIndex = getIndex(day, days);
             int startIndex = getIndex(start, timings);
             int endIndex = getIndex(end, timings);
-            assert startIndex < endIndex : "Starting time should be earlier than ending time";
             if (startIndex == -1 || dayIndex == -1 || endIndex == -1 || startIndex > endIndex) {
                 throw new KolinuxException(INVALID_ADD_ARGUMENT);
             }
+            assert startIndex < endIndex : "Starting time should be earlier than ending time";
             storageTimetable.add(day + "/" + description + "/" + start + "/" + end);
             for (int j = startIndex; j < endIndex; j++) {
                 if (timetable[j][dayIndex] == null) {
