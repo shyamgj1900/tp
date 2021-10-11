@@ -6,10 +6,9 @@ import seedu.duke.routes.Route;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class BusRouteCommand extends Command {
-    private String command = "";
+    private String[] splitInput;
     private String[] location;
     private int[] vertexCodeAOne;
     private int[] vertexCodeDOne;
@@ -25,8 +24,9 @@ public class BusRouteCommand extends Command {
     ArrayList<String> verticesDTwo;
     ArrayList<String> verticesE;
 
-    public BusRouteCommand() {
+    public BusRouteCommand(String input) {
         location = new String[2];
+        splitInput = input.split(" /");
         vertexCodeAOne = new int[2];
         vertexCodeDOne = new int[2];
         vertexCodeDTwo = new int[2];
@@ -44,20 +44,16 @@ public class BusRouteCommand extends Command {
 
     private void getLocations(int[] u, int[] v) throws KolinuxException {
         for (int i = 0; i < 2; i++) {
-            if (i == 0) {
-                System.out.println("Enter starting point");
-            } else {
-                System.out.println("Enter final destination");
+            if (splitInput.length < 3) {
+                throw new KolinuxException("Enter starting point and final destination");
             }
-            Scanner myCommand = new Scanner(System.in);
-            command = myCommand.nextLine();
-            location[i] = command;
-            vertexCodeAOne[i] = route.getStopNameAOne(command);
-            vertexCodeDOne[i] = route.getStopNameDOne(command);
-            vertexCodeDTwo[i] = route.getStopNameDTwo(command);
-            vertexCodeE[i] = route.getStopNameE(command);
+            location[i] = splitInput[i + 1];
+            vertexCodeAOne[i] = route.getStopNameAOne(location[i]);
+            vertexCodeDOne[i] = route.getStopNameDOne(location[i]);
+            vertexCodeDTwo[i] = route.getStopNameDTwo(location[i]);
+            vertexCodeE[i] = route.getStopNameE(location[i]);
             if (vertexCodeAOne[i] < 0 && vertexCodeDOne[i] < 0 && vertexCodeE[i] < 0 && vertexCodeDTwo[i] < 0) {
-                throw new KolinuxException("Enter valid bus stop name");
+                throw new KolinuxException(location[i].trim() + " is not a valid bus stop name");
             }
         }
         u[0] = vertexCodeAOne[0];
