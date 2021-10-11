@@ -60,10 +60,14 @@ public class BusRouteCommand extends Command {
                 throw new KolinuxException("Enter valid bus stop name");
             }
         }
-        u[0] = vertexCodeAOne[0]; v[0] = vertexCodeAOne[1];
-        u[1] = vertexCodeDOne[0]; v[1] = vertexCodeDOne[1];
-        u[2] = vertexCodeDTwo[0]; v[2] = vertexCodeDTwo[1];
-        u[3] = vertexCodeE[0]; v[3] = vertexCodeE[1];
+        u[0] = vertexCodeAOne[0];
+        v[0] = vertexCodeAOne[1];
+        u[1] = vertexCodeDOne[0];
+        v[1] = vertexCodeDOne[1];
+        u[2] = vertexCodeDTwo[0];
+        v[2] = vertexCodeDTwo[1];
+        u[3] = vertexCodeE[0];
+        v[3] = vertexCodeE[1];
     }
 
     private void checkConnection(int[] u, int []v, boolean[] flag, ArrayList<String> busNumbers) {
@@ -88,7 +92,6 @@ public class BusRouteCommand extends Command {
     @Override
     public CommandResult executeCommand() throws KolinuxException, IOException {
         String[] filePaths = {"/routeA1.txt", "/routeD1.txt", "/routeD2.txt", "/routeE.txt"};
-        ArrayList<String> busNumbers = new ArrayList<>();
         route.readNodesFromFile(verticesAOne, filePaths[0]);
         route.readNodesFromFile(verticesDOne, filePaths[1]);
         route.readNodesFromFile(verticesDTwo, filePaths[2]);
@@ -103,6 +106,7 @@ public class BusRouteCommand extends Command {
         String startLocation = location[0].trim().toUpperCase();
         String endLocation = location[1].trim().toUpperCase();
         boolean[] flag = {false};
+        ArrayList<String> busNumbers = new ArrayList<>();
         checkConnection(u, v, flag, busNumbers);
         if (!flag[0]) {
             String message = "There is no bus service from " + startLocation + " to " + endLocation;
