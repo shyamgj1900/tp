@@ -7,7 +7,7 @@ import seedu.duke.routes.Route;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/** Represent the command which interacts with the bus command **/
+/** Represent the command which interacts with the bus command. **/
 public class BusRouteCommand extends Command {
     private String[] splitInput;
     private String[] location;
