@@ -7,8 +7,9 @@ import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
 import seedu.duke.commands.PlannerCommand;
 import seedu.duke.commands.BusRouteCommand;
-
 import seedu.duke.commands.ViewModuleInfoCommand;
+import seedu.duke.commands.StoreModuleCommand;
+import seedu.duke.commands.DeleteModuleCommand;
 
 /** Represents the operations to parse information needed for the execution of a command. */
 public class Parser {
@@ -49,6 +50,10 @@ public class Parser {
             return new BusRouteCommand();
         case "view":
             return new ViewModuleInfoCommand(argument);
+        case "store_module":
+            return new StoreModuleCommand(argument);
+        case "delete_module":
+            return new DeleteModuleCommand(argument);
         case "planner":
             return parsePlannerArgument(argument);
         case "bye":
