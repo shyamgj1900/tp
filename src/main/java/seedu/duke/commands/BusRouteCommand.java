@@ -4,7 +4,7 @@ import seedu.duke.exceptions.KolinuxException;
 import seedu.duke.routes.Graph;
 import seedu.duke.routes.Route;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -61,11 +61,25 @@ public class BusRouteCommand extends Command {
         v[2] = vertexCodeE[1];
     }
 
+    private void checkConnection(int[] u, int []v, boolean[] flag, ArrayList<String> busNumbers) {
+        if (u[0] >= 0 && v[0] >= 0 && graphAOne.isConnected(u[0], v[0])) {
+            busNumbers.add("A1");
+            flag[0] = true;
+        }
+        if (u[1] >= 0 && v[1] >= 0 && graphDOne.isConnected(u[1], v[1])) {
+            busNumbers.add("D1");
+            flag[0] = true;
+        }
+        if (u[2] >= 0 && v[2] >= 0 && graphE.isConnected(u[2], v[2])) {
+            busNumbers.add("E");
+            flag[0] = true;
+        }
+    }
+
     @Override
-    public CommandResult executeCommand() throws KolinuxException, FileNotFoundException {
+    public CommandResult executeCommand() throws KolinuxException, IOException {
         String[] filePaths = {"/routeA1.txt", "/routeD1.txt", "/routeE.txt"};
         ArrayList<String> busNumbers = new ArrayList<>();
-        boolean flag = false;
         route.readNodesFromFile(verticesAOne, filePaths[0]);
         route.readNodesFromFile(verticesDOne, filePaths[1]);
         route.readNodesFromFile(verticesE, filePaths[2]);
@@ -77,19 +91,9 @@ public class BusRouteCommand extends Command {
         getLocations(u, v);
         String startLocation = location[0].toUpperCase();
         String endLocation = location[1].toUpperCase();
-        if (u[0] >= 0 && v[0] >= 0 && graphAOne.isConnected(u[0], v[0])) {
-            busNumbers.add("A1");
-            flag = true;
-        }
-        if (u[1] >= 0 && v[1] >= 0 && graphDOne.isConnected(u[1], v[1])) {
-            busNumbers.add("D1");
-            flag = true;
-        }
-        if (u[2] >= 0 && v[2] >= 0 && graphE.isConnected(u[2], v[2])) {
-            busNumbers.add("E");
-            flag = true;
-        }
-        if (!flag) {
+        boolean[] flag = {false};
+        checkConnection(u, v, flag, busNumbers);
+        if (!flag[0]) {
             String message = "There is no bus service from " + startLocation + " to " + endLocation;
             return new CommandResult(message);
         }

@@ -1,30 +1,36 @@
 package seedu.duke.routes;
 
 import seedu.duke.Main;
+import seedu.duke.exceptions.KolinuxException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Route {
 
-    public void readNodesFromFile(ArrayList<String> vertices, String filePath) throws FileNotFoundException {
+    public void readNodesFromFile(ArrayList<String> vertices, String filePath) throws IOException, KolinuxException {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
+            if (inputStream == null) {
+                throw new KolinuxException("File not found");
+            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
                 vertices.add(line);
             }
         } catch (IOException e) {
-            throw new FileNotFoundException();
+            throw new IOException();
         }
     }
 
-    public void setRoute(ArrayList<String> vertices, Graph graph) {
+    public void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
+        if (vertices == null) {
+            throw new KolinuxException("Route doesn't exist");
+        }
         for (String v : vertices) {
             String[] vertex = v.split(" ");
             graph.addEdge(Integer.parseInt(vertex[0]), Integer.parseInt((vertex[1])));
@@ -32,6 +38,7 @@ public class Route {
     }
 
     public int getStopNameAOne(String command) {
+        assert command != null;
         switch (command.toLowerCase()) {
         case "kr bus terminal":
             return 0;
@@ -65,6 +72,7 @@ public class Route {
     }
 
     public int getStopNameDOne(String command) {
+        assert command != null;
         switch (command.toLowerCase()) {
         case "opp hssml":
             return 0;
@@ -98,6 +106,7 @@ public class Route {
     }
 
     public int getStopNameE(String command) {
+        assert command != null;
         switch (command.toLowerCase()) {
         case "kent vale":
             return 0;
