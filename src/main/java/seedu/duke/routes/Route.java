@@ -1,30 +1,36 @@
 package seedu.duke.routes;
 
 import seedu.duke.Main;
+import seedu.duke.exceptions.KolinuxException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Route {
 
-    public void readNodesFromFile(ArrayList<String> vertices, String filePath) throws FileNotFoundException {
+    public void readNodesFromFile(ArrayList<String> vertices, String filePath) throws IOException, KolinuxException {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
+            if (inputStream == null) {
+                throw new KolinuxException("File not found");
+            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
                 vertices.add(line);
             }
         } catch (IOException e) {
-            throw new FileNotFoundException();
+            throw new IOException();
         }
     }
 
-    public void setRoute(ArrayList<String> vertices, Graph graph) {
+    public void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
+        if (vertices == null) {
+            throw new KolinuxException("Route doesn't exist");
+        }
         for (String v : vertices) {
             String[] vertex = v.split(" ");
             graph.addEdge(Integer.parseInt(vertex[0]), Integer.parseInt((vertex[1])));
@@ -32,7 +38,8 @@ public class Route {
     }
 
     public int getStopNameAOne(String command) {
-        switch (command.toLowerCase()) {
+        assert command != null;
+        switch (command.trim().toLowerCase()) {
         case "kr bus terminal":
             return 0;
         case "lt13":
@@ -65,7 +72,8 @@ public class Route {
     }
 
     public int getStopNameDOne(String command) {
-        switch (command.toLowerCase()) {
+        assert command != null;
+        switch (command.trim().toLowerCase()) {
         case "opp hssml":
             return 0;
         case "opp nuss":
@@ -97,8 +105,41 @@ public class Route {
         }
     }
 
+    public int getStopNameDTwo(String command) {
+        assert command != null;
+        switch (command.trim().toLowerCase()) {
+        case "pgp":
+            return 0;
+        case "kr mrt":
+            return 1;
+        case "lt27":
+            return 2;
+        case "uhall":
+            return 3;
+        case "opp uhc":
+            return 4;
+        case "museum":
+            return 5;
+        case "utown":
+            return 6;
+        case "uhc":
+            return 7;
+        case "opp uhall":
+            return 8;
+        case "s 17":
+            return 9;
+        case "opp kr mrt":
+            return 10;
+        case "pgpr":
+            return 11;
+        default:
+            return -1;
+        }
+    }
+
     public int getStopNameE(String command) {
-        switch (command.toLowerCase()) {
+        assert command != null;
+        switch (command.trim().toLowerCase()) {
         case "kent vale":
             return 0;
         case "ea":

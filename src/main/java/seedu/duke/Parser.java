@@ -49,7 +49,7 @@ public class Parser {
         case "cap":
             return new CalculateCapCommand(input);
         case "bus":
-            return new BusRouteCommand();
+            return new BusRouteCommand(input);
         case "view":
             return new ViewModuleInfoCommand(argument);
         case "store_module":
