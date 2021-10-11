@@ -21,7 +21,7 @@ public class TimetableCommand extends Command {
         case "add":
             Timetable.addLesson(parsedArguments);
             logger.log(Level.INFO, "User added a module to timetable");
-            return new CommandResult("Module has been added to timetable");
+            return new CommandResult("Lesson has been added to timetable");
         case "clear":
             Timetable.clearTimetable();
             logger.log(Level.INFO, "User has cleared timetable");
