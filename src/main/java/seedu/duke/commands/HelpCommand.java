@@ -9,10 +9,12 @@ public class HelpCommand extends Command {
             + "1. cap MC_AND_GRADES  - Calculates the total cap for the semester\n"
             + "2. view MODULE_CODE - View the module details\n"
             + "3. bus - Check for a NUS bus route from stop to another\n"
-            + "4. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule\n"
-            + "5. planner list DATE - Lists events on a certain date\n"
-            + "6. help - View this menu again\n"
-            + "7. bye - Exit Kolinux";
+            + "4. store_module MODULE_CODE - Add a module to your module list\n"
+            + "5. delete_module MODULE_CODE - Delete a module from your module list\n"
+            + "6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule\n"
+            + "7. planner list DATE - Lists events on a certain date\n"
+            + "8. help - View this menu again\n"
+            + "9. bye - Exit Kolinux";
 
     @Override
     public CommandResult executeCommand() {

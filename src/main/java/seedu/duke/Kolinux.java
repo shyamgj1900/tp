@@ -15,7 +15,6 @@ import java.util.Scanner;
 public class Kolinux {
 
     private Ui ui = new Ui();
-    private ModuleDb db = new ModuleDb();
 
     /**
      * Initializes Kolinux by starting the module information internal database, logger, and planner.
@@ -23,7 +22,7 @@ public class Kolinux {
     private void initKolinux() {
         try {
             KolinuxLogger.initLogger();
-            db.initModuleDb();
+            ModuleDb.initModuleDb();
             Planner.initPlanner();
         } catch (KolinuxException exception) {
             ui.showErrorMessage(exception);
@@ -39,7 +38,7 @@ public class Kolinux {
         while (true) {
             try {
                 String userInput = scanner.nextLine();
-                Command command = Parser.parseCommand(db, userInput);
+                Command command = Parser.parseCommand(userInput);
                 CommandResult result = command.executeCommand();
                 ui.showResultToUser(result);
                 if (command instanceof ExitCommand) {

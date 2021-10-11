@@ -1,6 +1,7 @@
 package seedu.duke.module;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -8,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ModuleDbTest {
 
-    private ModuleDb db = new ModuleDb();
     private static final ModuleDetails TEST_MODULE = new ModuleDetails("CS2101", "4", "Computing",
             "This module aims to equip students with the skills needed to communicate technical "
                     +
@@ -29,10 +29,15 @@ class ModuleDbTest {
 
     private static final String INVALID_MODULE_CODE = "x";
 
+
+    @BeforeAll
+    public static void setUp() {
+        ModuleDb.initModuleDb();
+    }
+
     @Test
     public void getModuleInfo_validModuleCode_moduleDetails() {
-        db.initModuleDb();
-        ModuleDetails mod = db.getModuleInfo(TEST_MODULE.getModuleCode());
+        ModuleDetails mod = ModuleDb.getModuleInfo(TEST_MODULE.getModuleCode());
         if (mod != null) {
             assertEquals(mod.toString(), TEST_MODULE.toString());
         }
@@ -40,8 +45,7 @@ class ModuleDbTest {
 
     @Test
     public void getModuleInfo_invalidModuleCode_nullModuleDetails() {
-        db.initModuleDb();
-        ModuleDetails mod = db.getModuleInfo(INVALID_MODULE_CODE);
+        ModuleDetails mod = ModuleDb.getModuleInfo(INVALID_MODULE_CODE);
         assertNull(mod);
     }
 }
