@@ -102,6 +102,28 @@ planner list 2021-10-10
 
 ### Check NUS bus route between 2 stops: `bus`
 
+Helps to find if there are bus routes between any 2 NUS bus stops. 
+
+Format: `bus`
+
+Example of usage:
+
+```
+bus
+Enter starting point
+PGP
+Enter final destination
+Museum
+```
+
+Expected Outcome:
+
+```
+Bus [D2] goes from PGP to MUSEUM
+```
+
+Note: ***Routes for buses A1, D1, D2 and E have been implemented so far***
+
 ### Calculate total CAP: `cap`
 
 Format: `cap MC_GRADE`
