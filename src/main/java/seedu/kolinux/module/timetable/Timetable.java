@@ -16,7 +16,7 @@ public class Timetable {
     protected static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
-    public static final String  INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
+    public static final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
             +
             "timetable add DESCRIPTION/DAY/START_TIME/END_TIME\n"
             +

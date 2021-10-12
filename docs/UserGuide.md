@@ -281,5 +281,17 @@ Bye! Thank you for using Kolinux
 
 **Q**: How do I transfer my data to another computer? 
 
-**A**: {your answer here}
+**A**: Locate the `/data` directory stored in the same folder as `Kolinux.jar`. Copy the directory to the other 
+computer, in the same folder as `Kolinux.jar`. The data will be automatically read upon starting up `Kolinux`.
 
+## Data Storage
+
+Kolinux automatically creates a directory `/data` upon the first start up. The directory consists of the files:
+
+`logger.log` - User activity log of the most recent session.
+
+`planner.txt` - Planner data of the user.
+
+`timetable.txt` - Timetable data of the user.
+
+Users are advised not to modify these files as it can corrupt important user data.
