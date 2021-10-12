@@ -8,7 +8,7 @@ public class HelpCommand extends Command {
     private static final String HELP_MESSAGE = "Here are the list of commands:\n"
             + "1. cap MC_AND_GRADES  - Calculates the total cap for the semester\n"
             + "2. view MODULE_CODE - View the module details\n"
-            + "3. bus - Check for a NUS bus route from stop to another\n"
+            + "3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another\n"
             + "4. store_module MODULE_CODE - Add a module to your module list\n"
             + "5. delete_module MODULE_CODE - Delete a module from your module list\n"
             + "6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule\n"
