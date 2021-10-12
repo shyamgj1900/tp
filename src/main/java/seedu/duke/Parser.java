@@ -81,6 +81,8 @@ public class Parser {
      * Processes the arguments by separating the first word (sub-command) from the input.
      * The rest of the input is separated into a String array using the "/" delimiter.
      *
+     * This method should only be called if the commandWord is "timetable" or "planner".
+     *
      * @param subInput User input without the command word
      * @param commandWord User commandWord
      * @return Command class according to commandWord
@@ -91,12 +93,11 @@ public class Parser {
         String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
         switch (commandWord) {
         case COMMAND_PLANNER:
-            return new PlannerCommand(subCommand,parsedArguments);
+            return new PlannerCommand(subCommand, parsedArguments);
         case COMMAND_TIMETABLE:
-            return new TimetableCommand(subCommand,parsedArguments);
+            return new TimetableCommand(subCommand, parsedArguments);
         default:
-            throw new KolinuxException("Invalid command");
+            throw new KolinuxException("Internal error occurred, please try again.");
         }
     }
-
 }

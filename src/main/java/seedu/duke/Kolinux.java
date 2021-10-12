@@ -8,7 +8,6 @@ import seedu.duke.module.ModuleDb;
 import seedu.duke.module.timetable.Timetable;
 import seedu.duke.planner.Planner;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
