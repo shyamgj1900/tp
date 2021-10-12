@@ -14,8 +14,10 @@ Here are the list of commands:
 5. delete_module MODULE_CODE - Delete a module from your module list
 6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
 7. planner list DATE - Lists events on a certain date
-8. help - View this menu again
-9. bye - Exit Kolinux
+8. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
+9. timetable clear - Remove all lessons from timetable
+10. help - View this menu again
+11. bye - Exit Kolinux
 Your CAP for this semester will be 4.19 if you get your desired grades!
 This command is not recognised, please enter "help" for the list of commands...
 CS2101: Effective Communication for Computing Professionals
@@ -48,4 +50,8 @@ Please provide a valid date and time! Format: yyyy-mm-dd
 2021-10-05
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
+Lesson has been added to timetable
+Please check the format of adding to timetable: timetable add DESCRIPTION/DAY/START_TIME/END_TIME
+e.g. timetable add CS1010 tut/Monday/1200/1400
+Timetable has been cleared completely
 Bye! Thank you for using Kolinux
