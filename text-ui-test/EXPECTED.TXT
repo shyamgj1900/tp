@@ -9,7 +9,7 @@ All the events in your schedule has been cleared.
 Here are the list of commands:
 1. cap MC_AND_GRADES  - Calculates the total cap for the semester
 2. view MODULE_CODE - View the module details
-3. bus - Check for a NUS bus route from stop to another
+3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
 4. store_module MODULE_CODE - Add a module to your module list
 5. delete_module MODULE_CODE - Delete a module from your module list
 6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
@@ -51,5 +51,7 @@ Please provide a valid date and time! Format: yyyy-mm-dd
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
 Lesson has been added to timetable
+Please check the format of adding to timetable: timetable add DESCRIPTION/DAY/START_TIME/END_TIME
+e.g. timetable add CS1010 tut/Monday/1200/1400
 Timetable has been cleared completely
 Bye! Thank you for using Kolinux
