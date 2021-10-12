@@ -13,12 +13,18 @@ public class Ui {
             + "| |  \\ \\ |_| | || | | | | |_| |) X (\n"
             + "|_|   \\_)___/ \\_)_|_| |_|____/(_/ \\_)";
     private static final String GREET_MESSAGE = "Welcome to Kolinux! Enter \"help\" to view the list of commands";
+    private static final String DIVIDER = "....................................................................";
+
+    private void printDivider() {
+        System.out.println(DIVIDER);
+    }
 
     /**
      * Prints the logo and greet message upon start-up of Kolinux.
      */
     public void greetUser() {
         System.out.println(LOGO + "\n" + GREET_MESSAGE);
+        printDivider();
     }
 
     /**
@@ -28,6 +34,7 @@ public class Ui {
      */
     public void showResultToUser(CommandResult result) {
         System.out.println(result.getFeedbackToUser());
+        printDivider();
     }
 
     /**
@@ -37,5 +44,6 @@ public class Ui {
      */
     public void showErrorMessage(KolinuxException exception) {
         System.out.println(exception.getMessage());
+        printDivider();
     }
 }
