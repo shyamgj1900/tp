@@ -19,14 +19,18 @@ public class TimetableCommand extends Command {
     public CommandResult executeCommand() throws KolinuxException {
         switch (subCommand) {
         case "add":
-            Timetable.addModule(parsedArguments);
+            Timetable.addLesson(parsedArguments);
             logger.log(Level.INFO, "User added a module to timetable");
-            return new CommandResult("Module has been added to timetable");
+            return new CommandResult("Lesson has been added to timetable");
+        case "clear":
+            Timetable.clearTimetable();
+            logger.log(Level.INFO, "User has cleared timetable");
+            return new CommandResult("Timetable has been cleared completely");
         default:
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
-            return new CommandResult("Ensure command has oen of the following formats:\n"
+            return new CommandResult("Ensure command has one of the following formats:\n"
                     +
-                    "1. timetable add DESCRIPTION/DAY/START_TIME/END_TIME\n");
+                    "1. timetable add DESCRIPTION/DAY/START_TIME/END_TIME");
         }
     }
 
