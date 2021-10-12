@@ -48,6 +48,7 @@ java -jar Kolinux.jar
 | |  \ \ |_| | || | | | | |_| |) X (
 |_|   \_)___/ \_)_|_| |_|____/(_/ \_)
 Welcome to Kolinux! Enter "help" to view the list of commands
+....................................................................
 ```
 
 ## List of Commands
@@ -85,6 +86,7 @@ Expected Outcome:
 ```
 planner add MA1508E quiz/2021-10-10/17:00/18:00
 An event has been added to your schedule successfully!
+....................................................................
 ```
 
 ### List events: `planner list`
@@ -105,6 +107,7 @@ Expected Outcome:
 planner list 2021-10-10
 2021-10-10
 17:00 - 18:00 MA1508E quiz
+....................................................................
 ```
 
 ### Check NUS bus route between 2 stops: `bus`
@@ -123,6 +126,7 @@ Expected Outcome:
 
 ```
 Bus [D2] goes from PGP to MUSEUM
+....................................................................
 ```
 
 Note: ***Routes for buses A1, D1, D2 and E have been implemented so far***
@@ -140,6 +144,7 @@ Expected Outcome:
 ```
 cap 4A 6B+ 4B 4B- 4A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
+....................................................................
 ```
 
 ### View module details: `view`
@@ -172,6 +177,7 @@ fundamental programming constructs (variables, types,
 expressions, assignments, functions, control structures,
 etc.), fundamental data structures (arrays, strings,
 composite data types), basic sorting, and recursion.
+....................................................................
 ```
 ### Add modules to module list by code: `store_module`
 
@@ -187,6 +193,7 @@ Expected Outcome:
 
 ```
 Successfully stored module: CS2113T
+....................................................................
 ```
 
 ### Delete modules from module list by code: `delete_module`
@@ -203,6 +210,7 @@ Expected Outcome:
 
 ```
 Successfully deleted module: CS2113T
+....................................................................
 ```
 
 ### Add lessons to timetable : `timetable add`
@@ -222,6 +230,7 @@ Expected Outcome:
 ```
 timetable add CS1010 TUT/Monday/1200/1400
 Lesson has been added to timetable
+....................................................................
 ```
 
 ### Clear timetable: `timetable clear`
@@ -230,6 +239,7 @@ Expected outcome:
 ```
 timetable clear
 Timetable has been cleared completely
+....................................................................
 ```
 
 ### View menu: `help`
@@ -252,6 +262,7 @@ Here are the list of commands:
 9. timetable clear - Remove all lessons from timetable
 10. help - View this menu again
 11. bye - Exit Kolinux
+....................................................................
 ```
 
 ### Exit Kolinux: `bye`
@@ -263,6 +274,7 @@ Expected Outcome:
 ```
 bye
 Bye! Thank you for using Kolinux
+....................................................................
 ```
 
 ## FAQ
