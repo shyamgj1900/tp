@@ -9,6 +9,7 @@ import seedu.kolinux.module.timetable.Timetable;
 import seedu.kolinux.planner.Planner;
 import seedu.kolinux.util.KolinuxLogger;
 import seedu.kolinux.util.Parser;
+import seedu.kolinux.util.Storage;
 import seedu.kolinux.util.Ui;
 
 import java.io.IOException;
@@ -20,10 +21,11 @@ public class Kolinux {
     private Ui ui = new Ui();
 
     /**
-     * Initializes Kolinux by starting the module information internal database, logger, and planner.
+     * Initializes Kolinux by starting the module information internal database, logger, timetable, and planner.
      */
     private void initKolinux() {
         try {
+            Storage.initStorage();
             KolinuxLogger.initLogger();
             ModuleDb.initModuleDb();
             Planner.initPlanner();

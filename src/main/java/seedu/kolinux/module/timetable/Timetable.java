@@ -14,7 +14,7 @@ public class Timetable {
     protected static String [] timings = new String [] { "0600", "0700", "0800", "0900", "1000", "1100",
         "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100" };
     protected static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
-    public static String filePath = "./timetable.txt";
+    public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
     public static final String  INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
             +

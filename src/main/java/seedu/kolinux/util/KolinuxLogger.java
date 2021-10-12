@@ -28,7 +28,7 @@ public class KolinuxLogger {
         logger.addHandler(consoleHandler);
 
         try {
-            FileHandler fileHandler = new FileHandler("./logger.log");
+            FileHandler fileHandler = new FileHandler("./data/logger.log");
             fileHandler.setFormatter(new SimpleFormatter());
             fileHandler.setLevel(Level.ALL);
             logger.addHandler(fileHandler);
