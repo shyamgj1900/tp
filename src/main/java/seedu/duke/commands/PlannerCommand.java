@@ -14,6 +14,10 @@ public class PlannerCommand extends Command {
     private String subCommand;
     private String[] parsedArguments;
 
+    private static final String ADD_SUBCOMMAND = "add";
+    private static final String LIST_SUBCOMMAND = "list";
+    private static final String CLEAR_SUBCOMMAND = "clear";
+
     private static final String ADD_EVENT_MESSAGE = "An event has been added to your schedule successfully!";
     private static final String CLEAR_EVENT_MESSAGE = "All the events in your schedule has been cleared.";
     private static final String INVALID_ARGUMENT_MESSAGE =
@@ -46,17 +50,17 @@ public class PlannerCommand extends Command {
     @Override
     public CommandResult executeCommand() throws KolinuxException {
         switch (subCommand) {
-        case "add":
+        case ADD_SUBCOMMAND:
             Event event = new Event(parsedArguments);
             Planner.addEvent(event);
             logger.log(Level.INFO, "User added an event to planner: " + event);
             return new CommandResult(ADD_EVENT_MESSAGE);
-        case "list":
+        case LIST_SUBCOMMAND:
             String date = processDate(parsedArguments[0]);
             String eventList = Planner.listEvents(date);
             logger.log(Level.INFO, "User listed events on " + date);
             return new CommandResult(date + eventList);
-        case "clear":
+        case CLEAR_SUBCOMMAND:
             // Command only for testing purposes, not known to the user.
             Planner.clearEvents();
             return new CommandResult(CLEAR_EVENT_MESSAGE);

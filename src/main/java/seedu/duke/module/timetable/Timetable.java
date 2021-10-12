@@ -1,6 +1,8 @@
 package seedu.duke.module.timetable;
 
 import seedu.duke.exceptions.KolinuxException;
+import seedu.duke.planner.Planner;
+import seedu.duke.planner.PlannerStorage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 
 public class Timetable {
 
-    public static String [][] timetableData = new String[16][6];
+    public static String [][] timetableData = new String[17][6];
     public static ArrayList<String> storageTimetable = new ArrayList<>();
     protected static String [] timings = new String [] { "0600", "0700", "0800", "0900", "1000", "1100",
         "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100" };
@@ -34,7 +36,7 @@ public class Timetable {
             }
             TimetableStorage.loadContent(timetableData, fileContents);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            TimetableStorage.createFilePath(filePath);
         }
     }
 
@@ -47,11 +49,12 @@ public class Timetable {
             int dayIndex = getIndex(day, days);
             int startIndex = getIndex(start, timings);
             int endIndex = getIndex(end, timings);
-            if (startIndex == -1 || dayIndex == -1 || endIndex == -1 || startIndex > endIndex) {
+            if (startIndex == -1 || dayIndex == -1 || endIndex == -1 || startIndex >= endIndex) {
                 throw new KolinuxException(INVALID_ADD_ARGUMENT);
             }
-            assert startIndex < endIndex : "Starting time should be earlier than ending time";
             for (int i = startIndex; i < endIndex; i++) {
+                assert dayIndex <= 6;
+                assert i <= 16;
                 if (timetableData[i][dayIndex] == null) {
                     timetableData[i][dayIndex] = description;
                 } else {
@@ -66,7 +69,7 @@ public class Timetable {
     }
 
     public static void clearTimetable() {
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 17; i++) {
             for (int j = 0; j < 6; j++) {
                 timetableData[i][j] = null;
             }

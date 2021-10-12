@@ -19,6 +19,9 @@ their activities for the day and a route finder for the NUS internal shuttle bus
   * [`bus`](#check-nus-bus-route-between-2-stops-bus)
   * [`cap`](#calculate-total-cap-cap)
   * [`view`](#view-module-details-view)
+  * [`module list`](#add-modules-to-module-list-by-code-store_module)
+    * [`store_module`](#add-modules-to-module-list-by-code-store_module)
+    * [`delete_module`](#delete-modules-from-module-list-by-code-delete_module)
   * [`timetable`](#add-lessons-to-timetable--timetable-add)
     * [`timetable add`](#add-lessons-to-timetable--timetable-add)
     * [`timetable clear`](#clear-timetable-timetable-clear)
@@ -53,12 +56,13 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 |:-------------:	|:----------------------------------------------:	|:------------------------------------------:	     |
 | `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
+| `store_module`	| Store a module in the module list			| `store_module MODULE_CODE`			     |
+| `delete_module`	| Delete a module from the module list			| `delete_module MODULE_CODE`			     |
 | `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
 | `cap`         	| Calculate the total cap given a set of grades     | `cap MC_GRADE`                             	     |
 | `view`        	| View module details                         	    | `view MODULE_CODE`                         	     |
 | `help`        	| View the different commands available          	| `help`                                     	     |
 | `bye`         	| Exit Kolinux                                   	| `bye`                                      	     |
-
 
 
 ## Features 
@@ -169,6 +173,38 @@ expressions, assignments, functions, control structures,
 etc.), fundamental data structures (arrays, strings,
 composite data types), basic sorting, and recursion.
 ```
+### Add modules to module list by code: `store_module`
+
+Format: `store_module MODULE_CODE `
+
+- `MODULE_CODE` needs to be in uppercase letters
+
+Example of usage:
+
+- `store_module CS2113T`
+
+Expected Outcome:
+
+```
+Successfully stored module: CS2113T
+```
+
+### Delete modules from module list by code: `delete_module`
+
+Format: `delete_module MODULE_CODE `
+
+- `MODULE_CODE` needs to be in uppercase letters
+
+Example of usage:
+
+- `delete_module CS2113T`
+
+Expected Outcome:
+
+```
+Successfully deleted module: CS2113T
+```
+
 ### Add lessons to timetable : `timetable add`
 
 Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
@@ -229,5 +265,4 @@ Bye! Thank you for using Kolinux
 **Q**: How do I transfer my data to another computer? 
 
 **A**: {your answer here}
-
 

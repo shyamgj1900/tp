@@ -29,5 +29,5 @@ public abstract class Command {
      * @throws KolinuxException If the arguments given are invalid
      * @throws FileNotFoundException If the file needed for execution is not found
      */
-    public abstract CommandResult executeCommand() throws KolinuxException, FileNotFoundException, IOException;
+    public abstract CommandResult executeCommand() throws KolinuxException, IOException;
 }
