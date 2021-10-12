@@ -19,6 +19,9 @@ their activities for the day and a route finder for the NUS internal shuttle bus
   * [`bus`](#check-nus-bus-route-between-2-stops-bus)
   * [`cap`](#calculate-total-cap-cap)
   * [`view`](#view-module-details-view)
+  * [`module list`](#add-modules-to module-list-by-code--store_module)
+    * [`store_module`](#add-modules-to-module-list-by-code--store_module)
+    * [`delete_module`](#delete-modules-from-module-list-by-code--delete_module)
   * [`timetable`](#add-lessons-to-timetable--timetable-add)
     * [`timetable add`](#add-lessons-to-timetable--timetable-add)
     * [`timetable clear`](#clear-timetable-timetable-clear)
@@ -169,6 +172,38 @@ expressions, assignments, functions, control structures,
 etc.), fundamental data structures (arrays, strings,
 composite data types), basic sorting, and recursion.
 ```
+### Add modules to module list by code: `store_module`
+
+Format: `store_module MODULE_CODE `
+
+- `MODULE_CODE` needs to be in uppercase letters
+
+Example of usage:
+
+- `store_module CS2113T`
+
+Expected Outcome:
+
+```
+Successfully stored module: CS2113T
+```
+
+### Delete modules from module list by code: `delete_module`
+
+Format: `delete_module MODULE_CODE `
+
+- `MODULE_CODE` needs to be in uppercase letters
+
+Example of usage:
+
+- `delete_module CS2113T`
+
+Expected Outcome:
+
+```
+Successfully deleted module: CS2113T
+```
+
 ### Add lessons to timetable : `timetable add`
 
 Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
@@ -229,5 +264,4 @@ Bye! Thank you for using Kolinux
 **Q**: How do I transfer my data to another computer? 
 
 **A**: {your answer here}
-
 
