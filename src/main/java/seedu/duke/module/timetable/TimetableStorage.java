@@ -69,7 +69,6 @@ public class TimetableStorage {
     }
 
     public static void saveToFile() {
-        createFilePath(filePath);
         writeToFile();
     }
 }
