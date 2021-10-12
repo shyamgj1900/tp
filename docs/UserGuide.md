@@ -243,10 +243,15 @@ help
 Here are the list of commands:
 1. cap MC_AND_GRADES  - Calculates the total cap for the semester
 2. view MODULE_CODE - View the module details
-3. bus routes - Check for a NUS bus route from stop to another
-4. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-5. help - View this menu again
-6. bye - Exit Kolinux
+3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
+4. store_module MODULE_CODE - Add a module to your module list
+5. delete_module MODULE_CODE - Delete a module from your module list
+6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+7. planner list DATE - Lists events on a certain date
+8. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
+9. timetable clear - Remove all lessons from timetable
+10. help - View this menu again
+11. bye - Exit Kolinux
 ```
 
 ### Exit Kolinux: `bye`
