@@ -16,6 +16,16 @@ import seedu.duke.exceptions.KolinuxException;
 /** Represents the operations to parse information needed for the execution of a command. */
 public class Parser {
 
+    private static final String COMMAND_HELP = "help";
+    private static final String COMMAND_CAP = "cap";
+    private static final String COMMAND_BUS = "bus";
+    private static final String COMMAND_VIEW_MODULE = "view";
+    private static final String COMMAND_STORE_MODULE = "store_module";
+    private static final String COMMAND_DELETE_MODULE = "delete_module";
+    private static final String COMMAND_PLANNER = "planner";
+    private static final String COMMAND_EXIT = "bye";
+    private static final String COMMAND_TIMETABLE = "timetable";
+
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
      *
@@ -44,24 +54,24 @@ public class Parser {
         String argument = trimmedInput.replaceFirst(commandWord, "").trim();
 
         switch (commandWord.toLowerCase()) {
-        case "help":
+        case COMMAND_HELP:
             return new HelpCommand();
-        case "cap":
+        case COMMAND_CAP:
             return new CalculateCapCommand(input);
-        case "bus":
+        case COMMAND_BUS:
             return new BusRouteCommand(input);
-        case "view":
+        case COMMAND_VIEW_MODULE:
             return new ViewModuleInfoCommand(argument);
-        case "store_module":
+        case COMMAND_STORE_MODULE:
             return new StoreModuleCommand(argument);
-        case "delete_module":
+        case COMMAND_DELETE_MODULE:
             return new DeleteModuleCommand(argument);
-        case "planner":
-            return parseSubCommand(argument, "planner");
-        case "bye":
+        case COMMAND_PLANNER:
+            return parseSubCommand(argument, COMMAND_PLANNER);
+        case COMMAND_EXIT:
             return new ExitCommand();
-        case "timetable":
-            return parseSubCommand(argument, "timetable");
+        case COMMAND_TIMETABLE:
+            return parseSubCommand(argument, COMMAND_TIMETABLE);
         default:
             return new InvalidCommand();
         }
@@ -80,9 +90,9 @@ public class Parser {
         String argument = subInput.replaceFirst(subCommand, "").trim();
         String[] parsedArguments = trimAllElementsOfArray(argument.split("/"));
         switch (commandWord) {
-        case "planner":
+        case COMMAND_PLANNER:
             return new PlannerCommand(subCommand,parsedArguments);
-        case "timetable":
+        case COMMAND_TIMETABLE:
             return new TimetableCommand(subCommand,parsedArguments);
         default:
             throw new KolinuxException("Invalid command");
