@@ -1,6 +1,8 @@
 package seedu.duke.module.timetable;
 
 import seedu.duke.exceptions.KolinuxException;
+import seedu.duke.planner.Planner;
+import seedu.duke.planner.PlannerStorage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +36,7 @@ public class Timetable {
             }
             TimetableStorage.loadContent(timetableData, fileContents);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            TimetableStorage.createFilePath(filePath);
         }
     }
 
