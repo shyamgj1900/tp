@@ -28,6 +28,10 @@ public class TimetableCommand extends Command {
             Timetable.clearTimetable();
             logger.log(Level.INFO, "User has cleared timetable");
             return new CommandResult("Timetable has been cleared completely");
+        case "view":
+            Timetable.viewTimetable();
+            logger.log(Level.INFO, "User has printed timetable");
+            return new CommandResult("Timetable has been printed above");
         default:
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
             return new CommandResult("Ensure command has one of the following formats:\n"

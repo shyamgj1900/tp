@@ -7,9 +7,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static seedu.kolinux.module.timetable.Lesson.timings;
+
 public class Timetable {
 
-    public static String [][] timetableData = new String[17][6];
+    private static final int ROW_SIZE = 16;
+    private static final int COLUMN_SIZE = 6;
+    private static final int COLUMN_LAST_INDEX = 5;
+    public static String [][] timetableData = new String[ROW_SIZE][COLUMN_SIZE];
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
@@ -24,6 +29,21 @@ public class Timetable {
     public static final String CORRUPT_STORAGE = "Your timetable storage file is corrupted, "
             +
             "it will be reset and cleared";
+    private static final String TIMETABLE_HEADER = "+-------------+--------------------+---------"
+            +
+            "-----------+--------------------+--------------------+--------------------+\n"
+            +
+            "|             |       MONDAY       |       TUESDAY      |      WEDNESDAY     "
+            +
+            "|      THURSDAY      |       FRIDAY       |\n+-------------+-----------------"
+            +
+            "---+--------------------+--------------------+--------------------+--------------------+";
+    private static final String TIMETABLE_ROW_DIVIDER = "+-------------+--------------------+----------"
+            +
+            "----------+--------------------+--------------------+--------------------+";
+    private static final int TABLE_COLUMN_WIDTH = 20;
+    private static final int TABLE_FIRST_COLUMN_WIDTH = 13;
+
 
     public static void initTimetable() throws KolinuxException {
         ArrayList<String> fileContents = new ArrayList<>();
@@ -43,26 +63,22 @@ public class Timetable {
     }
 
     public static void addLesson(Lesson lesson) throws KolinuxException {
-        try {
-            addToTimetable(lesson);
-            lessonStorage.add(lesson);
-            TimetableStorage.writeToFile();
-        } catch (IndexOutOfBoundsException | NullPointerException exception) {
-            throw new KolinuxException(INVALID_ADD_ARGUMENT);
-        }
+        addToTimetable(lesson);
+        lessonStorage.add(lesson);
+        TimetableStorage.writeToFile();
     }
 
     public static void addToTimetable(Lesson lesson) throws KolinuxException {
-        String description = lesson.description;
-        int dayIndex = lesson.dayIndex;
-        int startTimeIndex = lesson.startTimeIndex;
-        int endTimeIndex = lesson.endTimeIndex;
+        String description = lesson.getDescription();
+        int dayIndex = lesson.getDayIndex();
+        int startTimeIndex = lesson.getStartTimeIndex();
+        int endTimeIndex = lesson.getEndTimeIndex();
         if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
             throw new KolinuxException(INVALID_ADD_ARGUMENT);
         }
         for (int i = startTimeIndex; i < endTimeIndex; i++) {
-            assert dayIndex <= 6;
-            assert i <= 16;
+            assert dayIndex < COLUMN_SIZE;
+            assert i < ROW_SIZE;
             if (timetableData[i][dayIndex] == null) {
                 timetableData[i][dayIndex] = description;
             } else {
@@ -71,13 +87,42 @@ public class Timetable {
         }
     }
 
-    public void viewTimetable() {
+    public static void viewTimetable() {
+        System.out.println(TIMETABLE_HEADER);
+        for (int i = 1; i < ROW_SIZE; i++) {
+            String time = timings[i - 1] + " - " + timings[i];
+            System.out.print("|" + time + getSpaces((TABLE_FIRST_COLUMN_WIDTH - time.length())) + "|");
+            for (int j = 1; j < COLUMN_LAST_INDEX; j++) {
+                System.out.print(toPrint(timetableData[i][j]));
+            }
+            System.out.println(toPrint(timetableData[i][COLUMN_LAST_INDEX]));
+            System.out.println(TIMETABLE_ROW_DIVIDER);
+        }
+    }
 
+    private static String toPrint(String data) {
+        if (data != null) {
+            int spacesFront = (TABLE_COLUMN_WIDTH - data.length()) / 2;
+            int spacesBack = (TABLE_COLUMN_WIDTH - data.length()) / 2 + checkOddOrEven(data);;
+            return getSpaces(spacesFront) + data + getSpaces(spacesBack) + "|";
+        }
+        return getSpaces(TABLE_COLUMN_WIDTH) + "|";
+    }
+
+    private static String getSpaces(int number) {
+        return String.format("%1$" + number + "s", "");
+    }
+
+    private static int checkOddOrEven(String lesson) {
+        if (lesson.length() % 2 == 0) {
+            return 0;
+        }
+        return 1;
     }
 
     public static void clearTimetable() {
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 6; j++) {
+        for (int i = 0; i < ROW_SIZE; i++) {
+            for (int j = 0; j < COLUMN_SIZE; j++) {
                 timetableData[i][j] = null;
             }
         }
