@@ -6,6 +6,7 @@ import seedu.kolinux.module.timetable.Timetable;
 
 import java.util.logging.Level;
 
+/** Represents the command that interacts with the timetable. */
 public class TimetableCommand extends Command {
 
     private String subCommand;

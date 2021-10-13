@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.kolinux.module.timetable.Lesson.days;
 import static seedu.kolinux.module.timetable.Timetable.timetableData;
 import static seedu.kolinux.module.timetable.Lesson.getIndex;
-import static seedu.kolinux.module.timetable.Lesson.timings;
+import static seedu.kolinux.module.timetable.Lesson.schoolHours;
 import static seedu.kolinux.module.timetable.Timetable.INVALID_ADD_ARGUMENT;
 import static seedu.kolinux.module.timetable.Timetable.INACCESSIBLE_PERIOD;
 
@@ -23,7 +23,7 @@ public class TimetableTest {
         Timetable.clearTimetable();
         Lesson lesson = new Lesson(VALID_ADD_ARGUMENTS);
         Timetable.addLesson(lesson);
-        assertEquals(timetableData[getIndex("1200", timings)][getIndex("monday", days)],
+        assertEquals(timetableData[getIndex("1200", schoolHours)][getIndex("monday", days)],
                 "CS1010 tut");
         Timetable.clearTimetable();
     }
