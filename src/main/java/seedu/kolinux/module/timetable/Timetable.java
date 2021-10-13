@@ -10,10 +10,7 @@ import java.util.Scanner;
 public class Timetable {
 
     public static String [][] timetableData = new String[17][6];
-    public static ArrayList<String> storageTimetable = new ArrayList<>();
-    protected static String [] timings = new String [] { "0600", "0700", "0800", "0900", "1000", "1100",
-        "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100" };
-    protected static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
+    public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
     public static final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
@@ -35,42 +32,47 @@ public class Timetable {
             while (s.hasNext()) {
                 fileContents.add(s.nextLine());
             }
-            TimetableStorage.loadContent(timetableData, fileContents);
+            TimetableStorage.loadContent(timetableData, fileContents, lessonStorage);
         } catch (FileNotFoundException exception) {
             TimetableStorage.createFilePath(filePath);
-        } catch (KolinuxException | ArrayIndexOutOfBoundsException exception) {
+        } catch (ArrayIndexOutOfBoundsException exception) {
             clearTimetable();
             TimetableStorage.clearFile();
             throw new KolinuxException(CORRUPT_STORAGE);
         }
     }
 
-    public static void addLesson(String[] parsedArguments) throws KolinuxException {
+    public static void addLesson(Lesson lesson) throws KolinuxException {
         try {
-            String description = parsedArguments[0];
-            String day = parsedArguments[1].toLowerCase();
-            String start = parsedArguments[2];
-            String end = parsedArguments[3];
-            int dayIndex = getIndex(day, days);
-            int startIndex = getIndex(start, timings);
-            int endIndex = getIndex(end, timings);
-            if (startIndex == -1 || dayIndex == -1 || endIndex == -1 || startIndex >= endIndex) {
-                throw new KolinuxException(INVALID_ADD_ARGUMENT);
-            }
-            for (int i = startIndex; i < endIndex; i++) {
-                assert dayIndex <= 6;
-                assert i <= 16;
-                if (timetableData[i][dayIndex] == null) {
-                    timetableData[i][dayIndex] = description;
-                } else {
-                    throw new KolinuxException(INACCESSIBLE_PERIOD);
-                }
-            }
-            storageTimetable.add(day + "/" + description + "/" + start + "/" + end);
-            TimetableStorage.saveToFile();
+            addToTimetable(lesson);
+            lessonStorage.add(lesson);
+            TimetableStorage.writeToFile();
         } catch (IndexOutOfBoundsException | NullPointerException exception) {
             throw new KolinuxException(INVALID_ADD_ARGUMENT);
         }
+    }
+
+    public static void addToTimetable(Lesson lesson) throws KolinuxException {
+        String description = lesson.description;
+        int dayIndex = lesson.dayIndex;
+        int startTimeIndex = lesson.startTimeIndex;
+        int endTimeIndex = lesson.endTimeIndex;
+        if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
+            throw new KolinuxException(INVALID_ADD_ARGUMENT);
+        }
+        for (int i = startTimeIndex; i < endTimeIndex; i++) {
+            assert dayIndex <= 6;
+            assert i <= 16;
+            if (timetableData[i][dayIndex] == null) {
+                timetableData[i][dayIndex] = description;
+            } else {
+                throw new KolinuxException(INACCESSIBLE_PERIOD);
+            }
+        }
+    }
+
+    public void viewTimetable() {
+
     }
 
     public static void clearTimetable() {
@@ -79,17 +81,8 @@ public class Timetable {
                 timetableData[i][j] = null;
             }
         }
-        storageTimetable.clear();
-        TimetableStorage.saveToFile();
-    }
-
-    public static int getIndex(String input, String[] array) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].equals(input)) {
-                return i + 1;
-            }
-        }
-        return -1;
+        lessonStorage.clear();
+        TimetableStorage.writeToFile();
     }
 
 }

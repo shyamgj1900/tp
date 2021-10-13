@@ -1,6 +1,7 @@
 package seedu.kolinux.commands;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.timetable.Lesson;
 import seedu.kolinux.module.timetable.Timetable;
 
 import java.util.logging.Level;
@@ -19,7 +20,8 @@ public class TimetableCommand extends Command {
     public CommandResult executeCommand() throws KolinuxException {
         switch (subCommand) {
         case "add":
-            Timetable.addLesson(parsedArguments);
+            Lesson lesson = new Lesson(parsedArguments);
+            Timetable.addLesson(lesson);
             logger.log(Level.INFO, "User added a module to timetable");
             return new CommandResult("Lesson has been added to timetable");
         case "clear":
