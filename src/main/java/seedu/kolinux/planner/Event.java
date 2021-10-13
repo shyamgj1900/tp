@@ -64,8 +64,12 @@ public class Event {
         return date.toString();
     }
 
-    public String getTime() {
+    public String getStartTime() {
         return startTime.toString().replace(COLON, EMPTY_STRING);
+    }
+
+    public String getEndTime() {
+        return endTime.toString().replace(COLON, EMPTY_STRING);
     }
 
     /**

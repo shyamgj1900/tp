@@ -18,6 +18,41 @@ public class Planner {
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of the data is corrupted, your planner will be reset...";
+    private static final String TIME_CONFLICT_ERROR =
+            "You already have an event ongoing for that time period, please try again with another timing.";
+
+    private ArrayList<Event> filterPlanner(String date) {
+        ArrayList<Event> filteredPlanner =
+                (ArrayList<Event>) scheduleOfAllDates
+                        .stream()
+                        .filter((event) -> date.equals(event.getDate()))
+                        .sorted(Comparator.comparing(Event::getStartTime))
+                        .collect(Collectors.toList());
+        return filteredPlanner;
+    }
+
+    private boolean hasTimeConflict(Event eventToBeAdded) {
+        ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
+        String startTime = eventToBeAdded.getStartTime();
+        for (Event event : filteredPlanner) {
+            if (startTime.compareTo(event.getStartTime()) > 0 && startTime.compareTo(event.getEndTime()) < 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String concatenateEventStrings(ArrayList<String> eventStrings) {
+        if (eventStrings.isEmpty()) {
+            return EMPTY_LIST_MESSAGE;
+        }
+
+        String concatenatedString = EMPTY_STRING;
+        for (String event : eventStrings) {
+            concatenatedString = concatenatedString.concat("\n" + event);
+        }
+        return concatenatedString;
+    }
 
     /**
      * Initializes the planner by loading the previously saved schedule in planner.txt.
@@ -49,7 +84,10 @@ public class Planner {
      *
      * @param event Event
      */
-    public void addEvent(Event event) {
+    public void addEvent(Event event) throws KolinuxException {
+        if (hasTimeConflict(event)) {
+            throw new KolinuxException(TIME_CONFLICT_ERROR);
+        }
         scheduleOfAllDates.add(event);
         plannerStorage.writeFile(event.toData());
     }
@@ -64,23 +102,13 @@ public class Planner {
 
         assert Pattern.matches(DATE_PATTERN, date);
 
-        ArrayList<String> filteredSchedule =
-                (ArrayList<String>) scheduleOfAllDates
+        ArrayList<String> filteredEventStrings =
+                (ArrayList<String>) filterPlanner(date)
                         .stream()
-                        .filter((event) -> date.equals(event.getDate()))
-                        .sorted(Comparator.comparing(Event::getTime))
                         .map((event) -> event.toString())
                         .collect(Collectors.toList());
-
-        if (filteredSchedule.isEmpty()) {
-            return EMPTY_LIST_MESSAGE;
-        }
-
-        String filteredScheduleInString = EMPTY_STRING;
-        for (String event : filteredSchedule) {
-            filteredScheduleInString = filteredScheduleInString.concat("\n" + event);
-        }
-        return filteredScheduleInString;
+        String eventsInOneString = concatenateEventStrings(filteredEventStrings);
+        return eventsInOneString;
     }
 
     /**
