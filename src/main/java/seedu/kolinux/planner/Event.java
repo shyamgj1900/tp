@@ -53,6 +53,10 @@ public class Event {
         return date.toString();
     }
 
+    public String getTime() {
+        return startTime.toString().replace(":", "");
+    }
+
     /**
      * Converts the event to a data string that is stored in planner.txt.
      * Note: This string is different from the one displayed to the user on the user interface.

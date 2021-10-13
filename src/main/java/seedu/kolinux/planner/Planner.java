@@ -3,6 +3,7 @@ package seedu.kolinux.planner;
 import seedu.kolinux.exceptions.KolinuxException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -62,6 +63,7 @@ public class Planner {
                 (ArrayList<String>) scheduleOfAllDates
                         .stream()
                         .filter((event) -> date.equals(event.getDate()))
+                        .sorted(Comparator.comparing(Event::getTime))
                         .map((event) -> event.toString())
                         .collect(Collectors.toList());
 
