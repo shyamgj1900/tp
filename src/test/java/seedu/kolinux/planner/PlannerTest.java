@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlannerTest {
 
+    private Planner planner = new Planner();
+
     private static final String[] VALID_EVENT_ARGUMENTS
             = new String[]{"Pop Quiz 3", "2021-10-26", "15:00", "15:15"};
     private static final String[] INVALID_EVENT_DATE_ARGUMENTS
@@ -26,18 +28,18 @@ public class PlannerTest {
 
     @Test
     public void addEvent_validEventInput_eventAdded() throws KolinuxException {
-        Planner.clearEvents();
+        planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
-        Planner.addEvent(validEvent);
-        assertEquals(VALID_LIST, Planner.listEvents("2021-10-26"));
-        Planner.clearEvents();
+        planner.addEvent(validEvent);
+        assertEquals(VALID_LIST, planner.listEvents("2021-10-26"));
+        planner.clearEvents();
     }
 
     @Test
     public void addEvent_invalidEventDateInput_eventNotAdded() {
         try {
             Event invalidEvent = new Event(INVALID_EVENT_DATE_ARGUMENTS);
-            Planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent);
         } catch (KolinuxException exception) {
             assertEquals(DATETIME_ERROR, exception.getMessage());
         }
@@ -47,7 +49,7 @@ public class PlannerTest {
     public void addEvent_invalidEventFormatInput_eventNotAdded() {
         try {
             Event invalidEvent = new Event(INVALID_EVENT_FORMAT_ARGUMENTS);
-            Planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent);
         } catch (KolinuxException exception) {
             assertEquals(FORMAT_ERROR, exception.getMessage());
         }
@@ -57,7 +59,7 @@ public class PlannerTest {
     public void addEvent_wrongTimeOrderInput_eventNotAdded() {
         try {
             Event invalidEvent = new Event(WRONG_TIME_ORDER_ARGUMENTS);
-            Planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent);
         } catch (KolinuxException exception) {
             assertEquals(TIME_ORDER_ERROR, exception.getMessage());
         }

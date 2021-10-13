@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 /** Represents the operations to interact with the user schedule. */
 public class Planner {
 
+    private PlannerStorage plannerStorage = new PlannerStorage();
+
     private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     private static final String EMPTY_LIST_MESSAGE = "\nYou have no events planned for this date, just chill!";
     private static final String EMPTY_STRING = "";
@@ -22,9 +24,9 @@ public class Planner {
      *
      * @throws KolinuxException If the file cannot be read properly due to corruption
      */
-    public static void initPlanner() throws KolinuxException {
+    public void initPlanner() throws KolinuxException {
         ArrayList<String> fileLines;
-        if ((fileLines = PlannerStorage.readFile()) == null) {
+        if ((fileLines = plannerStorage.readFile()) == null) {
             assert scheduleOfAllDates.isEmpty();
             return;
         }
@@ -47,9 +49,9 @@ public class Planner {
      *
      * @param event Event
      */
-    public static void addEvent(Event event) {
+    public void addEvent(Event event) {
         scheduleOfAllDates.add(event);
-        PlannerStorage.writeFile(event.toData());
+        plannerStorage.writeFile(event.toData());
     }
 
     /**
@@ -58,7 +60,7 @@ public class Planner {
      * @param date Date
      * @return All the events on the date in a single concatenated string
      */
-    public static String listEvents(String date) {
+    public String listEvents(String date) {
 
         assert Pattern.matches(DATE_PATTERN, date);
 
@@ -84,8 +86,8 @@ public class Planner {
     /**
      * Clears all events in the schedule.
      */
-    public static void clearEvents() {
+    public void clearEvents() {
         scheduleOfAllDates.clear();
-        PlannerStorage.clearFile();
+        plannerStorage.clearFile();
     }
 }
