@@ -21,6 +21,12 @@ public class Planner {
     private static final String TIME_CONFLICT_ERROR =
             "You already have an event ongoing for that time period, please try again with another timing.";
 
+    /**
+     * Filters all the events in the planner by a particular date.
+     *
+     * @param date Date
+     * @return List of events happening on the given date
+     */
     private ArrayList<Event> filterPlanner(String date) {
         ArrayList<Event> filteredPlanner =
                 (ArrayList<Event>) scheduleOfAllDates
@@ -31,6 +37,12 @@ public class Planner {
         return filteredPlanner;
     }
 
+    /**
+     * Checks if an event has time conflict with an existing event on the same date.
+     *
+     * @param eventToBeAdded The event to be added
+     * @return true if there is time conflict, false otherwise.
+     */
     private boolean hasTimeConflict(Event eventToBeAdded) {
         ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
         String startTime = eventToBeAdded.getStartTime();
@@ -42,14 +54,21 @@ public class Planner {
         return false;
     }
 
-    private String concatenateEventStrings(ArrayList<String> eventStrings) {
-        if (eventStrings.isEmpty()) {
+    /**
+     * Concatenates an array list of strings into a single string, with a newline separating consecutive
+     * entries.
+     *
+     * @param strings List of strings to be concatenated
+     * @return Concatenated string of the list of strings
+     */
+    private String concatenateStrings(ArrayList<String> strings) {
+        if (strings.isEmpty()) {
             return EMPTY_LIST_MESSAGE;
         }
 
         String concatenatedString = EMPTY_STRING;
-        for (String event : eventStrings) {
-            concatenatedString = concatenatedString.concat("\n" + event);
+        for (String string : strings) {
+            concatenatedString = concatenatedString.concat("\n" + string);
         }
         return concatenatedString;
     }
@@ -83,6 +102,7 @@ public class Planner {
      * Adds an event to the schedule list.
      *
      * @param event Event
+     * @throws KolinuxException If the event to be added has time conflict with an existing event.
      */
     public void addEvent(Event event) throws KolinuxException {
         if (hasTimeConflict(event)) {
@@ -107,7 +127,7 @@ public class Planner {
                         .stream()
                         .map((event) -> event.toString())
                         .collect(Collectors.toList());
-        String eventsInOneString = concatenateEventStrings(filteredEventStrings);
+        String eventsInOneString = concatenateStrings(filteredEventStrings);
         return eventsInOneString;
     }
 
