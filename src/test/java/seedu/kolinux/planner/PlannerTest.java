@@ -17,6 +17,8 @@ public class PlannerTest {
             = new String[]{"Something worse", "2021-10-26", "07:00"};
     private static final String[] WRONG_TIME_ORDER_ARGUMENTS
             = new String[]{"Go back in time", "2021-04-06", "20:00", "16:00"};
+    private static final String[] CONFLICTED_TIME_ARGUMENTS
+            = new String[]{"Do something", "2021-10-26", "15:05", "17:00"};
     private static final String VALID_LIST
             = "\n15:00 - 15:15 Pop Quiz 3";
     private static final String DATETIME_ERROR =
@@ -25,6 +27,8 @@ public class PlannerTest {
             "Please check the format of your input! Format: planner add DESCRIPTION/DATE/START_TIME/END_TIME";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
+    private static final String TIME_CONFLICT_ERROR =
+            "You already have an event ongoing for that time period, please try again with another timing.";
 
     @Test
     public void addEvent_validEventInput_eventAdded() throws KolinuxException {
@@ -63,5 +67,19 @@ public class PlannerTest {
         } catch (KolinuxException exception) {
             assertEquals(TIME_ORDER_ERROR, exception.getMessage());
         }
+    }
+
+    @Test
+    public void addEvent_conflictedTimeInput_eventNotAdded() throws KolinuxException {
+        planner.clearEvents();
+        Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
+        planner.addEvent(validEvent);
+        try {
+            Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS);
+            planner.addEvent(invalidEvent);
+        } catch (KolinuxException exception) {
+            assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
+        }
+        planner.clearEvents();
     }
 }
