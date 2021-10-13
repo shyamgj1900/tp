@@ -79,6 +79,7 @@ public class Event {
     }
 
     public String toString() {
+        assert startTime.compareTo(endTime) <= 0;
         return startTime + " - " + endTime + " " + description;
     }
 }
