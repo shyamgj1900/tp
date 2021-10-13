@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 /** Represents the operations to interact with the user schedule. */
 public class Planner {
 
+    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
+    private static final String EMPTY_LIST_MESSAGE = "\nYou have no events planned for this date, just chill!";
+    private static final String EMPTY_STRING = "";
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of the data is corrupted, your planner will be reset...";
@@ -57,7 +60,7 @@ public class Planner {
      */
     public static String listEvents(String date) {
 
-        assert Pattern.matches("\\d\\d\\d\\d-\\d\\d-\\d\\d", date);
+        assert Pattern.matches(DATE_PATTERN, date);
 
         ArrayList<String> filteredSchedule =
                 (ArrayList<String>) scheduleOfAllDates
@@ -68,10 +71,10 @@ public class Planner {
                         .collect(Collectors.toList());
 
         if (filteredSchedule.isEmpty()) {
-            return "\nYou have no events planned for this date, just chill!";
+            return EMPTY_LIST_MESSAGE;
         }
 
-        String filteredScheduleInString = "";
+        String filteredScheduleInString = EMPTY_STRING;
         for (String event : filteredSchedule) {
             filteredScheduleInString = filteredScheduleInString.concat("\n" + event);
         }
