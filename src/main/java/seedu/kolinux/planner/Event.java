@@ -9,6 +9,11 @@ import java.time.format.DateTimeParseException;
 /** Represents an event in the schedule. */
 public class Event {
 
+    private static final String COLON = ":";
+    private static final String EMPTY_STRING = "";
+    private static final String PIPE_REGEX = "\\|";
+    private static final String PIPE = "|";
+
     private String description;
     private LocalDate date;
     private LocalTime startTime;
@@ -46,7 +51,7 @@ public class Event {
      * @throws KolinuxException If the data line is corrupted
      */
     public Event(String data) throws KolinuxException {
-        this(data.split("\\|"));
+        this(data.split(PIPE_REGEX));
     }
 
     public String getDate() {
@@ -54,7 +59,7 @@ public class Event {
     }
 
     public String getTime() {
-        return startTime.toString().replace(":", "");
+        return startTime.toString().replace(COLON, EMPTY_STRING);
     }
 
     /**
@@ -64,7 +69,7 @@ public class Event {
      * @return Data string
      */
     public String toData() {
-        return description + "|" + date.toString() + "|" + startTime.toString() + "|" + endTime.toString();
+        return description + PIPE + date.toString() + PIPE + startTime.toString() + PIPE + endTime.toString();
     }
 
     public String toString() {
