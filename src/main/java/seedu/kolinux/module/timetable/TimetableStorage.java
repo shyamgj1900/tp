@@ -12,6 +12,7 @@ import static seedu.kolinux.module.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.module.timetable.Timetable.CORRUPT_STORAGE;
 import static seedu.kolinux.module.timetable.Timetable.addToTimetable;
 
+/** Represents the methods to interact with timetable text file. */
 public class TimetableStorage {
 
     /**

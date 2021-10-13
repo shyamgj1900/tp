@@ -10,7 +10,7 @@ import java.util.Scanner;
 import static seedu.kolinux.module.timetable.Lesson.schoolHours;
 
 /**
- * Timetable class that stores the lessons into 2D array and Array list for storage.
+ * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
  */
 public class Timetable {
 
