@@ -15,8 +15,9 @@ public class HelpCommand extends Command {
             + "7. planner list DATE - Lists events on a certain date\n"
             + "8. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable\n"
             + "9. timetable clear - Remove all lessons from timetable\n"
-            + "10. help - View this menu again\n"
-            + "11. bye - Exit Kolinux";
+            + "10. timetable view - Print the timetable on CLI\n"
+            + "11. help - View this menu again\n"
+            + "12. bye - Exit Kolinux";
 
     @Override
     public CommandResult executeCommand() {
