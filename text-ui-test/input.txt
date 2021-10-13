@@ -14,6 +14,7 @@ planner add Project Meeting/2021-10-05/19:00/23:00
 planner add GEA1000 Tutorial/2021-10-07/09:00/12:00
 planner add some random stuff
 planner add CS2101 OP2 Rehearsal/29 Oct 21/7pm/9pm
+planner add Family dinner/2021-02-05/20:00/18:00
 planner list 2021-10-05
 timetable add CS1231 TUT/tuesday/1000/1200
 timetable add CS1231 TUT/tuesday/1200/1000
