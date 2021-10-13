@@ -24,6 +24,9 @@ public class Timetable {
     public static final String INACCESSIBLE_PERIOD = "Please choose another slot as the "
             +
             "period is already occupied by another lesson";
+    public static final String CORRUPT_STORAGE = "Your timetable storage file is corrupted, "
+            +
+            "it will be reset and cleared";
 
     public static void initTimetable() throws KolinuxException {
         ArrayList<String> fileContents = new ArrayList<>();
@@ -33,8 +36,12 @@ public class Timetable {
                 fileContents.add(s.nextLine());
             }
             TimetableStorage.loadContent(timetableData, fileContents);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException exception) {
             TimetableStorage.createFilePath(filePath);
+        } catch (KolinuxException | ArrayIndexOutOfBoundsException exception) {
+            clearTimetable();
+            TimetableStorage.clearFile();
+            throw new KolinuxException(CORRUPT_STORAGE);
         }
     }
 

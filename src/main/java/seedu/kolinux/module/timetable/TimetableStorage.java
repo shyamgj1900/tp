@@ -71,4 +71,14 @@ public class TimetableStorage {
     public static void saveToFile() {
         writeToFile();
     }
+
+    public static void clearFile() {
+        try {
+            FileWriter fw = new FileWriter(filePath);
+            fw.write("");
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
