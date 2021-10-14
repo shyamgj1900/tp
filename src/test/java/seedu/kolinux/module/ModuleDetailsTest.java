@@ -9,8 +9,9 @@ import java.util.ArrayList;
 
 public class ModuleDetailsTest {
 
+    private static final JsonReader jsonReader = new JsonReader();
     private static final ModuleDetails TEST_MODULE_DETAILS = new ModuleDetails("AC5001",
-            "4", "Design and Environment","This module introduces "
+            "4", "Design and Environment", "This module introduces "
             +
             "the architectural history of Singapore from the pre-colonial era to the contemporary "
             +
@@ -20,54 +21,58 @@ public class ModuleDetailsTest {
             +
             "offers critical views on the role of architecture in constructing the national identity "
             +
-            "of Singapore.","Architectural History of Singapore","Architecture");
+            "of Singapore.", "Architectural History of Singapore", "Architecture");
+
+    private static final String TEST_MODULE_DETAILS_CODE = "AC5001";
+    private static final String TEST_MODULE_DETAILS_CREDIT = "4";
+    private static final String TEST_MODULE_DETAILS_FACULTY = "Design and Environment";
+    private static final String TEST_MODULE_DETAILS_DESCRIPTION = "This module introduces "
+            +
+            "the architectural history of Singapore from the pre-colonial era to the contemporary "
+            +
+            "period from an interdisciplinary perspective. It explores the social and cultural "
+            +
+            "role of architects, and to how that role has been interpreted and has evolved. It also "
+            +
+            "offers critical views on the role of architecture in constructing the national identity "
+            +
+            "of Singapore.";
+    private static final String TEST_MODULE_DETAILS_TITLE = "Architectural History of Singapore";
+    private static final String TEST_MODULE_DETAILS_DEPARTMENT = "Architecture";
 
     @Test
-    public void getModuleCode_testModuleCode_validModuleCode() {
-        ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
-        if (modules != null) {
-            assertEquals(modules.get(0).getModuleCode(), TEST_MODULE_DETAILS.getModuleCode());
-        }
+    public void getModuleCode_testModule_correctModuleCode() {
+
+        assertEquals(TEST_MODULE_DETAILS_CODE, TEST_MODULE_DETAILS.getModuleCode());
+
     }
 
     @Test
-    public void getModuleCredit_testModuleCredit_validModuleCredit() {
-        ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
-        if (modules != null) {
-            assertEquals(modules.get(0).getModuleCredit(), TEST_MODULE_DETAILS.getModuleCredit());
-        }
+    public void getModuleCredit_testModule_correctModuleCredit() {
+
+        assertEquals(TEST_MODULE_DETAILS_CREDIT, TEST_MODULE_DETAILS.getModuleCredit());
+
     }
 
     @Test
-    public void getModuleDescription_testModuleDescription_validModuleDescription() {
-        ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
-        if (modules != null) {
-            assertNotEquals(modules.get(1).getDescription(), TEST_MODULE_DETAILS.getDescription());
-        }
+    public void getModuleDescription_testModule_correctModuleDescription() {
+        assertEquals(TEST_MODULE_DETAILS_DESCRIPTION, TEST_MODULE_DETAILS.getDescription());
+
     }
 
     @Test
-    public void getModuleTitle_testModuleTitle_invalidModuleTitle() {
-        ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
-        if (modules != null) {
-            assertNotEquals(modules.get(20).getTitle(), TEST_MODULE_DETAILS.getTitle());
-        }
+    public void getModuleTitle_testModule_correctModuleTitle() {
+        assertEquals(TEST_MODULE_DETAILS_TITLE, TEST_MODULE_DETAILS.getTitle());
     }
 
     @Test
-    public void getModuleDepartment_testModuleDepartment_validModuleDepartment() {
-        ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
-        if (modules != null) {
-            assertEquals(modules.get(0).getDepartment(), TEST_MODULE_DETAILS.getDepartment());
-        }
+    public void getModuleDepartment_testModule_correctModuleDepartment() {
+        assertEquals(TEST_MODULE_DETAILS_DEPARTMENT, TEST_MODULE_DETAILS.getDepartment());
     }
 
     @Test
-    public void getModuleFaculty_testModuleFaculty_validModuleFaculty() {
-        ArrayList<ModuleDetails> modules = JsonReader.readJsonData();
-        if (modules != null) {
-            assertEquals(modules.get(0).getFaculty(), TEST_MODULE_DETAILS.getFaculty());
-        }
+    public void getModuleFaculty_testModule_correctModuleFaculty() {
+        assertEquals(TEST_MODULE_DETAILS_FACULTY, TEST_MODULE_DETAILS.getFaculty());
     }
 
 }

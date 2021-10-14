@@ -30,7 +30,6 @@ public class Kolinux {
         try {
             storage.initStorage();
             kolinuxLogger.initLogger();
-            ModuleDb.initModuleDb();
             planner.initPlanner();
             Timetable.initTimetable();
         } catch (KolinuxException exception) {

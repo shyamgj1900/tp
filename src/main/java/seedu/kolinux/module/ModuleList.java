@@ -6,7 +6,19 @@ import java.util.ArrayList;
  * ModuleList class contains and facilitate operations on the myModules list.
  */
 public class ModuleList {
-    private static ArrayList<ModuleDetails> myModules = new ArrayList<>();
+    private ArrayList<ModuleDetails> myModules = new ArrayList<>();
+
+    public ArrayList<ModuleDetails> getMyModules() {
+        return myModules;
+    }
+
+    public int getMyModulesSize() {
+        return myModules.size();
+    }
+
+    public void clear() {
+        myModules.clear();
+    }
 
     /**
      * Stores the moduleDetails corresponding to a given module code in the myModules list.
@@ -15,8 +27,8 @@ public class ModuleList {
      * @return Returns an acknowledgement message if store is successful. Returns an error message if the code is
      *      invalid, or if it already exists in the list
      */
-    public static String storeModuleByCode(String code) {
-        ModuleDetails mod = ModuleDb.getModuleInfo(code);
+    public String storeModuleByCode(String code, ModuleDb moduleDb) {
+        ModuleDetails mod = moduleDb.getModuleInfo(code);
 
         if (mod == null) {
             return "Please enter a valid module code";
@@ -36,7 +48,7 @@ public class ModuleList {
      * @return Returns an acknowledgement message if deletion is successful. Returns an error message if the code is
      *      invalid, or if it is not found in the list
      */
-    public static String deleteModuleByCode(String code) {
+    public String deleteModuleByCode(String code) {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
                 myModules.remove(i);
