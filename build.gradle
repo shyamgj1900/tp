@@ -30,7 +30,7 @@ test {
 }
 
 application {
-    mainClassName = "seedu.duke.Main"
+    mainClassName = "seedu.kolinux.Main"
 }
 
 shadowJar {
