@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ModuleDbTest {
 
-    private static ModuleDb moduleDb;
-    private static final ModuleDetails TEST_MODULE = new ModuleDetails("CS2101", "4", "Computing",
+    private static final ModuleDb moduleDb = new ModuleDb();
+    private final ModuleDetails testModule = new ModuleDetails("CS2101", "4", "Computing",
             "This module aims to equip students with the skills needed to communicate technical "
                     +
                     "information to technical and nontechnical audiences, and to create comprehensible software "
@@ -28,7 +28,7 @@ class ModuleDbTest {
                     "software guides, oral presentations, software demonstrations and project blogs.",
             "Effective Communication for Computing Professionals", "Center for Engl Lang Comms");
 
-    private static final String INVALID_MODULE_CODE = "x";
+    private final String invalidModuleCode = "x";
 
 
     @BeforeAll
@@ -38,15 +38,15 @@ class ModuleDbTest {
 
     @Test
     public void getModuleInfo_validModuleCode_moduleDetails() {
-        ModuleDetails mod = moduleDb.getModuleInfo(TEST_MODULE.getModuleCode());
-        if (mod != null) {
-            assertEquals(mod.toString(), TEST_MODULE.toString());
-        }
+        ModuleDetails mod = moduleDb.getModuleInfo(testModule.getModuleCode());
+        assertEquals(mod.toString(), testModule.toString());
+
+
     }
 
     @Test
     public void getModuleInfo_invalidModuleCode_nullModuleDetails() {
-        ModuleDetails mod = moduleDb.getModuleInfo(INVALID_MODULE_CODE);
+        ModuleDetails mod = moduleDb.getModuleInfo(invalidModuleCode);
         assertNull(mod);
     }
 }

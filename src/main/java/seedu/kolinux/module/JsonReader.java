@@ -15,14 +15,14 @@ import seedu.kolinux.Main;
  */
 public class JsonReader {
 
-    public static InputStream inputStream = Main.class.getResourceAsStream("/moduleDetails.json");
+    public InputStream inputStream = Main.class.getResourceAsStream("/moduleDetails.json");
 
     /**
      * Reads module data from a JSON into an ArrayList.
      *
      * @return Returns an ArrayList of ModuleDetails objects
      */
-    public static ArrayList<ModuleDetails> readJsonData() {
+    public ArrayList<ModuleDetails> readJsonData() {
         Gson gson = new Gson();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         ArrayList<ModuleDetails> modules = gson.fromJson(reader, new TypeToken<ArrayList<ModuleDetails>>() {
