@@ -18,7 +18,7 @@ public class KolinuxLogger {
      * logs messages at ALL levels to logger.log. Any class can log relevant messages if it
      * has a logger attribute with the global name.
      */
-    public static void initLogger() {
+    public void initLogger() {
 
         LogManager.getLogManager().reset();
         logger.setLevel(Level.INFO);
