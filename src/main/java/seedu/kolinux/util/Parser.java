@@ -1,19 +1,22 @@
 package seedu.kolinux.util;
 
-import seedu.kolinux.commands.CalculateCapCommand;
 import seedu.kolinux.commands.Command;
-import seedu.kolinux.commands.ExitCommand;
 import seedu.kolinux.commands.HelpCommand;
-import seedu.kolinux.commands.InvalidCommand;
-import seedu.kolinux.commands.PlannerCommand;
+import seedu.kolinux.commands.CalculateCapCommand;
 import seedu.kolinux.commands.BusRouteCommand;
-import seedu.kolinux.commands.ViewModuleInfoCommand;
 import seedu.kolinux.commands.StoreModuleCommand;
 import seedu.kolinux.commands.DeleteModuleCommand;
+import seedu.kolinux.commands.ListModulesCommand;
+import seedu.kolinux.commands.InvalidCommand;
+import seedu.kolinux.commands.PlannerCommand;
 import seedu.kolinux.commands.TimetableCommand;
+import seedu.kolinux.commands.ExitCommand;
+import seedu.kolinux.commands.ViewModuleInfoCommand;
 import seedu.kolinux.exceptions.KolinuxException;
 
-/** Represents the operations to parse information needed for the execution of a command. */
+/**
+ * Represents the operations to parse information needed for the execution of a command.
+ */
 public class Parser {
 
     private static final String COMMAND_HELP = "help";
@@ -25,6 +28,7 @@ public class Parser {
     private static final String COMMAND_PLANNER = "planner";
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_TIMETABLE = "timetable";
+    private static final String COMMAND_LIST = "list";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -72,6 +76,8 @@ public class Parser {
             return new ExitCommand();
         case COMMAND_TIMETABLE:
             return parseSubCommand(argument, COMMAND_TIMETABLE);
+        case COMMAND_LIST:
+            return new ListModulesCommand();
         default:
             return new InvalidCommand();
         }
@@ -82,7 +88,7 @@ public class Parser {
      * The rest of the input is separated into a String array using the "/" delimiter.
      * This method should only be called if the commandWord is "timetable" or "planner".
      *
-     * @param subInput User input without the command word
+     * @param subInput    User input without the command word
      * @param commandWord User commandWord
      * @return Command class according to commandWord
      */
