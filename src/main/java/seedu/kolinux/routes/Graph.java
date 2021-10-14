@@ -15,8 +15,14 @@ public class Graph {
         }
     }
 
-    public void addEdge(int v, int w) {
-        adj[v].add(w);
+    /**
+     * Forms the edge between to connected vertices.
+     *
+     * @param u start vertex
+     * @param v end vertex
+     */
+    public void addEdge(int u, int v) {
+        adj[u].add(v);
     }
 
     /**
@@ -28,6 +34,9 @@ public class Graph {
      * @return true if connected, false otherwise
      */
     public Boolean isConnected(int u, int v) {
+        if (u < 0 || v < 0) {
+            return false;
+        }
         int vertex;
         boolean[] visited = new boolean[this.ver];
         ArrayList<Integer> queue = new ArrayList<>();
