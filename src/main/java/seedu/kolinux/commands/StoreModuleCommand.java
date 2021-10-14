@@ -17,7 +17,7 @@ public class StoreModuleCommand extends Command {
 
     @Override
     public CommandResult executeCommand() {
-        String message = ModuleList.storeModuleByCode(code, moduleDb);
+        String message = moduleList.storeModuleByCode(code, moduleDb);
         logger.log(Level.INFO, "User stored module " + code + " in myModules list");
         return new CommandResult(message);
     }
