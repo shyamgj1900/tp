@@ -10,8 +10,45 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Route {
+    private String[] splitInput;
+    private String[] location;
+    private int[] vertexCodeAOne;
+    private int[] vertexCodeDOne;
+    private int[] vertexCodeDTwo;
+    private int[] vertexCodeE;
+    private int[] vertexCodeK;
+    private Graph graphAOne;
+    private Graph graphDOne;
+    private Graph graphDTwo;
+    private Graph graphE;
+    private Graph graphK;
+    private ArrayList<String> verticesAOne;
+    private ArrayList<String> verticesDOne;
+    private ArrayList<String> verticesDTwo;
+    private ArrayList<String> verticesE;
+    private ArrayList<String> verticesK;
 
-    public void readNodesFromFile(ArrayList<String> vertices, String filePath) throws IOException, KolinuxException {
+    public Route(String input) {
+        location = new String[2];
+        splitInput = input.split(" /");
+        vertexCodeAOne = new int[2];
+        vertexCodeDOne = new int[2];
+        vertexCodeDTwo = new int[2];
+        vertexCodeE = new int[2];
+        vertexCodeK = new int[2];
+        graphAOne = new Graph(13);
+        graphDOne = new Graph(13);
+        graphDTwo = new Graph(12);
+        graphE = new Graph(7);
+        graphK = new Graph(16);
+        verticesAOne = new ArrayList<>();
+        verticesDOne = new ArrayList<>();
+        verticesDTwo = new ArrayList<>();
+        verticesE = new ArrayList<>();
+        verticesK = new ArrayList<>();
+    }
+
+    private void readNodesFromFile(ArrayList<String> vertices, String filePath) throws IOException, KolinuxException {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
             if (inputStream == null) {
@@ -27,7 +64,7 @@ public class Route {
         }
     }
 
-    public void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
+    private void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
         if (vertices == null) {
             throw new KolinuxException("Route doesn't exist");
         }
@@ -35,6 +72,192 @@ public class Route {
             String[] vertex = v.split(" ");
             graph.addEdge(Integer.parseInt(vertex[0]), Integer.parseInt((vertex[1])));
         }
+    }
+
+    /**
+     * Converts the bus stop locations into bus stop numbers.
+     *
+     * @throws KolinuxException if the user command is not in the correct format
+     */
+    private void getLocations() throws KolinuxException {
+        for (int i = 0; i < 2; i++) {
+            if (splitInput.length < 3) {
+                throw new KolinuxException("Enter starting point and final destination");
+            }
+            location[i] = splitInput[i + 1];
+            vertexCodeAOne[i] = getStopNumberAOne(location[i]);
+            vertexCodeDOne[i] = getStopNumberDOne(location[i]);
+            vertexCodeDTwo[i] = getStopNumberDTwo(location[i]);
+            vertexCodeE[i] = getStopNumberE(location[i]);
+            vertexCodeK[i] = getStopNumberK(location[i]);
+            if (vertexCodeAOne[i] < 0 && vertexCodeDOne[i] < 0
+                    && vertexCodeE[i] < 0 && vertexCodeDTwo[i] < 0 && vertexCodeK[i] < 0) {
+                throw new KolinuxException(location[i].trim() + " is not a valid bus stop name");
+            }
+        }
+    }
+
+    public String checkConnections() throws KolinuxException, IOException {
+        String[] filePaths = {"/routeA1.txt", "/routeD1.txt", "/routeD2.txt", "/routeE.txt", "/routeK.txt"};
+        readNodesFromFile(verticesAOne, filePaths[0]);
+        readNodesFromFile(verticesDOne, filePaths[1]);
+        readNodesFromFile(verticesDTwo, filePaths[2]);
+        readNodesFromFile(verticesE, filePaths[3]);
+        readNodesFromFile(verticesK, filePaths[4]);
+        setRoute(verticesAOne, graphAOne);
+        setRoute(verticesDOne, graphDOne);
+        setRoute(verticesDTwo, graphDTwo);
+        setRoute(verticesE, graphE);
+        setRoute(verticesK, graphK);
+        getLocations();
+        String startLocation = location[0].trim().toUpperCase();
+        String endLocation = location[1].trim().toUpperCase();
+        ArrayList<String> busNumbers = new ArrayList<>();
+        boolean[] flag = new boolean[2];
+        flag[0] = checkDirectConnections(busNumbers);
+        if (!flag[0]) {
+            ArrayList<String> busNumberOne = new ArrayList<>();
+            ArrayList<String> busNumberTwo = new ArrayList<>();
+            ArrayList<String> midLocation = new ArrayList<>();
+            flag[1] = checkIndirectConnections(busNumberOne, busNumberTwo, midLocation);
+            if (!flag[1]) {
+                return "There are no viable bus services from " + startLocation + " to " + endLocation;
+            }
+            return "Take bus " + busNumberOne + " then change to bus " + busNumberTwo + " at " + midLocation.get(0);
+        }
+        return "Bus " + busNumbers + " goes from " + startLocation + " to " + endLocation;
+    }
+
+    /**
+     * Checks if 2 vertices are connected and gets the particular
+     * bus route.
+     *
+     * @param busNumbers buses of the connected bus stops
+     */
+    private boolean checkDirectConnections(ArrayList<String> busNumbers) {
+        boolean flag = false;
+        if (graphAOne.isConnected(vertexCodeAOne[0], vertexCodeAOne[1])) {
+            busNumbers.add("A1");
+            flag = true;
+        }
+        if (graphDOne.isConnected(vertexCodeDOne[0], vertexCodeDOne[1])) {
+            busNumbers.add("D1");
+            flag = true;
+        }
+        if (graphDTwo.isConnected(vertexCodeDTwo[0], vertexCodeDTwo[1])) {
+            busNumbers.add("D2");
+            flag = true;
+        }
+        if (graphE.isConnected(vertexCodeE[0], vertexCodeE[1])) {
+            busNumbers.add("E");
+            flag = true;
+        }
+        if (graphK.isConnected(vertexCodeK[0], vertexCodeK[1])) {
+            busNumbers.add("K");
+            flag = true;
+        }
+        return flag;
+    }
+
+    private boolean checkIndirectConnections(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        if (vertexCodeAOne[0] > 0) {
+            flag = checkIndirectAOne(busNumberOne, busNumberTwo, midLocation);
+        } else if (vertexCodeDOne[0] > 0) {
+            if (graphDOne.isConnected(vertexCodeDOne[0], getStopNumberDOne("UTOWN"))) { //need additional check because route D1 is not a loop service
+                flag = checkIndirectDOne(busNumberOne, busNumberTwo, midLocation);
+            }
+        } else if (vertexCodeDTwo[0] > 0) {
+            if (graphDTwo.isConnected(vertexCodeDTwo[0], getStopNumberDTwo("UTOWN"))) {
+                flag = checkIndirectDTwo(busNumberOne, busNumberTwo, midLocation);
+            }
+        } else if (vertexCodeE[0] > 0) {
+            flag = checkIndirectE(busNumberOne, busNumberTwo, midLocation);
+        } else if (vertexCodeK[0] > 0) {
+            if (graphK.isConnected(vertexCodeK[0], getStopNumberK("KENT VALE"))) {
+                flag = checkIndirectK(busNumberOne, busNumberTwo, midLocation);
+            }
+        }
+        return flag;
+    }
+
+    private boolean checkIndirectK (ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        busNumberOne.add("K");
+        midLocation.add("KENT VALE");
+        if (graphE.isConnected(getStopNumberE("KENT VALE"), vertexCodeE[1])) {
+            busNumberTwo.add("E");
+            flag = true;
+        }
+        return flag;
+    }
+
+    private boolean checkIndirectE (ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        busNumberOne.add("E");
+        if (vertexCodeE[0] == 6) {
+            if (graphK.isConnected(getStopNumberK("KENT VALE"), vertexCodeK[1])) {
+                midLocation.add("KENT VALE");
+                busNumberTwo.add("K");
+                flag = true;
+            }
+        } else {
+            midLocation.add("UTOWN");
+            if (graphDOne.isConnected(getStopNumberDOne("UTOWN"), vertexCodeDOne[1])) {
+                busNumberTwo.add("D1");
+                flag = true;
+            }
+            if (graphDTwo.isConnected(getStopNumberDTwo("UTOWN"), vertexCodeDTwo[1])) {
+                busNumberTwo.add("D2");
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    private boolean checkIndirectDTwo(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        busNumberOne.add("D2");
+        midLocation.add("UTOWN");
+        if (graphDOne.isConnected(getStopNumberDOne("UTOWN"), vertexCodeDOne[1])) {
+            busNumberTwo.add("D1");
+            flag = true;
+        }
+        if (graphE.isConnected(getStopNumberE("UTOWN"), vertexCodeE[1])) {
+            busNumberTwo.add("E");
+            flag = true;
+        }
+        return flag;
+    }
+
+    private boolean checkIndirectDOne(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        busNumberOne.add("D1");
+        midLocation.add("UTOWN");
+        if (graphDTwo.isConnected(getStopNumberDTwo("UTOWN"), vertexCodeDTwo[1])) {
+            busNumberTwo.add("D2");
+            flag = true;
+        }
+        if (graphE.isConnected(getStopNumberE("UTOWN"), vertexCodeE[1])) {
+            busNumberTwo.add("E");
+            flag = true;
+        }
+        return flag;
+    }
+
+    private boolean checkIndirectAOne(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        busNumberOne.add("A1");
+        midLocation.add("PGP");
+        if (graphDTwo.isConnected(getStopNumberDTwo("PGP"), vertexCodeDTwo[1])) {
+            busNumberTwo.add("D2");
+            flag = true;
+        }
+        if (graphK.isConnected(getStopNumberK("PGP"), vertexCodeK[1])) {
+            busNumberTwo.add("K");
+            flag = true;
+        }
+        return flag;
     }
 
     public int getStopNumberAOne(String command) {

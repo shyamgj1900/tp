@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BusRouteTest {
-    private String[] validStopName = {"UTown", "BIZ 2", "LT27"};
+    private String validStopName = "UTown";
     private String invalidStopName = "BusStop";
     private int[][] vertices = {{0, 1}, {1, 2}, {2, 3}, {3, 4}, {4, 2}};
 
     @Test
     public void enterStopName_checkStopName_validStopName() {
-        Route route = new Route();
-        assertEquals(7, route.getStopNumberDOne(validStopName[0]));
+        Route route = new Route(validStopName);
+        assertEquals(7, route.getStopNumberDOne(validStopName));
     }
 
     @Test
     public void enterStopName_checkStopName_invalidStopName() {
-        Route route = new Route();
+        Route route = new Route(invalidStopName);
         assertEquals(-1, route.getStopNumberDOne(invalidStopName));
     }
 
