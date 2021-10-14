@@ -15,8 +15,14 @@ public class Graph {
         }
     }
 
-    public void addEdge(int v, int w) {
-        adj[v].add(w);
+    /**
+     * Forms the edge between to connected vertices.
+     *
+     * @param u start vertex
+     * @param v end vertex
+     */
+    public void addEdge(int u, int v) {
+        adj[u].add(v);
     }
 
     /**

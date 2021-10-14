@@ -48,7 +48,16 @@ public class Route {
         verticesK = new ArrayList<>();
     }
 
-    private void readNodesFromFile(ArrayList<String> vertices, String filePath) throws IOException, KolinuxException {
+    /**
+     * Reads the contents from the file which consists of the path
+     * of the graph.
+     *
+     * @param vertices contains the nodes which connect the graph
+     * @param filePath the path of the input file
+     * @throws KolinuxException if the user command is not in the correct format
+     * @throws IOException if the there any IO errors
+     */
+    private void readNodesFromFile(ArrayList<String> vertices, String filePath) throws KolinuxException, IOException {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
             if (inputStream == null) {
@@ -64,6 +73,13 @@ public class Route {
         }
     }
 
+    /**
+     * Forms the bus route. This is done in the form of an unweighted graph.
+     *
+     * @param vertices contains the nodes which connect the graph
+     * @param graph is the graph which forms the bus route
+     * @throws KolinuxException if the user command is not in the correct format
+     */
     private void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
         if (vertices == null) {
             throw new KolinuxException("Route doesn't exist");
@@ -97,6 +113,13 @@ public class Route {
         }
     }
 
+    /**
+     * Finds if there are bus routes between the starting and end locations.
+     *
+     * @return Message which specifies if any routes are found
+     * @throws KolinuxException if the user command is not in the correct format
+     * @throws IOException if the there any IO errors
+     */
     public String checkConnections() throws KolinuxException, IOException {
         String[] filePaths = {"/routeA1.txt", "/routeD1.txt", "/routeD2.txt", "/routeE.txt", "/routeK.txt"};
         readNodesFromFile(verticesAOne, filePaths[0]);
@@ -129,10 +152,10 @@ public class Route {
     }
 
     /**
-     * Checks if 2 vertices are connected and gets the particular
-     * bus route.
+     * Checks if 2 vertices are directly connected by the same route.
      *
      * @param busNumbers buses of the connected bus stops
+     * @return true if connected, false otherwise
      */
     private boolean checkDirectConnections(ArrayList<String> busNumbers) {
         boolean flag = false;
@@ -159,6 +182,16 @@ public class Route {
         return flag;
     }
 
+    /**
+     * Checks if any 2 vertices are connected by an indirect path which
+     * requires a change of bus.
+     *
+     * @param busNumberOne bus number which connects to the intermediate bus stop
+     * @param busNumberTwo bus number which connects from the intermediate bus stop
+     *                     to the final location
+     * @param midLocation is the intermediate bus stop
+     * @return true if connected, false otherwise
+     */
     private boolean checkIndirectConnections(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
         boolean flag = false;
         if (vertexCodeAOne[0] > 0) {
@@ -181,17 +214,87 @@ public class Route {
         return flag;
     }
 
-    private boolean checkIndirectK (ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+    /**
+     * Checks for indirect route in bus route A1
+     *
+     * @param busNumberOne bus number which connects to the intermediate bus stop
+     * @param busNumberTwo bus number which connects from the intermediate bus stop
+     *                     to the final location
+     * @param midLocation is the intermediate bus stop
+     * @return true if connected, false otherwise
+     */
+    private boolean checkIndirectAOne(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
         boolean flag = false;
-        busNumberOne.add("K");
-        midLocation.add("KENT VALE");
-        if (graphE.isConnected(getStopNumberE("KENT VALE"), vertexCodeE[1])) {
+        busNumberOne.add("A1");
+        midLocation.add("PGP");
+        if (graphDTwo.isConnected(getStopNumberDTwo("PGP"), vertexCodeDTwo[1])) {
+            busNumberTwo.add("D2");
+            flag = true;
+        }
+        if (graphK.isConnected(getStopNumberK("PGP"), vertexCodeK[1])) {
+            busNumberTwo.add("K");
+            flag = true;
+        }
+        return flag;
+    }
+
+    /**
+     * Checks for indirect route in bus route D1
+     *
+     * @param busNumberOne bus number which connects to the intermediate bus stop
+     * @param busNumberTwo bus number which connects from the intermediate bus stop
+     *                     to the final location
+     * @param midLocation is the intermediate bus stop
+     * @return true if connected, false otherwise
+     */
+    private boolean checkIndirectDOne(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        busNumberOne.add("D1");
+        midLocation.add("UTOWN");
+        if (graphDTwo.isConnected(getStopNumberDTwo("UTOWN"), vertexCodeDTwo[1])) {
+            busNumberTwo.add("D2");
+            flag = true;
+        }
+        if (graphE.isConnected(getStopNumberE("UTOWN"), vertexCodeE[1])) {
             busNumberTwo.add("E");
             flag = true;
         }
         return flag;
     }
 
+    /**
+     * Checks for indirect route in bus route D2
+     *
+     * @param busNumberOne bus number which connects to the intermediate bus stop
+     * @param busNumberTwo bus number which connects from the intermediate bus stop
+     *                     to the final location
+     * @param midLocation is the intermediate bus stop
+     * @return true if connected, false otherwise
+     */
+    private boolean checkIndirectDTwo(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+        boolean flag = false;
+        busNumberOne.add("D2");
+        midLocation.add("UTOWN");
+        if (graphDOne.isConnected(getStopNumberDOne("UTOWN"), vertexCodeDOne[1])) {
+            busNumberTwo.add("D1");
+            flag = true;
+        }
+        if (graphE.isConnected(getStopNumberE("UTOWN"), vertexCodeE[1])) {
+            busNumberTwo.add("E");
+            flag = true;
+        }
+        return flag;
+    }
+
+    /**
+     * Checks for indirect route in bus route E
+     *
+     * @param busNumberOne bus number which connects to the intermediate bus stop
+     * @param busNumberTwo bus number which connects from the intermediate bus stop
+     *                     to the final location
+     * @param midLocation is the intermediate bus stop
+     * @return true if connected, false otherwise
+     */
     private boolean checkIndirectE (ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
         boolean flag = false;
         busNumberOne.add("E");
@@ -215,52 +318,34 @@ public class Route {
         return flag;
     }
 
-    private boolean checkIndirectDTwo(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
+    /**
+     * Checks for indirect route in bus route K
+     *
+     * @param busNumberOne bus number which connects to the intermediate bus stop
+     * @param busNumberTwo bus number which connects from the intermediate bus stop
+     *                     to the final location
+     * @param midLocation is the intermediate bus stop
+     * @return true if connected, false otherwise
+     */
+    private boolean checkIndirectK (ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
         boolean flag = false;
-        busNumberOne.add("D2");
-        midLocation.add("UTOWN");
-        if (graphDOne.isConnected(getStopNumberDOne("UTOWN"), vertexCodeDOne[1])) {
-            busNumberTwo.add("D1");
-            flag = true;
-        }
-        if (graphE.isConnected(getStopNumberE("UTOWN"), vertexCodeE[1])) {
+        busNumberOne.add("K");
+        midLocation.add("KENT VALE");
+        if (graphE.isConnected(getStopNumberE("KENT VALE"), vertexCodeE[1])) {
             busNumberTwo.add("E");
             flag = true;
         }
         return flag;
     }
 
-    private boolean checkIndirectDOne(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
-        boolean flag = false;
-        busNumberOne.add("D1");
-        midLocation.add("UTOWN");
-        if (graphDTwo.isConnected(getStopNumberDTwo("UTOWN"), vertexCodeDTwo[1])) {
-            busNumberTwo.add("D2");
-            flag = true;
-        }
-        if (graphE.isConnected(getStopNumberE("UTOWN"), vertexCodeE[1])) {
-            busNumberTwo.add("E");
-            flag = true;
-        }
-        return flag;
-    }
-
-    private boolean checkIndirectAOne(ArrayList<String> busNumberOne, ArrayList<String> busNumberTwo, ArrayList<String> midLocation) {
-        boolean flag = false;
-        busNumberOne.add("A1");
-        midLocation.add("PGP");
-        if (graphDTwo.isConnected(getStopNumberDTwo("PGP"), vertexCodeDTwo[1])) {
-            busNumberTwo.add("D2");
-            flag = true;
-        }
-        if (graphK.isConnected(getStopNumberK("PGP"), vertexCodeK[1])) {
-            busNumberTwo.add("K");
-            flag = true;
-        }
-        return flag;
-    }
-
-    public int getStopNumberAOne(String command) {
+    /**
+     * Checks the given bus stop name with the corresponding bus stop
+     * number in the graph A1 if any.
+     *
+     * @param command the bus stop name
+     * @return the corresponding bus stop number
+     */
+    private int getStopNumberAOne(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
         case "kr bus terminal":
@@ -294,6 +379,13 @@ public class Route {
         }
     }
 
+    /**
+     * Checks the given bus stop name with the corresponding bus stop
+     * number in the graph D1 if any.
+     *
+     * @param command the bus stop name
+     * @return the corresponding bus stop number
+     */
     public int getStopNumberDOne(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
@@ -328,6 +420,13 @@ public class Route {
         }
     }
 
+    /**
+     * Checks the given bus stop name with the corresponding bus stop
+     * number in the graph D2 if any.
+     *
+     * @param command the bus stop name
+     * @return the corresponding bus stop number
+     */
     public int getStopNumberDTwo(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
@@ -360,6 +459,13 @@ public class Route {
         }
     }
 
+    /**
+     * Checks the given bus stop name with the corresponding bus stop
+     * number in the graph E if any.
+     *
+     * @param command the bus stop name
+     * @return the corresponding bus stop number
+     */
     public int getStopNumberE(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
@@ -382,6 +488,13 @@ public class Route {
         }
     }
 
+    /**
+     * Checks the given bus stop name with the corresponding bus stop
+     * number in the graph K if any.
+     *
+     * @param command the bus stop name
+     * @return the corresponding bus stop number
+     */
     public int getStopNumberK(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
