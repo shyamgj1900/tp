@@ -15,7 +15,7 @@ public class BusRouteCommand extends Command {
 
     @Override
     public CommandResult executeCommand() throws KolinuxException, IOException {
-        String message = route.checkConnections();
+        String message = route.checkRoutes();
         return new CommandResult(message);
     }
 }
