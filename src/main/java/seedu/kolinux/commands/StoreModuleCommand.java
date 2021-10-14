@@ -1,5 +1,6 @@
 package seedu.kolinux.commands;
 
+import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
 
 import java.util.logging.Level;
@@ -11,7 +12,6 @@ public class StoreModuleCommand extends Command {
     private String code;
 
     public StoreModuleCommand(String argument) {
-        super();
         code = argument;
     }
 

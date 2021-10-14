@@ -11,10 +11,10 @@ public abstract class Command {
 
     protected String argument;
     protected static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    protected static ModuleDb moduleDb = new ModuleDb();
+    protected static ModuleDb moduleDb = new ModuleDb().getPreInitModuleDb();
 
     public Command() {
-        moduleDb.initModuleDb();
+
     }
 
     public Command(String argument) {

@@ -10,6 +10,17 @@ public class ModuleDb {
     private HashMap<String, ModuleDetails> moduleDetailsMap = new HashMap<>();
 
     /**
+     * Returns a pre-initialized ModuleDb object.
+     *
+     * @return Returns a ModuleDb object containing a moduleDetailsMap of all modules
+     */
+    public ModuleDb getPreInitModuleDb() {
+        ModuleDb moduleDb = new ModuleDb();
+        moduleDb.initModuleDb();
+        return moduleDb;
+    }
+
+    /**
      * Loads module information stored in a JSON file into a HashMap.
      */
     public void initModuleDb() {
