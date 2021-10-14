@@ -12,7 +12,8 @@ public class ViewModuleInfoCommand extends Command {
     private ModuleDetails module;
 
     public ViewModuleInfoCommand(String moduleCode) {
-        module = ModuleDb.getModuleInfo(moduleCode);
+        super();
+        module = moduleDb.getModuleInfo(moduleCode);
     }
 
     @Override

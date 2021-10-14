@@ -11,6 +11,7 @@ public class DeleteModuleCommand extends Command {
     private String code;
 
     public DeleteModuleCommand(String argument) {
+        super();
         code = argument;
     }
 

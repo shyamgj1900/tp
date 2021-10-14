@@ -1,6 +1,7 @@
 package seedu.kolinux.commands;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleDb;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,8 +11,10 @@ public abstract class Command {
 
     protected String argument;
     protected static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    protected static ModuleDb moduleDb = new ModuleDb();
 
     public Command() {
+        moduleDb.initModuleDb();
     }
 
     public Command(String argument) {
