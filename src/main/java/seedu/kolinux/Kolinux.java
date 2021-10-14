@@ -19,16 +19,19 @@ import java.util.Scanner;
 public class Kolinux {
 
     private Ui ui = new Ui();
+    private Storage storage = new Storage();
+    private KolinuxLogger kolinuxLogger = new KolinuxLogger();
+    private Planner planner = new Planner();
 
     /**
      * Initializes Kolinux by starting the module information internal database, logger, timetable, and planner.
      */
     private void initKolinux() {
         try {
-            Storage.initStorage();
-            KolinuxLogger.initLogger();
+            storage.initStorage();
+            kolinuxLogger.initLogger();
             ModuleDb.initModuleDb();
-            Planner.initPlanner();
+            planner.initPlanner();
             Timetable.initTimetable();
         } catch (KolinuxException exception) {
             ui.showErrorMessage(exception);

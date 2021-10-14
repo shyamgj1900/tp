@@ -15,7 +15,7 @@ public class PlannerStorage {
     /**
      * Creates a file with the name planner.txt
      */
-    private static void createFile() {
+    private void createFile() {
         try {
             file.createNewFile();
         } catch (IOException exception) {
@@ -28,7 +28,7 @@ public class PlannerStorage {
      *
      * @param eventData String to write to the file
      */
-    public static void writeFile(String eventData) {
+    public void writeFile(String eventData) {
         try {
             FileWriter writer = new FileWriter(file, true);
             writer.append(eventData + "\n");
@@ -43,7 +43,7 @@ public class PlannerStorage {
      *
      * @return Array list where each entry is a line from the file, null if the file does not exist.
      */
-    public static ArrayList<String> readFile() {
+    public ArrayList<String> readFile() {
         ArrayList<String> fileLines = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(file);
@@ -60,7 +60,7 @@ public class PlannerStorage {
     /**
      * Clears the contents of the file with the name planner.txt.
      */
-    public static void clearFile() {
+    public void clearFile() {
         try {
             FileWriter writer = new FileWriter(file);
             writer.write("");

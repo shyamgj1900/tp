@@ -11,6 +11,8 @@ import java.util.logging.Level;
 /** Represents the command that interacts with the Planner. */
 public class PlannerCommand extends Command {
 
+    private Planner planner = new Planner();
+
     private String subCommand;
     private String[] parsedArguments;
 
@@ -52,17 +54,17 @@ public class PlannerCommand extends Command {
         switch (subCommand) {
         case ADD_SUBCOMMAND:
             Event event = new Event(parsedArguments);
-            Planner.addEvent(event);
+            planner.addEvent(event);
             logger.log(Level.INFO, "User added an event to planner: " + event);
             return new CommandResult(ADD_EVENT_MESSAGE);
         case LIST_SUBCOMMAND:
             String date = processDate(parsedArguments[0]);
-            String eventList = Planner.listEvents(date);
+            String eventList = planner.listEvents(date);
             logger.log(Level.INFO, "User listed events on " + date);
             return new CommandResult(date + eventList);
         case CLEAR_SUBCOMMAND:
             // Command only for testing purposes, not known to the user.
-            Planner.clearEvents();
+            planner.clearEvents();
             return new CommandResult(CLEAR_EVENT_MESSAGE);
         default:
             logger.log(Level.INFO, "User entered an invalid sub-command of Planner");
