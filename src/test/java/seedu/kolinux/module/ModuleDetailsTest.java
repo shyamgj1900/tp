@@ -42,16 +42,12 @@ public class ModuleDetailsTest {
 
     @Test
     public void getModuleCode_testModule_correctModuleCode() {
-
         assertEquals(TEST_MODULE_DETAILS_CODE, TEST_MODULE_DETAILS.getModuleCode());
-
     }
 
     @Test
     public void getModuleCredit_testModule_correctModuleCredit() {
-
         assertEquals(TEST_MODULE_DETAILS_CREDIT, TEST_MODULE_DETAILS.getModuleCredit());
-
     }
 
     @Test

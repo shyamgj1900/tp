@@ -59,4 +59,15 @@ public class ModuleList {
         return code + " not found in the module list";
     }
 
+    /**
+     * Prints codes and titles of each module stored in the myModules list.
+     */
+    public void listMyModules() {
+        for (ModuleDetails module : myModules) {
+            String code = module.getModuleCode();
+            String title = module.getTitle();
+            System.out.println(code + " " + title);
+        }
+    }
+
 }
