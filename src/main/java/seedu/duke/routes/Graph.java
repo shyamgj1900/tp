@@ -28,6 +28,9 @@ public class Graph {
      * @return true if connected, false otherwise
      */
     public Boolean isConnected(int u, int v) {
+        if (u < 0 || v < 0) {
+            return false;
+        }
         int vertex;
         boolean[] visited = new boolean[this.ver];
         ArrayList<Integer> queue = new ArrayList<>();

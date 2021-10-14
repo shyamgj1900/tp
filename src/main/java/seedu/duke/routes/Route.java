@@ -158,4 +158,44 @@ public class Route {
             return -1;
         }
     }
+
+    public int getStopNumberK(String command) {
+        assert command != null;
+        switch (command.trim().toLowerCase()) {
+            case "pgp":
+                return 0;
+            case "kr mrt":
+                return 1;
+            case "lt27":
+                return 2;
+            case "uhall":
+                return 3;
+            case "opp uhc":
+                return 4;
+            case "yih":
+                return 5;
+            case "clb":
+                return 6;
+            case "opp sde 3":
+                return 7;
+            case "japanese pri school":
+                return 8;
+            case "kent vale":
+                return 9;
+            case "museum":
+                return 10;
+            case "uhc":
+                return 11;
+            case "opp uhall":
+                return 12;
+            case "s 17":
+                return 13;
+            case "opp kr mrt":
+                return 14;
+            case "pgpr":
+                return 15;
+            default:
+                return -1;
+        }
+    }
 }
