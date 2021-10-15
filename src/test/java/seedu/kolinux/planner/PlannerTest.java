@@ -17,12 +17,15 @@ public class PlannerTest {
             = new String[]{"Something worse", "2021-10-26", "0700"};
     private static final String[] WRONG_TIME_ORDER_ARGUMENTS
             = new String[]{"Go back in time", "2021-04-06", "2000", "1600"};
-    private static final String[] CONFLICTED_TIME_ARGUMENTS
-            = new String[]{"Do something", "2021-10-26", "1505", "1700"};
+    private static final String[][] CONFLICTED_TIME_ARGUMENTS
+            = new String[][]{{"Do something", "2021-10-26", "1505", "1700"},
+                {"Do something", "2021-10-26", "1430", "1505"},
+                {"Do something", "2021-10-26", "1400", "1600"},
+                {"Do something", "2021-10-26", "1505", "1510"}};
     private static final String VALID_LIST
             = "\n15:00 - 15:15 Pop Quiz 3";
-    private static final String DATETIME_ERROR =
-            "Please provide a valid date and time!\n"
+    private static final String DATETIME_ERROR
+            = "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
                     + "Time: hhMM";
     private static final String FORMAT_ERROR =
@@ -72,12 +75,54 @@ public class PlannerTest {
     }
 
     @Test
-    public void addEvent_conflictedTimeInput_eventNotAdded() throws KolinuxException {
+    public void addEvent_startTimeWithinAnotherEvent_eventNotAdded() throws KolinuxException {
         planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
         planner.addEvent(validEvent);
         try {
-            Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS);
+            Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[0]);
+            planner.addEvent(invalidEvent);
+        } catch (KolinuxException exception) {
+            assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
+        }
+        planner.clearEvents();
+    }
+
+    @Test
+    public void addEvent_endTimeWithinAnotherEvent_eventNotAdded() throws KolinuxException {
+        planner.clearEvents();
+        Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
+        planner.addEvent(validEvent);
+        try {
+            Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[1]);
+            planner.addEvent(invalidEvent);
+        } catch (KolinuxException exception) {
+            assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
+        }
+        planner.clearEvents();
+    }
+
+    @Test
+    public void addEvent_eventContainsAnotherEvent_eventNotAdded() throws KolinuxException {
+        planner.clearEvents();
+        Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
+        planner.addEvent(validEvent);
+        try {
+            Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[2]);
+            planner.addEvent(invalidEvent);
+        } catch (KolinuxException exception) {
+            assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
+        }
+        planner.clearEvents();
+    }
+
+    @Test
+    public void addEvent_eventWithinAnotherEvent_eventNotAdded() throws KolinuxException {
+        planner.clearEvents();
+        Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
+        planner.addEvent(validEvent);
+        try {
+            Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[3]);
             planner.addEvent(invalidEvent);
         } catch (KolinuxException exception) {
             assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
