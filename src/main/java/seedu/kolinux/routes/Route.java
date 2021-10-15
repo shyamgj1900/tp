@@ -31,12 +31,12 @@ public class Route {
     private ArrayList<String> verticesE;
     private ArrayList<String> verticesK;
 
-    private final String FILEPATH_ROUTE_A1 = "/routeA1.txt";
-    private final String FILEPATH_ROUTE_A2 = "/routeA2.txt";
-    private final String FILEPATH_ROUTE_D1 = "/routeD1.txt";
-    private final String FILEPATH_ROUTE_D2 = "/routeD2.txt";
-    private final String FILEPATH_ROUTE_E = "/routeE.txt";
-    private final String FILEPATH_ROUTE_K = "/routeK.txt";
+    private final String FILEPATH_A1 = "/routeA1.txt";
+    private final String FILEPATH_A2 = "/routeA2.txt";
+    private final String FILEPATH_D1 = "/routeD1.txt";
+    private final String FILEPATH_D2 = "/routeD2.txt";
+    private final String FILEPATH_E = "/routeE.txt";
+    private final String FILEPATH_K = "/routeK.txt";
 
     public Route(String input) {
         location = new String[2];
@@ -135,12 +135,12 @@ public class Route {
      * @throws IOException if the there any IO errors
      */
     public String checkRoutes() throws KolinuxException, IOException {
-        readNodesFromFile(verticesAOne, FILEPATH_ROUTE_A1);
-        readNodesFromFile(verticesATwo, FILEPATH_ROUTE_A2);
-        readNodesFromFile(verticesDOne, FILEPATH_ROUTE_D1);
-        readNodesFromFile(verticesDTwo, FILEPATH_ROUTE_D2);
-        readNodesFromFile(verticesE, FILEPATH_ROUTE_E);
-        readNodesFromFile(verticesK, FILEPATH_ROUTE_K);
+        readNodesFromFile(verticesAOne, FILEPATH_A1);
+        readNodesFromFile(verticesATwo, FILEPATH_A2);
+        readNodesFromFile(verticesDOne, FILEPATH_D1);
+        readNodesFromFile(verticesDTwo, FILEPATH_D2);
+        readNodesFromFile(verticesE, FILEPATH_E);
+        readNodesFromFile(verticesK, FILEPATH_K);
         setRoute(verticesAOne, graphAOne);
         setRoute(verticesATwo, graphATwo);
         setRoute(verticesDOne, graphDOne);
@@ -434,36 +434,36 @@ public class Route {
     public int getStopNumberATwo(String command) {
         assert command != null;
         switch (command.trim().toLowerCase()) {
-            case "kr bus terminal":
-                return 0;
-            case "it":
-                return 1;
-            case "opp yih":
-                return 2;
-            case "museum":
-                return 3;
-            case "uhc":
-                return 4;
-            case "opp uhall":
-                return 5;
-            case "s 17":
-                return 6;
-            case "opp kr mrt":
-                return 7;
-            case "pgpr":
-                return 8;
-            case "tcoms":
-                return 9;
-            case "opp hssml":
-                return 10;
-            case "opp nuss":
-                return 11;
-            case "com 2":
-                return 12;
-            case "ventus":
-                return 13;
-            default:
-                return -1;
+        case "kr bus terminal":
+            return 0;
+        case "it":
+            return 1;
+        case "opp yih":
+            return 2;
+        case "museum":
+            return 3;
+        case "uhc":
+            return 4;
+        case "opp uhall":
+            return 5;
+        case "s 17":
+            return 6;
+        case "opp kr mrt":
+            return 7;
+        case "pgpr":
+            return 8;
+        case "tcoms":
+            return 9;
+        case "opp hssml":
+            return 10;
+        case "opp nuss":
+            return 11;
+        case "com 2":
+            return 12;
+        case "ventus":
+            return 13;
+        default:
+            return -1;
         }
     }
 
