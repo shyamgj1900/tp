@@ -20,6 +20,7 @@ public class Planner {
             "Some of the data is corrupted, your planner will be reset...";
     private static final String TIME_CONFLICT_ERROR =
             "You already have an event ongoing for that time period, please try again with another timing.";
+    private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
     /**
      * Filters all the events in the planner by a particular date.
@@ -72,6 +73,12 @@ public class Planner {
             concatenatedString = concatenatedString.concat("\n" + string);
         }
         return concatenatedString;
+    }
+
+    private ArrayList<String> returnDataStrings() {
+        return (ArrayList<String>) scheduleOfAllDates.stream()
+                .map(event -> event.toData())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -130,6 +137,27 @@ public class Planner {
                         .collect(Collectors.toList());
         String eventsInOneString = concatenateStrings(filteredEventStrings);
         return eventsInOneString;
+    }
+
+    public String listEventsWithId(String date) {
+
+        assert Pattern.matches(DATE_PATTERN, date);
+
+        ArrayList<String> filteredEventStrings =
+                (ArrayList<String>) filterPlanner(date)
+                        .stream()
+                        .map((event) -> event.toStringWithId())
+                        .collect(Collectors.toList());
+        String eventsInOneString = concatenateStrings(filteredEventStrings);
+        return eventsInOneString;
+    }
+
+    public void deleteEvent(String id) throws KolinuxException {
+        if (scheduleOfAllDates.removeIf(event -> id.equals(event.getId()))) {
+            plannerStorage.rewriteFile(returnDataStrings());
+        } else {
+            throw new KolinuxException(INVALID_ID_ERROR);
+        }
     }
 
     /**
