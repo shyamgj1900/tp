@@ -15,7 +15,7 @@ public class CalculateCapCommand extends Command {
     
     //store calculator
     private CapCalculator calculator;
-
+    
     private boolean isNumeric(String input) {
         try {
             Integer.parseInt(input);
