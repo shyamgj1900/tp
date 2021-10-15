@@ -75,16 +75,16 @@ Adds a new event to your schedule
 Format: `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
-* `START_TIME` and `END_TIME` needs to follow the following format: `hh:MM`
+* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
 
 Example of usage:
 
-* `planner add MA1508E quiz/2021-10-10/17:00/18:00`
+* `planner add MA1508E quiz/2021-10-10/1700/1800`
 
 Expected Outcome:
 
 ```
-planner add MA1508E quiz/2021-10-10/17:00/18:00
+planner add MA1508E quiz/2021-10-10/1700/1800
 An event has been added to your schedule successfully!
 ....................................................................
 ```
