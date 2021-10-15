@@ -16,6 +16,7 @@ their activities for the day and a route finder for the NUS internal shuttle bus
   * [`planner`](#add-an-event-to-planner-planner-add)
     * [`planner add`](#add-an-event-to-planner-planner-add)
     * [`planner list`](#list-events-planner-list)
+    * [`planner delete`](#delete-an-event-from-planner-planner-delete)
   * [`bus`](#check-nus-bus-route-between-2-stops-bus)
   * [`cap`](#calculate-total-cap-cap)
   * [`view`](#view-module-details-view)
@@ -57,6 +58,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 |:-------------:	|:----------------------------------------------:	|:------------------------------------------:	     |
 | `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
+| `planner delete` 	| Delete an event on a particular date              | `planner delete DATE`                              |
 | `store_module`	| Store a module in the module list			| `store_module MODULE_CODE`			     |
 | `delete_module`	| Delete a module from the module list			| `delete_module MODULE_CODE`			     |
 | `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
@@ -75,16 +77,16 @@ Adds a new event to your schedule
 Format: `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
-* `START_TIME` and `END_TIME` needs to follow the following format: `hh:MM`
+* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
 
 Example of usage:
 
-* `planner add MA1508E quiz/2021-10-10/17:00/18:00`
+* `planner add MA1508E quiz/2021-10-10/1700/1800`
 
 Expected Outcome:
 
 ```
-planner add MA1508E quiz/2021-10-10/17:00/18:00
+planner add MA1508E quiz/2021-10-10/1700/1800
 An event has been added to your schedule successfully!
 ....................................................................
 ```
@@ -107,6 +109,36 @@ Expected Outcome:
 planner list 2021-10-10
 2021-10-10
 17:00 - 18:00 MA1508E quiz
+....................................................................
+```
+
+### Delete an event from Planner: `planner delete`
+
+Deletes an event from your schedule
+
+Format: `planner delete DATE`
+
+This command has two steps:
+1. Input the command as shown in the format above.
+2. The schedule of events on `DATE` will be displayed, find the ID of the event you wish to delete.
+3. Input the ID to delete the event.
+
+* The `DATE` needs to follow the following format: `yyyy-mm-dd`
+
+Expected Outcome:
+```
+planner delete 2021-11-05
+Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):
+07:00 - 07:30 10km run (id: 7)
+10:00 - 12:00 Attend career talk (id: 9)
+15:00 - 17:00 Watch movie (id: 1)
+9
+An event has been deleted from your schedule successfully!
+....................................................................
+planner list 2021-11-05
+2021-11-05
+07:00 - 07:30 10km run (id: 7)
+15:00 - 17:00 Watch movie (id: 1)
 ....................................................................
 ```
 
@@ -258,10 +290,11 @@ Here are the list of commands:
 5. delete_module MODULE_CODE - Delete a module from your module list
 6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
 7. planner list DATE - Lists events on a certain date
-8. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
-9. timetable clear - Remove all lessons from timetable
-10. help - View this menu again
-11. bye - Exit Kolinux
+8. planner delete DATE - Delete an event on a certain date
+9. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
+10. timetable clear - Remove all lessons from timetable
+11. help - View this menu again
+12. bye - Exit Kolinux
 ....................................................................
 ```
 
