@@ -20,6 +20,16 @@ public abstract class CapCalculator {
         }
         assert !modules.isEmpty();
     }
+    
+    protected boolean hasSuGrade(String module) throws KolinuxException {
+        String[] moduleDescriptions = module.split("/");
+        if (moduleDescriptions.length == 1) {
+            String errorMessage = "Invalid module info found: " + module;
+            throw new KolinuxException(errorMessage);
+        }
+        String grade = moduleDescriptions[1];
+        return grade.equals("S") || grade.equals("U");
+    }
 
     /**
      * Extracts modular credit from a module description.
@@ -91,6 +101,9 @@ public abstract class CapCalculator {
         int totalMc = 0;
         double cap = 0;
         for (String module : modules) {
+            if (hasSuGrade(module)) {
+                continue;
+            }
             int mc = getMc(module);
             double gradePoint = getGradePoint(module);
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);

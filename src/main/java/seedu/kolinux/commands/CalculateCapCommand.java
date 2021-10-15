@@ -39,6 +39,10 @@ public class CalculateCapCommand extends Command {
      */
     public CalculateCapCommand(String input) throws KolinuxException {
         String[] commandDescriptions = input.split(" ");
+        if (commandDescriptions.length == 1) {
+            String errorMessage = "Please enter module credits and grades in the command (eg. 4A+)";
+            throw new KolinuxException(errorMessage);
+        }
         String moduleInfoFormat = getModuleInfoFormat(commandDescriptions[1]);
         switch (moduleInfoFormat) {
         case "mc":
@@ -52,7 +56,7 @@ public class CalculateCapCommand extends Command {
             throw new KolinuxException(errorMessage);
         }
     }
-
+    
     @Override
     public CommandResult executeCommand() throws KolinuxException {
         String cap = calculator.getCap();
