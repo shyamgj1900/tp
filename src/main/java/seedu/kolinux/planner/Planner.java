@@ -46,8 +46,9 @@ public class Planner {
     private boolean hasTimeConflict(Event eventToBeAdded) {
         ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
         String startTime = eventToBeAdded.getStartTime();
+        String endTime = eventToBeAdded.getEndTime();
         for (Event event : filteredPlanner) {
-            if (startTime.compareTo(event.getStartTime()) > 0 && startTime.compareTo(event.getEndTime()) < 0) {
+            if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
                 return true;
             }
         }

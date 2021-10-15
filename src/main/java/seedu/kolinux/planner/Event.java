@@ -22,7 +22,7 @@ public class Event {
     private static final String DATETIME_ERROR =
             "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
-                    + "Time: HHmm";
+                    + "Time: hhMM";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
     private static final String FORMAT_ERROR =
