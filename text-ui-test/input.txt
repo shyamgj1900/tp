@@ -1,6 +1,6 @@
 planner clear
 help
-cap 4B+ 6A- 4B+ 2B+
+cap 4/B+ 6/A- 4/B+ 2/B+
 invalid command
 view CS2101
 view invalid_module
