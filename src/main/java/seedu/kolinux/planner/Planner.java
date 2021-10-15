@@ -15,12 +15,14 @@ public class Planner {
     private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     private static final String EMPTY_LIST_MESSAGE = "\nYou have no events planned for this date, just chill!";
     private static final String EMPTY_STRING = "";
+    private static final String NO = "n";
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of the data is corrupted, your planner will be reset...";
     private static final String TIME_CONFLICT_ERROR =
             "You already have an event ongoing for that time period, please try again with another timing.";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
+    private static final String CANCEL_DELETE_ERROR = "Delete cancelled.";
 
     /**
      * Filters all the events in the planner by a particular date.
@@ -155,6 +157,8 @@ public class Planner {
     public void deleteEvent(String id) throws KolinuxException {
         if (scheduleOfAllDates.removeIf(event -> id.equals(event.getId()))) {
             plannerStorage.rewriteFile(returnDataStrings());
+        } else if (id.trim().equalsIgnoreCase(NO)) {
+            throw new KolinuxException(CANCEL_DELETE_ERROR);
         } else {
             throw new KolinuxException(INVALID_ID_ERROR);
         }
