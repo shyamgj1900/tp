@@ -31,12 +31,12 @@ public class Route {
     private ArrayList<String> verticesE;
     private ArrayList<String> verticesK;
 
-    private final String FILEPATH_A1 = "/routeA1.txt";
-    private final String FILEPATH_A2 = "/routeA2.txt";
-    private final String FILEPATH_D1 = "/routeD1.txt";
-    private final String FILEPATH_D2 = "/routeD2.txt";
-    private final String FILEPATH_E = "/routeE.txt";
-    private final String FILEPATH_K = "/routeK.txt";
+    private static final String FILEPATH_A1 = "/routeA1.txt";
+    private static final String FILEPATH_A2 = "/routeA2.txt";
+    private static final String FILEPATH_D1 = "/routeD1.txt";
+    private static final String FILEPATH_D2 = "/routeD2.txt";
+    private static final String FILEPATH_E = "/routeE.txt";
+    private static final String FILEPATH_K = "/routeK.txt";
 
     public Route(String input) {
         location = new String[2];
