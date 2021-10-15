@@ -31,7 +31,7 @@ public class CalculateCapCommand extends Command {
     }
 
     /**
-     * Check if a module contains an S/U grade
+     * Check if a module contains an S/U grade.
      * 
      * @param module Description of module which contains modular credit and grade.
      * @return True if the module has an S/U grade, false otherwise.

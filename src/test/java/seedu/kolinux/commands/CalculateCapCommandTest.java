@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalculateCapCommandTest {
     
-    private String validCapInput = "cap 4A+ 4B- 6A- 4F 2C";
+    private String validCapInput = "cap 4/A+ 4/B- 6/A- 4/F 2/C";
     private String invalidBlankInput = "cap";
-    private String invalidCapInput = "cap 4A 4B 44C";
+    private String invalidCapInput = "cap 4/A 4/B 44/C";
     
     private String validCapOutput = "Your CAP for this semester will be 3.15 if you get your desired grades!";
     private String invalidBlankOutput = "Please enter module credits and grades in the command (eg. 4A+)";
-    private String invalidCapOutput = "Invalid module info found: 44C";
+    private String invalidCapOutput = "Invalid module info found: 44/C";
 
     @Test
     public void executeCommand_validInput_capCalculated() throws KolinuxException {
