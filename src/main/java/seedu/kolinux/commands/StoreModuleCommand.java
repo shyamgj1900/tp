@@ -1,5 +1,6 @@
 package seedu.kolinux.commands;
 
+import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
 
 import java.util.logging.Level;
@@ -16,7 +17,7 @@ public class StoreModuleCommand extends Command {
 
     @Override
     public CommandResult executeCommand() {
-        String message = ModuleList.storeModuleByCode(code);
+        String message = moduleList.storeModuleByCode(code, moduleDb);
         logger.log(Level.INFO, "User stored module " + code + " in myModules list");
         return new CommandResult(message);
     }
