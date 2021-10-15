@@ -3,7 +3,6 @@ package seedu.kolinux.capcalculator;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDb;
 
-// assume module code contains 6 chars
 public class CapCalculatorByCode extends CapCalculator {
 
     private ModuleDb moduleDb = new ModuleDb().getPreInitModuleDb();
@@ -14,7 +13,8 @@ public class CapCalculatorByCode extends CapCalculator {
 
     @Override
     protected double getGradePoint(String module) throws KolinuxException {
-        String grade = module.substring(6);
+        String[] moduleDescriptions = module.split("/");
+        String grade = moduleDescriptions[1];
         switch (grade) {
         case "A+":
         case "A":
@@ -45,7 +45,8 @@ public class CapCalculatorByCode extends CapCalculator {
     
     @Override
     protected int getMc(String module) throws KolinuxException {
-        String moduleCode = module.substring(0, 6);
+        String[] moduleDescriptions = module.split("/");
+        String moduleCode = moduleDescriptions[0];
         String moduleCredit = moduleDb.getModuleInfo(moduleCode).getModuleCredit();
         return Integer.parseInt(moduleCredit);
     }
