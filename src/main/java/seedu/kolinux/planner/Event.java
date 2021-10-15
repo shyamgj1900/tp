@@ -99,6 +99,6 @@ public class Event {
     }
 
     public String toStringWithId() {
-        return toString() + " (id: " + id + ")";
+        return this + " (id: " + id + ")";
     }
 }

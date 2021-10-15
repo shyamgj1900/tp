@@ -63,15 +63,16 @@ public class PlannerCommand extends Command {
             return new CommandResult(ADD_EVENT_MESSAGE);
         case LIST_SUBCOMMAND:
             String dateToList = processDate(parsedArguments[0]);
-            String eventList = planner.listEvents(dateToList);
+            String eventList = planner.listEvents(dateToList, false);
             logger.log(Level.INFO, "User listed events on " + dateToList);
             return new CommandResult(dateToList + eventList);
         case DELETE_SUBCOMMAND:
             String dateToDelete = processDate(parsedArguments[0]);
-            String idList = planner.listEventsWithId(dateToDelete);
+            String idList = planner.listEvents(dateToDelete, true);
             Prompt prompt = new Prompt(ENTER_ID_PROMPT + idList);
             String id = prompt.getReply();
             planner.deleteEvent(id);
+            logger.log(Level.INFO, "User deleted an event on " + dateToDelete);
             return new CommandResult("You have deleted an event on " + dateToDelete);
         case CLEAR_SUBCOMMAND:
             // Command only for testing purposes, not known to the user.

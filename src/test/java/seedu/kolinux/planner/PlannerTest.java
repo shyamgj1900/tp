@@ -40,7 +40,7 @@ public class PlannerTest {
         planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS);
         planner.addEvent(validEvent);
-        assertEquals(VALID_LIST, planner.listEvents("2021-10-26"));
+        assertEquals(VALID_LIST, planner.listEvents("2021-10-26", false));
         planner.clearEvents();
     }
 
