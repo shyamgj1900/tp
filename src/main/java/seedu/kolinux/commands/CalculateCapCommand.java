@@ -29,7 +29,14 @@ public class CalculateCapCommand extends Command {
         }
         assert !modules.isEmpty();
     }
-    
+
+    /**
+     * Check if a module contains an S/U grade
+     * 
+     * @param module Description of module which contains modular credit and grade.
+     * @return True if the module has an S/U grade, false otherwise.
+     * @throws KolinuxException When the module contains invalid module description.
+     */
     private boolean isSuGrade(String module) throws KolinuxException {
         String[] moduleDescriptions = module.split("/");
         try {
