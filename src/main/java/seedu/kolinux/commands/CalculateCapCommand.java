@@ -29,6 +29,17 @@ public class CalculateCapCommand extends Command {
         }
         assert !modules.isEmpty();
     }
+    
+    private boolean isSuGrade(String module) throws KolinuxException {
+        String[] moduleDescriptions = module.split("/");
+        try {
+            String grade = moduleDescriptions[1];
+            return grade.equals("S") || grade.equals("U");
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            String errorMessage = "Invalid module info found: " + module;
+            throw new KolinuxException(errorMessage);
+        }
+    }
 
     /**
      * Extracts modular credit from a module description.
@@ -108,6 +119,9 @@ public class CalculateCapCommand extends Command {
         int totalMc = 0;
         double cap = 0;
         for (String module : modules) {
+            if (isSuGrade(module)) {
+                continue;
+            }
             int mc = getMc(module);
             double gradePoint = getGradePoint(module);
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);
