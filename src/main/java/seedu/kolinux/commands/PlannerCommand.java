@@ -23,9 +23,10 @@ public class PlannerCommand extends Command {
     private static final String CLEAR_SUBCOMMAND = "clear";
 
     private static final String ADD_EVENT_MESSAGE = "An event has been added to your schedule successfully!";
+    private static final String DELETE_EVENT_MESSAGE = "An event has been deleted from your schedule successfully!";
     private static final String CLEAR_EVENT_MESSAGE = "All the events in your schedule has been cleared.";
     private static final String ENTER_ID_PROMPT =
-            "Please enter the ID of the event you wish to delete (Enter 'n' to this operation):";
+            "Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):";
     private static final String INVALID_ARGUMENT_MESSAGE =
             "This command is not recognised, you can try:\n"
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
@@ -73,7 +74,7 @@ public class PlannerCommand extends Command {
             String id = prompt.getReply();
             planner.deleteEvent(id);
             logger.log(Level.INFO, "User deleted an event on " + dateToDelete);
-            return new CommandResult("You have deleted an event on " + dateToDelete);
+            return new CommandResult(DELETE_EVENT_MESSAGE);
         case CLEAR_SUBCOMMAND:
             // Command only for testing purposes, not known to the user.
             planner.clearEvents();
