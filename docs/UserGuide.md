@@ -258,10 +258,11 @@ Here are the list of commands:
 5. delete_module MODULE_CODE - Delete a module from your module list
 6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
 7. planner list DATE - Lists events on a certain date
-8. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
-9. timetable clear - Remove all lessons from timetable
-10. help - View this menu again
-11. bye - Exit Kolinux
+8. planner delete DATE - Delete an event on a certain date
+9. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
+10. timetable clear - Remove all lessons from timetable
+11. help - View this menu again
+12. bye - Exit Kolinux
 ....................................................................
 ```
 
