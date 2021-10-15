@@ -3,6 +3,7 @@ package seedu.kolinux.module.timetable;
 import org.junit.jupiter.api.Test;
 
 import seedu.kolinux.exceptions.KolinuxException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.kolinux.module.timetable.Lesson.days;
 import static seedu.kolinux.module.timetable.Timetable.timetableData;
