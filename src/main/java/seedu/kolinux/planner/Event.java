@@ -20,7 +20,9 @@ public class Event {
     private LocalTime endTime;
 
     private static final String DATETIME_ERROR =
-            "Please provide a valid date and time! Format: yyyy-mm-dd";
+            "Please provide a valid date and time!\n"
+                    + "Date: yyyy-mm-dd\n"
+                    + "Time: HHmm";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
     private static final String FORMAT_ERROR =
@@ -36,8 +38,8 @@ public class Event {
         try {
             this.description = parsedArguments[0];
             this.date = LocalDate.parse(parsedArguments[1]);
-            this.startTime = LocalTime.parse(parsedArguments[2]);
-            this.endTime = LocalTime.parse(parsedArguments[3]);
+            this.startTime = LocalTime.parse(parsedArguments[2].replaceFirst("..", "$0:"));
+            this.endTime = LocalTime.parse(parsedArguments[3].replaceFirst("..", "$0:"));
 
             if (startTime.compareTo(endTime) > 0) {
                 throw new KolinuxException(TIME_ORDER_ERROR);
@@ -79,7 +81,7 @@ public class Event {
      * @return Data string
      */
     public String toData() {
-        return description + PIPE + date.toString() + PIPE + startTime.toString() + PIPE + endTime.toString();
+        return description + PIPE + date.toString() + PIPE + getStartTime() + PIPE + getEndTime();
     }
 
     public String toString() {
