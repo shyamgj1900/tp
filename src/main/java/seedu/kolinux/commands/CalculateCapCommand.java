@@ -38,8 +38,9 @@ public class CalculateCapCommand extends Command {
      * @throws KolinuxException When the module contains invalid credit.
      */
     private int getMc(String module) throws KolinuxException {
+        String[] moduleDescriptions = module.split("/");
         try {
-            return Integer.parseInt(String.valueOf(module.charAt(0)));
+            return Integer.parseInt(String.valueOf(moduleDescriptions[0]));
         } catch (NumberFormatException exception) {
             String errorMessage = "Invalid module info found: " + module;
             throw new KolinuxException(errorMessage);
@@ -54,7 +55,8 @@ public class CalculateCapCommand extends Command {
      * @throws KolinuxException When the module contains invalid grade.
      */
     private double getGradePoint(String module) throws KolinuxException {
-        String grade = module.substring(1);
+        String[] moduleDescriptions = module.split("/");
+        String grade = moduleDescriptions[1];
         switch (grade) {
         case "A+":
         case "A":
