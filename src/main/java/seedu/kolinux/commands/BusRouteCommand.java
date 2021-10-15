@@ -5,7 +5,7 @@ import seedu.kolinux.routes.Route;
 
 import java.io.IOException;
 
-/** Represent the command which interacts with the bus command. **/
+/** Represents the command which interacts with the bus command. **/
 public class BusRouteCommand extends Command {
     private Route route;
 
