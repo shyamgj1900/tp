@@ -13,7 +13,6 @@ import java.util.logging.Level;
  */
 public class CalculateCapCommand extends Command {
     
-    //store calculator
     private CapCalculator calculator;
     
     private boolean isNumeric(String input) {
@@ -38,7 +37,7 @@ public class CalculateCapCommand extends Command {
      * 
      * @param input Command input from user which contains modular credits and grades.
      */
-    public CalculateCapCommand(String input) {
+    public CalculateCapCommand(String input) throws KolinuxException {
         String[] commandDescriptions = input.split(" ");
         String moduleInfoFormat = getModuleInfoFormat(commandDescriptions[1]);
         switch (moduleInfoFormat) {
@@ -49,14 +48,13 @@ public class CalculateCapCommand extends Command {
             calculator = new CapCalculatorByCode(input);
             break;
         default:
-            //handle later
-            System.out.println("ERROR");
+            String errorMessage = "Invalid module info found";
+            throw new KolinuxException(errorMessage);
         }
     }
 
     @Override
-    public CommandResult executeCommand() throws KolinuxException {        
-        //get cap from stored calculator
+    public CommandResult executeCommand() throws KolinuxException {
         String cap = calculator.getCap();
         String capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
         logger.log(Level.INFO, "User calculated CAP");
