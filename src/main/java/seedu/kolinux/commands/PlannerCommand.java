@@ -3,6 +3,7 @@ package seedu.kolinux.commands;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.planner.Event;
 import seedu.kolinux.planner.Planner;
+import seedu.kolinux.util.Prompt;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -18,10 +19,14 @@ public class PlannerCommand extends Command {
 
     private static final String ADD_SUBCOMMAND = "add";
     private static final String LIST_SUBCOMMAND = "list";
+    private static final String DELETE_SUBCOMMAND = "delete";
     private static final String CLEAR_SUBCOMMAND = "clear";
 
     private static final String ADD_EVENT_MESSAGE = "An event has been added to your schedule successfully!";
+    private static final String DELETE_EVENT_MESSAGE = "An event has been deleted from your schedule successfully!";
     private static final String CLEAR_EVENT_MESSAGE = "All the events in your schedule has been cleared.";
+    private static final String ENTER_ID_PROMPT =
+            "Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):";
     private static final String INVALID_ARGUMENT_MESSAGE =
             "This command is not recognised, you can try:\n"
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
@@ -58,10 +63,18 @@ public class PlannerCommand extends Command {
             logger.log(Level.INFO, "User added an event to planner: " + event);
             return new CommandResult(ADD_EVENT_MESSAGE);
         case LIST_SUBCOMMAND:
-            String date = processDate(parsedArguments[0]);
-            String eventList = planner.listEvents(date);
-            logger.log(Level.INFO, "User listed events on " + date);
-            return new CommandResult(date + eventList);
+            String dateToList = processDate(parsedArguments[0]);
+            String eventList = planner.listEvents(dateToList, false);
+            logger.log(Level.INFO, "User listed events on " + dateToList);
+            return new CommandResult(dateToList + eventList);
+        case DELETE_SUBCOMMAND:
+            String dateToDelete = processDate(parsedArguments[0]);
+            String idList = planner.listEvents(dateToDelete, true);
+            Prompt prompt = new Prompt(ENTER_ID_PROMPT + idList);
+            String id = prompt.getReply();
+            planner.deleteEvent(id);
+            logger.log(Level.INFO, "User deleted an event on " + dateToDelete);
+            return new CommandResult(DELETE_EVENT_MESSAGE);
         case CLEAR_SUBCOMMAND:
             // Command only for testing purposes, not known to the user.
             planner.clearEvents();
