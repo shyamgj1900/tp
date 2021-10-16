@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import static seedu.kolinux.module.timetable.Timetable.filePath;
 import static seedu.kolinux.module.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.module.timetable.Timetable.CORRUPT_STORAGE;
-import static seedu.kolinux.module.timetable.Timetable.addToTimetable;
 
 /** Represents the methods to interact with timetable text file. */
 public class TimetableStorage {
@@ -36,9 +35,6 @@ public class TimetableStorage {
                     Timetable.addLesson(new Lab(content));
                 }
             }
-//            for (Lesson lesson : lessons) {
-//                addToTimetable(lesson);
-//            }
         } catch (KolinuxException exception) {
             clearFile();
             throw new KolinuxException(CORRUPT_STORAGE);

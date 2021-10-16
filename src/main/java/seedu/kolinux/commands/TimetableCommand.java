@@ -13,14 +13,14 @@ public class TimetableCommand extends Command {
 
     private String subCommand;
     private String[] parsedArguments;
-    private final String INVALID_TIMETABLE_ARGUMENT = "Ensure command has one of the following formats:\n"
+    public static final String INVALID_TIMETABLE_ARGUMENT = "Ensure command has one of the following formats:\n"
             +
             "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
             +
             "2. timetable view\n"
             +
             "3. timetable clear";
-    private final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
+    public static final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
             +
             "timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
             +

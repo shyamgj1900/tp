@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * ModuleList class contains and facilitate operations on the myModules list.
  */
 public class ModuleList {
-    private final String HORIZONTAL_LINE = "....................................................................";
+    public static final String HORIZONTAL_LINE = "....................................................................";
     private ArrayList<ModuleDetails> myModules = new ArrayList<>();
 
     public ArrayList<ModuleDetails> getMyModules() {
@@ -68,23 +68,23 @@ public class ModuleList {
             String code = module.getModuleCode();
             String title = module.getTitle();
             double lectureHours = module.getLectureHours();
-            double tutorialHours = module.getTutorialHours();
-            double labHours = module.getLabHours();
-            double projectHours = module.getProjectHours();
-            double preparationHours = module.getPreparationHours();
             System.out.println(code + " " + title + "\n\nWorkload:");
             if (lectureHours != 0) {
                 System.out.println("Lecture: " + lectureHours + " hours");
             }
+            double tutorialHours = module.getTutorialHours();
             if (tutorialHours != 0) {
                 System.out.println("Tutorial: " + tutorialHours + " hours");
             }
+            double labHours = module.getLabHours();
             if (labHours != 0) {
                 System.out.println("Lab: " + labHours + " hours");
             }
+            double projectHours = module.getProjectHours();
             if (projectHours != 0) {
                 System.out.println("Project Work: " + projectHours + " hours");
             }
+            double preparationHours = module.getPreparationHours();
             if (preparationHours != 0) {
                 System.out.println("Preparation: " + preparationHours + " hours");
             }

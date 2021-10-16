@@ -15,9 +15,9 @@ import static seedu.kolinux.module.timetable.Timetable.INACCESSIBLE_PERIOD;
 
 public class TimetableTest {
 
-    private static final String[] VALID_ADD_ARGUMENTS = new String[] {"CS1010 tut", "monday", "1200", "1300"};
-    private static final String[] INVALID_ADD_TIMING = new String[] {"CS1010 tut", "monday", "1300", "1200"};
-    private static final String[] INACCESSIBLE_ADD_PERIOD = new String[] {"CS1231 tut", "monday", "1200", "1300"};
+    private static final String[] VALID_ADD_ARGUMENTS = new String[] {"TUT","CS1010", "monday", "1200", "1300"};
+    private static final String[] INVALID_ADD_TIMING = new String[] {"TUT","CS1010", "monday", "1300", "1200"};
+    private static final String[] INACCESSIBLE_ADD_PERIOD = new String[] {"TUT","CS1231", "monday", "1200", "1300"};
 
     @Test
     public void addLesson_validInput_lessonAdded() throws KolinuxException {
@@ -25,7 +25,7 @@ public class TimetableTest {
         Lesson lesson = new Lesson(VALID_ADD_ARGUMENTS);
         Timetable.addLesson(lesson);
         assertEquals(timetableData[getIndex("1200", schoolHours)][getIndex("monday", days)],
-                "CS1010 tut");
+                "CS1010 TUT");
         Timetable.clearTimetable();
     }
 
