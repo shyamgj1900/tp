@@ -2,6 +2,8 @@ package seedu.kolinux.planner;
 
 import seedu.kolinux.exceptions.KolinuxException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Pattern;
@@ -13,7 +15,6 @@ public class Planner {
     private PlannerStorage plannerStorage = new PlannerStorage();
 
     private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
-    private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
     private static final String EMPTY_STRING = "";
     private static final String NO = "n";
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
@@ -21,6 +22,8 @@ public class Planner {
             "Some of the data is corrupted, your planner will be reset...";
     private static final String TIME_CONFLICT_ERROR =
             "You already have an event ongoing for that time period, please try again with another timing.";
+    private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
+    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
     private static final String CANCEL_DELETE_ERROR = "Delete cancelled.";
 
@@ -132,9 +135,13 @@ public class Planner {
      * @throws KolinuxException If there are no events planned on the date specified
      */
     public String listEvents(String date, boolean withId) throws KolinuxException {
+        try {
+            LocalDate.parse(date);
+        } catch (DateTimeParseException exception) {
+            throw new KolinuxException(INVALID_DATE_MESSAGE);
+        }
 
         assert Pattern.matches(DATE_PATTERN, date);
-
         ArrayList<String> filteredEventStrings =
                 (ArrayList<String>) filterPlanner(date)
                         .stream()

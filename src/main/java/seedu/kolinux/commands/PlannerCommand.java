@@ -4,8 +4,6 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.planner.Event;
 import seedu.kolinux.planner.Planner;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 
 /** Represents the command that interacts with the Planner. */
@@ -30,27 +28,10 @@ public class PlannerCommand extends Command {
             "This command is not recognised, you can try:\n"
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
                     + "planner list DATE";
-    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
 
     public PlannerCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
         this.parsedArguments = parsedArguments;
-    }
-
-    /**
-     * Checks if the date follows the format yyyy-mm-dd.
-     *
-     * @param date Date
-     * @return Same date in string if it follows the format
-     * @throws KolinuxException If the date does not follow the format
-     */
-    private String processDate(String date) throws KolinuxException {
-        try {
-            LocalDate.parse(date);
-        } catch (DateTimeParseException exception) {
-            throw new KolinuxException(INVALID_DATE_MESSAGE);
-        }
-        return date;
     }
 
     @Override
@@ -62,16 +43,14 @@ public class PlannerCommand extends Command {
             logger.log(Level.INFO, "User added an event to planner: " + event);
             return new CommandResult(ADD_EVENT_MESSAGE);
         case LIST_SUBCOMMAND:
-            String dateToList = processDate(parsedArguments[0]);
-            String eventList = planner.listEvents(dateToList, false);
-            logger.log(Level.INFO, "User listed events on " + dateToList);
-            return new CommandResult(dateToList + eventList);
+            String eventList = planner.listEvents(parsedArguments[0], false);
+            logger.log(Level.INFO, "User listed events on " + parsedArguments[0]);
+            return new CommandResult(parsedArguments[0] + eventList);
         case DELETE_SUBCOMMAND:
-            String dateToDelete = processDate(parsedArguments[0]);
-            String idList = planner.listEvents(dateToDelete, true);
+            String idList = planner.listEvents(parsedArguments[0], true);
             String id = getReplyFromPrompt(ENTER_ID_PROMPT + idList);
             planner.deleteEvent(id);
-            logger.log(Level.INFO, "User deleted an event on " + dateToDelete);
+            logger.log(Level.INFO, "User deleted an event on " + parsedArguments[0]);
             return new CommandResult(DELETE_EVENT_MESSAGE);
         case CLEAR_SUBCOMMAND:
             // Command only for testing purposes, not known to the user.
