@@ -14,13 +14,18 @@ public class Event {
     private static final String PIPE_REGEX = "\\|";
     private static final String PIPE = "|";
 
+    private static int currentEventId = 0;
+
     private String description;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
+    private int id;
 
     private static final String DATETIME_ERROR =
-            "Please provide a valid date and time! Format: yyyy-mm-dd";
+            "Please provide a valid date and time!\n"
+                    + "Date: yyyy-mm-dd\n"
+                    + "Time: hhMM";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
     private static final String FORMAT_ERROR =
@@ -36,12 +41,14 @@ public class Event {
         try {
             this.description = parsedArguments[0];
             this.date = LocalDate.parse(parsedArguments[1]);
-            this.startTime = LocalTime.parse(parsedArguments[2]);
-            this.endTime = LocalTime.parse(parsedArguments[3]);
+            this.startTime = LocalTime.parse(parsedArguments[2].replaceFirst("..", "$0:"));
+            this.endTime = LocalTime.parse(parsedArguments[3].replaceFirst("..", "$0:"));
 
             if (startTime.compareTo(endTime) > 0) {
                 throw new KolinuxException(TIME_ORDER_ERROR);
             }
+            this.id = currentEventId;
+            currentEventId++;
         } catch (DateTimeParseException e) {
             throw new KolinuxException(DATETIME_ERROR);
         } catch (NullPointerException | IndexOutOfBoundsException e) {
@@ -72,6 +79,10 @@ public class Event {
         return endTime.toString().replace(COLON, EMPTY_STRING);
     }
 
+    public String getId() {
+        return Integer.toString(id);
+    }
+
     /**
      * Converts the event to a data string that is stored in planner.txt.
      * Note: This string is different from the one displayed to the user on the user interface.
@@ -79,11 +90,15 @@ public class Event {
      * @return Data string
      */
     public String toData() {
-        return description + PIPE + date.toString() + PIPE + startTime.toString() + PIPE + endTime.toString();
+        return description + PIPE + date.toString() + PIPE + getStartTime() + PIPE + getEndTime();
     }
 
     public String toString() {
         assert startTime.compareTo(endTime) <= 0;
         return startTime + " - " + endTime + " " + description;
+    }
+
+    public String toStringWithId() {
+        return this + " (id: " + id + ")";
     }
 }
