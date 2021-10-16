@@ -73,6 +73,11 @@ public class Planner {
         return concatenatedString;
     }
 
+    /**
+     * Returns a list of data strings generated from the list of events, to be used to rewrite planner.txt.
+     *
+     * @return List of data strings corresponding to all the events
+     */
     private ArrayList<String> returnDataStrings() {
         return (ArrayList<String>) scheduleOfAllDates.stream()
                 .map(event -> event.toData())

@@ -3,6 +3,7 @@ package seedu.kolinux.commands;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
+import seedu.kolinux.util.Prompt;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,6 +26,18 @@ public abstract class Command {
 
     protected boolean isEmptyArgument() {
         return argument.isEmpty();
+    }
+
+    /**
+     * Gets a reply from the user in a multi-step command. This is typically used if the program needs
+     * the users to confirm their choice or to authenticate themselves.
+     *
+     * @param question Question that will be displayed
+     * @return Answer entered by the user
+     */
+    protected String getReplyFromPrompt(String question) {
+        Prompt prompt = new Prompt(question);
+        return prompt.getReply();
     }
 
     /**

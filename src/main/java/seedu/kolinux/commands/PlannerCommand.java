@@ -3,7 +3,6 @@ package seedu.kolinux.commands;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.planner.Event;
 import seedu.kolinux.planner.Planner;
-import seedu.kolinux.util.Prompt;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -70,8 +69,7 @@ public class PlannerCommand extends Command {
         case DELETE_SUBCOMMAND:
             String dateToDelete = processDate(parsedArguments[0]);
             String idList = planner.listEvents(dateToDelete, true);
-            Prompt prompt = new Prompt(ENTER_ID_PROMPT + idList);
-            String id = prompt.getReply();
+            String id = getReplyFromPrompt(ENTER_ID_PROMPT + idList);
             planner.deleteEvent(id);
             logger.log(Level.INFO, "User deleted an event on " + dateToDelete);
             return new CommandResult(DELETE_EVENT_MESSAGE);
