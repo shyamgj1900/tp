@@ -1,6 +1,8 @@
 planner clear
 help
-cap 4/B+ 6/A- 4/B+ 2/B+
+cap mc 4/B+ 6/A- 4/B+ 2/B+
+cap code MA1511/A CS1231/S CS1010/B+ MA1508E/D
+cap code invalid_info_1 CS2113T/A+ invalid_info_2
 invalid command
 view CS2101
 view invalid_module
