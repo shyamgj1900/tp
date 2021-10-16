@@ -23,9 +23,9 @@ public class Timetable {
     public static File file = new File(filePath);
     public static final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
             +
-            "timetable add DESCRIPTION/DAY/START_TIME/END_TIME\n"
+            "timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
             +
-            "e.g. timetable add CS1010 tut/Monday/1200/1400";
+            "e.g. timetable add TUT/CS1010/Monday/1200/1400";
     public static final String INACCESSIBLE_PERIOD = "Please choose another slot as the "
             +
             "period is already occupied by another lesson";
@@ -90,7 +90,7 @@ public class Timetable {
      * @throws KolinuxException If the format of user input is incorrect
      */
     public static void addToTimetable(Lesson lesson) throws KolinuxException {
-        String description = lesson.getDescription();
+        String description = lesson.getModuleCode() + " " + lesson.getLessonType();
         int dayIndex = lesson.getDayIndex();
         int startTimeIndex = lesson.getStartTimeIndex();
         int endTimeIndex = lesson.getEndTimeIndex();

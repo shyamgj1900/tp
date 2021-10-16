@@ -28,11 +28,17 @@ public class TimetableStorage {
         try {
             for (String fileContent : fileContents) {
                 String[] content = fileContent.split("/");
-                lessons.add(new Lesson(content));
+                if (content[0].equals("TUT")) {
+                    Timetable.addLesson(new Tutorial(content));
+                } else if (content[0].equals("LEC")) {
+                    Timetable.addLesson(new Lecture(content));
+                } else if (content[0].equals("LAB")) {
+                    Timetable.addLesson(new Lab(content));
+                }
             }
-            for (Lesson lesson : lessons) {
-                addToTimetable(lesson);
-            }
+//            for (Lesson lesson : lessons) {
+//                addToTimetable(lesson);
+//            }
         } catch (KolinuxException exception) {
             clearFile();
             throw new KolinuxException(CORRUPT_STORAGE);

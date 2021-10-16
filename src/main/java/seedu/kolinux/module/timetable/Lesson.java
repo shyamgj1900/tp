@@ -7,23 +7,25 @@ import static seedu.kolinux.module.timetable.Timetable.INVALID_ADD_ARGUMENT;
 /** Lesson class which stores all the attributes of a lesson to be input into the timetable. */
 public class Lesson {
 
-    private String description;
-    private String day;
-    private String startTime;
-    private String endTime;
-    private int startTimeIndex;
-    private int endTimeIndex;
-    private int dayIndex;
+    protected String lessonType;
+    protected String moduleCode;
+    protected String day;
+    protected String startTime;
+    protected String endTime;
+    protected int startTimeIndex;
+    protected int endTimeIndex;
+    protected int dayIndex;
     public static String [] schoolHours = new String [] {"0600", "0700", "0800", "0900", "1000", "1100",
         "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100"};
     public static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
 
     public Lesson(String[] parsedArguments) throws KolinuxException {
         try {
-            this.description = parsedArguments[0];
-            this.day = parsedArguments[1].toLowerCase();
-            this.startTime = parsedArguments[2];
-            this.endTime = parsedArguments[3];
+            this.lessonType = parsedArguments[0];
+            this.moduleCode = parsedArguments[1].toUpperCase();
+            this.day = parsedArguments[2].toLowerCase();
+            this.startTime = parsedArguments[3];
+            this.endTime = parsedArguments[4];
             this.startTimeIndex = getIndex(startTime, schoolHours);
             this.endTimeIndex = getIndex(endTime, schoolHours);
             this.dayIndex = getIndex(day, days);
@@ -32,13 +34,17 @@ public class Lesson {
         }
     }
 
+    public String getLessonType() {
+        return lessonType;
+    }
+
     /**
      * Gets the description of the lesson.
      *
      * @return The description of the lesson
      */
-    public String getDescription() {
-        return description;
+    public String getModuleCode() {
+        return moduleCode;
     }
 
     /**
@@ -74,7 +80,7 @@ public class Lesson {
      * @return Formatted information about the lesson
      */
     public String getFileContent() {
-        return description + "/" + day + "/" + startTime + "/" + endTime;
+        return moduleCode + "/" + day + "/" + startTime + "/" + endTime;
     }
 
     /**
