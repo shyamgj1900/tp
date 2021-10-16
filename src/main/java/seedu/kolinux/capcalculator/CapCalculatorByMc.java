@@ -1,6 +1,8 @@
 package seedu.kolinux.capcalculator;
 
 public class CapCalculatorByMc extends CapCalculator {
+    
+    private final int MODULE_CREDIT_POSITION = 0;
 
     public CapCalculatorByMc(String input) {
         super(input);
@@ -10,10 +12,10 @@ public class CapCalculatorByMc extends CapCalculator {
     protected int getMc(String module) {
         String[] moduleDescriptions = module.split("/");
         try {
-            return Integer.parseInt(String.valueOf(moduleDescriptions[0]));
+            return Integer.parseInt(String.valueOf(moduleDescriptions[MODULE_CREDIT_POSITION]));
         } catch (NumberFormatException exception) {
             invalidModules.add(module);
-            return -1;
+            return INVALID_MC;
         }
     }
 }

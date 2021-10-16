@@ -6,6 +6,14 @@ import java.util.ArrayList;
 
 public abstract class CapCalculator {
     
+    private final int CLASSNAME_POSITION = 3;
+    private final int INFO_TYPE_POSITION = 1;
+    
+    protected final int INVALID_GRADE = -1;
+    protected final int INVALID_MC = -1;
+    
+    private final String TWO_DECIMAL_FORMAT = "%.2f";
+    
     protected ArrayList<String> modules;
     protected ArrayList<String> invalidModules;
 
@@ -25,14 +33,21 @@ public abstract class CapCalculator {
 
     protected void checkModulesNotEmpty() throws KolinuxException {
         if (modules.isEmpty()) {
-            String className = this.getClass().getName();
-            String errorMessage = "ERROR NO MODULE INFO";
-            if (className.equals("seedu.kolinux.capcalculator.CapCalculatorByCode")) {
-                errorMessage = "PUT MODULE CODE";
-            } else if (className.equals("seedu.kolinux.capcalculator.CapCalculatorByMc")) {
-                errorMessage = "PUT MC";
+            String errorMessage;
+            String className = this.getClass().getName().split("\\.")[CLASSNAME_POSITION];
+            switch (className) {
+            case "CapCalculatorByCode":
+                errorMessage = "Please enter valid module description. Example: CG2027/A+";
+                throw new KolinuxException(errorMessage);
+            case "CapCalculatorByMc":
+                errorMessage = "Please enter valid module description. Example: 4/A+";
+                throw new KolinuxException(errorMessage);
+            default:
+                // Should not reach this case
+                assert false;
+                errorMessage = "Unexpected class name found";
+                throw new KolinuxException(errorMessage);
             }
-            throw new KolinuxException(errorMessage);
         }
     }
     
@@ -42,7 +57,7 @@ public abstract class CapCalculator {
             invalidModules.add(module);
             return true;
         }
-        String grade = moduleDescriptions[1];
+        String grade = moduleDescriptions[INFO_TYPE_POSITION];
         return grade.equals("S") || grade.equals("U");
     }
 
@@ -62,7 +77,7 @@ public abstract class CapCalculator {
      */
     protected double getGradePoint(String module) {
         String[] moduleDescriptions = module.split("/");
-        String grade = moduleDescriptions[1];
+        String grade = moduleDescriptions[INFO_TYPE_POSITION];
         switch (grade) {
         case "A+":
         case "A":
@@ -87,7 +102,7 @@ public abstract class CapCalculator {
             return 0.0;
         default:
             invalidModules.add(module);
-            return -1;
+            return INVALID_GRADE;
         }
     }
 
@@ -104,7 +119,7 @@ public abstract class CapCalculator {
         return ((cap * totalMc) + (gradePoint * mc)) / (totalMc + mc);
     }
     
-    protected String getCap() throws KolinuxException {
+    protected String getCap() {
         int totalMc = 0;
         double cap = 0;
         for (String module : modules) {
@@ -117,7 +132,7 @@ public abstract class CapCalculator {
             totalMc += mc;
             assert cap <= 5.0;
         }
-        return String.format("%.2f", cap);
+        return String.format(TWO_DECIMAL_FORMAT, cap);
     }
     
     protected void checkInvalidModules() throws KolinuxException {

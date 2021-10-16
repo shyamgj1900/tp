@@ -12,6 +12,8 @@ import java.util.logging.Level;
  */
 public class CalculateCapCommand extends Command {
     
+    private final int MODULE_INFO_TYPE_POSITION = 1;
+    
     private CapCalculator calculator;
     
     /**
@@ -25,7 +27,7 @@ public class CalculateCapCommand extends Command {
             String errorMessage = "Please indicate your module description type";
             throw new KolinuxException(errorMessage);
         }
-        String moduleInfoType = commandDescriptions[1];
+        String moduleInfoType = commandDescriptions[MODULE_INFO_TYPE_POSITION];
         switch (moduleInfoType) {
         case "mc":
             calculator = new CapCalculatorByMc(input);
@@ -34,8 +36,8 @@ public class CalculateCapCommand extends Command {
             calculator = new CapCalculatorByCode(input);
             break;
         default:
-            String errorMessage = "Invalid module description type found, " +
-                    "please use either \"mc\" or \"code\" as module descriptions keyword";
+            String errorMessage = "Invalid module description type found, "
+                    + "please use either \"mc\" or \"code\" as module descriptions keyword";
             throw new KolinuxException(errorMessage);
         }
     }
