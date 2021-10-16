@@ -82,6 +82,15 @@ public class Timetable {
      * @throws KolinuxException If the format of user input is incorrect
      */
     public static void addLesson(Lesson lesson) throws KolinuxException {
+        for (Lesson storedLesson : lessonStorage) {
+            String storedCode = storedLesson.getModuleCode();
+            String storedType = storedLesson.getLessonType();
+            String lessonCode = lesson.getModuleCode();
+            String lessonType = lesson.getLessonType();
+            if (storedCode.equals(lessonCode) && storedType.equals(lessonType)) {
+                throw new KolinuxException(lessonCode + " " + lessonType + " already exists in the timetable.");
+            }
+        }
         addToTimetable(lesson);
         lessonStorage.add(lesson);
         TimetableStorage.writeToFile();
