@@ -1,10 +1,8 @@
 package seedu.kolinux.commands;
 
 import seedu.kolinux.exceptions.KolinuxException;
-import seedu.kolinux.module.timetable.Lab;
-import seedu.kolinux.module.timetable.Lecture;
 import seedu.kolinux.module.timetable.Timetable;
-import seedu.kolinux.module.timetable.Tutorial;
+
 
 import java.util.logging.Level;
 
@@ -13,8 +11,6 @@ public class TimetableCommand extends Command {
 
     private String subCommand;
     private String[] parsedArguments;
-    private String moduleCode;
-    private String lessonType;
     public static final String INVALID_TIMETABLE_ARGUMENT = "Ensure command has one of the following formats:\n"
             +
             "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
@@ -22,39 +18,21 @@ public class TimetableCommand extends Command {
             "2. timetable view\n"
             +
             "3. timetable clear";
-    public static final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
-            +
-            "timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
-            +
-            "e.g. timetable add TUT/CS1010/Monday/1200/1400";
 
     public TimetableCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
         this.parsedArguments = parsedArguments;
     }
 
-    public void inputAsLesson(String[] parsedArguments) throws KolinuxException {
-        String lessonType = parsedArguments[0].toLowerCase();
-        if (lessonType.startsWith("tut")) {
-            Timetable.addLesson(new Tutorial(parsedArguments));
-        } else if (lessonType.startsWith("lec")) {
-            Timetable.addLesson(new Lecture(parsedArguments));
-        } else if (lessonType.startsWith("lab")) {
-            Timetable.addLesson(new Lab(parsedArguments));
-        } else {
-            throw new KolinuxException(INVALID_ADD_ARGUMENT);
-        }
-    }
-
     @Override
     public CommandResult executeCommand() throws KolinuxException {
         switch (subCommand) {
         case "add":
-            inputAsLesson(parsedArguments);
+            Timetable.inputAsLesson(parsedArguments);
             logger.log(Level.INFO, "User added a module to timetable");
-            moduleCode = parsedArguments[1].toUpperCase();
-            lessonType = parsedArguments[0].toUpperCase();
-            return new CommandResult(moduleCode + " " + lessonType + " has been added to timetable");
+            return new CommandResult(parsedArguments[0].toUpperCase() + " "
+                    +
+                    parsedArguments[1].toUpperCase() + " has been added to timetable");
         case "clear":
             Timetable.clearTimetable();
             logger.log(Level.INFO, "User has cleared timetable");
@@ -64,15 +42,26 @@ public class TimetableCommand extends Command {
             logger.log(Level.INFO, "User has printed timetable");
             return new CommandResult("Timetable has been printed above");
         case "delete":
-            moduleCode = (parsedArguments[0].split(" "))[0].toUpperCase();
-            lessonType = (parsedArguments[0].split(" "))[1].toUpperCase();
-            Timetable.deleteLesson(moduleCode, lessonType);
-            logger.log(Level.INFO, "User has deleted" + moduleCode + " " + lessonType + " from the timetable.");
-            return new CommandResult(moduleCode + " " + lessonType + " has been deleted from timetable");
+            Timetable.deleteLesson(parsedArguments);
+            logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
+                    +
+                    " from the timetable.");
+            return new CommandResult(parsedArguments[0].toUpperCase()
+                    +
+                    " " + parsedArguments[1].toUpperCase() + " " + parsedArguments[2].toLowerCase()
+                    +
+                    " has been deleted from timetable");
+        case "update":
+            Timetable.updateTimetable(parsedArguments);
+            logger.log(Level.INFO, "User has updated the timetable.");
+            return new CommandResult(parsedArguments[0].toUpperCase() + " "
+                    +
+                    parsedArguments[1].toUpperCase() + " has been updated");
         default:
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
             return new CommandResult(INVALID_TIMETABLE_ARGUMENT);
         }
+
     }
 
 }

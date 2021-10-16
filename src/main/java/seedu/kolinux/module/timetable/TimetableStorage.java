@@ -27,11 +27,11 @@ public class TimetableStorage {
         try {
             for (String fileContent : fileContents) {
                 String[] content = fileContent.split("/");
-                if (content[0].equals("TUT")) {
+                if (content[1].equals("TUT")) {
                     Timetable.addLesson(new Tutorial(content));
-                } else if (content[0].equals("LEC")) {
+                } else if (content[1].equals("LEC")) {
                     Timetable.addLesson(new Lecture(content));
-                } else if (content[0].equals("LAB")) {
+                } else if (content[1].equals("LAB")) {
                     Timetable.addLesson(new Lab(content));
                 }
             }

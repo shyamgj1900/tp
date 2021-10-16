@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static seedu.kolinux.module.timetable.Lesson.getIndex;
 import static seedu.kolinux.module.timetable.Lesson.schoolHours;
+import static seedu.kolinux.module.timetable.Lesson.days;
 
 /**
  * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
@@ -22,17 +24,28 @@ public class Timetable {
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
-    public static final String INVALID_DELETE_ARGUMENT = " does not exist in timetable.\n"
+    public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable: \n"
+            +
+            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME";
+    public static final String INVALID_DELETE_FORMAT = "Please check the format of deleting from timetable: \n"
+            +
+            "timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
+            +
+            "e.g. timetable delete CS1010/TUT/Monday";
+    public static final String MISSING_LESSON_DELETE = " does not exist in timetable.\n"
             +
             "Please input valid lesson to remove.";
-    public static final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
+    public static final String INVALID_ADD_FORMAT = "Please check the format of adding to timetable: \n"
             +
             "timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
             +
-            "e.g. timetable add TUT/CS1010/Monday/1200/1400";
+            "e.g. timetable add CS1010/TUT/Monday/1200/1400";
     public static final String INACCESSIBLE_PERIOD = "Please choose another slot as the "
             +
             "period is already occupied by another lesson";
+    public static final String MISSING_LESSON_UPDATE = "Lesson does not exist in timetable.\n"
+            +
+            "Try adding lesson to timetable with: timetable add";
     public static final String CORRUPT_STORAGE = "Your timetable storage file is corrupted, "
             +
             "it will be reset and cleared";
@@ -82,15 +95,6 @@ public class Timetable {
      * @throws KolinuxException If the format of user input is incorrect
      */
     public static void addLesson(Lesson lesson) throws KolinuxException {
-        for (Lesson storedLesson : lessonStorage) {
-            String storedCode = storedLesson.getModuleCode();
-            String storedType = storedLesson.getLessonType();
-            String lessonCode = lesson.getModuleCode();
-            String lessonType = lesson.getLessonType();
-            if (storedCode.equals(lessonCode) && storedType.equals(lessonType)) {
-                throw new KolinuxException(lessonCode + " " + lessonType + " already exists in the timetable.");
-            }
-        }
         addToTimetable(lesson);
         lessonStorage.add(lesson);
         TimetableStorage.writeToFile();
@@ -107,17 +111,16 @@ public class Timetable {
         int dayIndex = lesson.getDayIndex();
         int startTimeIndex = lesson.getStartTimeIndex();
         int endTimeIndex = lesson.getEndTimeIndex();
-        if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
-            throw new KolinuxException(INVALID_ADD_ARGUMENT);
+        if (!isValidTiming(startTimeIndex, endTimeIndex, dayIndex)) {
+            throw new KolinuxException(INVALID_ADD_FORMAT);
+        }
+        if (!isPeriodFree(startTimeIndex, endTimeIndex, dayIndex)) {
+            throw new KolinuxException(INACCESSIBLE_PERIOD);
         }
         for (int i = startTimeIndex; i < endTimeIndex; i++) {
             assert dayIndex < COLUMN_SIZE;
             assert i < ROW_SIZE;
-            if (timetableData[i][dayIndex] == null) {
-                timetableData[i][dayIndex] = description;
-            } else {
-                throw new KolinuxException(INACCESSIBLE_PERIOD);
-            }
+            timetableData[i][dayIndex] = description;
         }
     }
 
@@ -191,28 +194,109 @@ public class Timetable {
         TimetableStorage.writeToFile();
     }
 
-    public static void deleteLesson(String moduleCode, String lessonType) throws KolinuxException {
+    public static void inputAsLesson(String[] parsedArguments) throws KolinuxException {
+        String lessonType = parsedArguments[1].toUpperCase();
+        if (lessonType.startsWith("TUT")) {
+            Timetable.addLesson(new Tutorial(parsedArguments));
+        } else if (lessonType.startsWith("LEC")) {
+            Timetable.addLesson(new Lecture(parsedArguments));
+        } else if (lessonType.startsWith("LAB")) {
+            Timetable.addLesson(new Lab(parsedArguments));
+        } else {
+            throw new KolinuxException(INVALID_ADD_FORMAT);
+        }
+    }
+
+    public static void deleteFromTimetable(String moduleCode, String lessonType, int dayIndex) {
         String description = moduleCode + " " + lessonType;
         for (int i = 0; i < ROW_SIZE; i++) {
-            for (int j = 0; j < COLUMN_SIZE; j++) {
-                if (Objects.equals(timetableData[i][j], description)) {
-                    timetableData[i][j] = null;
+            assert dayIndex < COLUMN_SIZE;
+            if (Objects.equals(timetableData[i][dayIndex], description)) {
+                    timetableData[i][dayIndex] = null;
+            }
+        }
+    }
+
+    public static void deleteLesson(String[] parsedArguments) throws KolinuxException {
+        try {
+            String moduleCode = parsedArguments[0].toUpperCase();//(parsedArguments[0].split(" "))[0].toUpperCase();
+            String lessonType = parsedArguments[1].toUpperCase();//(parsedArguments[0].split(" "))[1].toUpperCase();
+            String day = parsedArguments[2].toLowerCase();
+            int dayIndex = getIndex(day,days);
+            deleteFromTimetable(moduleCode, lessonType, dayIndex);
+            int removeIndex = -1;
+            for (int j = 0; j < lessonStorage.size(); j++) {
+                String typeInStorage = lessonStorage.get(j).getLessonType();
+                String codeInStorage = lessonStorage.get(j).getModuleCode();
+                String dayInStorage = lessonStorage.get(j).getDay();
+                if (typeInStorage.equals(lessonType) && codeInStorage.equals(moduleCode)
+                        && dayInStorage.equals(day)) {
+                    removeIndex = j;
                 }
             }
+            String description = moduleCode + " " + lessonType;
+            if (removeIndex != -1) {
+                lessonStorage.remove(removeIndex);
+                TimetableStorage.writeToFile();
+            } else {
+                throw new KolinuxException(description + MISSING_LESSON_DELETE);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new KolinuxException (INVALID_DELETE_FORMAT);
         }
-        int removeIndex = -1;
-        for (int j = 0; j < lessonStorage.size(); j++) {
-            String typeInStorage = lessonStorage.get(j).getLessonType();
-            String codeInStorage = lessonStorage.get(j).getModuleCode();
-            if(typeInStorage.equals(lessonType) && codeInStorage.equals(moduleCode)) {
-                removeIndex = j;
+    }
+
+    public static boolean isLessonFound(String lessonCode, String lessonType, String day) {
+        for (Lesson storedLesson : lessonStorage) {
+            String storedCode = storedLesson.getModuleCode();
+            String storedType = storedLesson.getLessonType();
+            String storedDay = storedLesson.getDay();
+            if (storedCode.equals(lessonCode) && storedType.equals(lessonType) && storedDay.equals(day)) {
+                return true;
             }
         }
-        if (removeIndex != -1) {
-            lessonStorage.remove(removeIndex);
-            TimetableStorage.writeToFile();
-        } else {
-            throw new KolinuxException(description + INVALID_DELETE_ARGUMENT);
+        return false;
+    }
+
+    public static boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) {
+        for (int i = startIndex; i < endIndex; i++) {
+            if (timetableData[i][dayIndex] != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isValidTiming(int startTimeIndex, int endTimeIndex, int dayIndex) {
+        if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void updateTimetable(String[] parsedArguments) throws KolinuxException {
+        try {
+            String moduleCode = parsedArguments[0].toUpperCase();
+            String lessonType = parsedArguments[1].toUpperCase();
+            String oldDay = parsedArguments[2].toLowerCase();
+            String newDay = parsedArguments[3].toLowerCase();
+            String startTiming = parsedArguments[4];
+            String endTiming = parsedArguments[5];
+            int startIndex = getIndex(startTiming, schoolHours);
+            int endIndex = getIndex(endTiming, schoolHours);
+            int newDayIndex = getIndex(newDay, days);
+            String[] parameters = new String[] {moduleCode, lessonType, newDay, startTiming, endTiming};
+            if (!isValidTiming(startIndex, endIndex, newDayIndex)) {
+                throw new KolinuxException(INVALID_UPDATE_FORMAT);
+            }
+            if (isLessonFound(moduleCode, lessonType, oldDay)) {
+                deleteLesson(parsedArguments);
+                inputAsLesson(parameters);
+            } else {
+                throw new KolinuxException(MISSING_LESSON_UPDATE);
+            }
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(INVALID_UPDATE_FORMAT);
         }
     }
 

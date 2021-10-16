@@ -6,11 +6,11 @@ import seedu.kolinux.exceptions.KolinuxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.kolinux.module.timetable.Lesson.days;
-import static seedu.kolinux.module.timetable.Timetable.timetableData;
 import static seedu.kolinux.module.timetable.Lesson.getIndex;
 import static seedu.kolinux.module.timetable.Lesson.schoolHours;
-import static seedu.kolinux.module.timetable.Timetable.INVALID_ADD_ARGUMENT;
 import static seedu.kolinux.module.timetable.Timetable.INACCESSIBLE_PERIOD;
+import static seedu.kolinux.module.timetable.Timetable.INVALID_ADD_FORMAT;
+import static seedu.kolinux.module.timetable.Timetable.timetableData;
 
 
 public class TimetableTest {
@@ -37,7 +37,7 @@ public class TimetableTest {
             Timetable.addLesson(lesson);
             Timetable.clearTimetable();
         } catch (KolinuxException e) {
-            assertEquals(INVALID_ADD_ARGUMENT, e.getMessage());
+            assertEquals(INVALID_ADD_FORMAT, e.getMessage());
         }
     }
 

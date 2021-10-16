@@ -2,7 +2,7 @@ package seedu.kolinux.module.timetable;
 
 import seedu.kolinux.exceptions.KolinuxException;
 
-import static seedu.kolinux.module.timetable.Timetable.INVALID_ADD_ARGUMENT;
+import static seedu.kolinux.module.timetable.Timetable.INVALID_ADD_FORMAT;
 
 /** Lesson class which stores all the attributes of a lesson to be input into the timetable. */
 public class Lesson {
@@ -21,8 +21,8 @@ public class Lesson {
 
     public Lesson(String[] parsedArguments) throws KolinuxException {
         try {
-            this.lessonType = parsedArguments[0];
-            this.moduleCode = parsedArguments[1].toUpperCase();
+            this.moduleCode = parsedArguments[0].toUpperCase();
+            this.lessonType = parsedArguments[1].toUpperCase();
             this.day = parsedArguments[2].toLowerCase();
             this.startTime = parsedArguments[3];
             this.endTime = parsedArguments[4];
@@ -30,7 +30,7 @@ public class Lesson {
             this.endTimeIndex = getIndex(endTime, schoolHours);
             this.dayIndex = getIndex(day, days);
         } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_ADD_ARGUMENT);
+            throw new KolinuxException(INVALID_ADD_FORMAT);
         }
     }
 
@@ -72,6 +72,10 @@ public class Lesson {
      */
     public int getEndTimeIndex() {
         return endTimeIndex;
+    }
+
+    public String getDay() {
+        return day;
     }
 
     /**
