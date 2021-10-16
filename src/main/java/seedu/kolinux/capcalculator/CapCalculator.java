@@ -19,6 +19,11 @@ public abstract class CapCalculator {
     protected ArrayList<String> modules;
     protected ArrayList<String> invalidModules;
 
+    /**
+     * Construct this calculator object and initialize necessary attributes to store module descriptions from user.
+     * 
+     * @param input Command input from user which contains the module descriptions.
+     */
     public CapCalculator(String input) {
         modules = new ArrayList<>();
         invalidModules = new ArrayList<>();
@@ -33,6 +38,11 @@ public abstract class CapCalculator {
         assert !modules.isEmpty();
     }
 
+    /**
+     * Check if the modules attribute in this object is empty.
+     * 
+     * @throws KolinuxException If the modules attribute is empty. Show an error message to the user.
+     */
     protected void checkModulesNotEmpty() throws KolinuxException {
         if (modules.isEmpty()) {
             String errorMessage;
@@ -52,7 +62,13 @@ public abstract class CapCalculator {
             }
         }
     }
-    
+
+    /**
+     * Check if a module has an S/U grade.
+     * 
+     * @param module The current module that is being checked.
+     * @return true if the module has an S/U grade, false otherwise.
+     */
     protected boolean containsSuGrade(String module) {
         String[] moduleDescriptions = module.split("/");
         if (moduleDescriptions.length == 1) {
@@ -115,12 +131,17 @@ public abstract class CapCalculator {
      * @param cap The previously calculated CAP.
      * @param mc The modular credit of the current module.
      * @param gradePoint The grade point of the current module to be calculated into CAP.
-     * @return The overall CAP.
+     * @return The overall CAP up to the current module.
      */
     protected double getCurrentCap(int totalMc, double cap, int mc, double gradePoint) {
         return ((cap * totalMc) + (gradePoint * mc)) / (totalMc + mc);
     }
-    
+
+    /**
+     * Calculate overall CAP based on input modules from user.
+     * 
+     * @return The overall CAP formatted to two decimal places.
+     */
     protected String getCap() {
         int totalMc = 0;
         double cap = 0;
@@ -136,7 +157,13 @@ public abstract class CapCalculator {
         }
         return String.format(TWO_DECIMAL_FORMAT, cap);
     }
-    
+
+    /**
+     * Check if this object detects any invalid input module description from user.
+     * 
+     * @throws KolinuxException When invalid module descriptions are found. Show an error message to the user
+     * containing all the invalid module descriptions.
+     */
     protected void checkInvalidModules() throws KolinuxException {
         if (!invalidModules.isEmpty()) {
             StringBuilder errorMessage = new StringBuilder("Invalid module info found: ");
@@ -148,10 +175,10 @@ public abstract class CapCalculator {
     }
 
     /**
-     * Calculate CAP based on modules stored in this command object.
+     * Calculate CAP based on modules stored in this calculator object.
      *
      * @return Overall CAP of the modules, formatted to two decimal places.
-     * @throws KolinuxException When a module description contains an invalid modular credit or grade.
+     * @throws KolinuxException When a module description contains an invalid module or grade.
      */
     public String executeCapCalculator() throws KolinuxException {
         checkModulesNotEmpty();

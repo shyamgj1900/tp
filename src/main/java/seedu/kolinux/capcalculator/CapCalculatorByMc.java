@@ -4,6 +4,11 @@ public class CapCalculatorByMc extends CapCalculator {
     
     private final int MODULE_CREDIT_POSITION = 0;
 
+    /**
+     * Construct the superclass of this object.
+     * 
+     * @param input Command input from user which contains the module descriptions.
+     */
     public CapCalculatorByMc(String input) {
         super(input);
     }

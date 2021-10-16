@@ -17,9 +17,10 @@ public class CalculateCapCommand extends Command {
     private CapCalculator calculator;
     
     /**
-     * Constructs this object and initializes array to store module information.
+     * Constructs this object and initializes a calculator based on the input keyword.
      * 
-     * @param input Command input from user which contains modular credits and grades.
+     * @param input Command input from user which contains module description type and module descriptions.
+     * @throws KolinuxException when an invalid input format is provided.
      */
     public CalculateCapCommand(String input) throws KolinuxException {
         String[] commandDescriptions = input.split(" ");

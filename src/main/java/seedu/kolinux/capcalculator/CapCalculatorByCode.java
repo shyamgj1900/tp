@@ -8,7 +8,13 @@ public class CapCalculatorByCode extends CapCalculator {
     private final int MODULE_CODE_POSITION = 0;
 
     private ModuleDb moduleDb;
-    
+
+    /**
+     * Construct the superclass of this object and initialize moduleDb in order to retrieve 
+     * module information from the database.
+     * 
+     * @param input Command input from user which contains the module descriptions.
+     */
     public CapCalculatorByCode(String input) {
         super(input);
         moduleDb = new ModuleDb().getPreInitModuleDb();
