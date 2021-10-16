@@ -132,9 +132,11 @@ public class Planner {
      * @param date Date
      * @param withId true if the list is needed to display the id of the events, false otherwise.
      * @return All the events on the date in a single concatenated string
-     * @throws KolinuxException If there are no events planned on the date specified
+     * @throws KolinuxException If the date specified is invalid or if there are no events planned
+     * on the date specified
      */
     public String listEvents(String date, boolean withId) throws KolinuxException {
+
         try {
             LocalDate.parse(date);
         } catch (DateTimeParseException exception) {
@@ -157,6 +159,7 @@ public class Planner {
         if (eventsInOneString.isEmpty()) {
             throw new KolinuxException(EMPTY_LIST_MESSAGE);
         }
+
         return eventsInOneString;
     }
 
