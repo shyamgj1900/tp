@@ -14,6 +14,8 @@ import seedu.kolinux.commands.ExitCommand;
 import seedu.kolinux.commands.ViewModuleInfoCommand;
 import seedu.kolinux.exceptions.KolinuxException;
 
+import java.util.ArrayList;
+
 /**
  * Represents the operations to parse information needed for the execution of a command.
  */
@@ -29,6 +31,7 @@ public class Parser {
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_TIMETABLE = "timetable";
     private static final String COMMAND_LIST = "list";
+    private static final String EMPTY_STRING = "";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -104,5 +107,20 @@ public class Parser {
         default:
             throw new KolinuxException("Internal error occurred, please try again.");
         }
+    }
+
+    /**
+     * Concatenates an array list of strings into a single string, starting with a newline and with newlines
+     * separating consecutive entries.
+     *
+     * @param strings List of strings to be concatenated
+     * @return Concatenated string of the list of strings
+     */
+    public static String concatenateStrings(ArrayList<String> strings) {
+        String concatenatedString = EMPTY_STRING;
+        for (String string : strings) {
+            concatenatedString = concatenatedString.concat("\n" + string);
+        }
+        return concatenatedString;
     }
 }
