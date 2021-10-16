@@ -19,8 +19,9 @@ Here are the list of commands:
 8. planner delete DATE - Delete an event on a certain date
 9. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
 10. timetable clear - Remove all lessons from timetable
-11. help - View this menu again
-12. bye - Exit Kolinux
+11. timetable view - Print the timetable on CLI
+12. help - View this menu again
+13. bye - Exit Kolinux
 ....................................................................
 Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................
@@ -79,10 +80,10 @@ You already have an event ongoing for that time period, please try again with an
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
 ....................................................................
-Lesson has been added to timetable
+CS2113 TUT has been added to timetable
 ....................................................................
-Please check the format of adding to timetable: timetable add DESCRIPTION/DAY/START_TIME/END_TIME
-e.g. timetable add CS1010 tut/Monday/1200/1400
+Please check the format of adding to timetable: timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME
+e.g. timetable add TUT/CS1010/Monday/1200/1400
 ....................................................................
 Timetable has been cleared completely
 ....................................................................

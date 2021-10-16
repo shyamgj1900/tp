@@ -4,7 +4,6 @@ import seedu.kolinux.commands.Command;
 import seedu.kolinux.commands.CommandResult;
 import seedu.kolinux.commands.ExitCommand;
 import seedu.kolinux.exceptions.KolinuxException;
-import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.timetable.Timetable;
 import seedu.kolinux.planner.Planner;
 import seedu.kolinux.util.KolinuxLogger;

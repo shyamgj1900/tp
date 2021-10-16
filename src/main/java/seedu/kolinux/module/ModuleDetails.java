@@ -11,15 +11,22 @@ public class ModuleDetails {
     private String department;
     private String moduleCredit;
     private String faculty;
+    private double[] workload;
+    private double lectureHours;
+    private double tutorialHours;
+    private double labHours;
+    private double projectHours;
+    private double preparationHours;
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
-                         String description, String title, String department) {
+                         String description, String title, String department, double[] workload) {
         this.moduleCode = moduleCode;
         this.moduleCredit = moduleCredit;
         this.faculty = faculty;
         this.description = description;
         this.title = title;
         this.department = department;
+        this.workload = workload;
 
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
@@ -46,6 +53,31 @@ public class ModuleDetails {
 
     public String getFaculty() {
         return faculty;
+    }
+
+    public double getTutorialHours() {
+        tutorialHours = workload[1];
+        return tutorialHours;
+    }
+
+    public double getLectureHours() {
+        lectureHours = workload[0];
+        return lectureHours;
+    }
+
+    public double getLabHours() {
+        labHours = workload[2];
+        return labHours;
+    }
+
+    public double getProjectHours() {
+        projectHours = workload[3];
+        return projectHours;
+    }
+
+    public double getPreparationHours() {
+        preparationHours = workload[4];
+        return preparationHours;
     }
 
     /**
