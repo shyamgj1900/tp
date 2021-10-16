@@ -25,7 +25,8 @@ public class CalculateCapCommand extends Command {
     }
     
     private String getModuleInfoFormat(String moduleInfo) {
-        if (isNumeric(moduleInfo.substring(0, 1))) {
+        String[] moduleDescriptions = moduleInfo.split("/");
+        if (isNumeric(moduleDescriptions[0])) {
             return "mc";
         } else {
             return "code";
@@ -43,6 +44,7 @@ public class CalculateCapCommand extends Command {
             String errorMessage = "Please enter module credits and grades in the command (eg. 4A+)";
             throw new KolinuxException(errorMessage);
         }
+        // need better format checker
         String moduleInfoFormat = getModuleInfoFormat(commandDescriptions[1]);
         switch (moduleInfoFormat) {
         case "mc":

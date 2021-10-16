@@ -19,8 +19,10 @@ public class CapCalculatorByCode extends CapCalculator {
         String moduleCode = moduleDescriptions[0];
         ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
         if (moduleInfo == null) {
-            String errorMessage = "Invalid module info found: " + module;
-            throw new KolinuxException(errorMessage);
+            /*String errorMessage = "Invalid module info found: " + module;
+            throw new KolinuxException(errorMessage);*/
+            invalidModules.add(module);
+            return -1;
         }
         String moduleCredit = moduleDb.getModuleInfo(moduleCode).getModuleCredit();
         return Integer.parseInt(moduleCredit);

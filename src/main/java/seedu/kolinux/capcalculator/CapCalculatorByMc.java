@@ -14,8 +14,10 @@ public class CapCalculatorByMc extends CapCalculator {
         try {
             return Integer.parseInt(String.valueOf(moduleDescriptions[0]));
         } catch (NumberFormatException exception) {
-            String errorMessage = "Invalid module info found: " + module;
-            throw new KolinuxException(errorMessage);
+            /*String errorMessage = "Invalid module info found: " + module;
+            throw new KolinuxException(errorMessage);*/
+            invalidModules.add(module);
+            return -1;
         }
     }
 }

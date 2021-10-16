@@ -7,9 +7,11 @@ import java.util.ArrayList;
 public abstract class CapCalculator {
     
     protected ArrayList<String> modules;
+    protected ArrayList<String> invalidModules;
 
     public CapCalculator(String input) {
         modules = new ArrayList<>();
+        invalidModules = new ArrayList<>();
         String[] commandDescriptions = input.split(" ");
         if (commandDescriptions.length == 1) {
             return;
@@ -24,8 +26,10 @@ public abstract class CapCalculator {
     protected boolean hasSuGrade(String module) throws KolinuxException {
         String[] moduleDescriptions = module.split("/");
         if (moduleDescriptions.length == 1) {
-            String errorMessage = "Invalid module info found: " + module;
-            throw new KolinuxException(errorMessage);
+            /*String errorMessage = "Invalid module info found: " + module;
+            throw new KolinuxException(errorMessage);*/
+            invalidModules.add(module);
+            return true;
         }
         String grade = moduleDescriptions[1];
         return grade.equals("S") || grade.equals("U");
@@ -73,8 +77,10 @@ public abstract class CapCalculator {
         case "F":
             return 0.0;
         default:
-            String errorMessage = "Invalid module info found: " + module;
-            throw new KolinuxException(errorMessage);
+            /*String errorMessage = "Invalid module info found: " + module;
+            throw new KolinuxException(errorMessage);*/
+            invalidModules.add(module);
+            return -1;
         }
     }
 
@@ -109,6 +115,13 @@ public abstract class CapCalculator {
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
             assert cap <= 5.0;
+        }
+        if (!invalidModules.isEmpty()) {
+            StringBuilder errorMessage = new StringBuilder("Invalid module info found: ");
+            for (String module : invalidModules) {
+                errorMessage.append(module).append(" ");
+            }
+            throw new KolinuxException(errorMessage.toString());
         }
         return String.format("%.2f", cap);
     }
