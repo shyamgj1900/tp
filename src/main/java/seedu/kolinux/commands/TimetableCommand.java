@@ -13,6 +13,8 @@ public class TimetableCommand extends Command {
 
     private String subCommand;
     private String[] parsedArguments;
+    private String moduleCode;
+    private String lessonType;
     public static final String INVALID_TIMETABLE_ARGUMENT = "Ensure command has one of the following formats:\n"
             +
             "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
@@ -50,8 +52,8 @@ public class TimetableCommand extends Command {
         case "add":
             inputAsLesson(parsedArguments);
             logger.log(Level.INFO, "User added a module to timetable");
-            String moduleCode = parsedArguments[1].toUpperCase();
-            String lessonType = parsedArguments[0].toUpperCase();
+            moduleCode = parsedArguments[1].toUpperCase();
+            lessonType = parsedArguments[0].toUpperCase();
             return new CommandResult(moduleCode + " " + lessonType + " has been added to timetable");
         case "clear":
             Timetable.clearTimetable();
@@ -61,6 +63,12 @@ public class TimetableCommand extends Command {
             Timetable.viewTimetable();
             logger.log(Level.INFO, "User has printed timetable");
             return new CommandResult("Timetable has been printed above");
+        case "delete":
+            moduleCode = (parsedArguments[0].split(" "))[0].toUpperCase();
+            lessonType = (parsedArguments[0].split(" "))[1].toUpperCase();
+            Timetable.deleteLesson(moduleCode, lessonType);
+            logger.log(Level.INFO, "User has deleted" + moduleCode + " " + lessonType + " from the timetable.");
+            return new CommandResult(moduleCode + " " + lessonType + " has been deleted from timetable");
         default:
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
             return new CommandResult(INVALID_TIMETABLE_ARGUMENT);

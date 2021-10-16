@@ -5,6 +5,7 @@ import seedu.kolinux.exceptions.KolinuxException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static seedu.kolinux.module.timetable.Lesson.schoolHours;
@@ -21,6 +22,9 @@ public class Timetable {
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
+    public static final String INVALID_DELETE_ARGUMENT = " does not exist in timetable.\n"
+            +
+            "Please input valid lesson to remove.";
     public static final String INVALID_ADD_ARGUMENT = "Please check the format of adding to timetable: "
             +
             "timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
@@ -176,6 +180,31 @@ public class Timetable {
         }
         lessonStorage.clear();
         TimetableStorage.writeToFile();
+    }
+
+    public static void deleteLesson(String moduleCode, String lessonType) throws KolinuxException {
+        String description = moduleCode + " " + lessonType;
+        for (int i = 0; i < ROW_SIZE; i++) {
+            for (int j = 0; j < COLUMN_SIZE; j++) {
+                if (Objects.equals(timetableData[i][j], description)) {
+                    timetableData[i][j] = null;
+                }
+            }
+        }
+        int removeIndex = -1;
+        for (int j = 0; j < lessonStorage.size(); j++) {
+            String typeInStorage = lessonStorage.get(j).getLessonType();
+            String codeInStorage = lessonStorage.get(j).getModuleCode();
+            if(typeInStorage.equals(lessonType) && codeInStorage.equals(moduleCode)) {
+                removeIndex = j;
+            }
+        }
+        if (removeIndex != -1) {
+            lessonStorage.remove(removeIndex);
+            TimetableStorage.writeToFile();
+        } else {
+            throw new KolinuxException(description + INVALID_DELETE_ARGUMENT);
+        }
     }
 
 }
