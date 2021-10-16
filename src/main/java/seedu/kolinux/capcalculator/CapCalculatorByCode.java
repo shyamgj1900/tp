@@ -19,7 +19,8 @@ public class CapCalculatorByCode extends CapCalculator {
         String moduleCode = moduleDescriptions[0];
         ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
         if (moduleInfo == null) {
-            throw new KolinuxException("Invalid module code found");
+            String errorMessage = "Invalid module info found: " + module;
+            throw new KolinuxException(errorMessage);
         }
         String moduleCredit = moduleDb.getModuleInfo(moduleCode).getModuleCredit();
         return Integer.parseInt(moduleCredit);
