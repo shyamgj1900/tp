@@ -31,9 +31,11 @@ public class CalculateCapCommand extends Command {
         switch (moduleInfoType) {
         case "mc":
             calculator = new CapCalculatorByMc(input);
+            logger.log(Level.INFO, "User calculate CAP using modular credit");
             break;
         case "code":
             calculator = new CapCalculatorByCode(input);
+            logger.log(Level.INFO, "User calculate CAP using module code");
             break;
         default:
             String errorMessage = "Invalid module description type found, "
@@ -46,7 +48,7 @@ public class CalculateCapCommand extends Command {
     public CommandResult executeCommand() throws KolinuxException {
         String cap = calculator.executeCapCalculator();
         String capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
-        logger.log(Level.INFO, "User calculated CAP");
+        logger.log(Level.INFO, "CAP is calculated from user's input");
         return new CommandResult(capMessage);
     }
 }
