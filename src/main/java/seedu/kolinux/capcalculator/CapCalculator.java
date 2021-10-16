@@ -36,7 +36,7 @@ public abstract class CapCalculator {
         }
     }
     
-    protected boolean hasSuGrade(String module) throws KolinuxException {
+    protected boolean hasSuGrade(String module) {
         String[] moduleDescriptions = module.split("/");
         if (moduleDescriptions.length == 1) {
             invalidModules.add(module);
@@ -51,18 +51,16 @@ public abstract class CapCalculator {
      *
      * @param module Description of module which contains modular credit and grade.
      * @return Modular credit.
-     * @throws KolinuxException When the module contains invalid credit.
      */
-    protected abstract int getMc(String module) throws KolinuxException;
+    protected abstract int getMc(String module);
 
     /**
      * Extracts grade point from a module description.
      *
      * @param module Description of module which contains modular credit and grade.
      * @return Grade point.
-     * @throws KolinuxException When the module contains invalid grade.
      */
-    protected double getGradePoint(String module) throws KolinuxException {
+    protected double getGradePoint(String module) {
         String[] moduleDescriptions = module.split("/");
         String grade = moduleDescriptions[1];
         switch (grade) {

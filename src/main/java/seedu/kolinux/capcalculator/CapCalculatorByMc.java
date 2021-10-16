@@ -1,15 +1,13 @@
 package seedu.kolinux.capcalculator;
 
-import seedu.kolinux.exceptions.KolinuxException;
-
 public class CapCalculatorByMc extends CapCalculator {
-    
+
     public CapCalculatorByMc(String input) {
         super(input);
     }
-    
+
     @Override
-    protected int getMc(String module) throws KolinuxException {
+    protected int getMc(String module) {
         String[] moduleDescriptions = module.split("/");
         try {
             return Integer.parseInt(String.valueOf(moduleDescriptions[0]));
