@@ -172,7 +172,7 @@ public class Planner {
     public void deleteEvent(String id) throws KolinuxException {
         if (scheduleOfAllDates.removeIf(event -> id.equals(event.getId()))) {
             plannerStorage.rewriteFile(returnDataStrings());
-        } else if (id.trim().equalsIgnoreCase(NO)) {
+        } else if (id.equalsIgnoreCase(NO)) {
             throw new KolinuxException(CANCEL_DELETE_ERROR);
         } else {
             throw new KolinuxException(INVALID_ID_ERROR);

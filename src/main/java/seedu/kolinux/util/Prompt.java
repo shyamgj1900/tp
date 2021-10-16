@@ -11,6 +11,6 @@ public class Prompt {
     }
 
     public String getReply() {
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 }
