@@ -4,6 +4,9 @@ import seedu.kolinux.exceptions.KolinuxException;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract representation of CAP calculator based on user input.
+ */
 public abstract class CapCalculator {
     
     private final int CLASSNAME_POSITION = 3;

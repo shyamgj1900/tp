@@ -1,5 +1,8 @@
 package seedu.kolinux.capcalculator;
 
+/**
+ * Represents CAP calculator used when the user's input module descriptions are based on modular credit.
+ */
 public class CapCalculatorByMc extends CapCalculator {
     
     private final int MODULE_CREDIT_POSITION = 0;
