@@ -31,6 +31,9 @@ public class PlannerTest {
     private static final String VALID_LIST_2
             = "\n15:00 - 15:15 Pop Quiz 3\n"
                     + "20:00 - 21:30 Pop Quiz 5";
+    private static final String VALID_LIST_3
+            = "\n15:00 - 15:15 Pop Quiz 3\n"
+                    + "15:05 - 15:10 Do something";
     private static final String DATETIME_ERROR
             = "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
@@ -40,13 +43,13 @@ public class PlannerTest {
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
     private static final String TIME_CONFLICT_ERROR =
-            "You already have an event ongoing for that time period, please try again with another timing.";
+            "You already have an event ongoing for that time period, do you still want to add? (y/n)";
 
     @Test
     public void addEvent_validEventInput_eventAdded() throws KolinuxException {
         planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS[0]);
-        planner.addEvent(validEvent);
+        planner.addEvent(validEvent, false);
         assertEquals(VALID_LIST_1, planner.listEvents("2021-10-26", false));
         planner.clearEvents();
     }
@@ -55,7 +58,7 @@ public class PlannerTest {
     public void addEvent_invalidEventDateInput_eventNotAdded() {
         try {
             Event invalidEvent = new Event(INVALID_EVENT_DATE_ARGUMENTS);
-            planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(DATETIME_ERROR, exception.getMessage());
         }
@@ -65,7 +68,7 @@ public class PlannerTest {
     public void addEvent_invalidEventFormatInput_eventNotAdded() {
         try {
             Event invalidEvent = new Event(INVALID_EVENT_FORMAT_ARGUMENTS);
-            planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(FORMAT_ERROR, exception.getMessage());
         }
@@ -75,7 +78,7 @@ public class PlannerTest {
     public void addEvent_wrongTimeOrderInput_eventNotAdded() {
         try {
             Event invalidEvent = new Event(WRONG_TIME_ORDER_ARGUMENTS);
-            planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(TIME_ORDER_ERROR, exception.getMessage());
         }
@@ -85,10 +88,10 @@ public class PlannerTest {
     public void addEvent_startTimeWithinAnotherEvent_eventNotAdded() throws KolinuxException {
         planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS[0]);
-        planner.addEvent(validEvent);
+        planner.addEvent(validEvent, false);
         try {
             Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[0]);
-            planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
         }
@@ -99,10 +102,10 @@ public class PlannerTest {
     public void addEvent_endTimeWithinAnotherEvent_eventNotAdded() throws KolinuxException {
         planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS[0]);
-        planner.addEvent(validEvent);
+        planner.addEvent(validEvent, false);
         try {
             Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[1]);
-            planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
         }
@@ -113,10 +116,10 @@ public class PlannerTest {
     public void addEvent_eventContainsAnotherEvent_eventNotAdded() throws KolinuxException {
         planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS[0]);
-        planner.addEvent(validEvent);
+        planner.addEvent(validEvent, false);
         try {
             Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[2]);
-            planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
         }
@@ -127,13 +130,24 @@ public class PlannerTest {
     public void addEvent_eventWithinAnotherEvent_eventNotAdded() throws KolinuxException {
         planner.clearEvents();
         Event validEvent = new Event(VALID_EVENT_ARGUMENTS[0]);
-        planner.addEvent(validEvent);
+        planner.addEvent(validEvent, false);
         try {
             Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[3]);
-            planner.addEvent(invalidEvent);
+            planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(TIME_CONFLICT_ERROR, exception.getMessage());
         }
+        planner.clearEvents();
+    }
+
+    @Test
+    public void addEvent_eventWithinAnotherEventButAllowConflict_eventAdded() throws KolinuxException {
+        planner.clearEvents();
+        Event validEvent = new Event(VALID_EVENT_ARGUMENTS[0]);
+        planner.addEvent(validEvent, false);
+        Event invalidEvent = new Event(CONFLICTED_TIME_ARGUMENTS[3]);
+        planner.addEvent(invalidEvent, true);
+        assertEquals(VALID_LIST_3, planner.listEvents("2021-10-26", false));
         planner.clearEvents();
     }
 
@@ -146,7 +160,7 @@ public class PlannerTest {
             if (Arrays.equals(validInput, new String[]{"Pop Quiz 4", "2021-10-26", "1530", "2000"})) {
                 idToBeDeleted = validEvent.getId();
             }
-            planner.addEvent(validEvent);
+            planner.addEvent(validEvent, false);
         }
         planner.deleteEvent(idToBeDeleted);
         assertEquals(VALID_LIST_2, planner.listEvents("2021-10-26", false));
