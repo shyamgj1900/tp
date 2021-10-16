@@ -12,6 +12,8 @@ public abstract class CapCalculator {
     protected final int INVALID_GRADE = -1;
     protected final int INVALID_MC = -1;
     
+    protected final double MAX_CAP = 5.0;
+    
     private final String TWO_DECIMAL_FORMAT = "%.2f";
     
     protected ArrayList<String> modules;
@@ -51,11 +53,11 @@ public abstract class CapCalculator {
         }
     }
     
-    protected boolean hasSuGrade(String module) {
+    protected boolean containsSuGrade(String module) {
         String[] moduleDescriptions = module.split("/");
         if (moduleDescriptions.length == 1) {
             invalidModules.add(module);
-            return true;
+            return true; // return true in order for getCap method to skip this module
         }
         String grade = moduleDescriptions[INFO_TYPE_POSITION];
         return grade.equals("S") || grade.equals("U");
@@ -123,14 +125,14 @@ public abstract class CapCalculator {
         int totalMc = 0;
         double cap = 0;
         for (String module : modules) {
-            if (hasSuGrade(module)) {
+            if (containsSuGrade(module)) {
                 continue;
             }
             int mc = getMc(module);
             double gradePoint = getGradePoint(module);
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
-            assert cap <= 5.0;
+            assert cap <= MAX_CAP;
         }
         return String.format(TWO_DECIMAL_FORMAT, cap);
     }
