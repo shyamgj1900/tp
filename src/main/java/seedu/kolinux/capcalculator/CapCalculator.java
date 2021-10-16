@@ -13,21 +13,32 @@ public abstract class CapCalculator {
         modules = new ArrayList<>();
         invalidModules = new ArrayList<>();
         String[] commandDescriptions = input.split(" ");
-        if (commandDescriptions.length == 1) {
+        if (commandDescriptions.length <= 2) {
             return;
         }
-        int moduleCount = commandDescriptions.length - 1;
+        int moduleCount = commandDescriptions.length - 2;
         for (int i = 0; i < moduleCount; i++) {
-            modules.add(commandDescriptions[i + 1]);
+            modules.add(commandDescriptions[i + 2]);
         }
         assert !modules.isEmpty();
+    }
+
+    protected void checkModulesNotEmpty() throws KolinuxException {
+        if (modules.isEmpty()) {
+            String className = this.getClass().getName();
+            String errorMessage = "ERROR NO MODULE INFO";
+            if (className.equals("seedu.kolinux.capcalculator.CapCalculatorByCode")) {
+                errorMessage = "PUT MODULE CODE";
+            } else if (className.equals("seedu.kolinux.capcalculator.CapCalculatorByMc")) {
+                errorMessage = "PUT MC";
+            }
+            throw new KolinuxException(errorMessage);
+        }
     }
     
     protected boolean hasSuGrade(String module) throws KolinuxException {
         String[] moduleDescriptions = module.split("/");
         if (moduleDescriptions.length == 1) {
-            /*String errorMessage = "Invalid module info found: " + module;
-            throw new KolinuxException(errorMessage);*/
             invalidModules.add(module);
             return true;
         }
@@ -77,8 +88,6 @@ public abstract class CapCalculator {
         case "F":
             return 0.0;
         default:
-            /*String errorMessage = "Invalid module info found: " + module;
-            throw new KolinuxException(errorMessage);*/
             invalidModules.add(module);
             return -1;
         }
@@ -96,14 +105,8 @@ public abstract class CapCalculator {
     protected double getCurrentCap(int totalMc, double cap, int mc, double gradePoint) {
         return ((cap * totalMc) + (gradePoint * mc)) / (totalMc + mc);
     }
-
-    /**
-     * Calculate CAP based on modules stored in this command object.
-     *
-     * @return Overall CAP of the modules, formatted to two decimal places.
-     * @throws KolinuxException When a module description contains an invalid modular credit or grade.
-     */
-    public String getCap() throws KolinuxException {
+    
+    protected String getCap() throws KolinuxException {
         int totalMc = 0;
         double cap = 0;
         for (String module : modules) {
@@ -116,6 +119,10 @@ public abstract class CapCalculator {
             totalMc += mc;
             assert cap <= 5.0;
         }
+        return String.format("%.2f", cap);
+    }
+    
+    protected void checkInvalidModules() throws KolinuxException {
         if (!invalidModules.isEmpty()) {
             StringBuilder errorMessage = new StringBuilder("Invalid module info found: ");
             for (String module : invalidModules) {
@@ -123,6 +130,18 @@ public abstract class CapCalculator {
             }
             throw new KolinuxException(errorMessage.toString());
         }
-        return String.format("%.2f", cap);
+    }
+
+    /**
+     * Calculate CAP based on modules stored in this command object.
+     *
+     * @return Overall CAP of the modules, formatted to two decimal places.
+     * @throws KolinuxException When a module description contains an invalid modular credit or grade.
+     */
+    public String executeCapCalculator() throws KolinuxException {
+        checkModulesNotEmpty();
+        String cap = getCap();
+        checkInvalidModules();
+        return cap;
     }
 }
