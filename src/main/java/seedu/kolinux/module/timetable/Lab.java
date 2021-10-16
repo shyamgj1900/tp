@@ -15,7 +15,7 @@ public class Lab extends Lesson {
 
     @Override
     public String getFileContent() {
-        return moduleCode + "/LAB/" + day + "/" + startTime + "/" + endTime;
+        return moduleCode + "/LAB/" + day + "/" + startTime;
     }
 
 }

@@ -28,7 +28,7 @@ public class TimetableCommand extends Command {
     public CommandResult executeCommand() throws KolinuxException {
         switch (subCommand) {
         case "add":
-            Timetable.inputAsLesson(parsedArguments);
+            Timetable.inputAsLesson(parsedArguments, moduleList);
             logger.log(Level.INFO, "User added a module to timetable");
             return new CommandResult(parsedArguments[0].toUpperCase() + " "
                     +
@@ -52,7 +52,7 @@ public class TimetableCommand extends Command {
                     +
                     " has been deleted from timetable");
         case "update":
-            Timetable.updateTimetable(parsedArguments);
+            Timetable.updateTimetable(parsedArguments, moduleList);
             logger.log(Level.INFO, "User has updated the timetable.");
             return new CommandResult(parsedArguments[0].toUpperCase() + " "
                     +

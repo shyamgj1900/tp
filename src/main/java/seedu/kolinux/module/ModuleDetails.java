@@ -5,7 +5,7 @@ package seedu.kolinux.module;
  */
 public class ModuleDetails {
 
-    private String moduleCode;
+    public String moduleCode;
     private String title;
     private String description;
     private String department;

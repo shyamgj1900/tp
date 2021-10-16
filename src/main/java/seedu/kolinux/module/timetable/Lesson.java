@@ -14,6 +14,7 @@ public class Lesson {
     protected String endTime;
     protected int startTimeIndex;
     protected int endTimeIndex;
+    protected String hours;
     protected int dayIndex;
     public static String [] schoolHours = new String [] {"0600", "0700", "0800", "0900", "1000", "1100",
         "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100"};
@@ -25,9 +26,8 @@ public class Lesson {
             this.lessonType = parsedArguments[1].toUpperCase();
             this.day = parsedArguments[2].toLowerCase();
             this.startTime = parsedArguments[3];
-            this.endTime = parsedArguments[4];
+            this.hours = parsedArguments[4];
             this.startTimeIndex = getIndex(startTime, schoolHours);
-            this.endTimeIndex = getIndex(endTime, schoolHours);
             this.dayIndex = getIndex(day, days);
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_ADD_FORMAT);
@@ -65,15 +65,6 @@ public class Lesson {
         return startTimeIndex;
     }
 
-    /**
-     * Gets the index of the ending time of the lesson in the schoolHours array.
-     *
-     * @return The index of the ending time of the lesson in the schoolHours array
-     */
-    public int getEndTimeIndex() {
-        return endTimeIndex;
-    }
-
     public String getDay() {
         return day;
     }
@@ -84,7 +75,7 @@ public class Lesson {
      * @return Formatted information about the lesson
      */
     public String getFileContent() {
-        return moduleCode + "/" + day + "/" + startTime + "/" + endTime;
+        return moduleCode + "/" + day + "/" + startTime;
     }
 
     /**
@@ -101,6 +92,10 @@ public class Lesson {
             }
         }
         return -1;
+    }
+
+    public String getHours() {
+        return hours;
     }
 
 }
