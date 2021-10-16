@@ -12,7 +12,7 @@ import java.util.logging.Level;
  */
 public class CalculateCapCommand extends Command {
     
-    private final int MODULE_INFO_TYPE_POSITION = 1;
+    private static final int MODULE_INFO_TYPE_POSITION = 1;
     
     private CapCalculator calculator;
     

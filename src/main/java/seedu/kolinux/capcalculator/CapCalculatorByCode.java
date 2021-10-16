@@ -8,7 +8,7 @@ import seedu.kolinux.module.ModuleDetails;
  */
 public class CapCalculatorByCode extends CapCalculator {
     
-    private final int MODULE_CODE_POSITION = 0;
+    private static final int MODULE_CODE_POSITION = 0;
 
     private ModuleDb moduleDb;
 

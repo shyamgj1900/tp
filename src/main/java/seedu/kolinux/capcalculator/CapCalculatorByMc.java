@@ -5,7 +5,7 @@ package seedu.kolinux.capcalculator;
  */
 public class CapCalculatorByMc extends CapCalculator {
     
-    private final int MODULE_CREDIT_POSITION = 0;
+    private static final int MODULE_CREDIT_POSITION = 0;
 
     /**
      * Construct the superclass of this object.

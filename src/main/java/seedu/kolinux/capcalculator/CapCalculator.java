@@ -9,15 +9,15 @@ import java.util.ArrayList;
  */
 public abstract class CapCalculator {
     
-    private final int CLASSNAME_POSITION = 3;
-    private final int INFO_TYPE_POSITION = 1;
+    private static final int CLASSNAME_POSITION = 3;
+    private static final int INFO_TYPE_POSITION = 1;
     
-    protected final int INVALID_GRADE = -1;
-    protected final int INVALID_MC = -1;
+    protected static final int INVALID_GRADE = -1;
+    protected static final int INVALID_MC = -1;
     
-    protected final double MAX_CAP = 5.0;
+    protected static final double MAX_CAP = 5.0;
     
-    private final String TWO_DECIMAL_FORMAT = "%.2f";
+    private static final String TWO_DECIMAL_FORMAT = "%.2f";
     
     protected ArrayList<String> modules;
     protected ArrayList<String> invalidModules;
@@ -165,7 +165,7 @@ public abstract class CapCalculator {
      * Check if this object detects any invalid input module description from user.
      * 
      * @throws KolinuxException When invalid module descriptions are found. Show an error message to the user
-     * containing all the invalid module descriptions.
+     *     containing all the invalid module descriptions.
      */
     protected void checkInvalidModules() throws KolinuxException {
         if (!invalidModules.isEmpty()) {
