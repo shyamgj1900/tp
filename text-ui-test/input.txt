@@ -21,4 +21,5 @@ planner list 2021-10-05
 store_module CS1010
 timetable add CS1010/TUT/tuesday/1000
 timetable clear
+bus /opp nuss /raffles hall
 bye
