@@ -30,7 +30,7 @@ public class Timetable {
             "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable:\n"
             +
-            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME";
+            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME";
     public static final String INVALID_DELETE_FORMAT = "Please check the format of deleting from timetable:\n"
             +
             "timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
@@ -41,7 +41,7 @@ public class Timetable {
             "Please input valid lesson to remove.";
     public static final String INVALID_ADD_FORMAT = "Please check the format of adding to timetable:\n"
             +
-            "timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME\n"
+            "timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME\n"
             +
             "e.g. timetable add CS1010/TUT/Monday/1200/1400";
     public static final String INACCESSIBLE_PERIOD = "Please choose another slot as the "
