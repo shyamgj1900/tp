@@ -140,6 +140,14 @@ public class Route {
         }
     }
 
+    /**
+     * Reads the list of bus stops from the file and returns the contents
+     * of the file.
+     *
+     * @return the bus stop names present in the file
+     * @throws KolinuxException if the user command is not in the correct format
+     * @throws IOException if the there any IO errors
+     */
     private String getBusStopNames() throws KolinuxException, IOException {
         ArrayList<String> lines = new ArrayList<>();
         try {
