@@ -14,11 +14,13 @@ public class HelpCommand extends Command {
             + "6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule\n"
             + "7. planner list DATE - Lists events on a certain date\n"
             + "8. planner delete DATE - Delete an event on a certain date\n"
-            + "9. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable\n"
-            + "10. timetable clear - Remove all lessons from timetable\n"
-            + "11. timetable view - Print the timetable on CLI\n"
-            + "12. help - View this menu again\n"
-            + "13. bye - Exit Kolinux";
+            + "9. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME - Add lesson to timetable\n"
+            + "10. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
+            + "11. timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
+            + "12. timetable clear - Remove all lessons from timetable\n"
+            + "13. timetable view - Print the timetable on CLI\n"
+            + "14. help - View this menu again\n"
+            + "15. bye - Exit Kolinux";
 
     @Override
     public CommandResult executeCommand() {

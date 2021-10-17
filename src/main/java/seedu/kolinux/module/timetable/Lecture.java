@@ -15,7 +15,7 @@ public class Lecture extends Lesson {
 
     @Override
     public String getFileContent() {
-        return "LEC/" + moduleCode + "/" + day + "/" + startTime + "/" + endTime;
+        return moduleCode + "/LEC/" + day + "/" + startTime;
     }
 
 }

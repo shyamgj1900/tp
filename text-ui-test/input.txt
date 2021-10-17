@@ -18,7 +18,7 @@ planner add some random stuff
 planner add CS2101 OP2 Rehearsal/29 Oct 21/7pm/9pm
 planner add Family dinner/2021-02-05/2000/1800
 planner list 2021-10-05
-timetable add TUT/CS2113/tuesday/1000/1200
-timetable add CS1231 TUT/tuesday/1200/1000
+store_module CS1010
+timetable add CS1010/TUT/tuesday/1000
 timetable clear
 bye
