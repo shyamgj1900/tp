@@ -1,6 +1,5 @@
 package seedu.kolinux.module.timetable;
 
-import seedu.kolinux.commands.Command;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;

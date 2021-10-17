@@ -13,11 +13,15 @@ public class TimetableCommand extends Command {
     private String[] parsedArguments;
     public static final String INVALID_TIMETABLE_ARGUMENT = "Ensure command has one of the following formats:\n"
             +
-            "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME\n"
+            "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME\n"
             +
             "2. timetable view\n"
             +
-            "3. timetable clear";
+            "3. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
+            +
+            "4. timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
+            +
+            "5. timetable clear";
 
     public TimetableCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -61,7 +65,6 @@ public class TimetableCommand extends Command {
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
             return new CommandResult(INVALID_TIMETABLE_ARGUMENT);
         }
-
     }
 
 }
