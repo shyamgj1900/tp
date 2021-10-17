@@ -17,11 +17,13 @@ Here are the list of commands:
 6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
 7. planner list DATE - Lists events on a certain date
 8. planner delete DATE - Delete an event on a certain date
-9. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
-10. timetable clear - Remove all lessons from timetable
-11. timetable view - Print the timetable on CLI
-12. help - View this menu again
-13. bye - Exit Kolinux
+9. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME - Add lesson to timetable
+10. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
+11. timetable delete MODULE_CODE/LESSON_TYPE/DAY
+12. timetable clear - Remove all lessons from timetable
+13. timetable view - Print the timetable on CLI
+14. help - View this menu again
+15. bye - Exit Kolinux
 ....................................................................
 Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................
@@ -78,10 +80,9 @@ Please check the format of the time! The end time is earlier than the start time
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
 ....................................................................
-CS2113 TUT has been added to timetable
+Successfully stored module: CS1010
 ....................................................................
-Please check the format of adding to timetable: timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME/END_TIME
-e.g. timetable add TUT/CS1010/Monday/1200/1400
+CS1010 TUT has been added to timetable
 ....................................................................
 Timetable has been cleared completely
 ....................................................................

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class ModuleList {
     public static final String HORIZONTAL_LINE = "....................................................................";
-    private ArrayList<ModuleDetails> myModules = new ArrayList<>();
+    public ArrayList<ModuleDetails> myModules = new ArrayList<>();
 
     public ArrayList<ModuleDetails> getMyModules() {
         return myModules;
