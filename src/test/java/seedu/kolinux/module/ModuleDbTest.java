@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class ModuleDbTest {
 
     private static final ModuleDb moduleDb = new ModuleDb();
+    private static final double[] workload = new double[] {2,1,1,3,3};
     private final ModuleDetails testModule = new ModuleDetails("CS2101", "4", "Computing",
             "This module aims to equip students with the skills needed to communicate technical "
                     +
@@ -26,7 +27,8 @@ class ModuleDbTest {
                     "Assessment modes include a variety of oral and written communication tasks such as reports, "
                     +
                     "software guides, oral presentations, software demonstrations and project blogs.",
-            "Effective Communication for Computing Professionals", "Center for Engl Lang Comms");
+            "Effective Communication for Computing Professionals",
+            "Center for Engl Lang Comms", workload);
 
     private final String invalidModuleCode = "x";
 

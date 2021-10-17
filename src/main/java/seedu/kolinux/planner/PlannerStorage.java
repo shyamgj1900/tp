@@ -39,6 +39,24 @@ public class PlannerStorage {
     }
 
     /**
+     * Rewrites the planner.txt file with the list of planned events.
+     *
+     * @param eventDataStrings Arraylist of data strings to write to the file
+     */
+    public void rewriteFile(ArrayList<String> eventDataStrings) {
+        clearFile();
+        try {
+            FileWriter writer = new FileWriter(file, true);
+            for (String eventDataString : eventDataStrings) {
+                writer.append(eventDataString + "\n");
+            }
+            writer.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
      * Reads from the file with the name planner.txt
      *
      * @return Array list where each entry is a line from the file, null if the file does not exist.

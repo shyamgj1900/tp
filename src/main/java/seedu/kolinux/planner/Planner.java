@@ -1,7 +1,10 @@
 package seedu.kolinux.planner;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.util.Parser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Pattern;
@@ -13,13 +16,14 @@ public class Planner {
     private PlannerStorage plannerStorage = new PlannerStorage();
 
     private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
-    private static final String EMPTY_LIST_MESSAGE = "\nYou have no events planned for this date, just chill!";
-    private static final String EMPTY_STRING = "";
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of the data is corrupted, your planner will be reset...";
-    private static final String TIME_CONFLICT_ERROR =
-            "You already have an event ongoing for that time period, please try again with another timing.";
+    private static final String TIME_CONFLICT_PROMPT =
+            "You already have an event ongoing for that time period, do you still want to add? (y/n)";
+    private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
+    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
+    private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
     /**
      * Filters all the events in the planner by a particular date.
@@ -46,8 +50,9 @@ public class Planner {
     private boolean hasTimeConflict(Event eventToBeAdded) {
         ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
         String startTime = eventToBeAdded.getStartTime();
+        String endTime = eventToBeAdded.getEndTime();
         for (Event event : filteredPlanner) {
-            if (startTime.compareTo(event.getStartTime()) > 0 && startTime.compareTo(event.getEndTime()) < 0) {
+            if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
                 return true;
             }
         }
@@ -55,22 +60,14 @@ public class Planner {
     }
 
     /**
-     * Concatenates an array list of strings into a single string, with a newline separating consecutive
-     * entries.
+     * Returns a list of data strings generated from the list of events, to be used to rewrite planner.txt.
      *
-     * @param strings List of strings to be concatenated
-     * @return Concatenated string of the list of strings
+     * @return List of data strings corresponding to all the events
      */
-    private String concatenateStrings(ArrayList<String> strings) {
-        if (strings.isEmpty()) {
-            return EMPTY_LIST_MESSAGE;
-        }
-
-        String concatenatedString = EMPTY_STRING;
-        for (String string : strings) {
-            concatenatedString = concatenatedString.concat("\n" + string);
-        }
-        return concatenatedString;
+    private ArrayList<String> returnDataStrings() {
+        return (ArrayList<String>) scheduleOfAllDates.stream()
+                .map(event -> event.toData())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -102,11 +99,12 @@ public class Planner {
      * Adds an event to the schedule list.
      *
      * @param event Event
-     * @throws KolinuxException If the event to be added has time conflict with an existing event.
+     * @param allowConflict true if the user allows the time conflict to be ignored
+     * @throws KolinuxException If there is a time conflict, and it is not allowed to be ignored.
      */
-    public void addEvent(Event event) throws KolinuxException {
-        if (hasTimeConflict(event)) {
-            throw new KolinuxException(TIME_CONFLICT_ERROR);
+    public void addEvent(Event event, boolean allowConflict) throws KolinuxException {
+        if (hasTimeConflict(event) && !allowConflict) {
+            throw new KolinuxException(TIME_CONFLICT_PROMPT);
         }
         scheduleOfAllDates.add(event);
         plannerStorage.writeFile(event.toData());
@@ -116,19 +114,51 @@ public class Planner {
      * Lists the events on a particular date.
      *
      * @param date Date
+     * @param withId true if the list is needed to display the id of the events, false otherwise.
      * @return All the events on the date in a single concatenated string
+     * @throws KolinuxException If the date specified is invalid or if there are no events planned
+     *     on the date specified
      */
-    public String listEvents(String date) {
+    public String listEvents(String date, boolean withId) throws KolinuxException {
+
+        try {
+            LocalDate.parse(date);
+        } catch (DateTimeParseException exception) {
+            throw new KolinuxException(INVALID_DATE_MESSAGE);
+        }
 
         assert Pattern.matches(DATE_PATTERN, date);
-
         ArrayList<String> filteredEventStrings =
                 (ArrayList<String>) filterPlanner(date)
                         .stream()
-                        .map((event) -> event.toString())
+                        .map((event) -> {
+                            if (withId) {
+                                return event.toStringWithId();
+                            }
+                            return event.toString();
+                        })
                         .collect(Collectors.toList());
-        String eventsInOneString = concatenateStrings(filteredEventStrings);
+
+        String eventsInOneString = Parser.concatenateStrings(filteredEventStrings);
+        if (eventsInOneString.isEmpty()) {
+            throw new KolinuxException(EMPTY_LIST_MESSAGE);
+        }
+
         return eventsInOneString;
+    }
+
+    /**
+     * Deletes an event given its corresponding unique ID.
+     *
+     * @param id Unique identifier of the event
+     * @throws KolinuxException If the id does not match any events
+     */
+    public void deleteEvent(String id) throws KolinuxException {
+        if (scheduleOfAllDates.removeIf(event -> id.equals(event.getId()))) {
+            plannerStorage.rewriteFile(returnDataStrings());
+        } else {
+            throw new KolinuxException(INVALID_ID_ERROR);
+        }
     }
 
     /**

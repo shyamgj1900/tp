@@ -1,6 +1,8 @@
 planner clear
 help
-cap 4B+ 6A- 4B+ 2B+
+cap mc 4/B+ 6/A- 4/B+ 2/B+
+cap code MA1511/A CS1231/S CS1010/B+ MA1508E/D
+cap code invalid_info_1 CS2113T/A+ invalid_info_2
 invalid command
 view CS2101
 view invalid_module
@@ -9,15 +11,14 @@ store_module CS2113T
 store_module invalid_module
 delete_module CS2113T
 delete_module CS2113T
-planner add CG2028 lab/2021-10-05/15:00/18:00
-planner add Project Meeting/2021-10-05/19:00/23:00
-planner add GEA1000 Tutorial/2021-10-07/09:00/12:00
+planner add CG2028 lab/2021-10-05/1500/1800
+planner add Project Meeting/2021-10-05/1900/2300
+planner add GEA1000 Tutorial/2021-10-07/0900/1200
 planner add some random stuff
 planner add CS2101 OP2 Rehearsal/29 Oct 21/7pm/9pm
-planner add Family dinner/2021-02-05/20:00/18:00
-planner add Resolve merge conflicts in tp/2021-10-07/11:00/13:00
+planner add Family dinner/2021-02-05/2000/1800
 planner list 2021-10-05
-timetable add CS1231 TUT/tuesday/1000/1200
+timetable add TUT/CS2113/tuesday/1000/1200
 timetable add CS1231 TUT/tuesday/1200/1000
 timetable clear
 bus /opp nuss /raffles hall
