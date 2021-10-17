@@ -26,7 +26,8 @@ public class Timetable {
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
-    private static final String INVALID_HOURS_INPUT = "Please ensure the timing for the " +
+    private static final String INVALID_HOURS_INPUT = "Please ensure the timing for the "
+            +
             "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable:\n"
             +
@@ -35,7 +36,11 @@ public class Timetable {
             +
             "timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
             +
-            "e.g. timetable delete CS1010/TUT/Monday";
+            "e.g. timetable delete CS1010/TUT/Monday\n"
+            +
+            "Please ensure the timing for the "
+            +
+            "lesson falls within the school hours: 0600 - 2100";
     public static final String MISSING_LESSON_DELETE = " does not exist in timetable.\n"
             +
             "Please input valid lesson to remove.";
@@ -279,6 +284,18 @@ public class Timetable {
         }
     }
 
+    public static void deleteAllOfModule(String moduleCode) {
+        for (int i = 0; i < ROW_SIZE; i++) {
+            for (int j = 0; j < COLUMN_SIZE; j++) {
+                if (timetableData[i][j] != null && timetableData[i][j].contains(moduleCode)) {
+                    timetableData[i][j] = null;
+                }
+            }
+        }
+        lessonStorage.removeIf(lesson -> lesson.getModuleCode().equals(moduleCode));
+        TimetableStorage.writeToFile();
+    }
+
     public static boolean isLessonFound(String lessonCode, String lessonType, String day) {
         for (Lesson storedLesson : lessonStorage) {
             String storedCode = storedLesson.getModuleCode();
@@ -328,7 +345,7 @@ public class Timetable {
             }
             if (isLessonFound(moduleCode, lessonType, oldDay)) {
                 deleteLesson(parsedArguments);
-                    inputAsLesson(parameters, moduleList);
+                inputAsLesson(parameters, moduleList);
             } else {
                 throw new KolinuxException(MISSING_LESSON_UPDATE);
             }
