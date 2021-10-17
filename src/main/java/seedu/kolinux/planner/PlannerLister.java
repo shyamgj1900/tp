@@ -29,11 +29,12 @@ public class PlannerLister {
         getLessonsOnDate();
     }
 
+    /**
     private void convertLessonToEvent(Lesson lesson) {
         String[] arguments = new String[4];
         arguments[0] = lesson.getModuleCode() + " " + lesson.getLessonType();
         arguments[1] = date;
-    }
+    }*/
 
     private void getLessonsOnDate() throws KolinuxException {
         int dayAsInteger;
