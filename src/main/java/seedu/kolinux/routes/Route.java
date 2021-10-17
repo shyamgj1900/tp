@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Route {
     public static final String BUS_A1 = "A1";
@@ -26,6 +27,8 @@ public class Route {
     private static final String FILEPATH_D2 = "/routeD2.txt";
     private static final String FILEPATH_E = "/routeE.txt";
     private static final String FILEPATH_K = "/routeK.txt";
+    public static final String FILEPATH_STOP_NAMES = "/busStopNames.txt";
+    public static final String COMMAND_LIST_STOPS = "bus stop list";
 
     private String[] splitInput;
     private String[] location;
@@ -137,6 +140,24 @@ public class Route {
         }
     }
 
+    private String getBusStopNames() throws KolinuxException, IOException {
+        ArrayList<String> lines = new ArrayList<>();
+        try {
+            InputStream inputStream = Main.class.getResourceAsStream(FILEPATH_STOP_NAMES);
+            if (inputStream == null) {
+                throw new KolinuxException("File not found");
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            return String.join("\n", lines);
+        } catch (IOException e) {
+            throw new IOException();
+        }
+    }
+
     /**
      * Finds if there are bus routes between the starting and end locations.
      *
@@ -145,6 +166,9 @@ public class Route {
      * @throws IOException if the there any IO errors
      */
     public String checkRoutes() throws KolinuxException, IOException {
+        if (splitInput[0].equalsIgnoreCase(COMMAND_LIST_STOPS)) {
+            return getBusStopNames();
+        }
         readNodesFromFile(verticesAOne, FILEPATH_A1);
         readNodesFromFile(verticesATwo, FILEPATH_A2);
         readNodesFromFile(verticesDOne, FILEPATH_D1);

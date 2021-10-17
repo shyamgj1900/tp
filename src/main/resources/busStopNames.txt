@@ -1,0 +1,18 @@
+._______________________________________________________________________________________________________.
+|_____BUS_A1_____|_____BUS_A2_____|_____BUS_D1_____|_____BUS_D2_____|_____BUS_E_____|_______BUS_K_______|
+|KR BUS TERMINAL |KR BUS TERMINAL |OPP HSSML       |PGP             |KENT VALE      |PGP                |
+|LT13            |IT              |OPP NUSS        |KR MRT          |EA             |KR MRT             |
+|AS 5            |OPP YIH         |COM 2           |LT27            |SDE 3          |LT27               |
+|COM 2           |MUSEUM          |VENTUS          |UHALL           |IT             |UHALL              |
+|BIZ 2           |UHC             |IT              |OPP UHC         |OPP YIH        |OPP UHC            |
+|OPP TCOMS       |OPP UHALL       |OPP YIH         |MUSEUM          |UTOWN          |YIH                |
+|PGP             |S 17            |MUSEUM          |UTOWN           |RAFFLES HALL   |CLB                |
+|KR MRT          |OPP KR MRT      |UTOWN           |UHC             |               |OPP SDE 3          |
+|LT27            |PGPR            |YIH             |OPP UHALL       |               |JAPANESE PRI SCHOOL|
+|UHALL           |TCOMS           |CLB             |S 17            |               |KENT VALE          |
+|OPP UHC         |OPP HSSML       |LT13            |OPP KR MRT      |               |MUSEUM             |
+|YIH             |OPP NUSS        |AS 5            |PGPR            |               |UHC                |
+|CLB             |COM 2           |BIZ 2           |                |               |OPP UHALL          |
+|                |VENTUS          |                |                |               |S 17               |
+|                |                |                |                |               |OPP KR MRT         |
+|________________|________________|________________|________________|_______________|PGPR_______________|
