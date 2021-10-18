@@ -6,8 +6,6 @@ import seedu.kolinux.module.timetable.Timetable;
 import seedu.kolinux.util.Parser;
 
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -58,6 +56,7 @@ public class PlannerLister {
 
         try {
             event = new Event(arguments);
+            event.setIsLesson();
         } catch (KolinuxException exception) {
             System.out.println(FATAL_ERROR);
         }

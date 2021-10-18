@@ -132,6 +132,12 @@ public class Planner {
         ArrayList<String> filteredEventStrings =
                 (ArrayList<String>) filterPlanner(date)
                         .stream()
+                        .filter((event) -> {
+                            if (withId) {
+                                return !event.getIsLesson();
+                            }
+                            return true;
+                        })
                         .map((event) -> {
                             if (withId) {
                                 return event.toStringWithId();

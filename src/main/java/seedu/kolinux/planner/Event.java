@@ -21,6 +21,7 @@ public class Event {
     private LocalTime startTime;
     private LocalTime endTime;
     private int id;
+    private boolean isLesson = false;
 
     private static final String DATETIME_ERROR =
             "Please provide a valid date and time!\n"
@@ -65,6 +66,14 @@ public class Event {
      */
     public Event(String data) throws KolinuxException {
         this(data.split(PIPE_REGEX));
+    }
+
+    public void setIsLesson() {
+        this.isLesson = true;
+    }
+
+    public boolean getIsLesson() {
+        return this.isLesson;
     }
 
     public String getDate() {
