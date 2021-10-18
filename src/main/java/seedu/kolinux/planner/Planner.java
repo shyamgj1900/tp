@@ -32,7 +32,7 @@ public class Planner {
      * @return List of events and lessons happening on the given date
      */
     private ArrayList<Event> filterPlanner(String date) {
-        ArrayList<Event> filteredPlanner = new PlannerLister(date).getConvertedLessonsOnDate();
+        ArrayList<Event> filteredPlanner = new LessonsGetter(date).getConvertedLessonsOnDate();
         scheduleOfAllDates.stream()
                 .filter((event) -> date.equals(event.getDate()))
                 .forEach((event) -> filteredPlanner.add(event));

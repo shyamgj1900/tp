@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class PlannerLister {
+public class LessonsGetter {
 
     private String date;
 
@@ -19,7 +19,7 @@ public class PlannerLister {
     private ArrayList<Lesson> lessonsOnDate = new ArrayList<>();
     private ArrayList<Event> convertedLessonsOnDate = new ArrayList<>();
 
-    public PlannerLister(String date) {
+    public LessonsGetter(String date) {
         this.date = date;
         getLessonsOnDate();
         convertLessonListToEventList();
