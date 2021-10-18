@@ -24,6 +24,7 @@ their activities for the day and a route finder for the NUS internal shuttle bus
     * [`module store`](#add-modules-to-module-list-by-code-module-store)
     * [`module delete`](#delete-modules-from-module-list-by-code-module-delete)
     * [`module list`](#list-modules-from-module-list-module-list)
+    * [`module grade`](#set-a-module's-grade-in-module-list-module-grade)
   * [`timetable`](#add-lessons-to-timetable--timetable-add)
     * [`timetable add`](#add-lessons-to-timetable--timetable-add)
     * [`timetable clear`](#clear-timetable-timetable-clear)
@@ -60,10 +61,11 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
 | `planner delete` 	| Delete an event on a particular date              | `planner delete DATE`                              |
-| `module list`         | List all stored modules from the module list                               | `module list`                               |
 | `module view`         | View module details                               | `module view MODULE_CODE`                               |
 | `module store`	| Store a module in the module list			| `module store MODULE_CODE`			     |
 | `module delete`	| Delete a module from the module list			| `module delete MODULE_CODE`			     |
+| `module list`         | List all stored modules from the module list                               | `module list`                               |
+| `module grade`         | Set the grade of a module in the module list by its module code                               | `module grade CODE/GRADE`                               |
 | `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
 | `cap`         	| Calculate the total cap given a set of grades     | `cap MC_GRADE`                             	     |
 | `help`        	| View the different commands available          	| `help`                                     	     |
@@ -253,7 +255,7 @@ Format: `module list `
 
 Example of usage:
 
-- `module list` when CS2113T is stored in the list
+- `module list` when CS2113T is already stored in the list
 
 Expected Outcome:
 
@@ -267,6 +269,22 @@ Project Work: 3.0 hours
 Preparation: 4.0 hours
 ....................................................................
 Remember to add the module's lessons to the timetable based on the workload
+....................................................................
+```
+
+### Set a module's grade in module list: `module grade`
+
+Format: `module grade CODE/GRADE `
+
+Example of usage:
+
+- `module grade CS2113T/A` when CS2113T is already stored in the list
+
+Expected Outcome:
+
+```
+....................................................................
+CS2113T grade set to A
 ....................................................................
 ```
 
