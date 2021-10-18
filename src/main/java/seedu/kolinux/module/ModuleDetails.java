@@ -156,14 +156,14 @@ public class ModuleDetails {
             }
             String time = getStartTime();
             String[] timings = time.split(":");
-            int offSetTime = Integer.parseInt(timings[0]) + examHours;
-            String finalTime;
-            if (offSetTime < 10) {
-                finalTime = "0" + offSetTime + ":00";
+            int endTiming = Integer.parseInt(timings[0]) + examHours;
+            String endTime;
+            if (endTiming < 10) {
+                endTime = "0" + endTiming + ":00";
             } else {
-                finalTime = offSetTime + ":00";
+                endTime = endTiming+ ":00";
             }
-            return finalTime;
+            return endTime;
         } catch (NullPointerException exception) {
             return null;
         }
