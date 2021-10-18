@@ -16,6 +16,8 @@ public class ModuleCommand extends Command {
     private static final String DELETE_SUBCOMMAND = "delete";
     private static final String VIEW_SUBCOMMAND = "view";
     private static final String LIST_SUBCOMMAND = "list";
+    private static final String SET_GRADE_SUBCOMMAND = "grade";
+    public static final String INVALID_GRADE_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
             +
             "1. module store CODE\n"
@@ -24,7 +26,9 @@ public class ModuleCommand extends Command {
             +
             "3. module view CODE\n"
             +
-            "4. module list\n";
+            "4. module list\n"
+            +
+            "5. module grade CODE/GRADE\n";
 
 
     public ModuleCommand(String subCommand, String[] parsedArguments) {
@@ -32,15 +36,27 @@ public class ModuleCommand extends Command {
         this.parsedArguments = parsedArguments;
     }
 
+    private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {
+        String moduleGrade;
+        try {
+            moduleGrade = parsedArguments[1];
+        } catch (IndexOutOfBoundsException exception) {
+            throw new KolinuxException(INVALID_GRADE_MESSAGE);
+        }
+        String message = moduleList.setModuleGrade(moduleCode, moduleGrade);
+        logger.log(Level.INFO, message);
+        return new CommandResult(message);
+    }
+
     private CommandResult storeModule() {
         String message = moduleList.storeModuleByCode(moduleCode, moduleDb);
-        logger.log(Level.INFO, "User stored module " + moduleCode + " in myModules list");
+        logger.log(Level.INFO, message);
         return new CommandResult(message);
     }
 
     private CommandResult deleteModule() {
         String message = moduleList.deleteModuleByCode(moduleCode);
-        logger.log(Level.INFO, "User deleted module " + moduleCode + " from myModules list");
+        logger.log(Level.INFO, message);
         return new CommandResult(message);
     }
 
@@ -79,6 +95,8 @@ public class ModuleCommand extends Command {
             return viewModule();
         case LIST_SUBCOMMAND:
             return listMyModules();
+        case SET_GRADE_SUBCOMMAND:
+            return setModuleGrade(parsedArguments);
         default:
             return displayError();
         }

@@ -11,6 +11,7 @@ public class ModuleDetails {
     private String department;
     private String moduleCredit;
     private String faculty;
+    private String grade;
     private double[] workload;
     private double lectureHours;
     private double tutorialHours;
@@ -27,8 +28,17 @@ public class ModuleDetails {
         this.title = title;
         this.department = department;
         this.workload = workload;
+        this.grade = null;
 
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
+    }
+
+    public void setGrade(String newGrade) {
+        grade = newGrade;
+    }
+
+    public String getGrade() {
+        return grade;
     }
 
     public String getModuleCredit() {
@@ -88,11 +98,11 @@ public class ModuleDetails {
     @Override
     public String toString() {
         int i = 50;
-        description = description.replaceAll("\n"," ");
+        description = description.replaceAll("\n", " ");
         StringBuilder sb = new StringBuilder(description);
         while (i < description.length()) {
             if ((description.charAt(i) == ' ') && (description.charAt(i + 1) != '\n')) {
-                sb.setCharAt(i,'\n');
+                sb.setCharAt(i, '\n');
                 i += 50;
             } else {
                 i++;
@@ -100,7 +110,7 @@ public class ModuleDetails {
             description = sb.toString();
         }
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
-                + "Credits: " + moduleCredit + "\n" + description;
+                + "Credits: " + moduleCredit + "\n" + "Grade: " + grade + "\n" + description;
     }
 
 }
