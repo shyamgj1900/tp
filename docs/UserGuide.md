@@ -6,7 +6,7 @@ Kolinux is built to help NUS Computer Engineering freshmen to better integrate i
 by allowing them to **manage their work** and **learn more about NUS**, all in a **single integrated platform**. 
 It is optimized for CLI users so that they can access the information that they require faster by typing in commands.
 
-Kolinux v2.0 offers a wide range of features for freshmen. These features include a **module planner**
+Kolinux v2.0 offers a wide range of features for freshmen. These features include a **module manager**
 for freshmen to manage their modules and view information about them, an **event planner** for freshmen to organise 
 their schedule for the day, a **CAP calculator**, and a **route finder** for the NUS internal shuttle bus.
 
@@ -77,6 +77,37 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 
 ## Features 
+
+Kolinux provides a **single integrated platform** consisting of **5 core features**:
+
+1. `module` - Module Manager
+
+The module manager allows users to add, delete, and list the modules they are taking for the semester. Users are also
+able to view important information regarding a module, such as the description and workload requirements. In addition,
+users are also able to set a grade on the modules in their list for the purpose of CAP calculation using our in-built 
+CAP calculator.
+
+2. `timetable` - Timetable
+
+This feature allows users to add and clear lessons from their timetable based on the modules added in the Module
+manager. It also provides users an aesthetic graphical representation of their timetable on CLI interface.
+
+3. `planner` - Events Planner
+
+The event planner works by allowing users to add, delete, and list any events happening on a specific date. This is
+for users to manage their schedules daily. This feature is also integrated with the timetable so that users will also
+be able to view their lessons on specific dates.
+
+4. `bus` - Route Finder
+
+The route finder helps users to find the buses from their start point to their destination. This feature allows users
+to get familiarised with the NUS internal shuttle bus route.
+
+5. `cap` - CAP Calculator
+
+The CAP calculator is an essential tool for many NUS students to keep track on their CAP and set desired grades for the
+current semester. This feature is integrated with the module manager so that users can calculate their CAP based on the
+grades set on the modules in the module manager.
 
 ### Add modules to module list by code: `module store`
 
