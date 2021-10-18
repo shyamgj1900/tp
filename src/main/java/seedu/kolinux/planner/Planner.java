@@ -35,9 +35,11 @@ public class Planner {
         ArrayList<Event> filteredPlanner = new PlannerLister(date).getConvertedLessonsOnDate();
         scheduleOfAllDates.stream()
                 .filter((event) -> date.equals(event.getDate()))
-                .sorted(Comparator.comparing(Event::getStartTime))
                 .forEach((event) -> filteredPlanner.add(event));
-        return filteredPlanner;
+        return (ArrayList<Event>) filteredPlanner
+                .stream()
+                .sorted(Comparator.comparing(Event::getStartTime))
+                .collect(Collectors.toList());
     }
 
     /**
