@@ -204,8 +204,7 @@ public class Timetable {
         TimetableStorage.writeToFile();
     }
 
-    public static void inputAsLesson(String[] parsedArguments, ModuleList moduleList)
-            throws KolinuxException {
+    public static void inputAsLesson(String[] parsedArguments, ModuleList moduleList) throws KolinuxException {
         try {
             if (!isLessonInModuleList(moduleList, parsedArguments[0].toUpperCase())) {
                 throw new KolinuxException("Module not found in module list");
@@ -213,24 +212,11 @@ public class Timetable {
             String lessonType = parsedArguments[1].toUpperCase();
             String moduleCode = parsedArguments[0].toUpperCase();
             int requiredHours = getHours(moduleList, moduleCode, lessonType);
-            if (requiredHours == 0) {
-                throw new KolinuxException(moduleCode + " has no " + lessonType
-                        +
-                        ".\nPlease add a different type of lesson.");
-
-            }
-            int inputHours = getIndex(parsedArguments[4], schoolHours)
-                    - getIndex(parsedArguments[3], schoolHours);
+            checkZeroWorkload(requiredHours, moduleCode, lessonType);
+            int inputHours = getIndex(parsedArguments[4], schoolHours) - getIndex(parsedArguments[3], schoolHours);
             int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
-            if (storageHours > requiredHours) {
-                throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
-                        +
-                        " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
-                        +
-                        "Please readjust the input timings or modify timetable to continue\n"
-                        +
-                        "with adding this lesson to the timetable.");
-            }
+            checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
+
             if (lessonType.startsWith("TUT")) {
                 Timetable.addLesson(new Tutorial(parsedArguments));
             } else if (lessonType.startsWith("LEC")) {
@@ -252,6 +238,29 @@ public class Timetable {
             if (Objects.equals(timetableData[i][dayIndex], description)) {
                 timetableData[i][dayIndex] = null;
             }
+        }
+    }
+
+    public static void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
+                                              String lessonType) throws KolinuxException {
+        if (storageHours > requiredHours) {
+            throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
+                    +
+                    " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
+                    +
+                    "Please readjust the input timings or modify timetable to continue\n"
+                    +
+                    "with adding this lesson to the timetable.");
+        }
+    }
+
+    public static void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType )
+            throws KolinuxException {
+        if (requiredHours == 0) {
+            throw new KolinuxException(moduleCode + " has no " + lessonType
+                    +
+                    ".\nPlease add a different type of lesson.");
+
         }
     }
 

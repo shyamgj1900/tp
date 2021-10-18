@@ -33,7 +33,7 @@ public class ModuleDetails {
     private double projectHours;
     private double preparationHours;
     private JsonArray semesterData;
-    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu'T'HH:mm:ss:SSSXXXXX");
+    private static final int OFFSET = 8;
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
                          String description, String title, String department, double[] workload,
@@ -135,12 +135,12 @@ public class ModuleDetails {
             String[] dateTime = getExamDateTime();
             String time = dateTime[1];
             String[] timings = time.split(":");
-            int offSetTime = Integer.parseInt(timings[0]) + 8;
+            int offsetTime = Integer.parseInt(timings[0]) + OFFSET;
             String finalTime;
-            if (offSetTime < 10) {
-                finalTime = "0" + offSetTime + ":00";
+            if (offsetTime < 10) {
+                finalTime = "0" + offsetTime + ":00";
             } else {
-                finalTime = offSetTime + ":00";
+                finalTime = offsetTime + ":00";
             }
             return finalTime;
         } catch (NullPointerException exception) {
@@ -161,7 +161,7 @@ public class ModuleDetails {
             if (endTiming < 10) {
                 endTime = "0" + endTiming + ":00";
             } else {
-                endTime = endTiming+ ":00";
+                endTime = endTiming + ":00";
             }
             return endTime;
         } catch (NullPointerException exception) {

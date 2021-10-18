@@ -21,8 +21,8 @@ public class ModuleDetailsTest {
             +
             "offers critical views on the role of architecture in constructing the national identity "
             +
-            "of Singapore.", "Architectural History of Singapore", "Architecture", workload
-            , semesterData);
+            "of Singapore.", "Architectural History of Singapore", "Architecture", workload,
+            semesterData);
 
     private static final String TEST_MODULE_DETAILS_CODE = "AC5001";
     private static final String TEST_MODULE_DETAILS_CREDIT = "4";
