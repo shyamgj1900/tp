@@ -15,17 +15,18 @@ Here are the list of commands:
 4. module store MODULE_CODE - Add a module to your module list
 5. module delete MODULE_CODE - Delete a module from your module list
 6. module list - List all modules stored in your module list
-7. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-8. planner list DATE - Lists events on a certain date
-9. planner delete DATE - Delete an event on a certain date
-10. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
-11. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME
+7. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
+8. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+9. planner list DATE - Lists events on a certain date
+10. planner delete DATE - Delete an event on a certain date
+11. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
+12. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME
     - shift a lesson to another timing
-12. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
-13. timetable clear - Remove all lessons from timetable
-14. timetable view - Print the timetable on CLI
-15. help - View this menu again
-16. bye - Exit Kolinux
+13. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
+14. timetable clear - Remove all lessons from timetable
+15. timetable view - Print the timetable on CLI
+16. help - View this menu again
+17. bye - Exit Kolinux
 ....................................................................
 Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................
@@ -39,6 +40,7 @@ CS2101: Effective Communication for Computing Professionals
 Department: Center for Engl Lang Comms
 Faculty: Computing
 Credits: 4
+Grade: null
 This module aims to equip students with the skills
 needed to communicate technical information to technical
 and nontechnical audiences, and to create comprehensible
@@ -63,6 +65,14 @@ Please enter a valid module code
 Successfully deleted module: CS2113T
 ....................................................................
 CS2113T not found in the module list
+....................................................................
+Please use the format: module grade CODE/GRADE
+....................................................................
+Successfully stored module: CS2113T
+....................................................................
+CS2113T grade set to A
+....................................................................
+Successfully deleted module: CS2113T
 ....................................................................
 An event has been added to your schedule successfully!
 ....................................................................
