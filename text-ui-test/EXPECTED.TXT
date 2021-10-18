@@ -17,9 +17,10 @@ Here are the list of commands:
 6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
 7. planner list DATE - Lists events on a certain date
 8. planner delete DATE - Delete an event on a certain date
-9. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME - Add lesson to timetable
-10. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
-11. timetable delete MODULE_CODE/LESSON_TYPE/DAY
+9. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
+10. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME
+    - shift a lesson to another timing
+11. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
 12. timetable clear - Remove all lessons from timetable
 13. timetable view - Print the timetable on CLI
 14. help - View this menu again
