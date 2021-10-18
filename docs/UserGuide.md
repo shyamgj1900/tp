@@ -78,6 +78,144 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 ## Features 
 
+### Add modules to module list by code: `module store`
+
+Format: `module store MODULE_CODE `
+
+- `MODULE_CODE` needs to be in uppercase letters
+
+Example of usage:
+
+- `module store CS2113T`
+
+Expected Outcome:
+
+```
+Successfully stored module: CS2113T
+....................................................................
+```
+
+### Delete modules from module list by code: `module delete`
+
+Format: `delete module MODULE_CODE `
+
+- `MODULE_CODE` needs to be in uppercase letters
+
+Example of usage:
+
+- `delete module CS2113T`
+
+Expected Outcome:
+
+```
+Successfully deleted module: CS2113T
+....................................................................
+```
+
+### List modules from module list: `module list`
+
+Format: `module list `
+
+Example of usage:
+
+- `module list` when CS2113T is already stored in the list
+
+Expected Outcome:
+
+```
+CS2113T Software Engineering & Object-Oriented Programming
+
+Workload:
+Lecture: 2.0 hours
+Tutorial: 1.0 hours
+Project Work: 3.0 hours
+Preparation: 4.0 hours
+....................................................................
+Remember to add the module's lessons to the timetable based on the workload
+....................................................................
+```
+
+### View module details: `module view`
+
+Format: `module view MODULE_CODE`
+
+* `MODULE_CODE` needs to be in uppercase letters
+
+Example of usage:
+
+* `module view CS1010`
+
+Expected Outcome:
+
+```
+view CS1010
+CS1010: Programming Methodology
+Department: Computer Science
+Faculty: Computing
+Credits: 4
+This module introduces the fundamental concepts of
+problem solving by computing and programming using
+an imperative programming language. It is the first
+and foremost introductory course to computing.  Topics
+covered include computational thinking and computational
+problem solving, designing and specifying an algorithm,
+basic problem formulation and problem solving approaches,
+program development, coding, testing and debugging,
+fundamental programming constructs (variables, types,
+expressions, assignments, functions, control structures,
+etc.), fundamental data structures (arrays, strings,
+composite data types), basic sorting, and recursion.
+....................................................................
+```
+
+### Set a module's grade in module list: `module grade`
+
+Format: `module grade CODE/GRADE `
+
+Example of usage:
+
+- `module grade CS2113T/A` when CS2113T is already stored in the list
+
+Expected Outcome:
+
+```
+....................................................................
+CS2113T grade set to A
+....................................................................
+```
+
+Note: The grades set using this command will be used to calculate CAP based on your module list. You may choose 
+to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
+
+### Add lessons to timetable : `timetable add`
+
+Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
+
+* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
+* `DAY` must be from between Monday to Friday where `DAY` is not case-sensitive
+  * i.e. `monday` is the same as `MONDAY`
+
+Example of usage:
+
+* `timetable add CS1010 TUT/Monday/1200/1400`
+* `timetable add CS2113T LEC/friday/1600/1800`
+
+Expected Outcome:
+```
+timetable add CS1010 TUT/Monday/1200/1400
+Lesson has been added to timetable
+....................................................................
+```
+
+### Clear timetable: `timetable clear`
+
+Expected outcome:
+```
+timetable clear
+Timetable has been cleared completely
+....................................................................
+```
+
 ### Add an event to Planner: `planner add`
 
 Adds a new event to your schedule
@@ -197,144 +335,6 @@ Expected Outcome:
 ```
 cap 4A 6B+ 4B 4B- 4A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
-....................................................................
-```
-
-### View module details: `module view`
-
-Format: `module view MODULE_CODE`
-
-* `MODULE_CODE` needs to be in uppercase letters
-
-Example of usage:
-
-* `module view CS1010`
-
-Expected Outcome:
-
-```
-view CS1010
-CS1010: Programming Methodology
-Department: Computer Science
-Faculty: Computing
-Credits: 4
-This module introduces the fundamental concepts of
-problem solving by computing and programming using
-an imperative programming language. It is the first
-and foremost introductory course to computing.  Topics
-covered include computational thinking and computational
-problem solving, designing and specifying an algorithm,
-basic problem formulation and problem solving approaches,
-program development, coding, testing and debugging,
-fundamental programming constructs (variables, types,
-expressions, assignments, functions, control structures,
-etc.), fundamental data structures (arrays, strings,
-composite data types), basic sorting, and recursion.
-....................................................................
-```
-### Add modules to module list by code: `module store`
-
-Format: `module store MODULE_CODE `
-
-- `MODULE_CODE` needs to be in uppercase letters
-
-Example of usage:
-
-- `module store CS2113T`
-
-Expected Outcome:
-
-```
-Successfully stored module: CS2113T
-....................................................................
-```
-
-### Delete modules from module list by code: `module delete`
-
-Format: `delete module MODULE_CODE `
-
-- `MODULE_CODE` needs to be in uppercase letters
-
-Example of usage:
-
-- `delete module CS2113T`
-
-Expected Outcome:
-
-```
-Successfully deleted module: CS2113T
-....................................................................
-```
-
-### List modules from module list: `module list`
-
-Format: `module list `
-
-Example of usage:
-
-- `module list` when CS2113T is already stored in the list
-
-Expected Outcome:
-
-```
-CS2113T Software Engineering & Object-Oriented Programming
-
-Workload:
-Lecture: 2.0 hours
-Tutorial: 1.0 hours
-Project Work: 3.0 hours
-Preparation: 4.0 hours
-....................................................................
-Remember to add the module's lessons to the timetable based on the workload
-....................................................................
-```
-
-### Set a module's grade in module list: `module grade`
-
-Format: `module grade CODE/GRADE `
-
-Example of usage:
-
-- `module grade CS2113T/A` when CS2113T is already stored in the list
-
-Expected Outcome:
-
-```
-....................................................................
-CS2113T grade set to A
-....................................................................
-```
-
-Note: The grades set using this command will be used to calculate CAP based on your module list. You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
-
-
-
-### Add lessons to timetable : `timetable add`
-
-Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
-
-* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
-* `DAY` must be from between Monday to Friday where `DAY` is not case-sensitive
-  * i.e. `monday` is the same as `MONDAY`
-
-Example of usage:
-
-* `timetable add CS1010 TUT/Monday/1200/1400`
-* `timetable add CS2113T LEC/friday/1600/1800`
-
-Expected Outcome:
-```
-timetable add CS1010 TUT/Monday/1200/1400
-Lesson has been added to timetable
-....................................................................
-```
-
-### Clear timetable: `timetable clear`
-
-Expected outcome:
-```
-timetable clear
-Timetable has been cleared completely
 ....................................................................
 ```
 
