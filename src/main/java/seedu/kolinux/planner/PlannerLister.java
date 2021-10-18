@@ -21,7 +21,7 @@ public class PlannerLister {
     private ArrayList<Lesson> lessonsOnDate = new ArrayList<>();
     private ArrayList<Event> convertedLessonsOnDate = new ArrayList<>();
 
-    public PlannerLister(String date) throws KolinuxException {
+    public PlannerLister(String date) {
         this.date = date;
         getLessonsOnDate();
         convertLessonListToEventList();
@@ -31,14 +31,16 @@ public class PlannerLister {
         return convertedLessonsOnDate;
     }
 
-    private void getLessonsOnDate() throws KolinuxException {
-        int dayAsInteger;
+    private void getLessonsOnDate() {
+        int dayAsInteger = 0;
         try {
             dayAsInteger = Parser.findDayFromDate(date);
         } catch (ParseException exception) {
-            throw new KolinuxException(INVALID_DATE_MESSAGE);
+            System.out.println(INVALID_DATE_MESSAGE);
+            return;
         }
 
+        assert ((dayAsInteger >= 1) && (dayAsInteger <= 7));
         String day = Parser.parseDay(dayAsInteger);
         lessonsOnDate = (ArrayList<Lesson>) Timetable.lessonStorage
                 .stream()
