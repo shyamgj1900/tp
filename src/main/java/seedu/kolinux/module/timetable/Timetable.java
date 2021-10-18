@@ -254,7 +254,7 @@ public class Timetable {
         }
     }
 
-    public static void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType )
+    public static void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
             throws KolinuxException {
         if (requiredHours == 0) {
             throw new KolinuxException(moduleCode + " has no " + lessonType
