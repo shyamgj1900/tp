@@ -4,6 +4,7 @@ import seedu.kolinux.commands.Command;
 import seedu.kolinux.commands.HelpCommand;
 import seedu.kolinux.commands.CalculateCapCommand;
 import seedu.kolinux.commands.BusRouteCommand;
+import seedu.kolinux.commands.SetModuleGradeCommand;
 import seedu.kolinux.commands.StoreModuleCommand;
 import seedu.kolinux.commands.DeleteModuleCommand;
 import seedu.kolinux.commands.ListModulesCommand;
@@ -32,6 +33,8 @@ public class Parser {
     private static final String COMMAND_TIMETABLE = "timetable";
     private static final String COMMAND_LIST = "list";
     private static final String EMPTY_STRING = "";
+    
+    private static final String COMMAND_SET_MODULE_GRADE = "set";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -81,6 +84,8 @@ public class Parser {
             return parseSubCommand(argument, COMMAND_TIMETABLE);
         case COMMAND_LIST:
             return new ListModulesCommand();
+        case COMMAND_SET_MODULE_GRADE:
+            return new SetModuleGradeCommand(argument);
         default:
             return new InvalidCommand();
         }

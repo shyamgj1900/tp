@@ -17,6 +17,7 @@ public class ModuleDetails {
     private double labHours;
     private double projectHours;
     private double preparationHours;
+    private String grade;
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
                          String description, String title, String department, double[] workload) {
@@ -27,6 +28,7 @@ public class ModuleDetails {
         this.title = title;
         this.department = department;
         this.workload = workload;
+        this.grade = null;
 
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
@@ -78,6 +80,14 @@ public class ModuleDetails {
     public double getPreparationHours() {
         preparationHours = workload[4];
         return preparationHours;
+    }
+    
+    public String getGrade() {
+        return grade;
+    }
+    
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
     /**

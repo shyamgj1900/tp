@@ -95,4 +95,13 @@ public class ModuleList {
         System.out.print("Remember to add the module's lessons to the timetable based on the workload");
     }
 
+    public void setModuleGrade(String code, String grade, ModuleDb moduleDb) {
+        ModuleDetails mod = moduleDb.getModuleInfo(code);
+        myModules.get(myModules.indexOf(mod)).setGrade(grade);
+    }
+    
+    public String getModuleGrade(String code, ModuleDb moduleDb) {
+        ModuleDetails mod = moduleDb.getModuleInfo(code);
+        return myModules.get(myModules.indexOf(mod)).getGrade();
+    }
 }
