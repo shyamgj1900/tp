@@ -11,6 +11,10 @@ module store CS2113T
 module store invalid_module
 module delete CS2113T
 module delete CS2113T
+module grade invalid_module
+module store CS2113T
+module grade CS2113T/A
+module delete CS2113T
 planner add CG2028 lab/2021-10-05/1500/1800
 planner add Project Meeting/2021-10-05/1900/2300
 planner add GEA1000 Tutorial/2021-10-07/0900/1200
