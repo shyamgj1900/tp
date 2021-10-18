@@ -26,10 +26,10 @@ public class Planner {
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
     /**
-     * Filters all the events in the planner by a particular date.
+     * Filters all the events including the lessons in the planner by a particular date.
      *
      * @param date Date
-     * @return List of events happening on the given date
+     * @return List of events and lessons happening on the given date
      */
     private ArrayList<Event> filterPlanner(String date) {
         ArrayList<Event> filteredPlanner = new PlannerLister(date).getConvertedLessonsOnDate();
