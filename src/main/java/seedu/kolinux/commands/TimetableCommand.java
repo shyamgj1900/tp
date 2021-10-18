@@ -11,7 +11,7 @@ public class TimetableCommand extends Command {
 
     private String subCommand;
     private String[] parsedArguments;
-    public static final String INVALID_TIMETABLE_ARGUMENT = "Ensure command has one of the following formats:\n"
+    public static final String INVALID_TIMETABLE_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
             +
             "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME\n"
             +
@@ -63,7 +63,7 @@ public class TimetableCommand extends Command {
                     parsedArguments[1].toUpperCase() + " has been updated");
         default:
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
-            return new CommandResult(INVALID_TIMETABLE_ARGUMENT);
+            return new CommandResult(INVALID_TIMETABLE_ARGUMENT_MESSAGE);
         }
     }
 

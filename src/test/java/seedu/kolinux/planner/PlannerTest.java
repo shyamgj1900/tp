@@ -2,7 +2,10 @@ package seedu.kolinux.planner;
 
 import org.junit.jupiter.api.Test;
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.timetable.Lesson;
+import seedu.kolinux.module.timetable.Timetable;
 
+import java.sql.Time;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlannerTest {
 
     private Planner planner = new Planner();
+    private Timetable timetable = new Timetable();
 
+    private static final String[][] VALID_LESSON_ARGUMENTS
+            = new String[][]{{"CS2113T", "LEC", "Friday", "1600", "1800"},
+                {"CS2113T", "TUT", "Wednesday", "1100", "1200"},
+                {"CS2101", "LEC", "Friday", "1000", "1200"}};
     private static final String[][] VALID_EVENT_ARGUMENTS
             = new String[][]{{"Pop Quiz 3", "2021-10-26", "1500", "1515"},
                 {"Pop Quiz 4", "2021-10-26", "1530", "2000"},
@@ -25,7 +33,8 @@ public class PlannerTest {
             = new String[][]{{"Do something", "2021-10-26", "1505", "1700"},
                 {"Do something", "2021-10-26", "1430", "1505"},
                 {"Do something", "2021-10-26", "1400", "1600"},
-                {"Do something", "2021-10-26", "1505", "1510"}};
+                {"Do something", "2021-10-26", "1505", "1510"},
+                {"Conflict with lecture", "2021-10-22", "1500", "1700"}};
     private static final String VALID_LIST_1
             = "\n15:00 - 15:15 Pop Quiz 3";
     private static final String VALID_LIST_2
@@ -34,6 +43,11 @@ public class PlannerTest {
     private static final String VALID_LIST_3
             = "\n15:00 - 15:15 Pop Quiz 3\n"
                     + "15:05 - 15:10 Do something";
+    private static final String VALID_LIST_4
+            = "\n15:00 - 17:00 Conflict with lecture\n"
+                    + "16:00 - 18:00 CS2113T LEC";
+    private static final String VALID_LIST_5
+            = "\n15:00 - 17:00 Conflict with lecture (id: 3)";
     private static final String DATETIME_ERROR
             = "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
@@ -149,6 +163,30 @@ public class PlannerTest {
         planner.addEvent(invalidEvent, true);
         assertEquals(VALID_LIST_3, planner.listEvents("2021-10-26", false));
         planner.clearEvents();
+    }
+
+    @Test
+    public void addEvent_eventConflictWithTimetableAllowConflict_eventAdded() throws KolinuxException {
+        planner.clearEvents();
+        timetable.clearTimetable();
+        Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
+        timetable.addLesson(lesson);
+        Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
+        planner.addEvent(event, true);
+        assertEquals(VALID_LIST_4, planner.listEvents("2021-10-22", false));
+        planner.clearEvents();
+        timetable.clearTimetable();
+    }
+
+    @Test
+    public void listEvent_attemptToDeleteLessonFromPlanner_lessonHiddenFromUser() throws KolinuxException {
+        planner.clearEvents();
+        timetable.clearTimetable();
+        Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
+        timetable.addLesson(lesson);
+        Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
+        planner.addEvent(event, true);
+        assertEquals(VALID_LIST_5, planner.listEvents("2021-10-22", true));
     }
 
     @Test
