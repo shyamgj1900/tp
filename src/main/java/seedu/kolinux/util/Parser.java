@@ -1,5 +1,6 @@
 package seedu.kolinux.util;
 
+import seedu.kolinux.commands.CalculateModuleListCapCommand;
 import seedu.kolinux.commands.Command;
 import seedu.kolinux.commands.HelpCommand;
 import seedu.kolinux.commands.CalculateCapCommand;
@@ -35,6 +36,7 @@ public class Parser {
     private static final String EMPTY_STRING = "";
     
     private static final String COMMAND_SET_MODULE_GRADE = "set";
+    private static final String COMMAND_MODULELIST_CAP = "stored_cap";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -86,6 +88,8 @@ public class Parser {
             return new ListModulesCommand();
         case COMMAND_SET_MODULE_GRADE:
             return new SetModuleGradeCommand(argument);
+        case COMMAND_MODULELIST_CAP:
+            return new CalculateModuleListCapCommand();
         default:
             return new InvalidCommand();
         }
