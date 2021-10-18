@@ -1,5 +1,19 @@
 package seedu.kolinux.module;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.OffsetDateTime;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.Locale;
+
 /**
  * ModuleDetails class that stores all attributes of each module.
  */
@@ -17,9 +31,12 @@ public class ModuleDetails {
     private double labHours;
     private double projectHours;
     private double preparationHours;
+    private JsonArray semesterData;
+    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu'T'HH:mm:ss:SSSXXXXX");
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
-                         String description, String title, String department, double[] workload) {
+                         String description, String title, String department, double[] workload,
+                         JsonArray semesterData) {
         this.moduleCode = moduleCode;
         this.moduleCredit = moduleCredit;
         this.faculty = faculty;
@@ -27,6 +44,7 @@ public class ModuleDetails {
         this.title = title;
         this.department = department;
         this.workload = workload;
+        this.semesterData = semesterData;
 
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
@@ -78,6 +96,68 @@ public class ModuleDetails {
     public double getPreparationHours() {
         preparationHours = workload[4];
         return preparationHours;
+    }
+
+    public String[] getExamDateTime() {
+        try {
+            String examDate = null;
+            for (int i = 0; i < semesterData.size(); i++) {
+                examDate = semesterData.get(i).getAsJsonObject().get("examDate").getAsString();
+            }
+            String newTimeFormat = examDate.replace(":00.000Z", "");
+            String[] dateTime = newTimeFormat.split("T");
+            return dateTime;
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    public String getDate() {
+        try {
+            String[] dateTime = getExamDateTime();
+            return dateTime[0];
+        } catch (NullPointerException exception) {
+            return null;
+        }
+    }
+
+    public String getStartTime() {
+        try {
+            String[] dateTime = getExamDateTime();
+            String time = dateTime[1];
+            String[] timings = time.split(":");
+            int offSetTime = Integer.parseInt(timings[0]) + 8;
+            String finalTime;
+            if (offSetTime < 10) {
+                finalTime = "0" + offSetTime + ":00";
+            } else {
+                finalTime = offSetTime + ":00";
+            }
+            return finalTime;
+        } catch (NullPointerException exception) {
+            return null;
+        }
+    }
+
+    public String getEndTime() {
+        try {
+            int examHours = 0;
+            for (int i = 0; i < semesterData.size(); i++) {
+                examHours = (semesterData.get(i).getAsJsonObject().get("examDuration").getAsInt()) / 60;
+            }
+            String time = getStartTime();
+            String[] timings = time.split(":");
+            int offSetTime = Integer.parseInt(timings[0]) + examHours;
+            String finalTime;
+            if (offSetTime < 10) {
+                finalTime = "0" + offSetTime + ":00";
+            } else {
+                finalTime = offSetTime + ":00";
+            }
+            return finalTime;
+        } catch (NullPointerException exception) {
+            return null;
+        }
     }
 
     /**

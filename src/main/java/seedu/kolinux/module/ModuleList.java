@@ -2,6 +2,7 @@ package seedu.kolinux.module;
 
 import seedu.kolinux.module.timetable.Timetable;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 /**
@@ -89,6 +90,15 @@ public class ModuleList {
             double preparationHours = module.getPreparationHours();
             if (preparationHours != 0) {
                 System.out.println("Preparation: " + preparationHours + " hours");
+            }
+            String examDate = module.getDate();
+            String examStartTime = module.getStartTime();
+            String examEndTime = module.getEndTime();
+            if (examDate != null && examStartTime != null && examEndTime != null) {
+                System.out.println("Exam date: " + examDate);
+                System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
+            } else {
+                System.out.println("No exam");
             }
             System.out.println(HORIZONTAL_LINE);
         }
