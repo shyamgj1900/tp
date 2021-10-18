@@ -78,6 +78,8 @@ Format: `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
+* Users who attempt to add an event that has a time conflict with another event will need to give
+additional confirmation if they wish to proceed.
 
 Example of usage:
 
@@ -89,6 +91,11 @@ Expected Outcome:
 planner add MA1508E quiz/2021-10-10/1700/1800
 An event has been added to your schedule successfully!
 ....................................................................
+planner add Watch movie/2021-10-10/1530/1730
+You already have an event ongoing for that time period, do you still want to add? (y/n)
+y
+An event has been added to your schedule successfully!
+....................................................................
 ```
 
 ### List events: `planner list`
@@ -98,6 +105,8 @@ Lists events on a particular date
 Format: `planner list DATE`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
+* The `list` will include all the events and lessons occurring on the `DATE` specified.
+  * _Visit the section on `timetable` for commands to add lessons._
 
 Example of usage:
 
@@ -108,6 +117,7 @@ Expected Outcome:
 ```
 planner list 2021-10-10
 2021-10-10
+15:30 - 17:30 Watch movie
 17:00 - 18:00 MA1508E quiz
 ....................................................................
 ```
@@ -124,6 +134,9 @@ This command has two steps:
 3. Input the ID to delete the event.
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
+* Only events added via the `Planner` will be displayed on the list in step 2.
+  * Users are not allowed to delete lessons added via the `Timetable` from the `Planner`.
+  * _Visit the section on `timetable` for commands to delete lessons._
 
 Expected Outcome:
 ```
