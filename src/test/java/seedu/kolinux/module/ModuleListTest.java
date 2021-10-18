@@ -22,7 +22,8 @@ public class ModuleListTest {
             +
             "offers critical views on the role of architecture in constructing the national identity "
             +
-            "of Singapore.", "Architectural History of Singapore", "Architecture", workload);
+            "of Singapore.", "Architectural History of Singapore", "Architecture",
+            workload);
 
     private static final String INVALID_MODULE_CODE = "x";
     private static final ModuleDb moduleDb = new ModuleDb();
