@@ -34,7 +34,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult addLesson() throws KolinuxException {
-        Timetable.inputAsLesson(parsedArguments, moduleList);
+        Timetable.inputLesson(parsedArguments, moduleList);
         logger.log(Level.INFO, "User added a module to timetable");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +

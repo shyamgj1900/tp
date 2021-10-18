@@ -204,7 +204,7 @@ public class Timetable {
         TimetableStorage.writeToFile();
     }
 
-    public static void inputAsLesson(String[] parsedArguments, ModuleList moduleList) throws KolinuxException {
+    public static void inputLesson(String[] parsedArguments, ModuleList moduleList) throws KolinuxException {
         try {
             if (!isLessonInModuleList(moduleList, parsedArguments[0].toUpperCase())) {
                 throw new KolinuxException("Module not found in module list");
@@ -344,23 +344,33 @@ public class Timetable {
             String oldDay = parsedArguments[2].toLowerCase();
             String newDay = parsedArguments[3].toLowerCase();
             String startTiming = parsedArguments[4];
-            String endTiming = parsedArguments[5];
             int startIndex = getIndex(startTiming, schoolHours);
-            int endIndex = getIndex(endTiming, schoolHours);
+            int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay);
             int newDayIndex = getIndex(newDay, days);
+            String endTiming = schoolHours[endIndex - 1];
             String[] parameters = new String[] {moduleCode, lessonType, newDay, startTiming, endTiming};
             if (!isValidTiming(startIndex, endIndex, newDayIndex)) {
                 throw new KolinuxException(INVALID_UPDATE_FORMAT);
             }
             if (isLessonFound(moduleCode, lessonType, oldDay)) {
                 deleteLesson(parsedArguments);
-                inputAsLesson(parameters, moduleList);
+                inputLesson(parameters, moduleList);
             } else {
                 throw new KolinuxException(MISSING_LESSON_UPDATE);
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_UPDATE_FORMAT);
         }
+    }
+
+    private static int getOldLessonHours(String moduleCode, String lessonType, String day) {
+        for (Lesson lesson : lessonStorage) {
+            if (lesson.getModuleCode().equals(moduleCode) && lesson.getLessonType().equals(lessonType)
+                    && lesson.getDay().equals(day)) {
+                return lesson.getEndTimeIndex() - lesson.getStartTimeIndex();
+            }
+        }
+        return -1;
     }
 
     public static boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
