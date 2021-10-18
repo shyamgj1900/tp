@@ -3,12 +3,12 @@
 ## Introduction
 
 Kolinux is built to help NUS Computer Engineering freshmen to better integrate into university life 
-by allowing them to manage their work and learn more about NUS, all in 1 platform. It is optimized 
-for CLI users so that they can access the information that they require faster by typing in commands.
+by allowing them to **manage their work** and **learn more about NUS**, all in a **single integrated platform**. 
+It is optimized for CLI users so that they can access the information that they require faster by typing in commands.
 
-Kolinux v1.0 offers a range of minimum features for freshmen. These features include a module viewer
-for freshmen to view information of a module, a CAP calculator, a planner for freshmen to organise 
-their activities for the day and a route finder for the NUS internal shuttle bus.
+Kolinux v2.0 offers a wide range of features for freshmen. These features include a **module planner**
+for freshmen to manage their modules and view information about them, an **event planner** for freshmen to organise 
+their schedule for the day, a **CAP calculator**, and a **route finder** for the NUS internal shuttle bus.
 
 * [Quick Start](#quick-start)
 * [List of Commands](#list-of-commands)
@@ -33,6 +33,8 @@ their activities for the day and a route finder for the NUS internal shuttle bus
 
 ## Quick Start
 
+### Installation and start-up
+
 1. Ensure that you have Java 11 or above installed.
 2. Download the latest version of `Kolinux.jar` from [here](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases).
 3. Copy `Kolinux.jar` to an empty folder.
@@ -56,20 +58,22 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 ## List of Commands
 
-|    Command    	|                     Action                     	|               Command Format               	     |
-|:-------------:	|:----------------------------------------------:	|:------------------------------------------:	     |
-| `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
-| `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
-| `planner delete` 	| Delete an event on a particular date              | `planner delete DATE`                              |
-| `module view`         | View module details                               | `module view MODULE_CODE`                               |
-| `module store`	| Store a module in the module list			| `module store MODULE_CODE`			     |
-| `module delete`	| Delete a module from the module list			| `module delete MODULE_CODE`			     |
-| `module list`         | List all stored modules from the module list                               | `module list`                               |
-| `module grade`         | Set the grade of a module in the module list by its module code                               | `module grade CODE/GRADE`                               |
-| `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
-| `cap`         	| Calculate the total cap given a set of grades     | `cap MC_GRADE`                             	     |
-| `help`        	| View the different commands available          	| `help`                                     	     |
-| `bye`         	| Exit Kolinux                                   	| `bye`                                      	     |
+|    Command    	|                     Action                     	              |               Command Format               	       |
+|:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
+| `module store`	| Store a module in the module list			                      | `module store MODULE_CODE`			               |
+| `module delete`	| Delete a module from the module list			                  | `module delete MODULE_CODE`			               |
+| `module list`     | List all stored modules from the module list                    | `module list`                                      |
+| `module view`     | View module details                                             | `module view MODULE_CODE`                          |
+| `module grade`    | Set the grade of a module in the module list by its module code | `module grade CODE/GRADE`                          |
+| `timetable add`   | Add a lesson to your timetable                                  | `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`|
+| `timetable clear` | Clears all lessons in your timetable                            | `timetable clear`                                  |
+| `planner add` 	| Add a new event to your schedule on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
+| `planner list` 	| List the events on a particular date                            | `planner list DATE`                                |
+| `planner delete` 	| Delete an event on a particular date                            | `planner delete DATE`                              |
+| `bus`         	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
+| `cap`         	| Calculate the total CAP given a set of grades                   | `cap MC_GRADE`                             	       |
+| `help`        	| View the different commands available          	              | `help`                                     	       |
+| `bye`         	| Exit Kolinux                                   	              | `bye`                                      	       |
 
 
 ## Features 
