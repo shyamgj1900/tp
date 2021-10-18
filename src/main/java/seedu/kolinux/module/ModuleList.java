@@ -1,5 +1,7 @@
 package seedu.kolinux.module;
 
+import seedu.kolinux.module.timetable.Timetable;
+
 import java.util.ArrayList;
 
 /**
@@ -53,10 +55,10 @@ public class ModuleList {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
                 myModules.remove(i);
+                Timetable.deleteAllOfModule(code);
                 return "Successfully deleted module: " + code;
             }
         }
-
         return code + " not found in the module list";
     }
 
