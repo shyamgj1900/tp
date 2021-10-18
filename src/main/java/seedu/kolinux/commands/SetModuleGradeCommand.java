@@ -1,5 +1,7 @@
 package seedu.kolinux.commands;
 
+import seedu.kolinux.exceptions.KolinuxException;
+
 // May change command name later
 public class SetModuleGradeCommand extends Command {
     
@@ -14,7 +16,7 @@ public class SetModuleGradeCommand extends Command {
     }
     
     @Override
-    public CommandResult executeCommand() {
+    public CommandResult executeCommand() throws KolinuxException {
         moduleList.setModuleGrade(moduleCode, moduleGrade, moduleDb);
         String message = "Grade of " + moduleCode + " is " + moduleGrade;
         return new CommandResult(message);

@@ -1,5 +1,6 @@
 package seedu.kolinux.module;
 
+import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.timetable.Timetable;
 
 import java.util.ArrayList;
@@ -95,9 +96,14 @@ public class ModuleList {
         System.out.print("Remember to add the module's lessons to the timetable based on the workload");
     }
 
-    public void setModuleGrade(String code, String grade, ModuleDb moduleDb) {
+    public void setModuleGrade(String code, String grade, ModuleDb moduleDb) throws KolinuxException {
         ModuleDetails mod = moduleDb.getModuleInfo(code);
-        myModules.get(myModules.indexOf(mod)).setGrade(grade);
+        try {
+            myModules.get(myModules.indexOf(mod)).setGrade(grade);
+        } catch (IndexOutOfBoundsException exception) {
+            String errorMessage = code + " is not in the module list";
+            throw new KolinuxException(errorMessage);
+        }
     }
     
     public String getModuleGrade(String code, ModuleDb moduleDb) {
