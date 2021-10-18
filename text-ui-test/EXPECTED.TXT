@@ -10,21 +10,22 @@ All the events in your schedule has been cleared.
 ....................................................................
 Here are the list of commands:
 1. cap MC_AND_GRADES  - Calculates the total cap for the semester
-2. view MODULE_CODE - View the module details
-3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
-4. store_module MODULE_CODE - Add a module to your module list
-5. delete_module MODULE_CODE - Delete a module from your module list
-6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-7. planner list DATE - Lists events on a certain date
-8. planner delete DATE - Delete an event on a certain date
-9. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
-10. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME
+2. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
+3. module view MODULE_CODE - View the module details
+4. module store MODULE_CODE - Add a module to your module list
+5. module delete MODULE_CODE - Delete a module from your module list
+6. module list - List all modules stored in your module list
+7. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+8. planner list DATE - Lists events on a certain date
+9. planner delete DATE - Delete an event on a certain date
+10. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
+11. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME
     - shift a lesson to another timing
-11. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
-12. timetable clear - Remove all lessons from timetable
-13. timetable view - Print the timetable on CLI
-14. help - View this menu again
-15. bye - Exit Kolinux
+12. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
+13. timetable clear - Remove all lessons from timetable
+14. timetable view - Print the timetable on CLI
+15. help - View this menu again
+16. bye - Exit Kolinux
 ....................................................................
 Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................

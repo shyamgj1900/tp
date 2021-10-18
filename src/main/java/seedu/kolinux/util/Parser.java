@@ -4,14 +4,11 @@ import seedu.kolinux.commands.Command;
 import seedu.kolinux.commands.HelpCommand;
 import seedu.kolinux.commands.CalculateCapCommand;
 import seedu.kolinux.commands.BusRouteCommand;
-import seedu.kolinux.commands.StoreModuleCommand;
-import seedu.kolinux.commands.DeleteModuleCommand;
-import seedu.kolinux.commands.ListModulesCommand;
+import seedu.kolinux.commands.ModuleCommand;
 import seedu.kolinux.commands.InvalidCommand;
 import seedu.kolinux.commands.PlannerCommand;
 import seedu.kolinux.commands.TimetableCommand;
 import seedu.kolinux.commands.ExitCommand;
-import seedu.kolinux.commands.ViewModuleInfoCommand;
 import seedu.kolinux.exceptions.KolinuxException;
 
 import java.text.ParseException;
@@ -27,13 +24,10 @@ public class Parser {
     private static final String COMMAND_HELP = "help";
     private static final String COMMAND_CAP = "cap";
     private static final String COMMAND_BUS = "bus";
-    private static final String COMMAND_VIEW_MODULE = "view";
-    private static final String COMMAND_STORE_MODULE = "store_module";
-    private static final String COMMAND_DELETE_MODULE = "delete_module";
+    private static final String COMMAND_MODULE = "module";
     private static final String COMMAND_PLANNER = "planner";
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_TIMETABLE = "timetable";
-    private static final String COMMAND_LIST = "list";
     private static final String EMPTY_STRING = "";
 
     /**
@@ -70,20 +64,14 @@ public class Parser {
             return new CalculateCapCommand(input);
         case COMMAND_BUS:
             return new BusRouteCommand(input);
-        case COMMAND_VIEW_MODULE:
-            return new ViewModuleInfoCommand(argument);
-        case COMMAND_STORE_MODULE:
-            return new StoreModuleCommand(argument);
-        case COMMAND_DELETE_MODULE:
-            return new DeleteModuleCommand(argument);
+        case COMMAND_MODULE:
+            return parseSubCommand(argument, COMMAND_MODULE);
         case COMMAND_PLANNER:
             return parseSubCommand(argument, COMMAND_PLANNER);
         case COMMAND_EXIT:
             return new ExitCommand();
         case COMMAND_TIMETABLE:
             return parseSubCommand(argument, COMMAND_TIMETABLE);
-        case COMMAND_LIST:
-            return new ListModulesCommand();
         default:
             return new InvalidCommand();
         }
@@ -107,6 +95,8 @@ public class Parser {
             return new PlannerCommand(subCommand, parsedArguments);
         case COMMAND_TIMETABLE:
             return new TimetableCommand(subCommand, parsedArguments);
+        case COMMAND_MODULE:
+            return new ModuleCommand(subCommand, parsedArguments);
         default:
             throw new KolinuxException("Internal error occurred, please try again.");
         }
