@@ -39,7 +39,7 @@ public class ModuleCommand extends Command {
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {
         String moduleGrade;
         try {
-            moduleGrade = parsedArguments[1];
+            moduleGrade = parsedArguments[1].toUpperCase();
         } catch (IndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_GRADE_MESSAGE);
         }
@@ -84,7 +84,7 @@ public class ModuleCommand extends Command {
 
     @Override
     public CommandResult executeCommand() throws KolinuxException {
-        moduleCode = parsedArguments[0];
+        moduleCode = parsedArguments[0].toUpperCase();
 
         switch (subCommand) {
         case STORE_SUBCOMMAND:

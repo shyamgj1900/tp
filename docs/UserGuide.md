@@ -288,6 +288,10 @@ CS2113T grade set to A
 ....................................................................
 ```
 
+Note: The grades set using this command will be used to calculate CAP based on your module list. You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
+
+
+
 ### Add lessons to timetable : `timetable add`
 
 Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
