@@ -97,7 +97,8 @@ public class Planner {
     }
 
     /**
-     * Adds an event to the schedule list.
+     * Adds an event to the schedule list. This method also checks if there are conflicts between the
+     * added event and the existing events and lessons.
      *
      * @param event Event
      * @param allowConflict true if the user allows the time conflict to be ignored
@@ -112,7 +113,12 @@ public class Planner {
     }
 
     /**
-     * Lists the events on a particular date.
+     * Lists the events on a particular date. This method first obtains the list of events and lessons
+     * on the date specified. If listing with ID is required, only the added events are listed with their
+     * respective IDs. Else, all the events and lessons are listed without their IDs. This method is used
+     * when the user executes the planner list and delete operations, where the IDs are only printed if
+     * the user needs to delete an event. Hence, users are not allowed to delete lessons stored in the
+     * timetable.
      *
      * @param date Date
      * @param withId true if the list is needed to display the id of the events, false otherwise.

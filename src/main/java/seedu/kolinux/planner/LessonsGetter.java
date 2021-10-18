@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/** Represents the methods needed to fetch lessons data from the Timetable class. */
 public class LessonsGetter {
 
     private String date;
@@ -19,6 +20,12 @@ public class LessonsGetter {
     private ArrayList<Lesson> lessonsOnDate = new ArrayList<>();
     private ArrayList<Event> convertedLessonsOnDate = new ArrayList<>();
 
+    /**
+     * The list of Lesson and the corresponding Event on a specified date will be populated upon the
+     * construction of this object.
+     *
+     * @param date Date to get the list of lessons
+     */
     public LessonsGetter(String date) {
         this.date = date;
         getLessonsOnDate();
@@ -29,8 +36,12 @@ public class LessonsGetter {
         return convertedLessonsOnDate;
     }
 
+    /**
+     * Populates the lessonsOnDate array list by the list of lessons occurring on a date, specified by
+     * the date attribute of this class.
+     */
     private void getLessonsOnDate() {
-        int dayAsInteger = 0;
+        int dayAsInteger;
         try {
             dayAsInteger = Parser.findDayFromDate(date);
         } catch (ParseException exception) {
@@ -46,6 +57,12 @@ public class LessonsGetter {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Constructs an Event object from a Lesson object.
+     *
+     * @param lesson Lesson to be converted
+     * @return Event corresponding to the lesson
+     */
     private Event convertLessonToEvent(Lesson lesson) {
         String[] arguments = new String[4];
         arguments[0] = lesson.getModuleCode() + " " + lesson.getLessonType();
@@ -58,11 +75,16 @@ public class LessonsGetter {
             event = new Event(arguments);
             event.setIsLesson();
         } catch (KolinuxException exception) {
+            // Should not be executed since the necessary checks of the arguments were done before constructing
+            // the Lesson object.
             System.out.println(FATAL_ERROR);
         }
         return event;
     }
 
+    /**
+     * Constructs list of Event objects from the list of Lesson objects in lessonsOnDate.
+     */
     private void convertLessonListToEventList() {
         convertedLessonsOnDate = (ArrayList<Event>) lessonsOnDate
                 .stream()
