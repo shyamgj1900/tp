@@ -14,7 +14,10 @@ import seedu.kolinux.commands.ExitCommand;
 import seedu.kolinux.commands.ViewModuleInfoCommand;
 import seedu.kolinux.exceptions.KolinuxException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Represents the operations to parse information needed for the execution of a command.
@@ -122,5 +125,34 @@ public class Parser {
             concatenatedString = concatenatedString.concat("\n" + string);
         }
         return concatenatedString;
+    }
+
+    public static int findDayFromDate(String date) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        return day;
+    }
+
+    public static String parseDay(int day) {
+        assert ((day >= 1) && (day <= 7));
+        switch (day) {
+        case 1:
+            return "SUNDAY";
+        case 2:
+            return "MONDAY";
+        case 3:
+            return "TUESDAY";
+        case 4:
+            return "WEDNESDAY";
+        case 5:
+            return "THURSDAY";
+        case 6:
+            return "FRIDAY";
+        case 7:
+            return "SATURDAY";
+        default:
+            return "";
+        }
     }
 }
