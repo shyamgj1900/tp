@@ -19,10 +19,11 @@ their activities for the day and a route finder for the NUS internal shuttle bus
     * [`planner delete`](#delete-an-event-from-planner-planner-delete)
   * [`bus`](#check-nus-bus-route-between-2-stops-bus)
   * [`cap`](#calculate-total-cap-cap)
-  * [`view`](#view-module-details-view)
-  * [`module list`](#add-modules-to-module-list-by-code-store_module)
-    * [`store_module`](#add-modules-to-module-list-by-code-store_module)
-    * [`delete_module`](#delete-modules-from-module-list-by-code-delete_module)
+  * [`module`](#view-module-details-module-view)
+    * [`module view`](#view-module-details-module-view)
+    * [`module store`](#add-modules-to-module-list-by-code-module-store)
+    * [`module delete`](#delete-modules-from-module-list-by-code-module-delete)
+    * [`module list`](#list-modules-from-module-list-module-list)
   * [`timetable`](#add-lessons-to-timetable--timetable-add)
     * [`timetable add`](#add-lessons-to-timetable--timetable-add)
     * [`timetable clear`](#clear-timetable-timetable-clear)
@@ -59,11 +60,12 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
 | `planner delete` 	| Delete an event on a particular date              | `planner delete DATE`                              |
-| `store_module`	| Store a module in the module list			| `store_module MODULE_CODE`			     |
-| `delete_module`	| Delete a module from the module list			| `delete_module MODULE_CODE`			     |
+| `module list`         | List all stored modules from the module list                               | `module list`                               |
+| `module view`         | View module details                               | `module view MODULE_CODE`                               |
+| `module store`	| Store a module in the module list			| `module store MODULE_CODE`			     |
+| `module delete`	| Delete a module from the module list			| `module delete MODULE_CODE`			     |
 | `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
 | `cap`         	| Calculate the total cap given a set of grades     | `cap MC_GRADE`                             	     |
-| `view`        	| View module details                         	    | `view MODULE_CODE`                         	     |
 | `help`        	| View the different commands available          	| `help`                                     	     |
 | `bye`         	| Exit Kolinux                                   	| `bye`                                      	     |
 
@@ -179,15 +181,15 @@ Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
 ```
 
-### View module details: `view`
+### View module details: `module view`
 
-Format: `view MODULE_CODE`
+Format: `module view MODULE_CODE`
 
 * `MODULE_CODE` needs to be in uppercase letters
 
 Example of usage:
 
-* `view CS1010`
+* `module view CS1010`
 
 Expected Outcome:
 
@@ -211,15 +213,15 @@ etc.), fundamental data structures (arrays, strings,
 composite data types), basic sorting, and recursion.
 ....................................................................
 ```
-### Add modules to module list by code: `store_module`
+### Add modules to module list by code: `module store`
 
-Format: `store_module MODULE_CODE `
+Format: `module store MODULE_CODE `
 
 - `MODULE_CODE` needs to be in uppercase letters
 
 Example of usage:
 
-- `store_module CS2113T`
+- `module store CS2113T`
 
 Expected Outcome:
 
@@ -228,20 +230,43 @@ Successfully stored module: CS2113T
 ....................................................................
 ```
 
-### Delete modules from module list by code: `delete_module`
+### Delete modules from module list by code: `module delete`
 
-Format: `delete_module MODULE_CODE `
+Format: `delete module MODULE_CODE `
 
 - `MODULE_CODE` needs to be in uppercase letters
 
 Example of usage:
 
-- `delete_module CS2113T`
+- `delete module CS2113T`
 
 Expected Outcome:
 
 ```
 Successfully deleted module: CS2113T
+....................................................................
+```
+
+### List modules from module list: `module list`
+
+Format: `module list `
+
+Example of usage:
+
+- `module list` when CS2113T is stored in the list
+
+Expected Outcome:
+
+```
+CS2113T Software Engineering & Object-Oriented Programming
+
+Workload:
+Lecture: 2.0 hours
+Tutorial: 1.0 hours
+Project Work: 3.0 hours
+Preparation: 4.0 hours
+....................................................................
+Remember to add the module's lessons to the timetable based on the workload
 ....................................................................
 ```
 
