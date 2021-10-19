@@ -231,12 +231,15 @@ Based on your available grade, your cap for this semester is 5.00
 
 This feature also allows user to know the minimum grade to get for the other modules in order to achieve desired CAP by including the CAP at the end of the command.
 
-Format: `module cap DESIRED_CAP` when at least one module doesn't have the grade stored
+Format: `module cap DESIRED_CAP`
+
+Example of usage:
+- `module cap 4.0` when at least one module doesn't have the grade stored
 
 Demo:
 
 ```
-module cap 4
+module cap 4.0
 Based on your modules, you have to get an average grade of B+ or higher 
 in order to achieve your desired CAP
 ....................................................................
