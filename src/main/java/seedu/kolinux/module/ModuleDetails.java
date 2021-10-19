@@ -46,7 +46,7 @@ public class ModuleDetails {
         this.department = department;
         this.workload = workload;
         this.semesterData = semesterData;
-        this.grade = null;
+        this.grade = "0";
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
