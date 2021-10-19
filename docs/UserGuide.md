@@ -13,8 +13,8 @@ for the NUS internal shuttle bus.
 
 ### Latest Releases
 
-* :boom: `v2.0` _Coming soon_
-* :boom: `v1.0` Released on Oct 12, 2021.
+* 💥 `v2.0` _Coming soon_
+* 💥 `v1.0` Released on Oct 12, 2021.
 
 ## Content
 
@@ -75,6 +75,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `module list`     | List all stored modules from the module list                    | `module list`                                      |
 | `module view`     | View module details                                             | `module view MODULE_CODE`                          |
 | `module grade`    | Set the grade of a module in the module list by its module code | `module grade CODE/GRADE`                          |
+| `module cap`      | Calculate overall CAP of modules in the module list             | `module cap`                                       |
 | `timetable add`   | Add a lesson to your timetable                                  | `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`|
 | `timetable clear` | Clears all lessons in your timetable                            | `timetable clear`                                  |
 | `planner add` 	| Add a new event to your schedule on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
@@ -122,13 +123,13 @@ Successfully stored module: CS2113T
 
 #### Delete modules from module list by code: `module delete`
 
-Format: `delete module MODULE_CODE `
+Format: `module delete MODULE_CODE `
 
 - `MODULE_CODE` needs to be in uppercase letters
 
 Example of usage:
 
-- `delete module CS2113T`
+- `module delete CS2113T`
 
 Demo:
 
@@ -204,13 +205,45 @@ Example of usage:
 Demo:
 
 ```
-....................................................................
+module grade CS2113T/A
 CS2113T grade set to A
 ....................................................................
 ```
 
-:grey_exclamation: Note: The grades set using this command will be used to calculate CAP based on your module list. 
+❕ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
+
+### Calculate overall CAP from modules in module list: `module cap`
+
+Format: `module cap`
+
+Example of usage:
+
+- `module cap` when at least one module is already stored in the list with the module's grade
+
+Demo:
+
+```
+module cap
+Based on your available grade, your cap for this semester is 5.00
+....................................................................
+```
+
+This feature also allows user to know the minimum grade to get for the other modules in order to achieve desired CAP by including the CAP at the end of the command.
+
+Format: `module cap DESIRED_CAP`
+
+Example of usage:
+- `module cap 4.0` when at least one module doesn't have the grade stored
+
+Demo:
+
+```
+module cap 4.0
+Based on your modules, you have to get an average grade of B+ or higher 
+in order to achieve your desired CAP
+....................................................................
+```
 
 ### Timetable: `timetable`
 
@@ -278,7 +311,7 @@ An event has been added to your schedule successfully!
 ....................................................................
 ```
 
-:grey_exclamation: Note: Users who attempt to add an event that has a time conflict with another event will need to 
+❕ Note: Users who attempt to add an event that has a time conflict with another event will need to 
 give additional confirmation if they wish to proceed.
 
 #### List events: `planner list`
@@ -303,7 +336,7 @@ planner list 2021-10-10
 ....................................................................
 ```
 
-:grey_exclamation: Note: The `list` will include all the events and lessons occurring on the `DATE` specified.
+❕ Note: The `list` will include all the events and lessons occurring on the `DATE` specified.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to add lessons._
 
 #### Delete an event from Planner: `planner delete`
@@ -336,7 +369,7 @@ planner list 2021-11-05
 ....................................................................
 ```
 
-:grey_exclamation: Note: Only events added via the `planner` will be displayed on the list in step 2.
+❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, users are not allowed to delete lessons added via the `timetable` from the `planner`.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
 
@@ -360,19 +393,20 @@ Bus [D2] goes from PGP to MUSEUM
 ....................................................................
 ```
 
-:grey_exclamation: Note: Only routes for buses A1, D1, D2 and E have been implemented so far.
+❕ Note: Only routes for buses A1, D1, D2 and E have been implemented so far.
 
 ### CAP Calculator: `cap`
 
 The CAP calculator is an essential tool for many NUS students to keep track on their CAP and set desired grades for the
-current semester. This feature is integrated with the module manager so that users can calculate their CAP based on the
-grades set on the modules in the module manager.
+current semester. User can choose between different formats of module and the respective grade to allow more command 
+flexibility.
 
-Format: `cap MC_GRADE`
+Format: `cap mc MC/GRADE` or `cap code CODE/GRADE`
 
 Example of usage:
 
-* `cap 4A 6B+ 4B 4B- 4A+`
+* `cap mc 4/A 6/B+ 4/B 4/B- 4/A+`
+* `cap code CS2113T/A CS2101/C CG2027/B-`
 
 Demo:
 
@@ -380,6 +414,8 @@ Demo:
 cap 4A 6B+ 4B 4B- 4A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
+cap code CS2113T/A CS2101/C CG2027/B-
+Your CAP for this semester will be 3.40 if you get your desired grades!
 ```
 
 ### View menu: `help`
@@ -435,4 +471,4 @@ Kolinux automatically creates a directory `/data` upon the first start up. The d
 
 `timetable.txt` - Timetable data of the user.
 
-:exclamation: Users are advised not to modify these files as it can corrupt important user data.
+❗ Users are advised not to modify these files as it can corrupt important user data.

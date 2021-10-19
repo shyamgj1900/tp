@@ -2,6 +2,7 @@ package seedu.kolinux.commands;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
+import seedu.kolinux.module.ModuleListStorage;
 
 import java.util.logging.Level;
 
@@ -12,11 +13,14 @@ public class ModuleCommand extends Command {
     private String subCommand;
     private String[] parsedArguments;
     private String moduleCode;
-    private static final String STORE_SUBCOMMAND = "store";
-    private static final String DELETE_SUBCOMMAND = "delete";
-    private static final String VIEW_SUBCOMMAND = "view";
-    private static final String LIST_SUBCOMMAND = "list";
-    private static final String SET_GRADE_SUBCOMMAND = "grade";
+
+    public static final String STORE_SUBCOMMAND = "store";
+    public static final String DELETE_SUBCOMMAND = "delete";
+    public static final String VIEW_SUBCOMMAND = "view";
+    public static final String LIST_SUBCOMMAND = "list";
+    public static final String SET_GRADE_SUBCOMMAND = "grade";
+
+
     private static final String CAP_SUBCOMMAND = "cap";
     public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
@@ -43,7 +47,7 @@ public class ModuleCommand extends Command {
                 || moduleGrade.equals("B+") || moduleGrade.equals("B") || moduleGrade.equals("B-")
                 || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
                 || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
-                || moduleGrade.equals("U");
+                || moduleGrade.equals("U") || moduleGrade.equals("0");
     }
 
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {
@@ -58,6 +62,7 @@ public class ModuleCommand extends Command {
         }
         String message = moduleList.setModuleGrade(moduleCode, moduleGrade);
         logger.log(Level.INFO, message);
+        ModuleListStorage.writeModulesToFile(moduleList);
         return new CommandResult(message);
     }
     
@@ -69,12 +74,15 @@ public class ModuleCommand extends Command {
     private CommandResult storeModule() {
         String message = moduleList.storeModuleByCode(moduleCode, moduleDb);
         logger.log(Level.INFO, message);
+
+        ModuleListStorage.writeModulesToFile(moduleList);
         return new CommandResult(message);
     }
 
     private CommandResult deleteModule() {
         String message = moduleList.deleteModuleByCode(moduleCode);
         logger.log(Level.INFO, message);
+        ModuleListStorage.writeModulesToFile(moduleList);
         return new CommandResult(message);
     }
 

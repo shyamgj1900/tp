@@ -7,6 +7,6 @@ by allowing them to manage their work and learn more about NUS, all in 1 platfor
 for CLI users so that they can access the information that they require faster by typing in commands.
 
 Useful links:
-* :book: [User Guide](UserGuide.md)
-* :bulb: [Developer Guide](DeveloperGuide.md)
-* :family_man_boy_boy: [About Us](AboutUs.md)
+* 📖 [User Guide](UserGuide.md)
+* 💡 [Developer Guide](DeveloperGuide.md)
+* 👨‍👦‍👦 [About Us](AboutUs.md)
