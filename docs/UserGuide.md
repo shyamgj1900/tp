@@ -13,8 +13,8 @@ for the NUS internal shuttle bus.
 
 ### Latest Releases
 
-* :boom: `v2.0` _Coming soon_
-* :boom: `v1.0` Released on Oct 12, 2021.
+* 💥 `v2.0` _Coming soon_
+* 💥 `v1.0` Released on Oct 12, 2021.
 
 ## Content
 
@@ -209,7 +209,7 @@ CS2113T grade set to A
 ....................................................................
 ```
 
-:grey_exclamation: Note: The grades set using this command will be used to calculate CAP based on your module list. 
+❕ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 
 ### Timetable: `timetable`
@@ -278,7 +278,7 @@ An event has been added to your schedule successfully!
 ....................................................................
 ```
 
-:grey_exclamation: Note: Users who attempt to add an event that has a time conflict with another event will need to 
+❕ Note: Users who attempt to add an event that has a time conflict with another event will need to 
 give additional confirmation if they wish to proceed.
 
 #### List events: `planner list`
@@ -303,7 +303,7 @@ planner list 2021-10-10
 ....................................................................
 ```
 
-:grey_exclamation: Note: The `list` will include all the events and lessons occurring on the `DATE` specified.
+❕ Note: The `list` will include all the events and lessons occurring on the `DATE` specified.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to add lessons._
 
 #### Delete an event from Planner: `planner delete`
@@ -336,7 +336,7 @@ planner list 2021-11-05
 ....................................................................
 ```
 
-:grey_exclamation: Note: Only events added via the `planner` will be displayed on the list in step 2.
+❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, users are not allowed to delete lessons added via the `timetable` from the `planner`.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
 
@@ -360,7 +360,7 @@ Bus [D2] goes from PGP to MUSEUM
 ....................................................................
 ```
 
-:grey_exclamation: Note: Only routes for buses A1, D1, D2 and E have been implemented so far.
+❕ Note: Only routes for buses A1, D1, D2 and E have been implemented so far.
 
 ### CAP Calculator: `cap`
 
@@ -435,4 +435,4 @@ Kolinux automatically creates a directory `/data` upon the first start up. The d
 
 `timetable.txt` - Timetable data of the user.
 
-:exclamation: Users are advised not to modify these files as it can corrupt important user data.
+❗ Users are advised not to modify these files as it can corrupt important user data.
