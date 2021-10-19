@@ -9,7 +9,7 @@ import java.util.logging.Level;
 /** Represents the command that interacts with the Planner. */
 public class PlannerCommand extends Command {
 
-    private Planner planner = new Planner();
+    private Planner planner = new Planner(moduleList);
 
     private String subCommand;
     private String[] parsedArguments;
