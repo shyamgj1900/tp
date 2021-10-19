@@ -12,10 +12,8 @@ public class CalculateModuleListCapCommand extends Command {
     
     private ModuleListCapCalculator calculator;
     private String moduleDescriptionList;
-
-    // Command format: module cap
+    
     public CalculateModuleListCapCommand() {
-        // parse module list
         moduleDescriptionList = "cap code";
         for (ModuleDetails module : moduleList.getMyModules()) {
             String moduleCode = module.getModuleCode();
@@ -27,7 +25,6 @@ public class CalculateModuleListCapCommand extends Command {
             moduleDescriptionList += " " + moduleDescription;
         }
         this.calculator = new ModuleListCapCalculator(moduleDescriptionList);
-        //this.calculator = new ModuleListCapCalculator(moduleList);
     }
     
     @Override

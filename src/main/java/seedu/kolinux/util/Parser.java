@@ -5,7 +5,6 @@ import seedu.kolinux.commands.Command;
 import seedu.kolinux.commands.HelpCommand;
 import seedu.kolinux.commands.CalculateCapCommand;
 import seedu.kolinux.commands.BusRouteCommand;
-import seedu.kolinux.commands.SetModuleGradeCommand;
 import seedu.kolinux.commands.ModuleCommand;
 import seedu.kolinux.commands.InvalidCommand;
 import seedu.kolinux.commands.PlannerCommand;

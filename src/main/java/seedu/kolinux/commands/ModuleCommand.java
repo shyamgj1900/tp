@@ -17,7 +17,6 @@ public class ModuleCommand extends Command {
     private static final String VIEW_SUBCOMMAND = "view";
     private static final String LIST_SUBCOMMAND = "list";
     private static final String SET_GRADE_SUBCOMMAND = "grade";
-    //private static final String SHOW_CAP_SUBCOMMAND = "cap"; ///////////////////////////////////////////
     public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
@@ -60,13 +59,6 @@ public class ModuleCommand extends Command {
         logger.log(Level.INFO, message);
         return new CommandResult(message);
     }
-    
-    /*private CommandResult showModuleCap() throws KolinuxException {
-        //ModuleListCapCalculator calculator = new ModuleListCapCalculator(moduleList);
-        //return calculator.executeCapCalculator();
-        CalculateModuleListCapCommand command = new CalculateModuleListCapCommand();
-        return command.executeCommand();
-    }*/
 
     private CommandResult storeModule() {
         String message = moduleList.storeModuleByCode(moduleCode, moduleDb);
@@ -117,8 +109,6 @@ public class ModuleCommand extends Command {
             return listMyModules();
         case SET_GRADE_SUBCOMMAND:
             return setModuleGrade(parsedArguments);
-        /*case SHOW_CAP_SUBCOMMAND:
-            return showModuleCap();*/
         default:
             return displayError();
         }
