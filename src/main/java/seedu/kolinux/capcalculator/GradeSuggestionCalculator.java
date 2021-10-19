@@ -4,17 +4,27 @@ import seedu.kolinux.exceptions.KolinuxException;
 
 public class GradeSuggestionCalculator extends CapCalculatorByCode {
     
+    private static final String UNAVAILABLE_GRADE = "0";
+    
     private String userDesiredCap;
     
     public GradeSuggestionCalculator(String input, String userDesiredCap) {
         super(input);
         this.userDesiredCap = userDesiredCap;
     }
+    
+    public void checkInvalidDesiredCap() throws KolinuxException {
+        double cap = Double.parseDouble(userDesiredCap);
+        if (cap > 5.0) {
+            String errorMessage = "CAP cannot exceed 5.0";
+            throw new KolinuxException(errorMessage);
+        }
+    }
 
     private boolean isInvalidModule(String module) {
         String[] moduleDescriptions = module.split("/");
         String grade = moduleDescriptions[1];
-        return grade.equals("S") || grade.equals("U") || grade.equals("0");
+        return grade.equals(SATISFACTORY_GRADE) || grade.equals(UNSATISFACTORY_GRADE) || grade.equals(UNAVAILABLE_GRADE);
     }
     
     private double getMcModulesWithGrade() {
@@ -23,8 +33,6 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
             if (isInvalidModule(module)) {
                 continue;
             }
-            /*String[] moduleDescriptions = module.split("/");
-            totalMc += Double.parseDouble(moduleDescriptions[1]);*/
             int mc = getMc(module);
             totalMc += mc;
         }
@@ -34,8 +42,6 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
     private double getMcModulesWithoutGrade() {
         double totalMc = 0.0;
         for (String module : invalidModules) {
-            /*String[] moduleDescriptions = module.split("/");
-            totalMc += Double.parseDouble(moduleDescriptions[1]);*/
             int mc = getMc(module);
             totalMc += mc;
         }
@@ -70,7 +76,6 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
     }
     
     private String getMinimumGrade(double currentCap, double mcModuleWithGrade, double mcModuleWithoutGrade) {
-        //double desiredCap = Double.parseDouble(modules.get(modules.size() - 1));
         double desiredCap = Double.parseDouble(userDesiredCap);
         double minimumCap = ((desiredCap * mcModuleWithGrade) + (desiredCap * mcModuleWithoutGrade) - (currentCap * mcModuleWithGrade)) / mcModuleWithoutGrade;
         return getGradeLetter(minimumCap);
@@ -84,6 +89,7 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
     }
      
     public String executeCapCalculator() throws KolinuxException {
+        checkInvalidDesiredCap();
         checkModulesNotEmpty();
         return getExpectedGrades();
     }

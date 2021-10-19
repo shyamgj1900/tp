@@ -8,6 +8,9 @@ import java.util.ArrayList;
  * Abstract representation of CAP calculator based on user input.
  */
 public abstract class CapCalculator {
+
+    protected static final String SATISFACTORY_GRADE = "S";
+    protected static final String UNSATISFACTORY_GRADE = "U";
     
     private static final int CLASSNAME_POSITION = 3;
     private static final int INFO_TYPE_POSITION = 1;
@@ -57,6 +60,10 @@ public abstract class CapCalculator {
             case "CapCalculatorByMc":
                 errorMessage = "Please enter valid module description. Example: 4/A+";
                 throw new KolinuxException(errorMessage);
+            case "ModuleListCapCalculator":
+            case "GradeSuggestionCalculator":
+                errorMessage = "Please store modules using module store command";
+                throw new KolinuxException(errorMessage);
             default:
                 // Should not reach this case
                 assert false;
@@ -79,7 +86,7 @@ public abstract class CapCalculator {
             return true; // return true in order for getCap method to skip this module
         }
         String grade = moduleDescriptions[INFO_TYPE_POSITION];
-        return grade.equals("S") || grade.equals("U");
+        return grade.equals(SATISFACTORY_GRADE) || grade.equals(UNSATISFACTORY_GRADE);
     }
 
     /**
