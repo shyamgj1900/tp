@@ -3,35 +3,47 @@
 ## Introduction
 
 Kolinux is built to help NUS Computer Engineering freshmen to better integrate into university life 
-by allowing them to manage their work and learn more about NUS, all in 1 platform. It is optimized 
-for CLI users so that they can access the information that they require faster by typing in commands.
+by allowing them to **manage their work** and **learn more about NUS**, all in a **single integrated platform**. 
+It is optimized for CLI users so that they can access the information that they require faster by typing in commands.
 
-Kolinux v1.0 offers a range of minimum features for freshmen. These features include a module viewer
-for freshmen to view information of a module, a CAP calculator, a planner for freshmen to organise 
-their activities for the day and a route finder for the NUS internal shuttle bus.
+Kolinux offers a wide range of features for freshmen. These features include a **module manager**
+for freshmen to manage their modules and view information about them, a **timetable** to view their classes, an 
+**event planner** for freshmen to organise their schedule for the day, a **CAP calculator**, and a **route finder** 
+for the NUS internal shuttle bus.
+
+### Latest Releases
+
+* :boom: `v2.0` _Coming soon_
+* :boom: `v1.0` Released on Oct 12, 2021.
+
+## Content
 
 * [Quick Start](#quick-start)
 * [List of Commands](#list-of-commands)
 * [Features](#features)
-  * [`planner`](#add-an-event-to-planner-planner-add)
-    * [`planner add`](#add-an-event-to-planner-planner-add)
-    * [`planner list`](#list-events-planner-list)
-    * [`planner delete`](#delete-an-event-from-planner-planner-delete)
-  * [`bus`](#check-nus-bus-route-between-2-stops-bus)
-  * [`cap`](#calculate-total-cap-cap)
-  * [`module`](#view-module-details-module-view)
-    * [`module view`](#view-module-details-module-view)
+  * [`module`](#module-manager-module)
     * [`module store`](#add-modules-to-module-list-by-code-module-store)
     * [`module delete`](#delete-modules-from-module-list-by-code-module-delete)
     * [`module list`](#list-modules-from-module-list-module-list)
-    * [`module grade`](#set-a-module's-grade-in-module-list-module-grade)
-  * [`timetable`](#add-lessons-to-timetable--timetable-add)
+    * [`module view`](#view-module-details-module-view)
+    * [`module grade`](#set-a-modules-grade-in-module-list-module-grade)
+  * [`timetable`](#timetable-timetable)
     * [`timetable add`](#add-lessons-to-timetable--timetable-add)
     * [`timetable clear`](#clear-timetable-timetable-clear)
+  * [`planner`](#event-planner-planner)
+    * [`planner add`](#add-an-event-to-planner-planner-add)
+    * [`planner list`](#list-events-planner-list)
+    * [`planner delete`](#delete-an-event-from-planner-planner-delete)
+  * [`bus`](#nus-bus-route-finder-bus)
+  * [`cap`](#cap-calculator-cap)
   * [`help`](#view-menu-help)
-  * [`bye`](#exit-kolinux-bye)
+  * [`bye`](#exit-bye)
+* [FAQ](#faq)
+* [Data Storage](#data-storage)
 
 ## Quick Start
+
+### Installation and start-up
 
 1. Ensure that you have Java 11 or above installed.
 2. Download the latest version of `Kolinux.jar` from [here](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases).
@@ -56,134 +68,99 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 ## List of Commands
 
-|    Command    	|                     Action                     	|               Command Format               	     |
-|:-------------:	|:----------------------------------------------:	|:------------------------------------------:	     |
-| `planner add` 	| Add a new event to your schedule              	| `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
-| `planner list` 	| List the events on a particular date              | `planner list DATE`                                |
-| `planner delete` 	| Delete an event on a particular date              | `planner delete DATE`                              |
-| `module view`         | View module details                               | `module view MODULE_CODE`                               |
-| `module store`	| Store a module in the module list			| `module store MODULE_CODE`			     |
-| `module delete`	| Delete a module from the module list			| `module delete MODULE_CODE`			     |
-| `module list`         | List all stored modules from the module list                               | `module list`                               |
-| `module grade`         | Set the grade of a module in the module list by its module code                               | `module grade CODE/GRADE`                               |
-| `bus`         	| Check for a NUS bus route from stop to another 	| `bus /start_location /end_location`                |
-| `cap`         	| Calculate the total cap given a set of grades     | `cap MC_GRADE`                             	     |
-| `help`        	| View the different commands available          	| `help`                                     	     |
-| `bye`         	| Exit Kolinux                                   	| `bye`                                      	     |
+|    Command    	|                     Action                     	              |               Command Format               	       |
+|:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
+| `module store`	| Store a module in the module list			                      | `module store MODULE_CODE`			               |
+| `module delete`	| Delete a module from the module list			                  | `module delete MODULE_CODE`			               |
+| `module list`     | List all stored modules from the module list                    | `module list`                                      |
+| `module view`     | View module details                                             | `module view MODULE_CODE`                          |
+| `module grade`    | Set the grade of a module in the module list by its module code | `module grade CODE/GRADE`                          |
+| `timetable add`   | Add a lesson to your timetable                                  | `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`|
+| `timetable clear` | Clears all lessons in your timetable                            | `timetable clear`                                  |
+| `planner add` 	| Add a new event to your schedule on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
+| `planner list` 	| List the events on a particular date                            | `planner list DATE`                                |
+| `planner delete` 	| Delete an event on a particular date                            | `planner delete DATE`                              |
+| `bus`         	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
+| `cap`         	| Calculate the total CAP given a set of grades                   | `cap MC_GRADE`                             	       |
+| `help`        	| View the different commands available          	              | `help`                                     	       |
+| `bye`         	| Exit Kolinux                                   	              | `bye`                                      	       |
 
 
 ## Features 
 
-### Add an event to Planner: `planner add`
+Kolinux provides a **single integrated platform** consisting of **5 core features**:
 
-Adds a new event to your schedule
+1. `module` - Module Manager
+2. `timetable` - Timetable
+3. `planner` - Event Planner
+4. `bus` - Route Finder
+5. `cap` - CAP Calculator
 
-Format: `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
+### Module Manager: `module`
 
-* The `DATE` needs to follow the following format: `yyyy-mm-dd`
-* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
+The module manager allows users to `store`, `delete`, and `list` the modules they are taking for the semester. Users 
+are also able to `view` important information regarding a module, such as the description and workload requirements. 
+In addition, users are able to set a `grade` on the modules in their list for the purpose of CAP calculation using our 
+in-built CAP calculator.
 
-Example of usage:
+#### Add modules to module list by code: `module store`
 
-* `planner add MA1508E quiz/2021-10-10/1700/1800`
+Format: `module store MODULE_CODE `
 
-Expected Outcome:
-
-```
-planner add MA1508E quiz/2021-10-10/1700/1800
-An event has been added to your schedule successfully!
-....................................................................
-```
-
-### List events: `planner list`
-
-Lists events on a particular date
-
-Format: `planner list DATE`
-
-* The `DATE` needs to follow the following format: `yyyy-mm-dd`
+- `MODULE_CODE` needs to be in uppercase letters
 
 Example of usage:
 
-* `planner list 2021-10-10`
+- `module store CS2113T`
 
-Expected Outcome:
+Demo:
 
 ```
-planner list 2021-10-10
-2021-10-10
-17:00 - 18:00 MA1508E quiz
+Successfully stored module: CS2113T
 ....................................................................
 ```
 
-### Delete an event from Planner: `planner delete`
+#### Delete modules from module list by code: `module delete`
 
-Deletes an event from your schedule
+Format: `delete module MODULE_CODE `
 
-Format: `planner delete DATE`
-
-This command has two steps:
-1. Input the command as shown in the format above.
-2. The schedule of events on `DATE` will be displayed, find the ID of the event you wish to delete.
-3. Input the ID to delete the event.
-
-* The `DATE` needs to follow the following format: `yyyy-mm-dd`
-
-Expected Outcome:
-```
-planner delete 2021-11-05
-Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):
-07:00 - 07:30 10km run (id: 7)
-10:00 - 12:00 Attend career talk (id: 9)
-15:00 - 17:00 Watch movie (id: 1)
-9
-An event has been deleted from your schedule successfully!
-....................................................................
-planner list 2021-11-05
-2021-11-05
-07:00 - 07:30 10km run (id: 7)
-15:00 - 17:00 Watch movie (id: 1)
-....................................................................
-```
-
-### Check NUS bus route between 2 stops: `bus`
-
-Helps to find if there are bus routes between any 2 NUS bus stops. 
-
-Format: `bus /start_location /end_location`
-
-* Bus stop names are not case sensitive
+- `MODULE_CODE` needs to be in uppercase letters
 
 Example of usage:
 
-* `bus /pgp /museum`
+- `delete module CS2113T`
 
-Expected Outcome:
+Demo:
 
 ```
-Bus [D2] goes from PGP to MUSEUM
+Successfully deleted module: CS2113T
 ....................................................................
 ```
 
-Note: ***Routes for buses A1, D1, D2 and E have been implemented so far***
+#### List modules from module list: `module list`
 
-### Calculate total CAP: `cap`
-
-Format: `cap MC_GRADE`
+Format: `module list `
 
 Example of usage:
 
-* `cap 4A 6B+ 4B 4B- 4A+`
+- `module list` when CS2113T is already stored in the list
 
-Expected Outcome:
+Demo:
 
 ```
-cap 4A 6B+ 4B 4B- 4A+
-Your CAP for this semester will be 4.09 if you get your desired grades!
+CS2113T Software Engineering & Object-Oriented Programming
+
+Workload:
+Lecture: 2.0 hours
+Tutorial: 1.0 hours
+Project Work: 3.0 hours
+Preparation: 4.0 hours
+....................................................................
+Remember to add the module's lessons to the timetable based on the workload
 ....................................................................
 ```
 
-### View module details: `module view`
+#### View module details: `module view`
 
 Format: `module view MODULE_CODE`
 
@@ -193,7 +170,7 @@ Example of usage:
 
 * `module view CS1010`
 
-Expected Outcome:
+Demo:
 
 ```
 view CS1010
@@ -215,64 +192,8 @@ etc.), fundamental data structures (arrays, strings,
 composite data types), basic sorting, and recursion.
 ....................................................................
 ```
-### Add modules to module list by code: `module store`
 
-Format: `module store MODULE_CODE `
-
-- `MODULE_CODE` needs to be in uppercase letters
-
-Example of usage:
-
-- `module store CS2113T`
-
-Expected Outcome:
-
-```
-Successfully stored module: CS2113T
-....................................................................
-```
-
-### Delete modules from module list by code: `module delete`
-
-Format: `delete module MODULE_CODE `
-
-- `MODULE_CODE` needs to be in uppercase letters
-
-Example of usage:
-
-- `delete module CS2113T`
-
-Expected Outcome:
-
-```
-Successfully deleted module: CS2113T
-....................................................................
-```
-
-### List modules from module list: `module list`
-
-Format: `module list `
-
-Example of usage:
-
-- `module list` when CS2113T is already stored in the list
-
-Expected Outcome:
-
-```
-CS2113T Software Engineering & Object-Oriented Programming
-
-Workload:
-Lecture: 2.0 hours
-Tutorial: 1.0 hours
-Project Work: 3.0 hours
-Preparation: 4.0 hours
-....................................................................
-Remember to add the module's lessons to the timetable based on the workload
-....................................................................
-```
-
-### Set a module's grade in module list: `module grade`
+#### Set a module's grade in module list: `module grade`
 
 Format: `module grade CODE/GRADE `
 
@@ -280,7 +201,7 @@ Example of usage:
 
 - `module grade CS2113T/A` when CS2113T is already stored in the list
 
-Expected Outcome:
+Demo:
 
 ```
 ....................................................................
@@ -288,11 +209,15 @@ CS2113T grade set to A
 ....................................................................
 ```
 
-Note: The grades set using this command will be used to calculate CAP based on your module list. You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
+:grey_exclamation: Note: The grades set using this command will be used to calculate CAP based on your module list. 
+You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 
+### Timetable: `timetable`
 
+This feature allows users to `add` and `clear` lessons from their timetable based on the modules added in the module
+manager. It also provides users an aesthetic visual representation of their timetable on CLI interface.
 
-### Add lessons to timetable : `timetable add`
+#### Add lessons to timetable : `timetable add`
 
 Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
 
@@ -305,27 +230,163 @@ Example of usage:
 * `timetable add CS1010 TUT/Monday/1200/1400`
 * `timetable add CS2113T LEC/friday/1600/1800`
 
-Expected Outcome:
+Demo:
 ```
 timetable add CS1010 TUT/Monday/1200/1400
 Lesson has been added to timetable
 ....................................................................
 ```
 
-### Clear timetable: `timetable clear`
+#### Clear timetable: `timetable clear`
 
-Expected outcome:
+Demo:
 ```
 timetable clear
 Timetable has been cleared completely
 ....................................................................
 ```
 
+### Event Planner: `planner`
+
+The event planner works by allowing users to `add`, `delete`, and `list` any events happening on a specific date. 
+This is for users to manage their schedules daily. This feature is also integrated with the timetable so that users 
+will also be able to view their lessons on specific dates.
+
+#### Add an event to Planner: `planner add`
+
+Adds a new event to your schedule
+
+Format: `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
+
+* The `DATE` needs to follow the following format: `yyyy-mm-dd`
+* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
+
+Example of usage:
+
+* `planner add MA1508E quiz/2021-10-10/1700/1800`
+
+Demo:
+
+```
+planner add MA1508E quiz/2021-10-10/1700/1800
+An event has been added to your schedule successfully!
+....................................................................
+planner add Watch movie/2021-10-10/1530/1730
+You already have an event ongoing for that time period, do you still want to add? (y/n)
+y
+An event has been added to your schedule successfully!
+....................................................................
+```
+
+:grey_exclamation: Note: Users who attempt to add an event that has a time conflict with another event will need to 
+give additional confirmation if they wish to proceed.
+
+#### List events: `planner list`
+
+Lists events on a particular date
+
+Format: `planner list DATE`
+
+* The `DATE` needs to follow the following format: `yyyy-mm-dd`
+
+Example of usage:
+
+* `planner list 2021-10-10`
+
+Demo:
+
+```
+planner list 2021-10-10
+2021-10-10
+15:30 - 17:30 Watch movie
+17:00 - 18:00 MA1508E quiz
+....................................................................
+```
+
+:grey_exclamation: Note: The `list` will include all the events and lessons occurring on the `DATE` specified.
+_Visit the section on [`timetable`](#timetable-timetable) for commands to add lessons._
+
+#### Delete an event from Planner: `planner delete`
+
+Deletes an event from your schedule
+
+Format: `planner delete DATE`
+
+This command has two steps:
+1. Input the command as shown in the format above.
+2. The schedule of events on `DATE` will be displayed, find the ID of the event you wish to delete.
+3. Input the ID to delete the event.
+
+* The `DATE` needs to follow the following format: `yyyy-mm-dd`
+
+Demo:
+```
+planner delete 2021-11-05
+Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):
+07:00 - 07:30 10km run (id: 7)
+10:00 - 12:00 Attend career talk (id: 9)
+15:00 - 17:00 Watch movie (id: 1)
+9
+An event has been deleted from your schedule successfully!
+....................................................................
+planner list 2021-11-05
+2021-11-05
+07:00 - 07:30 10km run (id: 7)
+15:00 - 17:00 Watch movie (id: 1)
+....................................................................
+```
+
+:grey_exclamation: Note: Only events added via the `planner` will be displayed on the list in step 2.
+Hence, users are not allowed to delete lessons added via the `timetable` from the `planner`.
+_Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
+
+### NUS Bus Route Finder: `bus`
+
+The route finder helps users to find if there are bus routes between any two NUS bus stops. This feature allows users
+to get familiarised with the NUS internal shuttle bus route.
+
+Format: `bus /start_location /end_location`
+
+* Bus stop names are not case sensitive
+
+Example of usage:
+
+* `bus /pgp /museum`
+
+Demo:
+
+```
+Bus [D2] goes from PGP to MUSEUM
+....................................................................
+```
+
+:grey_exclamation: Note: Only routes for buses A1, D1, D2 and E have been implemented so far.
+
+### CAP Calculator: `cap`
+
+The CAP calculator is an essential tool for many NUS students to keep track on their CAP and set desired grades for the
+current semester. This feature is integrated with the module manager so that users can calculate their CAP based on the
+grades set on the modules in the module manager.
+
+Format: `cap MC_GRADE`
+
+Example of usage:
+
+* `cap 4A 6B+ 4B 4B- 4A+`
+
+Demo:
+
+```
+cap 4A 6B+ 4B 4B- 4A+
+Your CAP for this semester will be 4.09 if you get your desired grades!
+....................................................................
+```
+
 ### View menu: `help`
 
-Views the different commands available
+Views the different commands available.
 
-Expected outcome:
+Demo:
 
 ```
 help
@@ -345,11 +406,11 @@ Here are the list of commands:
 ....................................................................
 ```
 
-### Exit Kolinux: `bye`
+### Exit: `bye`
 
-Exits Kolinux
+Exits Kolinux.
 
-Expected Outcome:
+Demo:
 
 ```
 bye
@@ -374,4 +435,4 @@ Kolinux automatically creates a directory `/data` upon the first start up. The d
 
 `timetable.txt` - Timetable data of the user.
 
-Users are advised not to modify these files as it can corrupt important user data.
+:exclamation: Users are advised not to modify these files as it can corrupt important user data.
