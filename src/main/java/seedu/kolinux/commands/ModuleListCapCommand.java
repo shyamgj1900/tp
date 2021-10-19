@@ -6,11 +6,11 @@ import seedu.kolinux.capcalculator.ModuleListCapCalculator;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 
+import java.util.logging.Level;
+
 /**
  * Represents the command that calculate CAP from stored modules.
  */
-import java.util.logging.Level;
-
 public class ModuleListCapCommand extends Command {
     
     private static final String UNAVAILABLE_GRADE = "0";
