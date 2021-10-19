@@ -21,10 +21,9 @@ public class HelpCommand extends Command {
             + "13. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
             + "    - shift a lesson to another timing\n"
             + "14. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson\n"
-            + "15. timetable clear - Remove all lessons from timetable\n"
-            + "16. timetable view - Print the timetable on CLI\n"
-            + "17. help - View this menu again\n"
-            + "18. bye - Exit Kolinux";
+            + "15. timetable view - Print the timetable on CLI\n"
+            + "16. help - View this menu again\n"
+            + "17. bye - Exit Kolinux";
 
     @Override
     public CommandResult executeCommand() {
