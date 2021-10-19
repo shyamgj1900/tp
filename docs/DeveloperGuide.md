@@ -98,7 +98,8 @@ The figure below represents the sequence diagram when `planner add` is invoked:
 
 ### Value proposition:
  
-Users can manage all important university related tasks (module planner, scheduler, timetable, finding bus routes and CAP calculator) all in 1 platform.
+Users can manage all important university related tasks (Module Manager, Event Planner, Timetable, Bus Route Finder, 
+and CAP calculator) in a single integrated platform.
 
 ## User Stories
 
@@ -112,7 +113,7 @@ Users can manage all important university related tasks (module planner, schedul
 | v1.0    	| As a NUS student             	| add modules that I am interested in taking to my module list                                                    	| I can start preparing for modreg ahead of time             	|
 | v1.0    	| As a NUS student             	| remove modules that I am no longer interested in taking from my list                                            	| I can focus on the modules which I'm interested in         	|
 | v2.0    	| As a user                    	| see my plan of the day in a chronological order                                                                 	| I will not miss out any important events                   	|
-| v2.0    	| As an overwhelmed freshman   	| be able to delete events from my Planner because of my unpredictable schedule                                   	| I can                                                      	|
+| v2.0    	| As an overwhelmed freshman   	| be able to delete events from my Planner because of my unpredictable schedule                                   	| I can remove cancelled events out of my list.                 |
 | v2.0    	| As a user                    	| see a list of my modules                                                                                        	| I can plan my academic journey                             	|
 | v2.0    	| As a user                    	| be able to add events even when it conflicts with another event                                                 	| I can train my multitasking skills and be more productive. 	|
 | v2.0    	| As a user                    	| view my classes when using the Planner for more effective planning of events                                    	| I can plan my schedule very precisely                      	|
