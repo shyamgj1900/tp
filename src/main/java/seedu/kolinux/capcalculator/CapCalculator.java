@@ -17,7 +17,7 @@ public abstract class CapCalculator {
     
     protected static final double MAX_CAP = 5.0;
     
-    private static final String TWO_DECIMAL_FORMAT = "%.2f";
+    protected static final String TWO_DECIMAL_FORMAT = "%.2f";
     
     protected ArrayList<String> modules;
     protected ArrayList<String> invalidModules;

@@ -1,7 +1,5 @@
 package seedu.kolinux.commands;
 
-import seedu.kolinux.capcalculator.CapCalculator;
-import seedu.kolinux.capcalculator.ModuleListCapCalculator;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 
@@ -19,8 +17,9 @@ public class ModuleCommand extends Command {
     private static final String VIEW_SUBCOMMAND = "view";
     private static final String LIST_SUBCOMMAND = "list";
     private static final String SET_GRADE_SUBCOMMAND = "grade";
-    private static final String SHOW_CAP_SUBCOMMAND = "cap"; ///////////////////////////////////////////
-    public static final String INVALID_GRADE_MESSAGE = "Please use the format: module grade CODE/GRADE";
+    //private static final String SHOW_CAP_SUBCOMMAND = "cap"; ///////////////////////////////////////////
+    public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
+    public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
             +
             "1. module store CODE\n"
@@ -38,23 +37,36 @@ public class ModuleCommand extends Command {
         this.subCommand = subCommand;
         this.parsedArguments = parsedArguments;
     }
+    
+    private boolean isValidGrade(String moduleGrade) {
+        return moduleGrade.equals("A+") || moduleGrade.equals("A") || moduleGrade.equals("A-")
+                || moduleGrade.equals("B+") || moduleGrade.equals("B") || moduleGrade.equals("B-")
+                || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
+                || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
+                || moduleGrade.equals("U");
+    }
 
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {
         String moduleGrade;
         try {
             moduleGrade = parsedArguments[1].toUpperCase();
         } catch (IndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_GRADE_MESSAGE);
+            throw new KolinuxException(INVALID_GRADE_FORMAT_MESSAGE);
+        }
+        if (!isValidGrade(moduleGrade)) {
+            throw new KolinuxException(INVALID_GRADE_LETTER_MESSAGE);
         }
         String message = moduleList.setModuleGrade(moduleCode, moduleGrade);
         logger.log(Level.INFO, message);
         return new CommandResult(message);
     }
     
-    private CommandResult showModuleCap() throws KolinuxException {
-        ModuleListCapCalculator calculator = new ModuleListCapCalculator(moduleList);
-        return calculator.executeCapCalculator();
-    }
+    /*private CommandResult showModuleCap() throws KolinuxException {
+        //ModuleListCapCalculator calculator = new ModuleListCapCalculator(moduleList);
+        //return calculator.executeCapCalculator();
+        CalculateModuleListCapCommand command = new CalculateModuleListCapCommand();
+        return command.executeCommand();
+    }*/
 
     private CommandResult storeModule() {
         String message = moduleList.storeModuleByCode(moduleCode, moduleDb);
@@ -105,8 +117,8 @@ public class ModuleCommand extends Command {
             return listMyModules();
         case SET_GRADE_SUBCOMMAND:
             return setModuleGrade(parsedArguments);
-        case SHOW_CAP_SUBCOMMAND:
-            return showModuleCap();
+        /*case SHOW_CAP_SUBCOMMAND:
+            return showModuleCap();*/
         default:
             return displayError();
         }
