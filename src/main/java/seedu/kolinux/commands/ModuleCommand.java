@@ -2,6 +2,7 @@ package seedu.kolinux.commands;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
+import seedu.kolinux.module.ModuleListStorage;
 
 import java.util.logging.Level;
 
@@ -45,18 +46,22 @@ public class ModuleCommand extends Command {
         }
         String message = moduleList.setModuleGrade(moduleCode, moduleGrade);
         logger.log(Level.INFO, message);
+        ModuleListStorage.writeModulesToFile(moduleList);
         return new CommandResult(message);
     }
 
     private CommandResult storeModule() {
         String message = moduleList.storeModuleByCode(moduleCode, moduleDb);
         logger.log(Level.INFO, message);
+
+        ModuleListStorage.writeModulesToFile(moduleList);
         return new CommandResult(message);
     }
 
     private CommandResult deleteModule() {
         String message = moduleList.deleteModuleByCode(moduleCode);
         logger.log(Level.INFO, message);
+        ModuleListStorage.writeModulesToFile(moduleList);
         return new CommandResult(message);
     }
 

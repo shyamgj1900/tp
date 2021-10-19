@@ -63,9 +63,7 @@ public class ModuleListStorage {
     public static void setupStorage() {
         try {
             File storedModules = new File(STORAGE_PATH);
-            if (storedModules.createNewFile()) {
-                System.out.println("File created: " + storedModules.getName());
-            } else {
+            if (!storedModules.createNewFile()) {
                 System.out.println("Loading from " + STORAGE_PATH);
                 loadStoredModules(storedModules);
             }
@@ -94,21 +92,6 @@ public class ModuleListStorage {
             fw.close();
         } catch (IOException e) {
             System.out.println(STORAGE_PATH + " can't be overwritten. Changes will be lost when the program is closed");
-        }
-    }
-
-    /**
-     * Appends a new module's details to the file at STORAGE_PATH.
-     *
-     * @param newModuleDetails ModuleDetails to append to the file at STORAGE_PATH
-     */
-    public static void appendModuleToFile(ModuleDetails newModuleDetails) {
-        try {
-            FileWriter fw = new FileWriter(STORAGE_PATH, true);
-            fw.write('\n' + newModuleDetails.getEncodedFormat());
-            fw.close();
-        } catch (IOException e) {
-            System.out.println(STORAGE_PATH + " cannot be updated. Changes will be lost when the program is closed");
         }
     }
 
