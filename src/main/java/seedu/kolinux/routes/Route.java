@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Route {
     public static final String BUS_A1 = "A1";
@@ -17,10 +16,10 @@ public class Route {
     public static final String BUS_D2 = "D2";
     public static final String BUS_E = "E";
     public static final String BUS_K = "K";
-    public static final String PGP = "PGP";
-    public static final String IT = "IT";
-    public static final String UTOWN = "UTOWN";
-    public static final String KENT_VALE = "KENT VALE";
+    public static final String STOP_PGP = "PGP";
+    public static final String STOP_IT = "IT";
+    public static final String STOP_UTOWN = "UTOWN";
+    public static final String STOP_KENT_VALE = "KENT VALE";
     private static final String FILEPATH_A1 = "/routeA1.txt";
     private static final String FILEPATH_A2 = "/routeA2.txt";
     private static final String FILEPATH_D1 = "/routeD1.txt";
@@ -29,47 +28,54 @@ public class Route {
     private static final String FILEPATH_K = "/routeK.txt";
     public static final String FILEPATH_STOP_NAMES = "/busStopNames.txt";
     public static final String COMMAND_LIST_STOPS = "bus stop list";
+    public static final String USER_COMMAND_DELIMITER = " /";
+    public static final int TOTAL_VERTICES_A1 = 13;
+    public static final int TOTAL_VERTICES_A2 = 14;
+    public static final int TOTAL_VERTICES_D1 = 13;
+    public static final int TOTAL_VERTICES_D2 = 12;
+    public static final int TOTAL_VERTICES_E = 7;
+    public static final int TOTAL_VERTICES_K = 16;
 
     private String[] splitInput;
     private String[] location;
-    private int[] vertexCodeAOne;
-    private int[] vertexCodeATwo;
-    private int[] vertexCodeDOne;
-    private int[] vertexCodeDTwo;
+    private int[] vertexCodeA1;
+    private int[] vertexCodeA2;
+    private int[] vertexCodeD1;
+    private int[] vertexCodeD2;
     private int[] vertexCodeE;
     private int[] vertexCodeK;
-    private Graph graphAOne;
-    private Graph graphATwo;
-    private Graph graphDOne;
-    private Graph graphDTwo;
+    private Graph graphA1;
+    private Graph graphA2;
+    private Graph graphD1;
+    private Graph graphD2;
     private Graph graphE;
     private Graph graphK;
-    private ArrayList<String> verticesAOne;
-    private ArrayList<String> verticesATwo;
-    private ArrayList<String> verticesDOne;
-    private ArrayList<String> verticesDTwo;
+    private ArrayList<String> verticesA1;
+    private ArrayList<String> verticesA2;
+    private ArrayList<String> verticesD1;
+    private ArrayList<String> verticesD2;
     private ArrayList<String> verticesE;
     private ArrayList<String> verticesK;
 
     public Route(String input) {
         location = new String[2];
-        splitInput = input.split(" /");
-        vertexCodeAOne = new int[2];
-        vertexCodeATwo = new int[2];
-        vertexCodeDOne = new int[2];
-        vertexCodeDTwo = new int[2];
+        splitInput = input.split(USER_COMMAND_DELIMITER);
+        vertexCodeA1 = new int[2];
+        vertexCodeA2 = new int[2];
+        vertexCodeD1 = new int[2];
+        vertexCodeD2 = new int[2];
         vertexCodeE = new int[2];
         vertexCodeK = new int[2];
-        graphAOne = new Graph(13);
-        graphATwo = new Graph(14);
-        graphDOne = new Graph(13);
-        graphDTwo = new Graph(12);
-        graphE = new Graph(7);
-        graphK = new Graph(16);
-        verticesAOne = new ArrayList<>();
-        verticesATwo = new ArrayList<>();
-        verticesDOne = new ArrayList<>();
-        verticesDTwo = new ArrayList<>();
+        graphA1 = new Graph(TOTAL_VERTICES_A1);
+        graphA2 = new Graph(TOTAL_VERTICES_A2);
+        graphD1 = new Graph(TOTAL_VERTICES_D1);
+        graphD2 = new Graph(TOTAL_VERTICES_D2);
+        graphE = new Graph(TOTAL_VERTICES_E);
+        graphK = new Graph(TOTAL_VERTICES_K);
+        verticesA1 = new ArrayList<>();
+        verticesA2 = new ArrayList<>();
+        verticesD1 = new ArrayList<>();
+        verticesD2 = new ArrayList<>();
         verticesE = new ArrayList<>();
         verticesK = new ArrayList<>();
     }
@@ -87,7 +93,7 @@ public class Route {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
             if (inputStream == null) {
-                throw new KolinuxException("File not found");
+                throw new KolinuxException("File not found.");
             }
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
@@ -107,8 +113,8 @@ public class Route {
      * @throws KolinuxException if the user command is not in the correct format
      */
     private void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
-        if (vertices == null) {
-            throw new KolinuxException("Route doesn't exist");
+        if (vertices.size() == 0) {
+            throw new KolinuxException("Route doesn't exist. Please make sure text file has vertices of expected graph.");
         }
         for (String v : vertices) {
             String[] vertex = v.split(" ");
@@ -124,18 +130,18 @@ public class Route {
     private void getLocations() throws KolinuxException {
         for (int i = 0; i < 2; i++) {
             if (splitInput.length < 3) {
-                throw new KolinuxException("Enter starting point and final destination");
+                throw new KolinuxException("Enter starting point and final destination.");
             }
             location[i] = splitInput[i + 1];
-            vertexCodeAOne[i] = getStopNumberAOne(location[i]);
-            vertexCodeATwo[i] = getStopNumberATwo(location[i]);
-            vertexCodeDOne[i] = getStopNumberDOne(location[i]);
-            vertexCodeDTwo[i] = getStopNumberDTwo(location[i]);
+            vertexCodeA1[i] = getStopNumberAOne(location[i]);
+            vertexCodeA2[i] = getStopNumberATwo(location[i]);
+            vertexCodeD1[i] = getStopNumberDOne(location[i]);
+            vertexCodeD2[i] = getStopNumberDTwo(location[i]);
             vertexCodeE[i] = getStopNumberE(location[i]);
             vertexCodeK[i] = getStopNumberK(location[i]);
-            if (vertexCodeAOne[i] < 0 && vertexCodeATwo[i] < 0 && vertexCodeDOne[i] < 0
-                    && vertexCodeE[i] < 0 && vertexCodeDTwo[i] < 0 && vertexCodeK[i] < 0) {
-                throw new KolinuxException(location[i].trim() + " is not a valid bus stop name");
+            if (vertexCodeA1[i] < 0 && vertexCodeA2[i] < 0 && vertexCodeD1[i] < 0
+                    && vertexCodeE[i] < 0 && vertexCodeD2[i] < 0 && vertexCodeK[i] < 0) {
+                throw new KolinuxException(location[i].trim() + " is not a valid bus stop name.");
             }
         }
     }
@@ -153,7 +159,7 @@ public class Route {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(FILEPATH_STOP_NAMES);
             if (inputStream == null) {
-                throw new KolinuxException("File not found");
+                throw new KolinuxException("File not found.");
             }
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
@@ -177,16 +183,16 @@ public class Route {
         if (splitInput[0].equalsIgnoreCase(COMMAND_LIST_STOPS)) {
             return getBusStopNames();
         }
-        readNodesFromFile(verticesAOne, FILEPATH_A1);
-        readNodesFromFile(verticesATwo, FILEPATH_A2);
-        readNodesFromFile(verticesDOne, FILEPATH_D1);
-        readNodesFromFile(verticesDTwo, FILEPATH_D2);
+        readNodesFromFile(verticesA1, FILEPATH_A1);
+        readNodesFromFile(verticesA2, FILEPATH_A2);
+        readNodesFromFile(verticesD1, FILEPATH_D1);
+        readNodesFromFile(verticesD2, FILEPATH_D2);
         readNodesFromFile(verticesE, FILEPATH_E);
         readNodesFromFile(verticesK, FILEPATH_K);
-        setRoute(verticesAOne, graphAOne);
-        setRoute(verticesATwo, graphATwo);
-        setRoute(verticesDOne, graphDOne);
-        setRoute(verticesDTwo, graphDTwo);
+        setRoute(verticesA1, graphA1);
+        setRoute(verticesA2, graphA2);
+        setRoute(verticesD1, graphD1);
+        setRoute(verticesD2, graphD2);
         setRoute(verticesE, graphE);
         setRoute(verticesK, graphK);
         getLocations();
@@ -216,19 +222,19 @@ public class Route {
      */
     private boolean checkDirectRoutes(ArrayList<String> busNumbers) {
         boolean flag = false;
-        if (graphAOne.isConnected(vertexCodeAOne[0], vertexCodeAOne[1])) {
+        if (graphA1.isConnected(vertexCodeA1[0], vertexCodeA1[1])) {
             busNumbers.add(BUS_A1);
             flag = true;
         }
-        if (graphATwo.isConnected(vertexCodeATwo[0], vertexCodeATwo[1])) {
+        if (graphA2.isConnected(vertexCodeA2[0], vertexCodeA2[1])) {
             busNumbers.add(BUS_A2);
             flag = true;
         }
-        if (graphDOne.isConnected(vertexCodeDOne[0], vertexCodeDOne[1])) {
+        if (graphD1.isConnected(vertexCodeD1[0], vertexCodeD1[1])) {
             busNumbers.add(BUS_D1);
             flag = true;
         }
-        if (graphDTwo.isConnected(vertexCodeDTwo[0], vertexCodeDTwo[1])) {
+        if (graphD2.isConnected(vertexCodeD2[0], vertexCodeD2[1])) {
             busNumbers.add(BUS_D2);
             flag = true;
         }
@@ -255,22 +261,22 @@ public class Route {
      */
     private boolean checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
-        if (vertexCodeAOne[0] > 0) {
+        if (vertexCodeA1[0] > 0) {
             flag = checkIndirectAOne(busOne, busTwo, midLoc);
-        } else if (vertexCodeATwo[0] > 0) {
+        } else if (vertexCodeA2[0] > 0) {
             flag = checkIndirectATwo(busOne, busTwo, midLoc);
-        } else if (vertexCodeDOne[0] > 0) {
-            if (graphDOne.isConnected(vertexCodeDOne[0], getStopNumberDOne(UTOWN))) {
+        } else if (vertexCodeD1[0] > 0) {
+            if (graphD1.isConnected(vertexCodeD1[0], getStopNumberDOne(STOP_UTOWN))) {
                 flag = checkIndirectDOne(busOne, busTwo, midLoc);
             }
-        } else if (vertexCodeDTwo[0] > 0) {
-            if (graphDTwo.isConnected(vertexCodeDTwo[0], getStopNumberDTwo(UTOWN))) {
+        } else if (vertexCodeD2[0] > 0) {
+            if (graphD2.isConnected(vertexCodeD2[0], getStopNumberDTwo(STOP_UTOWN))) {
                 flag = checkIndirectDTwo(busOne, busTwo, midLoc);
             }
         } else if (vertexCodeE[0] > 0) {
             flag = checkIndirectE(busOne, busTwo, midLoc);
         } else if (vertexCodeK[0] > 0) {
-            if (graphK.isConnected(vertexCodeK[0], getStopNumberK(KENT_VALE))) {
+            if (graphK.isConnected(vertexCodeK[0], getStopNumberK(STOP_KENT_VALE))) {
                 flag = checkIndirectK(busOne, busTwo, midLoc);
             }
         }
@@ -289,12 +295,12 @@ public class Route {
     private boolean checkIndirectAOne(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
         busOne.add(BUS_A1);
-        midLoc.add(PGP);
-        if (graphDTwo.isConnected(getStopNumberDTwo(PGP), vertexCodeDTwo[1])) {
+        midLoc.add(STOP_PGP);
+        if (graphD2.isConnected(getStopNumberDTwo(STOP_PGP), vertexCodeD2[1])) {
             busTwo.add(BUS_D2);
             flag = true;
         }
-        if (graphK.isConnected(getStopNumberK(PGP), vertexCodeK[1])) {
+        if (graphK.isConnected(getStopNumberK(STOP_PGP), vertexCodeK[1])) {
             busTwo.add(BUS_K);
             flag = true;
         }
@@ -313,12 +319,12 @@ public class Route {
     private boolean checkIndirectATwo(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
         busOne.add(BUS_A2);
-        midLoc.add(IT);
-        if (graphDOne.isConnected(getStopNumberDOne(IT), vertexCodeDOne[1])) {
+        midLoc.add(STOP_IT);
+        if (graphD1.isConnected(getStopNumberDOne(STOP_IT), vertexCodeD1[1])) {
             busTwo.add(BUS_D1);
             flag = true;
         }
-        if (graphE.isConnected(getStopNumberE(IT), vertexCodeE[1])) {
+        if (graphE.isConnected(getStopNumberE(STOP_IT), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
@@ -337,12 +343,12 @@ public class Route {
     private boolean checkIndirectDOne(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
         busOne.add(BUS_D1);
-        midLoc.add(UTOWN);
-        if (graphDTwo.isConnected(getStopNumberDTwo(UTOWN), vertexCodeDTwo[1])) {
+        midLoc.add(STOP_UTOWN);
+        if (graphD2.isConnected(getStopNumberDTwo(STOP_UTOWN), vertexCodeD2[1])) {
             busTwo.add(BUS_D2);
             flag = true;
         }
-        if (graphE.isConnected(getStopNumberE(UTOWN), vertexCodeE[1])) {
+        if (graphE.isConnected(getStopNumberE(STOP_UTOWN), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
@@ -361,12 +367,12 @@ public class Route {
     private boolean checkIndirectDTwo(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
         busOne.add(BUS_D2);
-        midLoc.add(UTOWN);
-        if (graphDOne.isConnected(getStopNumberDOne(UTOWN), vertexCodeDOne[1])) {
+        midLoc.add(STOP_UTOWN);
+        if (graphD1.isConnected(getStopNumberDOne(STOP_UTOWN), vertexCodeD1[1])) {
             busTwo.add(BUS_D1);
             flag = true;
         }
-        if (graphE.isConnected(getStopNumberE(UTOWN), vertexCodeE[1])) {
+        if (graphE.isConnected(getStopNumberE(STOP_UTOWN), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
@@ -386,18 +392,18 @@ public class Route {
         boolean flag = false;
         busOne.add(BUS_E);
         if (vertexCodeE[0] == 6) {
-            if (graphK.isConnected(getStopNumberK(KENT_VALE), vertexCodeK[1])) {
-                midLoc.add(KENT_VALE);
+            if (graphK.isConnected(getStopNumberK(STOP_KENT_VALE), vertexCodeK[1])) {
+                midLoc.add(STOP_KENT_VALE);
                 busTwo.add(BUS_K);
                 flag = true;
             }
         } else {
-            midLoc.add(UTOWN);
-            if (graphDOne.isConnected(getStopNumberDOne(UTOWN), vertexCodeDOne[1])) {
+            midLoc.add(STOP_UTOWN);
+            if (graphD1.isConnected(getStopNumberDOne(STOP_UTOWN), vertexCodeD1[1])) {
                 busTwo.add(BUS_D1);
                 flag = true;
             }
-            if (graphDTwo.isConnected(getStopNumberDTwo(UTOWN), vertexCodeDTwo[1])) {
+            if (graphD2.isConnected(getStopNumberDTwo(STOP_UTOWN), vertexCodeD2[1])) {
                 busTwo.add(BUS_D2);
                 flag = true;
             }
@@ -417,8 +423,8 @@ public class Route {
     private boolean checkIndirectK(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
         busOne.add(BUS_K);
-        midLoc.add(KENT_VALE);
-        if (graphE.isConnected(getStopNumberE(KENT_VALE), vertexCodeE[1])) {
+        midLoc.add(STOP_KENT_VALE);
+        if (graphE.isConnected(getStopNumberE(STOP_KENT_VALE), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
