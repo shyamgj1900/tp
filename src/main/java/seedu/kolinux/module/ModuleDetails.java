@@ -91,6 +91,16 @@ public class ModuleDetails {
     }
 
     /**
+     * Returns a String object representing the ModuleDetails in a format that can be used to read and write
+     * the ModuleDetails from/to file.
+     *
+     * @return The String representation of the ModuleDetails that be used to read and write from/to file.
+     */
+    public String getEncodedFormat() {
+        return moduleCode + "/" + grade;
+    }
+
+    /**
      * Returns a String object that is formatted for printing in CLI.
      *
      * @return The String representation of a module's details

@@ -12,11 +12,11 @@ public class ModuleCommand extends Command {
     private String subCommand;
     private String[] parsedArguments;
     private String moduleCode;
-    private static final String STORE_SUBCOMMAND = "store";
-    private static final String DELETE_SUBCOMMAND = "delete";
-    private static final String VIEW_SUBCOMMAND = "view";
-    private static final String LIST_SUBCOMMAND = "list";
-    private static final String SET_GRADE_SUBCOMMAND = "grade";
+    public static final String STORE_SUBCOMMAND = "store";
+    public static final String DELETE_SUBCOMMAND = "delete";
+    public static final String VIEW_SUBCOMMAND = "view";
+    public static final String LIST_SUBCOMMAND = "list";
+    public static final String SET_GRADE_SUBCOMMAND = "grade";
     public static final String INVALID_GRADE_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
             +
