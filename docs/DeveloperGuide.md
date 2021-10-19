@@ -48,19 +48,19 @@ Given below are the examples of the usage of `timetable add` of lessons to the t
 
 Example 1: Adding a tutorial to the `lessonStorage` ( lesson of type `TUT` )
 
-![Example 1](./images/timetableAdd1.png)
+![Example 1](assets/images/timetableAdd1.png)
 
 Example 2: Adding a lecture to the `lessonStorage` ( lesson of type `LEC` )
 
-![Example 2](./images/timetableAdd2.png)
+![Example 2](assets/images/timetableAdd2.png)
 
 Example 3: Adding a lab to the `lessonStorage` ( lesson of type `LAB` )
 
-![Example 3](./images/timetableAdd3.png)
+![Example 3](assets/images/timetableAdd3.png)
 
 The following sequence diagram shows the `timetable add` operation:
 
-![Sequence Diagram](./images/addToTimetableSequence.png)
+![Sequence Diagram](assets/images/addToTimetableSequence.png)
 
 
 ### planner add feature
