@@ -44,9 +44,6 @@ public class ModuleListCapCommand extends Command {
         for (ModuleDetails module : moduleList.getMyModules()) {
             String moduleCode = module.getModuleCode();
             String moduleGrade = module.getGrade();
-            if (moduleGrade == null) {
-                moduleGrade = UNAVAILABLE_GRADE;
-            }
             String moduleDescription = moduleCode + "/" + moduleGrade;
             moduleDescriptionList += " " + moduleDescription;
         }
