@@ -41,7 +41,7 @@ CS2101: Effective Communication for Computing Professionals
 Department: Center for Engl Lang Comms
 Faculty: Computing
 Credits: 4
-Grade: null
+Grade: 0
 This module aims to equip students with the skills
 needed to communicate technical information to technical
 and nontechnical audiences, and to create comprehensible
