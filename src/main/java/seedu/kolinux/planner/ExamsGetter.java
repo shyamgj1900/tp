@@ -15,11 +15,21 @@ public class ExamsGetter {
     private static final String COLON = ":";
     private static final String EMPTY_STRING = "";
 
+    /**
+     * Constructed when user needs to perform add, list, or delete operations in planner. Hence, the
+     * module list will always be updated with the latest version.
+     *
+     * @param moduleList Module list stored by the user
+     */
     public ExamsGetter(ModuleList moduleList) {
         this.moduleList = moduleList;
         retrieveModuleExams();
     }
 
+    /**
+     * Iterates through the module list stored by the user to find the exam dates and times of the modules
+     * if there are any.
+     */
     private void retrieveModuleExams() {
         String[] arguments = new String[4];
         for (ModuleDetails module : moduleList.getMyModules()) {

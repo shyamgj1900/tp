@@ -38,6 +38,14 @@ public class LessonsGetter {
         return convertedLessonsOnDate;
     }
 
+    /**
+     * Constructs an ExamsGetter to get the exam dates and times of the modules in the module list. The
+     * exams occurring on the date specified will be constructed as events and will be added to
+     * convertedLessonsOnDate. The module list will always be updated with the latest version.
+     *
+     * @param moduleList Module list stored by the user
+     * @param date Date specified
+     */
     private void getExamsOnDate(ModuleList moduleList, String date) {
         ExamsGetter examsGetter = new ExamsGetter(moduleList);
         ArrayList<Event> examsOnDate = examsGetter.getExams();
