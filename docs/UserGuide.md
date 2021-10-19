@@ -395,8 +395,8 @@ CS1010 LEC has been updated
 ### Event Planner: `planner`
 
 The event planner works by allowing users to `add`, `delete`, and `list` any events happening on a specific date. 
-This is for users to manage their schedules daily. This feature is also integrated with the timetable so that users 
-will also be able to view their lessons on specific dates.
+This is for users to manage their schedules daily. This feature is also integrated with the timetable and the module 
+manager so that users will also be able to view their lessons and exams on specific dates.
 
 #### Add an event to Planner: `planner add`
 
@@ -449,8 +449,9 @@ planner list 2021-10-10
 ....................................................................
 ```
 
-❕ Note: The `list` will include all the events and lessons occurring on the `DATE` specified.
+❕ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to add lessons._
+_Exams are added to the list automatically as modules are stored in the [`module`](#module-manager-module) manager._
 
 #### Delete an event from Planner: `planner delete`
 
@@ -483,8 +484,9 @@ planner list 2021-11-05
 ```
 
 ❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
-Hence, users are not allowed to delete lessons added via the `timetable` from the `planner`.
+Hence, users are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
+_Exams will be automatically deleted as modules are deleted from the [`module`](#module-manager-module) manager._
 
 ### NUS Bus Route Finder: `bus`
 
@@ -579,6 +581,8 @@ computer, in the same folder as `Kolinux.jar`. The data will be automatically re
 Kolinux automatically creates a directory `/data` upon the first start up. The directory consists of the files:
 
 `logger.log` - User activity log of the most recent session.
+
+`moduleList.txt` - Module manager data of the user.
 
 `planner.txt` - Planner data of the user.
 
