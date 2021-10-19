@@ -153,7 +153,13 @@ public abstract class CapCalculator {
                 continue;
             }
             int mc = getMc(module);
+            if (mc == INVALID_MC) {
+                continue;
+            }
             double gradePoint = getGradePoint(module);
+            if (gradePoint == INVALID_GRADE) {
+                continue;
+            }
             cap = getCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
             assert cap <= MAX_CAP;

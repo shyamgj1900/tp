@@ -61,8 +61,8 @@ public class ModuleCommand extends Command {
         return new CommandResult(message);
     }
     
-    private CommandResult showModuleCap() throws KolinuxException {
-        CalculateModuleListCapCommand command = new CalculateModuleListCapCommand();
+    private CommandResult showModuleCap(String[] parsedArguments) throws KolinuxException {
+        CalculateModuleListCapCommand command = new CalculateModuleListCapCommand(parsedArguments);
         return command.executeCommand();
     }
 
@@ -116,7 +116,7 @@ public class ModuleCommand extends Command {
         case SET_GRADE_SUBCOMMAND:
             return setModuleGrade(parsedArguments);
         case CAP_SUBCOMMAND:
-            return showModuleCap();
+            return showModuleCap(parsedArguments);
         default:
             return displayError();
         }

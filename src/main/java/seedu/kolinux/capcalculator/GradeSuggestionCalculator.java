@@ -1,43 +1,32 @@
 package seedu.kolinux.capcalculator;
 
 import seedu.kolinux.exceptions.KolinuxException;
-import seedu.kolinux.module.ModuleDetails;
 
-public class ModuleListCapCalculator extends CapCalculatorByCode {
+public class GradeSuggestionCalculator extends CapCalculatorByCode {
     
-    public static final String UNAVALIABLE_GRADE = "0";
+    private String userDesiredCap;
     
-    public ModuleListCapCalculator(String input) {
+    public GradeSuggestionCalculator(String input, String userDesiredCap) {
         super(input);
+        this.userDesiredCap = userDesiredCap;
     }
-    
-    /*private boolean isNumeric(String input) {
-        try {
-            Double.parseDouble(input);
-        } catch (NumberFormatException exception) {
-            return false;
-        }
-        return true;
-    }*/
-    
-    /*private boolean hasDesiredCap() {
-        return isNumeric(modules.get(modules.size() - 1));
-    }*/
-    
+
     private boolean isInvalidModule(String module) {
         String[] moduleDescriptions = module.split("/");
         String grade = moduleDescriptions[1];
         return grade.equals("S") || grade.equals("U") || grade.equals("0");
     }
     
-    /*private double getMcModulesWithGrade() {
+    private double getMcModulesWithGrade() {
         double totalMc = 0.0;
         for (String module : modules) {
             if (isInvalidModule(module)) {
                 continue;
             }
-            String[] moduleDescriptions = module.split("/");
-            totalMc += Double.parseDouble(moduleDescriptions[1]);
+            /*String[] moduleDescriptions = module.split("/");
+            totalMc += Double.parseDouble(moduleDescriptions[1]);*/
+            int mc = getMc(module);
+            totalMc += mc;
         }
         return totalMc;
     }
@@ -45,14 +34,16 @@ public class ModuleListCapCalculator extends CapCalculatorByCode {
     private double getMcModulesWithoutGrade() {
         double totalMc = 0.0;
         for (String module : invalidModules) {
-            String[] moduleDescriptions = module.split("/");
-            totalMc += Double.parseDouble(moduleDescriptions[1]);
+            /*String[] moduleDescriptions = module.split("/");
+            totalMc += Double.parseDouble(moduleDescriptions[1]);*/
+            int mc = getMc(module);
+            totalMc += mc;
         }
         return totalMc;
-    }*/
-    
+    }
+
     // return grade letter equal to or higher than cap
-    /*private String getGradeLetter(double cap) {
+    private String getGradeLetter(double cap) {
         if (cap <= 0.0) {
             return "F";
         } else if (cap <= 1.0) {
@@ -76,29 +67,24 @@ public class ModuleListCapCalculator extends CapCalculatorByCode {
         } else {
             return "impossible";
         }
-    }*/
+    }
     
-    /*private String getMinimumGrade(double currentCap, double mcModuleWithGrade, double mcModuleWithoutGrade) {
-        double desiredCap = Double.parseDouble(modules.get(modules.size() - 1));
+    private String getMinimumGrade(double currentCap, double mcModuleWithGrade, double mcModuleWithoutGrade) {
+        //double desiredCap = Double.parseDouble(modules.get(modules.size() - 1));
+        double desiredCap = Double.parseDouble(userDesiredCap);
         double minimumCap = ((desiredCap * mcModuleWithGrade) + (desiredCap * mcModuleWithoutGrade) - (currentCap * mcModuleWithGrade)) / mcModuleWithoutGrade;
         return getGradeLetter(minimumCap);
-    }*/
-    
-    /*private String getExpectedGrades() {
+    }
+
+    private String getExpectedGrades() {
         double currentCap = Double.parseDouble(getCap());
         double mcModuleWithGrade = getMcModulesWithGrade();
         double mcModuleWithoutGrade = getMcModulesWithoutGrade();
         return getMinimumGrade(currentCap, mcModuleWithGrade, mcModuleWithoutGrade);
-    }*/
-
+    }
+     
     public String executeCapCalculator() throws KolinuxException {
         checkModulesNotEmpty();
-        /*String result;
-        if (hasDesiredCap()) {
-            result = getExpectedGrades();
-        } else {
-            result = getCap();
-        }*/
-        return getCap();
+        return getExpectedGrades();
     }
 }
