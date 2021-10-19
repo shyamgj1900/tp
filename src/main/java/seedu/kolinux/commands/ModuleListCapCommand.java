@@ -6,6 +6,9 @@ import seedu.kolinux.capcalculator.ModuleListCapCalculator;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 
+/**
+ * Represents the command that calculate CAP from stored modules.
+ */
 import java.util.logging.Level;
 
 public class ModuleListCapCommand extends Command {
@@ -15,6 +18,12 @@ public class ModuleListCapCommand extends Command {
     private CapCalculatorByCode calculator;
     private String moduleDescriptionList;
 
+    /**
+     * Check if a string is numeric or not.
+     * 
+     * @param input The string being checked.
+     * @return true if the string can be converted to numerical value, false otherwise.
+     */
     private boolean isNumeric(String input) {
         try {
             Double.parseDouble(input);
@@ -23,7 +32,13 @@ public class ModuleListCapCommand extends Command {
         }
         return true;
     }
-    
+
+    /**
+     * Constructor of this object. Format the modules and grades stored in module list and pass it to the
+     * respective calculator.
+     * 
+     * @param commandDescriptions Command input from user which is used to determine the calculator type.
+     */
     public ModuleListCapCommand(String[] commandDescriptions) {
         moduleDescriptionList = "cap code";
         for (ModuleDetails module : moduleList.getMyModules()) {
@@ -47,7 +62,7 @@ public class ModuleListCapCommand extends Command {
         String result = calculator.executeCapCalculator();
         String message;
         if (calculator instanceof GradeSuggestionCalculator) {
-            message = (result.equals("impossible")) 
+            message = (result.equals("UNACHIEVABLE")) 
                     ? "It is impossible to achieve your desired CAP with the current modules"
                     : "Based on your modules, you have to get an average grade of " + result + " or higher in order to achieve your desired CAP";
             logger.log(Level.INFO, "Suggested grade is calculated from module list");
