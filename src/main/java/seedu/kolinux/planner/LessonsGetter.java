@@ -1,6 +1,7 @@
 package seedu.kolinux.planner;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.module.timetable.Lesson;
 import seedu.kolinux.module.timetable.Timetable;
 import seedu.kolinux.util.Parser;
@@ -26,14 +27,25 @@ public class LessonsGetter {
      *
      * @param date Date to get the list of lessons
      */
-    public LessonsGetter(String date) {
+    public LessonsGetter(ModuleList moduleList, String date) {
         this.date = date;
         getLessonsOnDate();
         convertLessonListToEventList();
+        getExamsOnDate(moduleList, date);
     }
 
     public ArrayList<Event> getConvertedLessonsOnDate() {
         return convertedLessonsOnDate;
+    }
+
+    private void getExamsOnDate(ModuleList moduleList, String date) {
+        ExamsGetter examsGetter = new ExamsGetter(moduleList);
+        ArrayList<Event> examsOnDate = examsGetter.getExams();
+        for (Event exam : examsOnDate) {
+            if (exam.getDate().equals(date)) {
+                convertedLessonsOnDate.add(exam);
+            }
+        }
     }
 
     /**

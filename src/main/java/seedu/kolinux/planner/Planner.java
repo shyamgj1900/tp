@@ -1,6 +1,7 @@
 package seedu.kolinux.planner;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.util.Parser;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 public class Planner {
 
     private PlannerStorage plannerStorage = new PlannerStorage();
+    private ModuleList moduleList;
 
     private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
@@ -25,6 +27,14 @@ public class Planner {
     private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
+    public Planner() {
+
+    }
+
+    public Planner(ModuleList moduleList) {
+        this.moduleList = moduleList;
+    }
+
     /**
      * Filters all the events including the lessons in the planner by a particular date.
      *
@@ -32,7 +42,7 @@ public class Planner {
      * @return List of events and lessons happening on the given date
      */
     private ArrayList<Event> filterPlanner(String date) {
-        ArrayList<Event> filteredPlanner = new LessonsGetter(date).getConvertedLessonsOnDate();
+        ArrayList<Event> filteredPlanner = new LessonsGetter(moduleList, date).getConvertedLessonsOnDate();
         scheduleOfAllDates.stream()
                 .filter((event) -> date.equals(event.getDate()))
                 .forEach((event) -> filteredPlanner.add(event));
