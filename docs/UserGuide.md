@@ -75,6 +75,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `module list`     | List all stored modules from the module list                    | `module list`                                      |
 | `module view`     | View module details                                             | `module view MODULE_CODE`                          |
 | `module grade`    | Set the grade of a module in the module list by its module code | `module grade CODE/GRADE`                          |
+| `module cap`      | Calculate overall CAP of modules in the module list             | `module cap`                                       |
 | `timetable add`   | Add a lesson to your timetable                                  | `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`|
 | `timetable clear` | Clears all lessons in your timetable                            | `timetable clear`                                  |
 | `planner add` 	| Add a new event to your schedule on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
@@ -204,13 +205,45 @@ Example of usage:
 Demo:
 
 ```
-....................................................................
+module grade CS2113T/A
 CS2113T grade set to A
 ....................................................................
 ```
 
 ❕ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
+
+### Calculate overall CAP from modules in module list: `module cap`
+
+Format: `module cap`
+
+Example of usage:
+
+- `module cap` when at least one module is already stored in the list with the module's grade
+
+Demo:
+
+```
+module cap
+Based on your available grade, your cap for this semester is 5.00
+....................................................................
+```
+
+This feature also allows user to know the minimum grade to get for the other modules in order to achieve desired CAP by including the CAP at the end of the command.
+
+Format: `module cap DESIRED_CAP`
+
+Example of usage:
+- `module cap 4.0` when at least one module doesn't have the grade stored
+
+Demo:
+
+```
+module cap 4.0
+Based on your modules, you have to get an average grade of B+ or higher 
+in order to achieve your desired CAP
+....................................................................
+```
 
 ### Timetable: `timetable`
 
@@ -365,14 +398,15 @@ Bus [D2] goes from PGP to MUSEUM
 ### CAP Calculator: `cap`
 
 The CAP calculator is an essential tool for many NUS students to keep track on their CAP and set desired grades for the
-current semester. This feature is integrated with the module manager so that users can calculate their CAP based on the
-grades set on the modules in the module manager.
+current semester. User can choose between different formats of module and the respective grade to allow more command 
+flexibility.
 
-Format: `cap MC_GRADE`
+Format: `cap mc MC/GRADE` or `cap code CODE/GRADE`
 
 Example of usage:
 
-* `cap 4A 6B+ 4B 4B- 4A+`
+* `cap mc 4/A 6/B+ 4/B 4/B- 4/A+`
+* `cap code CS2113T/A CS2101/C CG2027/B-`
 
 Demo:
 
@@ -380,6 +414,8 @@ Demo:
 cap 4A 6B+ 4B 4B- 4A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
+cap code CS2113T/A CS2101/C CG2027/B-
+Your CAP for this semester will be 3.40 if you get your desired grades!
 ```
 
 ### View menu: `help`
