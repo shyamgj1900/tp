@@ -12,6 +12,8 @@ public class ExamsGetter {
     private ModuleList moduleList;
 
     private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
+    private static final String COLON = ":";
+    private static final String EMPTY_STRING = "";
 
     public ExamsGetter(ModuleList moduleList) {
         this.moduleList = moduleList;
@@ -26,11 +28,12 @@ public class ExamsGetter {
             }
             arguments[0] = module.getModuleCode() + " Exam";
             arguments[1] = module.getDate();
-            arguments[2] = module.getStartTime().replaceFirst(":", "");
-            arguments[3] = module.getEndTime().replaceFirst(":", "");
+            arguments[2] = module.getStartTime().replaceFirst(COLON, EMPTY_STRING);
+            arguments[3] = module.getEndTime().replaceFirst(COLON, EMPTY_STRING);
 
             try {
                 Event event = new Event(arguments);
+                event.setIsLesson();
                 exams.add(event);
             } catch (KolinuxException exception) {
                 // Should not execute this

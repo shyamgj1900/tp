@@ -42,6 +42,7 @@ public class Planner {
      * @return List of events and lessons happening on the given date
      */
     private ArrayList<Event> filterPlanner(String date) {
+        assert (moduleList != null);
         ArrayList<Event> filteredPlanner = new LessonsGetter(moduleList, date).getConvertedLessonsOnDate();
         scheduleOfAllDates.stream()
                 .filter((event) -> date.equals(event.getDate()))
