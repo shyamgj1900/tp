@@ -1,5 +1,8 @@
 package seedu.kolinux.module;
 
+import seedu.kolinux.capcalculator.CapCalculator;
+import seedu.kolinux.capcalculator.ModuleListCapCalculator;
+import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.timetable.Timetable;
 
 import java.time.OffsetDateTime;
@@ -140,5 +143,4 @@ public class ModuleList {
         }
         System.out.print("Remember to add the module's lessons to the timetable based on the workload");
     }
-
 }
