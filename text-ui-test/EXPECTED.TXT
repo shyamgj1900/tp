@@ -6,7 +6,6 @@
 |_|   \_)___/ \_)_|_| |_|____/(_/ \_)
 Welcome to Kolinux! Enter "help" to view the list of commands
 ....................................................................
-Loading from ./data/moduleList.txt
 All the events in your schedule has been cleared.
 ....................................................................
 Here are the list of commands:
@@ -93,7 +92,7 @@ Please check the format of the time! The end time is earlier than the start time
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
 ....................................................................
-CS1010 is already in the module list
+Successfully stored module: CS1010
 ....................................................................
 CS1010 TUT has been added to timetable
 ....................................................................
