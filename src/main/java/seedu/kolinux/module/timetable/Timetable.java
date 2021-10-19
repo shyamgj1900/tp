@@ -41,7 +41,7 @@ public class Timetable {
             "Please ensure the timing for the "
             +
             "lesson falls within the school hours: 0600 - 2100";
-    public static final String MISSING_LESSON_DELETE = " does not exist in timetable.\n"
+    public static final String MISSING_LESSON_TO_DELETE = " does not exist in timetable.\n"
             +
             "Please input valid lesson to remove.";
     public static final String INVALID_ADD_FORMAT = "Please check the format of adding to timetable:\n"
@@ -52,7 +52,7 @@ public class Timetable {
     public static final String INACCESSIBLE_PERIOD = "Please choose another slot as the "
             +
             "period is already occupied by another lesson";
-    public static final String MISSING_LESSON_UPDATE = "Lesson does not exist in timetable.\n"
+    public static final String MISSING_LESSON_TO_UPDATE = "Lesson does not exist in timetable.\n"
             +
             "Try adding lesson to timetable with: timetable add";
     public static final String CORRUPT_STORAGE = "Your timetable storage file is corrupted, "
@@ -206,11 +206,11 @@ public class Timetable {
 
     public static void inputLesson(String[] parsedArguments, ModuleList moduleList) throws KolinuxException {
         try {
-            if (!isLessonInModuleList(moduleList, parsedArguments[0].toUpperCase())) {
-                throw new KolinuxException("Module not found in module list");
-            }
             String lessonType = parsedArguments[1].toUpperCase();
             String moduleCode = parsedArguments[0].toUpperCase();
+            if (!isLessonInModuleList(moduleList, parsedArguments[0].toUpperCase())) {
+                throw new KolinuxException(moduleCode + " not found in module list");
+            }
             int requiredHours = getHours(moduleList, moduleCode, lessonType);
             checkZeroWorkload(requiredHours, moduleCode, lessonType);
             int inputHours = getIndex(parsedArguments[4], schoolHours) - getIndex(parsedArguments[3], schoolHours);
@@ -286,7 +286,7 @@ public class Timetable {
                 lessonStorage.remove(removeIndex);
                 TimetableStorage.writeToFile();
             } else {
-                throw new KolinuxException(description + MISSING_LESSON_DELETE);
+                throw new KolinuxException(description + MISSING_LESSON_TO_DELETE);
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_DELETE_FORMAT);
@@ -305,7 +305,7 @@ public class Timetable {
         TimetableStorage.writeToFile();
     }
 
-    public static boolean isLessonFound(String lessonCode, String lessonType, String day) {
+    public static boolean isLessonInTimetable(String lessonCode, String lessonType, String day) {
         for (Lesson storedLesson : lessonStorage) {
             String storedCode = storedLesson.getModuleCode();
             String storedType = storedLesson.getLessonType();
@@ -346,17 +346,13 @@ public class Timetable {
             String startTiming = parsedArguments[4];
             int startIndex = getIndex(startTiming, schoolHours);
             int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay);
-            int newDayIndex = getIndex(newDay, days);
             String endTiming = schoolHours[endIndex - 1];
             String[] parameters = new String[] {moduleCode, lessonType, newDay, startTiming, endTiming};
-            if (!isValidTiming(startIndex, endIndex, newDayIndex)) {
-                throw new KolinuxException(INVALID_UPDATE_FORMAT);
-            }
-            if (isLessonFound(moduleCode, lessonType, oldDay)) {
+            if (isLessonInTimetable(moduleCode, lessonType, oldDay)) {
                 deleteLesson(parsedArguments);
                 inputLesson(parameters, moduleList);
             } else {
-                throw new KolinuxException(MISSING_LESSON_UPDATE);
+                throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_UPDATE_FORMAT);
