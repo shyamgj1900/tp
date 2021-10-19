@@ -8,7 +8,7 @@ import seedu.kolinux.module.ModuleDetails;
 
 import java.util.logging.Level;
 
-public class CalculateModuleListCapCommand extends Command {
+public class ModuleListCapCommand extends Command {
     
     private static final String UNAVAILABLE_GRADE = "0";
     
@@ -24,7 +24,7 @@ public class CalculateModuleListCapCommand extends Command {
         return true;
     }
     
-    public CalculateModuleListCapCommand(String[] commandDescriptions) {
+    public ModuleListCapCommand(String[] commandDescriptions) {
         moduleDescriptionList = "cap code";
         for (ModuleDetails module : moduleList.getMyModules()) {
             String moduleCode = module.getModuleCode();
@@ -44,14 +44,17 @@ public class CalculateModuleListCapCommand extends Command {
     
     @Override
     public CommandResult executeCommand() throws KolinuxException {
-        // if isNumeric
-        String cap = calculator.executeCapCalculator();
-        String capMessage = "Based on your available grade, your cap for this semester is " + cap;
-        logger.log(Level.INFO, "CAP is calculated from module list");
-        
-        // else isString (grade letter)
-        
-        
-        return new CommandResult(capMessage);
+        String result = calculator.executeCapCalculator();
+        String message;
+        if (calculator instanceof GradeSuggestionCalculator) {
+            message = (result.equals("impossible")) 
+                    ? "It is impossible to achieve your desired CAP with the current modules"
+                    : "Based on your modules, you have to get an average grade of " + result + " or higher in order to achieve your desired CAP";
+            logger.log(Level.INFO, "Suggested grade is calculated from module list");
+        } else {
+            message = "Based on your available grade, your cap for this semester is " + result;
+            logger.log(Level.INFO, "CAP is calculated from module list");
+        }
+        return new CommandResult(message);
     }
 }

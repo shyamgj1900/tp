@@ -1,6 +1,5 @@
 package seedu.kolinux.util;
 
-import seedu.kolinux.commands.CalculateModuleListCapCommand;
 import seedu.kolinux.commands.Command;
 import seedu.kolinux.commands.HelpCommand;
 import seedu.kolinux.commands.CalculateCapCommand;

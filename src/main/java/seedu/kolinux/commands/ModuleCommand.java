@@ -62,7 +62,7 @@ public class ModuleCommand extends Command {
     }
     
     private CommandResult showModuleCap(String[] parsedArguments) throws KolinuxException {
-        CalculateModuleListCapCommand command = new CalculateModuleListCapCommand(parsedArguments);
+        ModuleListCapCommand command = new ModuleListCapCommand(parsedArguments);
         return command.executeCommand();
     }
 
