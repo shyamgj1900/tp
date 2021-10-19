@@ -26,19 +26,20 @@ public class Planner {
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
     /**
-     * Filters all the events in the planner by a particular date.
+     * Filters all the events including the lessons in the planner by a particular date.
      *
      * @param date Date
-     * @return List of events happening on the given date
+     * @return List of events and lessons happening on the given date
      */
     private ArrayList<Event> filterPlanner(String date) {
-        ArrayList<Event> filteredPlanner =
-                (ArrayList<Event>) scheduleOfAllDates
-                        .stream()
-                        .filter((event) -> date.equals(event.getDate()))
-                        .sorted(Comparator.comparing(Event::getStartTime))
-                        .collect(Collectors.toList());
-        return filteredPlanner;
+        ArrayList<Event> filteredPlanner = new LessonsGetter(date).getConvertedLessonsOnDate();
+        scheduleOfAllDates.stream()
+                .filter((event) -> date.equals(event.getDate()))
+                .forEach((event) -> filteredPlanner.add(event));
+        return (ArrayList<Event>) filteredPlanner
+                .stream()
+                .sorted(Comparator.comparing(Event::getStartTime))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -96,7 +97,8 @@ public class Planner {
     }
 
     /**
-     * Adds an event to the schedule list.
+     * Adds an event to the schedule list. This method also checks if there are conflicts between the
+     * added event and the existing events and lessons.
      *
      * @param event Event
      * @param allowConflict true if the user allows the time conflict to be ignored
@@ -111,7 +113,12 @@ public class Planner {
     }
 
     /**
-     * Lists the events on a particular date.
+     * Lists the events on a particular date. This method first obtains the list of events and lessons
+     * on the date specified. If listing with ID is required, only the added events are listed with their
+     * respective IDs. Else, all the events and lessons are listed without their IDs. This method is used
+     * when the user executes the planner list and delete operations, where the IDs are only printed if
+     * the user needs to delete an event. Hence, users are not allowed to delete lessons stored in the
+     * timetable.
      *
      * @param date Date
      * @param withId true if the list is needed to display the id of the events, false otherwise.
@@ -131,6 +138,12 @@ public class Planner {
         ArrayList<String> filteredEventStrings =
                 (ArrayList<String>) filterPlanner(date)
                         .stream()
+                        .filter((event) -> {
+                            if (withId) {
+                                return !event.getIsLesson();
+                            }
+                            return true;
+                        })
                         .map((event) -> {
                             if (withId) {
                                 return event.toStringWithId();

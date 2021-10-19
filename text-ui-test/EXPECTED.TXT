@@ -10,21 +10,23 @@ All the events in your schedule has been cleared.
 ....................................................................
 Here are the list of commands:
 1. cap MC_AND_GRADES  - Calculates the total cap for the semester
-2. view MODULE_CODE - View the module details
-3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
-4. store_module MODULE_CODE - Add a module to your module list
-5. delete_module MODULE_CODE - Delete a module from your module list
-6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-7. planner list DATE - Lists events on a certain date
-8. planner delete DATE - Delete an event on a certain date
-9. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
-10. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME
+2. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
+3. module view MODULE_CODE - View the module details
+4. module store MODULE_CODE - Add a module to your module list
+5. module delete MODULE_CODE - Delete a module from your module list
+6. module list - List all modules stored in your module list
+7. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
+8. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+9. planner list DATE - Lists events on a certain date
+10. planner delete DATE - Delete an event on a certain date
+11. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
+12. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
     - shift a lesson to another timing
-11. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
-12. timetable clear - Remove all lessons from timetable
-13. timetable view - Print the timetable on CLI
-14. help - View this menu again
-15. bye - Exit Kolinux
+13. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
+14. timetable clear - Remove all lessons from timetable
+15. timetable view - Print the timetable on CLI
+16. help - View this menu again
+17. bye - Exit Kolinux
 ....................................................................
 Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................
@@ -38,6 +40,7 @@ CS2101: Effective Communication for Computing Professionals
 Department: Center for Engl Lang Comms
 Faculty: Computing
 Credits: 4
+Grade: null
 This module aims to equip students with the skills
 needed to communicate technical information to technical
 and nontechnical audiences, and to create comprehensible
@@ -63,6 +66,14 @@ Successfully deleted module: CS2113T
 ....................................................................
 CS2113T not found in the module list
 ....................................................................
+Please use the format: module grade CODE/GRADE
+....................................................................
+Successfully stored module: CS2113T
+....................................................................
+CS2113T grade set to A
+....................................................................
+Successfully deleted module: CS2113T
+....................................................................
 An event has been added to your schedule successfully!
 ....................................................................
 An event has been added to your schedule successfully!
@@ -84,6 +95,9 @@ Please check the format of the time! The end time is earlier than the start time
 Successfully stored module: CS1010
 ....................................................................
 CS1010 TUT has been added to timetable
+....................................................................
+2021-10-19
+10:00 - 11:00 CS1010 TUT
 ....................................................................
 Timetable has been cleared completely
 ....................................................................
