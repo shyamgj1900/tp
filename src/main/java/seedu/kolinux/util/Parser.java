@@ -30,8 +30,6 @@ public class Parser {
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_TIMETABLE = "timetable";
     private static final String EMPTY_STRING = "";
-    
-    private static final String COMMAND_MODULELIST_CAP = "modulecap";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -75,8 +73,6 @@ public class Parser {
             return new ExitCommand();
         case COMMAND_TIMETABLE:
             return parseSubCommand(argument, COMMAND_TIMETABLE);
-        case COMMAND_MODULELIST_CAP:
-            return new CalculateModuleListCapCommand();
         default:
             return new InvalidCommand();
         }
