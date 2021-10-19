@@ -122,13 +122,13 @@ Successfully stored module: CS2113T
 
 #### Delete modules from module list by code: `module delete`
 
-Format: `delete module MODULE_CODE `
+Format: `module delete MODULE_CODE `
 
 - `MODULE_CODE` needs to be in uppercase letters
 
 Example of usage:
 
-- `delete module CS2113T`
+- `module delete CS2113T`
 
 Demo:
 

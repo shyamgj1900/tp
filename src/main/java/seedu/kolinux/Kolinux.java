@@ -4,6 +4,7 @@ import seedu.kolinux.commands.Command;
 import seedu.kolinux.commands.CommandResult;
 import seedu.kolinux.commands.ExitCommand;
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleListStorage;
 import seedu.kolinux.module.timetable.Timetable;
 import seedu.kolinux.planner.Planner;
 import seedu.kolinux.util.KolinuxLogger;
@@ -31,6 +32,7 @@ public class Kolinux {
             kolinuxLogger.initLogger();
             planner.initPlanner();
             Timetable.initTimetable();
+            ModuleListStorage.setupStorage();
         } catch (KolinuxException exception) {
             ui.showErrorMessage(exception);
         }
