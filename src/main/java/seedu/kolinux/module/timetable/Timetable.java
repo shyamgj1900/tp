@@ -26,6 +26,9 @@ public class Timetable {
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
+    private static final String UPDATING_TO_SAME_TIMING = "You are updating the lesson to the same "
+            +
+            "timing as before.\nPlease update lesson to a different timing.";
     private static final String INVALID_HOURS_INPUT = "Please ensure the timing for the "
             +
             "lesson falls within the school hours: 0600 - 2100";
@@ -343,11 +346,16 @@ public class Timetable {
             String lessonType = parsedArguments[1].toUpperCase();
             String oldDay = parsedArguments[2].toLowerCase();
             String newDay = parsedArguments[3].toLowerCase();
-            String startTiming = parsedArguments[4];
-            int startIndex = getIndex(startTiming, schoolHours);
+            String newStartTiming = parsedArguments[4];
+            int startIndex = getIndex(newStartTiming, schoolHours);
             int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay);
-            String endTiming = schoolHours[endIndex - 1];
-            String[] parameters = new String[] {moduleCode, lessonType, newDay, startTiming, endTiming};
+            String[] oldTimings = getOldTimings(moduleCode, lessonType, oldDay);
+            String newEndTiming = schoolHours[endIndex - 1];
+            if (Objects.equals(oldDay, newDay) && Objects.equals(oldTimings[0], newStartTiming)
+                    && Objects.equals(oldTimings[1], newEndTiming)) {
+                throw new KolinuxException(UPDATING_TO_SAME_TIMING);
+            }
+            String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
             if (isLessonInTimetable(moduleCode, lessonType, oldDay)) {
                 deleteLesson(parsedArguments);
                 inputLesson(parameters, moduleList);
@@ -401,6 +409,20 @@ public class Timetable {
             }
         }
         return hourCount;
+    }
+
+    public static String[] getOldTimings(String moduleCode, String lessonType, String day) {
+        String[] timings = new String[2];
+        for (Lesson storedLesson : lessonStorage) {
+            String storedCode = storedLesson.getModuleCode();
+            String storedType = storedLesson.getLessonType();
+            String storedDay = storedLesson.getDay();
+            if (storedCode.equals(moduleCode) && storedType.equals(lessonType) && storedDay.equals(day)) {
+                timings[0] = storedLesson.getStartTime();
+                timings[1] = storedLesson.getEndTime();
+            }
+        }
+        return timings;
     }
 
 }

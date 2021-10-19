@@ -25,10 +25,9 @@ Here are the list of commands:
 13. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
     - shift a lesson to another timing
 14. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
-15. timetable clear - Remove all lessons from timetable
-16. timetable view - Print the timetable on CLI
-17. help - View this menu again
-18. bye - Exit Kolinux
+15. timetable view - Print the timetable on CLI
+16. help - View this menu again
+17. bye - Exit Kolinux
 ....................................................................
 Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................
