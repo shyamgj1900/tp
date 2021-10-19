@@ -17,7 +17,7 @@ public class SetModuleGradeCommand extends Command {
     
     @Override
     public CommandResult executeCommand() throws KolinuxException {
-        moduleList.setModuleGrade(moduleCode, moduleGrade, moduleDb);
+        moduleList.setModuleGrade(moduleCode, moduleGrade);
         String message = "Grade of " + moduleCode + " is " + moduleGrade;
         return new CommandResult(message);
     }

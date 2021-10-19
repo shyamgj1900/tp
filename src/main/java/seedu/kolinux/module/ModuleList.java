@@ -1,5 +1,7 @@
 package seedu.kolinux.module;
 
+import seedu.kolinux.capcalculator.CapCalculator;
+import seedu.kolinux.capcalculator.ModuleListCapCalculator;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.timetable.Timetable;
 
@@ -22,6 +24,42 @@ public class ModuleList {
 
     public void clear() {
         myModules.clear();
+    }
+
+
+    /**
+     * Searches the myModules list for a module corresponding to the give moduleCode and returns its grade.
+     * @param moduleCode Module whose grade is to be returned
+     * @return Returns the grade of the module whose code is moduleCode if it exists in myModules. Returns null if the
+     *      module is not stored.
+     */
+    public String getModuleGrade(String moduleCode) {
+        for (ModuleDetails module : myModules) {
+            if (module.getModuleCode().equals(moduleCode)) {
+                return module.getGrade();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Searches the myModules list for a module corresponding to the give moduleCode and updates its grade to the given
+     * grade.
+     * @param moduleCode Module whose grade is to be updated
+     * @param grade New grade for the module whose code is moduleCode
+     * @return Returns an acknowledgement message if the grade is updated. Returns an error message if the moduleCode is
+     *      invalid
+     */
+    public String setModuleGrade(String moduleCode, String grade) {
+        for (ModuleDetails module : myModules) {
+            if (module.getModuleCode().equals(moduleCode)) {
+                module.setGrade(grade);
+                return moduleCode + " grade set to " + grade;
+            }
+        }
+
+        return moduleCode + " not found in the list";
     }
 
     /**
@@ -94,20 +132,5 @@ public class ModuleList {
             System.out.println(HORIZONTAL_LINE);
         }
         System.out.print("Remember to add the module's lessons to the timetable based on the workload");
-    }
-
-    public void setModuleGrade(String code, String grade, ModuleDb moduleDb) throws KolinuxException {
-        ModuleDetails mod = moduleDb.getModuleInfo(code);
-        try {
-            myModules.get(myModules.indexOf(mod)).setGrade(grade);
-        } catch (IndexOutOfBoundsException exception) {
-            String errorMessage = code + " is not in the module list";
-            throw new KolinuxException(errorMessage);
-        }
-    }
-    
-    public String getModuleGrade(String code, ModuleDb moduleDb) {
-        ModuleDetails mod = moduleDb.getModuleInfo(code);
-        return myModules.get(myModules.indexOf(mod)).getGrade();
     }
 }
