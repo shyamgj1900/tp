@@ -13,8 +13,6 @@ import java.util.logging.Level;
  */
 public class ModuleListCapCommand extends Command {
     
-    private static final String UNAVAILABLE_GRADE = "0";
-    
     private CapCalculatorByCode calculator;
     private String moduleDescriptionList;
 
