@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Graph {
-    private int ver;
-    private ArrayList<Integer>[] adj;
+    private int vertex;
+    private ArrayList<Integer>[] adj;  //adjacency list
 
-    public Graph(int ver) {
-        this.ver = ver;
-        adj = new ArrayList[ver];
-        for (int i = 0; i < ver; i++) {
+    public Graph(int vertex) {
+        this.vertex = vertex;
+        adj = new ArrayList[vertex];
+        for (int i = 0; i < vertex; i++) {
             adj[i] = new ArrayList<>();
         }
     }
@@ -38,7 +38,7 @@ public class Graph {
             return false;
         }
         int vertex;
-        boolean[] visited = new boolean[this.ver];
+        boolean[] visited = new boolean[this.vertex];
         ArrayList<Integer> queue = new ArrayList<>();
         visited[u] = true;
         queue.add(u);

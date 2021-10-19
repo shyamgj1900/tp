@@ -31,7 +31,7 @@ public class Timetable {
             "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable:\n"
             +
-            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME";
+            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME";
     public static final String INVALID_DELETE_FORMAT = "Please check the format of deleting from timetable:\n"
             +
             "timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
@@ -204,8 +204,7 @@ public class Timetable {
         TimetableStorage.writeToFile();
     }
 
-    public static void inputAsLesson(String[] parsedArguments, ModuleList moduleList)
-            throws KolinuxException {
+    public static void inputLesson(String[] parsedArguments, ModuleList moduleList) throws KolinuxException {
         try {
             if (!isLessonInModuleList(moduleList, parsedArguments[0].toUpperCase())) {
                 throw new KolinuxException("Module not found in module list");
@@ -213,24 +212,11 @@ public class Timetable {
             String lessonType = parsedArguments[1].toUpperCase();
             String moduleCode = parsedArguments[0].toUpperCase();
             int requiredHours = getHours(moduleList, moduleCode, lessonType);
-            if (requiredHours == 0) {
-                throw new KolinuxException(moduleCode + " has no " + lessonType
-                        +
-                        ".\nPlease add a different type of lesson.");
-
-            }
-            int inputHours = getIndex(parsedArguments[4], schoolHours)
-                    - getIndex(parsedArguments[3], schoolHours);
+            checkZeroWorkload(requiredHours, moduleCode, lessonType);
+            int inputHours = getIndex(parsedArguments[4], schoolHours) - getIndex(parsedArguments[3], schoolHours);
             int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
-            if (storageHours > requiredHours) {
-                throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
-                        +
-                        " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
-                        +
-                        "Please readjust the input timings or modify timetable to continue\n"
-                        +
-                        "with adding this lesson to the timetable.");
-            }
+            checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
+
             if (lessonType.startsWith("TUT")) {
                 Timetable.addLesson(new Tutorial(parsedArguments));
             } else if (lessonType.startsWith("LEC")) {
@@ -252,6 +238,29 @@ public class Timetable {
             if (Objects.equals(timetableData[i][dayIndex], description)) {
                 timetableData[i][dayIndex] = null;
             }
+        }
+    }
+
+    public static void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
+                                              String lessonType) throws KolinuxException {
+        if (storageHours > requiredHours) {
+            throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
+                    +
+                    " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
+                    +
+                    "Please readjust the input timings or modify timetable to continue\n"
+                    +
+                    "with adding this lesson to the timetable.");
+        }
+    }
+
+    public static void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
+            throws KolinuxException {
+        if (requiredHours == 0) {
+            throw new KolinuxException(moduleCode + " has no " + lessonType
+                    +
+                    ".\nPlease add a different type of lesson.");
+
         }
     }
 
@@ -335,23 +344,33 @@ public class Timetable {
             String oldDay = parsedArguments[2].toLowerCase();
             String newDay = parsedArguments[3].toLowerCase();
             String startTiming = parsedArguments[4];
-            String endTiming = parsedArguments[5];
             int startIndex = getIndex(startTiming, schoolHours);
-            int endIndex = getIndex(endTiming, schoolHours);
+            int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay);
             int newDayIndex = getIndex(newDay, days);
+            String endTiming = schoolHours[endIndex - 1];
             String[] parameters = new String[] {moduleCode, lessonType, newDay, startTiming, endTiming};
             if (!isValidTiming(startIndex, endIndex, newDayIndex)) {
                 throw new KolinuxException(INVALID_UPDATE_FORMAT);
             }
             if (isLessonFound(moduleCode, lessonType, oldDay)) {
                 deleteLesson(parsedArguments);
-                inputAsLesson(parameters, moduleList);
+                inputLesson(parameters, moduleList);
             } else {
                 throw new KolinuxException(MISSING_LESSON_UPDATE);
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_UPDATE_FORMAT);
         }
+    }
+
+    private static int getOldLessonHours(String moduleCode, String lessonType, String day) {
+        for (Lesson lesson : lessonStorage) {
+            if (lesson.getModuleCode().equals(moduleCode) && lesson.getLessonType().equals(lessonType)
+                    && lesson.getDay().equals(day)) {
+                return lesson.getEndTimeIndex() - lesson.getStartTimeIndex();
+            }
+        }
+        return -1;
     }
 
     public static boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
