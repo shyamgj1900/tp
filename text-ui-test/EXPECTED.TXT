@@ -11,22 +11,23 @@ All the events in your schedule has been cleared.
 Here are the list of commands:
 1. cap MC_AND_GRADES  - Calculates the total cap for the semester
 2. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
-3. module view MODULE_CODE - View the module details
-4. module store MODULE_CODE - Add a module to your module list
-5. module delete MODULE_CODE - Delete a module from your module list
-6. module list - List all modules stored in your module list
-7. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
-8. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-9. planner list DATE - Lists events on a certain date
-10. planner delete DATE - Delete an event on a certain date
-11. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
-12. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME/NEW_END_TIME
+3. bus stop list - List all the bus stop names
+4. module view MODULE_CODE - View the module details
+5. module store MODULE_CODE - Add a module to your module list
+6. module delete MODULE_CODE - Delete a module from your module list
+7. module list - List all modules stored in your module list
+8. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
+9. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+10. planner list DATE - Lists events on a certain date
+11. planner delete DATE - Delete an event on a certain date
+12. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
+13. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
     - shift a lesson to another timing
-13. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
-14. timetable clear - Remove all lessons from timetable
-15. timetable view - Print the timetable on CLI
-16. help - View this menu again
-17. bye - Exit Kolinux
+14. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
+15. timetable clear - Remove all lessons from timetable
+16. timetable view - Print the timetable on CLI
+17. help - View this menu again
+18. bye - Exit Kolinux
 ....................................................................
 Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................
