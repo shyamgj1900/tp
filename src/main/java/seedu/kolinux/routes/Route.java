@@ -114,7 +114,7 @@ public class Route {
      */
     private void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
         if (vertices.size() == 0) {
-            throw new KolinuxException("Route doesn't exist. Please make sure text file has vertices of expected graph.");
+            throw new KolinuxException("Route doesn't exist. Please make sure text file has vertices of the graph.");
         }
         for (String v : vertices) {
             String[] vertex = v.split(" ");
@@ -127,7 +127,19 @@ public class Route {
      *
      * @throws KolinuxException if the user command is not in the correct format
      */
-    private void getLocations() throws KolinuxException {
+    private void getLocations() throws KolinuxException, IOException {
+        readNodesFromFile(verticesA1, FILEPATH_A1);
+        readNodesFromFile(verticesA2, FILEPATH_A2);
+        readNodesFromFile(verticesD1, FILEPATH_D1);
+        readNodesFromFile(verticesD2, FILEPATH_D2);
+        readNodesFromFile(verticesE, FILEPATH_E);
+        readNodesFromFile(verticesK, FILEPATH_K);
+        setRoute(verticesA1, graphA1);
+        setRoute(verticesA2, graphA2);
+        setRoute(verticesD1, graphD1);
+        setRoute(verticesD2, graphD2);
+        setRoute(verticesE, graphE);
+        setRoute(verticesK, graphK);
         for (int i = 0; i < 2; i++) {
             if (splitInput.length < 3) {
                 throw new KolinuxException("Enter starting point and final destination.");
@@ -183,18 +195,6 @@ public class Route {
         if (splitInput[0].equalsIgnoreCase(COMMAND_LIST_STOPS)) {
             return getBusStopNames();
         }
-        readNodesFromFile(verticesA1, FILEPATH_A1);
-        readNodesFromFile(verticesA2, FILEPATH_A2);
-        readNodesFromFile(verticesD1, FILEPATH_D1);
-        readNodesFromFile(verticesD2, FILEPATH_D2);
-        readNodesFromFile(verticesE, FILEPATH_E);
-        readNodesFromFile(verticesK, FILEPATH_K);
-        setRoute(verticesA1, graphA1);
-        setRoute(verticesA2, graphA2);
-        setRoute(verticesD1, graphD1);
-        setRoute(verticesD2, graphD2);
-        setRoute(verticesE, graphE);
-        setRoute(verticesK, graphK);
         getLocations();
         String startLocation = location[0].trim().toUpperCase();
         String endLocation = location[1].trim().toUpperCase();
