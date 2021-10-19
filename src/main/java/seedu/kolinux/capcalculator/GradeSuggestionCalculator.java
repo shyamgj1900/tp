@@ -45,7 +45,8 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
     private boolean isInvalidModule(String module) {
         String[] moduleDescriptions = module.split("/");
         String grade = moduleDescriptions[1];
-        return grade.equals(SATISFACTORY_GRADE) || grade.equals(UNSATISFACTORY_GRADE) || grade.equals(UNAVAILABLE_GRADE);
+        return grade.equals(SATISFACTORY_GRADE) || grade.equals(UNSATISFACTORY_GRADE) 
+                || grade.equals(UNAVAILABLE_GRADE);
     }
 
     /**
@@ -121,7 +122,8 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      */
     private String getMinimumGrade(double currentCap, double mcModuleWithGrade, double mcModuleWithoutGrade) {
         double desiredCap = Double.parseDouble(userDesiredCap);
-        double minimumCap = ((desiredCap * mcModuleWithGrade) + (desiredCap * mcModuleWithoutGrade) - (currentCap * mcModuleWithGrade)) / mcModuleWithoutGrade;
+        double minimumCap = ((desiredCap * mcModuleWithGrade) + (desiredCap * mcModuleWithoutGrade) 
+                - (currentCap * mcModuleWithGrade)) / mcModuleWithoutGrade;
         return getGradeLetter(minimumCap);
     }
 

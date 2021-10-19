@@ -62,9 +62,12 @@ public class ModuleListCapCommand extends Command {
         String result = calculator.executeCapCalculator();
         String message;
         if (calculator instanceof GradeSuggestionCalculator) {
-            message = (result.equals("UNACHIEVABLE")) 
-                    ? "It is impossible to achieve your desired CAP with the current modules"
-                    : "Based on your modules, you have to get an average grade of " + result + " or higher in order to achieve your desired CAP";
+            if (result.equals("UNACHIEVABLE")) {
+                message = "It is impossible to achieve your desired CAP with the current modules";
+            } else {
+                message = "Based on your modules, you have to get an average grade of " + result
+                        + " or higher in order to achieve your desired CAP";
+            }
             logger.log(Level.INFO, "Suggested grade is calculated from module list");
         } else {
             message = "Based on your available grade, your cap for this semester is " + result;
