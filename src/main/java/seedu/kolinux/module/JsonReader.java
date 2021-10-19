@@ -31,6 +31,10 @@ public class JsonReader {
         ArrayList<ModuleDetails> modules = gson.fromJson(reader, new TypeToken<ArrayList<ModuleDetails>>() {
         }.getType());
 
+        for (ModuleDetails module : modules) {
+            module.setGrade("0");
+        }
+
         return modules;
     }
 
