@@ -21,6 +21,7 @@ public class Event {
     private LocalTime startTime;
     private LocalTime endTime;
     private int id;
+    private boolean isLesson = false;
 
     private static final String DATETIME_ERROR =
             "Please provide a valid date and time!\n"
@@ -67,6 +68,18 @@ public class Event {
         this(data.split(PIPE_REGEX));
     }
 
+    /**
+     * This method is called only when constructing an Event from a given Lesson. Otherwise, the
+     * default value of isLesson is false upon construction of this object.
+     */
+    public void setIsLesson() {
+        this.isLesson = true;
+    }
+
+    public boolean getIsLesson() {
+        return this.isLesson;
+    }
+
     public String getDate() {
         return date.toString();
     }
@@ -98,6 +111,11 @@ public class Event {
         return startTime + " - " + endTime + " " + description;
     }
 
+    /**
+     * Prints the string representation of this object with ID.
+     *
+     * @return String representation with ID
+     */
     public String toStringWithId() {
         return this + " (id: " + id + ")";
     }

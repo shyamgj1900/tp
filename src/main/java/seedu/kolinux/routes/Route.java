@@ -609,7 +609,7 @@ public class Route {
             return 0;
         case "ea":
             return 1;
-        case "sd3":
+        case "sde 3":
             return 2;
         case "it":
             return 3;

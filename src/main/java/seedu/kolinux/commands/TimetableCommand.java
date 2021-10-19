@@ -11,9 +11,9 @@ public class TimetableCommand extends Command {
 
     private String subCommand;
     private String[] parsedArguments;
-    public static final String INVALID_TIMETABLE_ARGUMENT = "Ensure command has one of the following formats:\n"
+    public static final String INVALID_TIMETABLE_ARGUMENT_MESSAGE = "Ensure command has one of the "
             +
-            "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME\n"
+            "following formats:\n1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME\n"
             +
             "2. timetable view\n"
             +
@@ -22,48 +22,73 @@ public class TimetableCommand extends Command {
             "4. timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
             +
             "5. timetable clear";
+    private static final String ADD_SUBCOMMAND = "add";
+    private static final String CLEAR_SUBCOMMAND = "clear";
+    private static final String UPDATE_SUBCOMMAND = "update";
+    private static final String DELETE_SUBCOMMAND = "delete";
+    private static final String VIEW_SUBCOMMAND = "view";
 
     public TimetableCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
         this.parsedArguments = parsedArguments;
     }
 
+    private CommandResult addLesson() throws KolinuxException {
+        Timetable.inputLesson(parsedArguments, moduleList);
+        logger.log(Level.INFO, "User added a module to timetable");
+        return new CommandResult(parsedArguments[0].toUpperCase() + " "
+                +
+                parsedArguments[1].toUpperCase() + " has been added to timetable");
+    }
+
+    private CommandResult deleteLesson() throws KolinuxException {
+        Timetable.deleteLesson(parsedArguments);
+        logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
+                +
+                " from the timetable.");
+        return new CommandResult(parsedArguments[0].toUpperCase()
+                +
+                " " + parsedArguments[1].toUpperCase() + " " + parsedArguments[2].toLowerCase()
+                +
+                " has been deleted from timetable");
+    }
+
+    private CommandResult viewTimetable() {
+        Timetable.viewTimetable();
+        logger.log(Level.INFO, "User has printed timetable");
+        return new CommandResult("Timetable has been printed above");
+    }
+
+    private CommandResult clearAllLessons() {
+        Timetable.clearTimetable();
+        logger.log(Level.INFO, "User has cleared timetable");
+        return new CommandResult("Timetable has been cleared completely");
+    }
+
+    private CommandResult updateLesson() throws KolinuxException {
+        Timetable.updateTimetable(parsedArguments, moduleList);
+        logger.log(Level.INFO, "User has updated the timetable.");
+        return new CommandResult(parsedArguments[0].toUpperCase() + " "
+                +
+                parsedArguments[1].toUpperCase() + " has been updated");
+    }
+
     @Override
     public CommandResult executeCommand() throws KolinuxException {
         switch (subCommand) {
-        case "add":
-            Timetable.inputAsLesson(parsedArguments, moduleList);
-            logger.log(Level.INFO, "User added a module to timetable");
-            return new CommandResult(parsedArguments[0].toUpperCase() + " "
-                    +
-                    parsedArguments[1].toUpperCase() + " has been added to timetable");
-        case "clear":
-            Timetable.clearTimetable();
-            logger.log(Level.INFO, "User has cleared timetable");
-            return new CommandResult("Timetable has been cleared completely");
-        case "view":
-            Timetable.viewTimetable();
-            logger.log(Level.INFO, "User has printed timetable");
-            return new CommandResult("Timetable has been printed above");
-        case "delete":
-            Timetable.deleteLesson(parsedArguments);
-            logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
-                    +
-                    " from the timetable.");
-            return new CommandResult(parsedArguments[0].toUpperCase()
-                    +
-                    " " + parsedArguments[1].toUpperCase() + " " + parsedArguments[2].toLowerCase()
-                    +
-                    " has been deleted from timetable");
-        case "update":
-            Timetable.updateTimetable(parsedArguments, moduleList);
-            logger.log(Level.INFO, "User has updated the timetable.");
-            return new CommandResult(parsedArguments[0].toUpperCase() + " "
-                    +
-                    parsedArguments[1].toUpperCase() + " has been updated");
+        case ADD_SUBCOMMAND:
+            return addLesson();
+        case CLEAR_SUBCOMMAND:
+            return clearAllLessons();
+        case VIEW_SUBCOMMAND:
+            return viewTimetable();
+        case DELETE_SUBCOMMAND:
+            return deleteLesson();
+        case UPDATE_SUBCOMMAND:
+            return updateLesson();
         default:
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
-            return new CommandResult(INVALID_TIMETABLE_ARGUMENT);
+            return new CommandResult(INVALID_TIMETABLE_ARGUMENT_MESSAGE);
         }
     }
 

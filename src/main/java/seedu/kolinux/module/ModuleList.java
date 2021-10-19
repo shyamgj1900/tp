@@ -2,6 +2,7 @@ package seedu.kolinux.module;
 
 import seedu.kolinux.module.timetable.Timetable;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +22,42 @@ public class ModuleList {
 
     public void clear() {
         myModules.clear();
+    }
+
+
+    /**
+     * Searches the myModules list for a module corresponding to the give moduleCode and returns its grade.
+     * @param moduleCode Module whose grade is to be returned
+     * @return Returns the grade of the module whose code is moduleCode if it exists in myModules. Returns null if the
+     *      module is not stored.
+     */
+    public String getModuleGrade(String moduleCode) {
+        for (ModuleDetails module : myModules) {
+            if (module.getModuleCode().equals(moduleCode)) {
+                return module.getGrade();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Searches the myModules list for a module corresponding to the give moduleCode and updates its grade to the given
+     * grade.
+     * @param moduleCode Module whose grade is to be updated
+     * @param grade New grade for the module whose code is moduleCode
+     * @return Returns an acknowledgement message if the grade is updated. Returns an error message if the moduleCode is
+     *      invalid
+     */
+    public String setModuleGrade(String moduleCode, String grade) {
+        for (ModuleDetails module : myModules) {
+            if (module.getModuleCode().equals(moduleCode)) {
+                module.setGrade(grade);
+                return moduleCode + " grade set to " + grade;
+            }
+        }
+
+        return moduleCode + " not found in the list";
     }
 
     /**
@@ -89,6 +126,15 @@ public class ModuleList {
             double preparationHours = module.getPreparationHours();
             if (preparationHours != 0) {
                 System.out.println("Preparation: " + preparationHours + " hours");
+            }
+            String examDate = module.getDate();
+            String examStartTime = module.getStartTime();
+            String examEndTime = module.getEndTime();
+            if (examDate != null && examStartTime != null && examEndTime != null) {
+                System.out.println("Exam date: " + examDate);
+                System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
+            } else {
+                System.out.println("No exam");
             }
             System.out.println(HORIZONTAL_LINE);
         }
