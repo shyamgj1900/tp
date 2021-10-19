@@ -6,6 +6,7 @@ import seedu.kolinux.module.ModuleList;
 
 import java.util.ArrayList;
 
+/** Represents the methods to fetch exams data from the module list. */
 public class ExamsGetter {
 
     private ArrayList<Event> exams = new ArrayList<>();

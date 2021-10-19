@@ -10,8 +10,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-/** Represents the methods needed to fetch lessons data from the Timetable class. */
-public class LessonsGetter {
+/** Represents the methods needed to sync with the module list to fetch lessons and exams data. */
+public class ModuleSyncer {
 
     private String date;
 
@@ -19,23 +19,24 @@ public class LessonsGetter {
     private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
 
     private ArrayList<Lesson> lessonsOnDate = new ArrayList<>();
-    private ArrayList<Event> convertedLessonsOnDate = new ArrayList<>();
+    private ArrayList<Event> lessonsAndExamsAsEventsOnDate = new ArrayList<>();
 
     /**
      * The list of Lesson and the corresponding Event on a specified date will be populated upon the
-     * construction of this object.
+     * construction of this object. Events will then be created using the exam data, and added to the
+     * list.
      *
-     * @param date Date to get the list of lessons
+     * @param date Date to get the list of lessons and exams
      */
-    public LessonsGetter(ModuleList moduleList, String date) {
+    public ModuleSyncer(ModuleList moduleList, String date) {
         this.date = date;
         getLessonsOnDate();
         convertLessonListToEventList();
         getExamsOnDate(moduleList, date);
     }
 
-    public ArrayList<Event> getConvertedLessonsOnDate() {
-        return convertedLessonsOnDate;
+    public ArrayList<Event> getLessonsAndExamsAsEventsOnDate() {
+        return lessonsAndExamsAsEventsOnDate;
     }
 
     /**
@@ -51,7 +52,7 @@ public class LessonsGetter {
         ArrayList<Event> examsOnDate = examsGetter.getExams();
         for (Event exam : examsOnDate) {
             if (exam.getDate().equals(date)) {
-                convertedLessonsOnDate.add(exam);
+                lessonsAndExamsAsEventsOnDate.add(exam);
             }
         }
     }
@@ -106,7 +107,7 @@ public class LessonsGetter {
      * Constructs list of Event objects from the list of Lesson objects in lessonsOnDate.
      */
     private void convertLessonListToEventList() {
-        convertedLessonsOnDate = (ArrayList<Event>) lessonsOnDate
+        lessonsAndExamsAsEventsOnDate = (ArrayList<Event>) lessonsOnDate
                 .stream()
                 .map(lesson -> convertLessonToEvent(lesson))
                 .collect(Collectors.toList());

@@ -36,14 +36,14 @@ public class Planner {
     }
 
     /**
-     * Filters all the events including the lessons in the planner by a particular date.
+     * Filters all the events including the lessons and exams in the planner by a particular date.
      *
      * @param date Date
-     * @return List of events and lessons happening on the given date
+     * @return List of events, lessons, and exams happening on the given date
      */
     private ArrayList<Event> filterPlanner(String date) {
         assert (moduleList != null);
-        ArrayList<Event> filteredPlanner = new LessonsGetter(moduleList, date).getConvertedLessonsOnDate();
+        ArrayList<Event> filteredPlanner = new ModuleSyncer(moduleList, date).getLessonsAndExamsAsEventsOnDate();
         scheduleOfAllDates.stream()
                 .filter((event) -> date.equals(event.getDate()))
                 .forEach((event) -> filteredPlanner.add(event));
@@ -109,7 +109,7 @@ public class Planner {
 
     /**
      * Adds an event to the schedule list. This method also checks if there are conflicts between the
-     * added event and the existing events and lessons.
+     * added event and the existing events, lessons, and exams.
      *
      * @param event Event
      * @param allowConflict true if the user allows the time conflict to be ignored
@@ -124,12 +124,12 @@ public class Planner {
     }
 
     /**
-     * Lists the events on a particular date. This method first obtains the list of events and lessons
+     * Lists the events on a particular date. This method first obtains the list of events, lessons, and exams
      * on the date specified. If listing with ID is required, only the added events are listed with their
-     * respective IDs. Else, all the events and lessons are listed without their IDs. This method is used
+     * respective IDs. Else, all the events, lessons, and exams are listed without their IDs. This method is used
      * when the user executes the planner list and delete operations, where the IDs are only printed if
      * the user needs to delete an event. Hence, users are not allowed to delete lessons stored in the
-     * timetable.
+     * timetable and exams.
      *
      * @param date Date
      * @param withId true if the list is needed to display the id of the events, false otherwise.
