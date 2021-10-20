@@ -1,7 +1,7 @@
 package seedu.kolinux.capcalculator;
 
 import seedu.kolinux.exceptions.KolinuxException;
-import seedu.kolinux.module.ModuleList;
+import seedu.kolinux.module.CalculatorModuleList;
 
 import java.util.ArrayList;
 
@@ -19,14 +19,14 @@ public abstract class CapCalculator {
     
     protected static final String TWO_DECIMAL_FORMAT = "%.2f";
     
-    protected ModuleList modules;
+    protected CalculatorModuleList modules;
     protected ArrayList<String> invalidModules;
 
     /**
      * Construct this object by initializing modules and invalidModules attributes.
      */
     public CapCalculator() {
-        modules = new ModuleList();
+        modules = new CalculatorModuleList();
         invalidModules = new ArrayList<>();
     }
 

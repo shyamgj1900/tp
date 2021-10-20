@@ -3,6 +3,7 @@ package seedu.kolinux.capcalculator;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
+import seedu.kolinux.module.CalculatorModuleList;
 
 /**
  * Represents CAP calculator used when the user's input module descriptions are based on module code.
@@ -62,7 +63,7 @@ public class CapCalculatorByCode extends CapCalculator {
     public CapCalculatorByCode(ModuleList modules) {
         super();
         moduleDb = new ModuleDb().getPreInitModuleDb();
-        this.modules = modules;
+        this.modules = (CalculatorModuleList)modules;
     }
 
     /**
