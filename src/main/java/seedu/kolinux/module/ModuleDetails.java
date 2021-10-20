@@ -74,34 +74,6 @@ public class ModuleDetails {
         return grade;
     }
 
-    public double getGradePoint() {
-        switch (grade) {
-        case "A+":
-        case "A":
-            return 5.0;
-        case "A-":
-            return 4.5;
-        case "B+":
-            return 4.0;
-        case "B":
-            return 3.5;
-        case "B-":
-            return 3.0;
-        case "C+":
-            return 2.5;
-        case "C":
-            return 2.0;
-        case "D+":
-            return 1.5;
-        case "D":
-            return 1.0;
-        case "F":
-            return 0.0;
-        default:
-            return -1; // Invalid grade
-        }
-    }
-
     public String getModuleCredit() {
         return moduleCredit;
     }
@@ -218,6 +190,39 @@ public class ModuleDetails {
      */
     public String getEncodedFormat() {
         return moduleCode + "/" + grade;
+    }
+
+    /**
+     * Return a grade point corresponding to the grade of this object.
+     * 
+     * @return Grade point in double type
+     */
+    public double getGradePoint() {
+        switch (grade) {
+        case "A+":
+        case "A":
+            return 5.0;
+        case "A-":
+            return 4.5;
+        case "B+":
+            return 4.0;
+        case "B":
+            return 3.5;
+        case "B-":
+            return 3.0;
+        case "C+":
+            return 2.5;
+        case "C":
+            return 2.0;
+        case "D+":
+            return 1.5;
+        case "D":
+            return 1.0;
+        case "F":
+            return 0.0;
+        default:
+            return -1; // Invalid grade
+        }
     }
     
     public boolean containsSuGrade() {
