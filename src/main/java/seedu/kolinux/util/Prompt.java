@@ -2,6 +2,7 @@ package seedu.kolinux.util;
 
 import java.util.Scanner;
 
+/** Represents a prompt for the user to give additional confirmation. */
 public class Prompt {
 
     private Scanner scanner = new Scanner(System.in);

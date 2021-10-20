@@ -120,6 +120,14 @@ public class Parser {
         return concatenatedString;
     }
 
+    /**
+     * Returns the day of the week from a given date. The days of the week are represented
+     * in integers 1 - 7 starting from Sunday.
+     *
+     * @param date Date specified
+     * @return Day of the week represented by an integer
+     * @throws ParseException If the date does not follow the format yyyy-MM-dd
+     */
     public static int findDayFromDate(String date) throws ParseException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
@@ -127,6 +135,12 @@ public class Parser {
         return day;
     }
 
+    /**
+     * Returns the day of the week in String, given an integer 1 - 7 starting from Sunday.
+     *
+     * @param day Integer representing the day
+     * @return Day of the week in String represented by the integer
+     */
     public static String parseDay(int day) {
         assert ((day >= 1) && (day <= 7));
         switch (day) {
