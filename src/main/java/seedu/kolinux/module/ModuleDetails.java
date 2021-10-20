@@ -1,18 +1,6 @@
 package seedu.kolinux.module;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.OffsetDateTime;
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Locale;
 
 /**
  * ModuleDetails class that stores all attributes of each module.
@@ -34,6 +22,8 @@ public class ModuleDetails {
     private double preparationHours;
     private JsonArray semesterData;
     private static final int OFFSET = 8;
+    private static final int SEMESTER_1 = 0;
+    private static final int SEMESTER_2 = 1;
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
                          String description, String title, String department, double[] workload,
@@ -109,10 +99,7 @@ public class ModuleDetails {
 
     public String[] getExamDateTime() {
         try {
-            String examDate = null;
-            for (int i = 0; i < semesterData.size(); i++) {
-                examDate = semesterData.get(i).getAsJsonObject().get("examDate").getAsString();
-            }
+            String examDate = semesterData.get(SEMESTER_1).getAsJsonObject().get("examDate").getAsString();
             String newTimeFormat = examDate.replace(":00.000Z", "");
             String[] dateTime = newTimeFormat.split("T");
             return dateTime;
