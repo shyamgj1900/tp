@@ -28,7 +28,7 @@ public class TimetableTest {
     private static final String[] UPDATE_LESSON_ARGUMENTS = new String[] {"CS1231", "TUT", "monday", "tuesday", "1500"};
     private static final ModuleDb moduleDb = new ModuleDb();
     private static ModuleList moduleList = new ModuleList();
-    private static Timetable timetable = new Timetable();
+    private static Timetable timetable = new Timetable(moduleList);
 
 
     @BeforeAll
@@ -84,6 +84,7 @@ public class TimetableTest {
         timetable.inputLesson(VALID_ADD_ARGUMENTS);
         assertEquals("CS1231 TUT",
                 timetable.timetableData[getIndex("1200", schoolHours)][getIndex("monday", days)]);
+        timetable.clearTimetable();
     }
 
     @Test
@@ -91,6 +92,7 @@ public class TimetableTest {
         try {
             timetable.clearTimetable();
             timetable.inputLesson(VALID_ADD_ARGUMENTS);
+            timetable.clearTimetable();
         } catch (KolinuxException exception) {
             assertEquals("CS1231 not found in module list", exception.getMessage());
         }
@@ -111,6 +113,7 @@ public class TimetableTest {
         try {
             timetable.clearTimetable();
             timetable.deleteLesson(VALID_ADD_ARGUMENTS);
+            timetable.clearTimetable();
         } catch (KolinuxException e) {
             assertEquals("CS1231 TUT" + Timetable.MISSING_LESSON_TO_DELETE, e.getMessage());
 

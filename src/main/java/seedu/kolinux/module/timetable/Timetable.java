@@ -36,7 +36,11 @@ public class Timetable {
             "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable:\n"
             +
-            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME";
+            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
+            +
+            "Please ensure the timing for the "
+            +
+            "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_DELETE_FORMAT = "Please check the format of deleting from timetable:\n"
             +
             "timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
@@ -85,6 +89,7 @@ public class Timetable {
     public Timetable(ModuleList moduleList) {
         this.moduleList = moduleList;
     }
+
     /**
      * Initializes the timetable with the data from timetable.txt when Kolinux starts up.
      *
@@ -97,7 +102,7 @@ public class Timetable {
             while (s.hasNext()) {
                 fileContents.add(s.nextLine());
             }
-            loadContent(fileContents, lessonStorage);
+            loadContent(fileContents);
         } catch (FileNotFoundException exception) {
             timetableStorage.createFilePath(filePath);
         } catch (ArrayIndexOutOfBoundsException exception) {
@@ -112,25 +117,26 @@ public class Timetable {
      * to carry out any timetable commands given by user.
      *
      * @param fileContents Array list of the contents of the timetable text file
-     * @param lessons Array list of the lessons which have been extracted from timetable text file
      * @throws KolinuxException If the format of the file content for timetable inputting is incorrect
      */
-    private void loadContent(ArrayList<String> fileContents, ArrayList<Lesson> lessons)
+    private void loadContent(ArrayList<String> fileContents)
             throws KolinuxException {
-        try {
-            for (String fileContent : fileContents) {
-                String[] content = fileContent.split("/");
-                if (content[1].equals("TUT")) {
-                    addLessonToTimetable(new Tutorial(content));
-                } else if (content[1].equals("LEC")) {
-                    addLessonToTimetable(new Lecture(content));
-                } else if (content[1].equals("LAB")) {
-                    addLessonToTimetable(new Lab(content));
-                }
+        for (String fileContent : fileContents) {
+            String[] content = fileContent.split("/");
+            switch (content[1]) {
+            case "TUT":
+                addLessonToTimetable(new Tutorial(content));
+                break;
+            case "LEC":
+                addLessonToTimetable(new Lecture(content));
+                break;
+            case "LAB":
+                addLessonToTimetable(new Lab(content));
+                break;
+            default:
+                timetableStorage.clearFile();
+                throw new KolinuxException(CORRUPT_STORAGE);
             }
-        } catch (KolinuxException exception) {
-            timetableStorage.clearFile();
-            throw new KolinuxException(CORRUPT_STORAGE);
         }
     }
 
@@ -422,8 +428,8 @@ public class Timetable {
     private int getStorageHours(String moduleCode, String lessonType) {
         int hourCount = 0;
         for (Lesson storedLesson : lessonStorage) {
-            if (storedLesson.getModuleCode().equals(moduleCode) &&
-                    storedLesson.getLessonType().equals(lessonType)) {
+            if (storedLesson.getModuleCode().equals(moduleCode)
+                    && storedLesson.getLessonType().equals(lessonType)) {
                 hourCount += storedLesson.getHours();
             }
         }
