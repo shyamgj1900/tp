@@ -10,8 +10,6 @@ import seedu.kolinux.module.ModuleList;
  */
 public class GradeSuggestionCalculator extends CapCalculatorByCode {
     
-    private static final String UNAVAILABLE_GRADE = "0";
-    
     private String userDesiredCap;
     
     public GradeSuggestionCalculator(ModuleList modules, String userDesiredCap) {
@@ -37,11 +35,6 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
             throw new KolinuxException(errorMessage);
         }
     }
-
-    /*protected int getMc(ModuleDetails module) {
-        String moduleCredit = module.getModuleCredit();
-        return Integer.parseInt(moduleCredit);
-    }*/
 
     /**
      * Get the total number of MC of modules which already have their grade stored.

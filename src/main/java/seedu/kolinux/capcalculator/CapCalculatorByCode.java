@@ -1,6 +1,5 @@
 package seedu.kolinux.capcalculator;
 
-import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
@@ -9,8 +8,6 @@ import seedu.kolinux.module.ModuleList;
  * Represents CAP calculator used when the user's input module descriptions are based on module code.
  */
 public class CapCalculatorByCode extends CapCalculator {
-    
-    private static final int MODULE_CODE_POSITION = 0;
 
     protected ModuleDb moduleDb;
 
@@ -49,8 +46,13 @@ public class CapCalculatorByCode extends CapCalculator {
         moduleDb = new ModuleDb().getPreInitModuleDb();
         this.modules = modules;
     }
-    
-    @Override
+
+    /**
+     * Extracts modular credit from a module description.
+     *
+     * @param module Module details which only contains module code and its grade.
+     * @return Modular credit.
+     */
     protected int getMc(ModuleDetails module) {
         String moduleCode = module.getModuleCode();
         ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
@@ -71,7 +73,6 @@ public class CapCalculatorByCode extends CapCalculator {
             int mc = getMc(module);
             double gradePoint = module.getGradePoint();
             if (gradePoint == INVALID_GRADE || mc == INVALID_MC) {
-                //invalidModules.storeModuleCodeGrade(module.getModuleCode(), module.getGrade());
                 invalidModules.add(module.getModuleCode() + "/" + module.getGrade());
                 continue;
             }

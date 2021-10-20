@@ -1,14 +1,11 @@
 package seedu.kolinux.capcalculator;
 
-import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 
 /**
  * Represents CAP calculator used when the user's input module descriptions are based on modular credit.
  */
 public class CapCalculatorByMc extends CapCalculator {
-    
-    private static final int MODULE_CREDIT_POSITION = 0;
 
     /**
      * Construct the superclass of this object.
@@ -34,18 +31,6 @@ public class CapCalculatorByMc extends CapCalculator {
         }
     }
 
-    @Override
-    protected int getMc(ModuleDetails module) {
-        /*String[] moduleDescriptions = module.split("/");
-        try {
-            return Integer.parseInt(String.valueOf(moduleDescriptions[MODULE_CREDIT_POSITION]));
-        } catch (NumberFormatException exception) {
-            invalidModules.add(module);
-            return INVALID_MC;
-        }*/
-        return Integer.parseInt(module.getModuleCredit());
-    }
-
     protected String getCap() {
         int totalMc = 0;
         double cap = 0;
@@ -53,7 +38,7 @@ public class CapCalculatorByMc extends CapCalculator {
             if (module.containsSuGrade()) {
                 continue;
             }
-            int mc = getMc(module);
+            int mc = Integer.parseInt(module.getModuleCredit());
             double gradePoint = module.getGradePoint();
             if (gradePoint == INVALID_GRADE || mc < 1) {
                 invalidModules.add(module.getModuleCredit() + "/" + module.getGrade());

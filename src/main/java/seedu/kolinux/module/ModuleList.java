@@ -1,8 +1,5 @@
 package seedu.kolinux.module;
 
-import seedu.kolinux.capcalculator.CapCalculator;
-import seedu.kolinux.capcalculator.ModuleListCapCalculator;
-import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.timetable.Timetable;
 
 import java.time.OffsetDateTime;
