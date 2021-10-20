@@ -26,9 +26,10 @@
 
 ## Implementation
 
-### timetable add feature
+### Add to timetable feature
 
-The timetable add mechanism is facilitated by `Timetable`. The lessons added to `Timetable` 
+The timetable add mechanism is facilitated by `Timetable` where the format of the input is as such: 
+`timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`. The lessons added to `Timetable` 
 via inputLesson(String[] lessonDetails) is stored in the `lessonStorage` within the program via 
 the method `addLesson(Lesson lesson)` and locally in `TimetableStorage` which saves it 
 to `timetable.txt` file to constantly save the lessons' data. It implements the following operations:
@@ -37,7 +38,7 @@ to `timetable.txt` file to constantly save the lessons' data. It implements the 
 to `timetableStorage` based on the type of lesson it is, which is included in the lessonDetail.
 * TimetableStorage#writeToFile() - Saves the lesson details to `timetable.txt` locally.
 
-#### Notes about the methods:
+#### ❕ Notes about the methods:
 
 * String[] lessonDetails consists of MODULE_CODE, LESSON_TYPE (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
 DAY, START_TIME, END_TIME. 
