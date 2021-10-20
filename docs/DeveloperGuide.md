@@ -94,7 +94,7 @@ The `ModuleCommand` class extends the `Command` class and handles all module rel
 
 ❕ Notes about the methods:
 
-`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a`ModuleDetails` instance corresponding to a kwy module code is appended to list in `moduleList`
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to list in `moduleList`
 
 The input format for storage and deletion of modules is as follows:
 
@@ -111,6 +111,24 @@ Step 1: The user launches the application. `myModules` , the list of `ModuleDeta
 Example: `myModules` is initialized with single `ModuleDetails` instance corresponding to `CS2113T`
 
 ![moduleListInit](assets/images/moduleListInit.png)
+
+
+
+Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
+
+![moduleListInit](assets/images/moduleStore.png)
+
+
+
+Step 3: The user executes `module delete CS2101` command to delete the instance of `ModuleDetais` corresponding to `CS2101` from `myModules`. The `module delete` prefix ensures `ModuleList#deleteModuleByCode(String code)` is called. 
+
+![moduleListInit](assets/images/moduleListInit.png)
+
+
+
+The following sequence diagram models how the store operation works:
+
+
 
 ### cap calculator by code feature
 
