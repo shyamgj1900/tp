@@ -81,7 +81,7 @@ public class TimetableTest {
     public void inputLesson_validLesson_lessonAdded() throws KolinuxException {
         timetable.clearTimetable();
         moduleList.storeModuleByCode("CS1231", moduleDb);
-        timetable.inputLesson(VALID_ADD_ARGUMENTS, moduleList);
+        timetable.inputLesson(VALID_ADD_ARGUMENTS);
         assertEquals("CS1231 TUT",
                 timetable.timetableData[getIndex("1200", schoolHours)][getIndex("monday", days)]);
     }
@@ -90,7 +90,7 @@ public class TimetableTest {
     public void inputLesson_lessonNotInModuleList_lessonNotAdded() {
         try {
             timetable.clearTimetable();
-            timetable.inputLesson(VALID_ADD_ARGUMENTS, moduleList);
+            timetable.inputLesson(VALID_ADD_ARGUMENTS);
         } catch (KolinuxException exception) {
             assertEquals("CS1231 not found in module list", exception.getMessage());
         }
@@ -132,8 +132,8 @@ public class TimetableTest {
     public void updateLesson_validLesson_lessonUpdated() throws KolinuxException {
         timetable.clearTimetable();
         moduleList.storeModuleByCode("CS1231", moduleDb);
-        timetable.inputLesson(VALID_ADD_ARGUMENTS, moduleList);
-        timetable.updateTimetable(UPDATE_LESSON_ARGUMENTS, moduleList);
+        timetable.inputLesson(VALID_ADD_ARGUMENTS);
+        timetable.updateTimetable(UPDATE_LESSON_ARGUMENTS);
         assertFalse(timetable.isLessonInTimetable("CS1231", "TUT", "monday"));
         assertTrue(timetable.isLessonInTimetable("CS1231", "TUT", "tuesday"));
         timetable.clearTimetable();
@@ -144,7 +144,7 @@ public class TimetableTest {
         try {
             timetable.clearTimetable();
             moduleList.storeModuleByCode("CS1231", moduleDb);
-            timetable.updateTimetable(UPDATE_LESSON_ARGUMENTS, moduleList);
+            timetable.updateTimetable(UPDATE_LESSON_ARGUMENTS);
             timetable.clearTimetable();
         } catch (KolinuxException e) {
             assertEquals(Timetable.MISSING_LESSON_TO_UPDATE, e.getMessage());

@@ -135,21 +135,21 @@ public class Timetable {
     }
 
     /**
-     * Saves the timetable to the local storage by writing to timetable.txt
+     * Adds lesson to timetable based on the time and day of the lesson and
+     * saves the timetable to the local storage by writing to timetable.txt
      * based on the time and day of the lesson.
      *
      * @param lesson Lesson which is to be added to the timetable
      * @throws KolinuxException If the format of user input is incorrect
      */
     public void addLessonToTimetable(Lesson lesson) throws KolinuxException {
-//        addToTimetable(lesson);
         String moduleCode = lesson.getModuleCode();
         String lessonType = lesson.getLessonType();
         String description = moduleCode + " " + lessonType;
         int dayIndex = lesson.getDayIndex();
         int startTimeIndex = lesson.getStartTimeIndex();
         int endTimeIndex = lesson.getEndTimeIndex();
-        if (!isValidTiming(startTimeIndex, endTimeIndex, dayIndex)) {
+        if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
             throw new KolinuxException(INVALID_ADD_FORMAT);
         }
         if (!isPeriodFree(startTimeIndex, endTimeIndex, dayIndex)) {
@@ -162,32 +162,6 @@ public class Timetable {
         }
         lessonStorage.add(lesson);
         timetableStorage.writeToFile();
-    }
-
-    /**
-     * Adds lesson to timetable based on the time and day of the lesson.
-     *
-     * @param lesson Lesson which is to be added to the timetable
-     * @throws KolinuxException If the format of user input is incorrect
-     */
-    public void addToTimetable(Lesson lesson) throws KolinuxException {
-        String moduleCode = lesson.getModuleCode();
-        String lessonType = lesson.getLessonType();
-        String description = moduleCode + " " + lessonType;
-        int dayIndex = lesson.getDayIndex();
-        int startTimeIndex = lesson.getStartTimeIndex();
-        int endTimeIndex = lesson.getEndTimeIndex();
-        if (!isValidTiming(startTimeIndex, endTimeIndex, dayIndex)) {
-            throw new KolinuxException(INVALID_ADD_FORMAT);
-        }
-        if (!isPeriodFree(startTimeIndex, endTimeIndex, dayIndex)) {
-            throw new KolinuxException(INACCESSIBLE_PERIOD);
-        }
-        for (int i = startTimeIndex; i < endTimeIndex; i++) {
-            assert dayIndex < COLUMN_SIZE;
-            assert i < ROW_SIZE;
-            timetableData[i][dayIndex] = description;
-        }
     }
 
     /**
@@ -207,47 +181,6 @@ public class Timetable {
     }
 
     /**
-     * Formats the string of the lesson which is to be printed in each box of the
-     * timetable by adding spaces to the front and back of the lesson entry.
-     *
-     * @param data The lesson information found in the timetableData
-     * @return The formatted string to be printed in each entry of the timetable
-     */
-    private String toPrint(String data) {
-        if (data != null) {
-            int spacesFront = (TABLE_COLUMN_WIDTH - data.length()) / 2;
-            int spacesBack = (TABLE_COLUMN_WIDTH - data.length()) / 2 + checkOddOrEven(data);
-            return getSpaces(spacesFront) + data + getSpaces(spacesBack) + "|";
-        }
-        return getSpaces(TABLE_COLUMN_WIDTH) + "|";
-    }
-
-    /**
-     * Adds spaces to format the timetable properly.
-     *
-     * @param numberOfSpaces The number of spaces to be added in each entry of the timetable
-     * @return The string with the spaces to be added to each entry of the timetable
-     */
-    private String getSpaces(int numberOfSpaces) {
-        return String.format("%1$" + numberOfSpaces + "s", "");
-    }
-
-    /**
-     * Checks if the length of the description for the timetable entry is even or odd,
-     * this is done in order to ensure the description is in the middle each box in the timetable.
-     * Ensures the format of the timetable is neat.
-     *
-     * @param lesson The description of the lesson
-     * @return The number of extra spaces to be added to the string to ensure proper formatting
-     */
-    private int checkOddOrEven(String lesson) {
-        if (lesson.length() % 2 == 0) {
-            return 0;
-        }
-        return 1;
-    }
-
-    /**
      * Clears all the entries of the timetable, ending up with an empty timetable.
      */
     public void clearTimetable() {
@@ -264,7 +197,7 @@ public class Timetable {
         try {
             String lessonType = parsedArguments[1].toUpperCase();
             String moduleCode = parsedArguments[0].toUpperCase();
-            if (!isLessonInModuleList(moduleList, parsedArguments[0].toUpperCase())) {
+            if (!isLessonInModuleList(moduleList, moduleCode)) {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
             int requiredHours = getHours(moduleList, moduleCode, lessonType);
@@ -294,29 +227,6 @@ public class Timetable {
             if (Objects.equals(timetableData[i][dayIndex], description)) {
                 timetableData[i][dayIndex] = null;
             }
-        }
-    }
-
-    public void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
-                                              String lessonType) throws KolinuxException {
-        if (storageHours > requiredHours) {
-            throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
-                    +
-                    " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
-                    +
-                    "Please readjust the input timings or modify timetable to continue\n"
-                    +
-                    "with adding this lesson to the timetable.");
-        }
-    }
-
-    private void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
-            throws KolinuxException {
-        if (requiredHours == 0) {
-            throw new KolinuxException(moduleCode + " has no " + lessonType
-                    +
-                    ".\nPlease add a different type of lesson.");
-
         }
     }
 
@@ -361,38 +271,6 @@ public class Timetable {
         timetableStorage.writeToFile();
     }
 
-    public boolean isLessonInTimetable(String lessonCode, String lessonType, String day) {
-        for (Lesson storedLesson : lessonStorage) {
-            String storedCode = storedLesson.getModuleCode();
-            String storedType = storedLesson.getLessonType();
-            String storedDay = storedLesson.getDay();
-            if (storedCode.equals(lessonCode) && storedType.equals(lessonType) && storedDay.equals(day)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
-        try {
-            for (int i = startIndex; i < endIndex; i++) {
-                if (timetableData[i][dayIndex] != null) {
-                    return false;
-                }
-            }
-            return true;
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_HOURS_INPUT);
-        }
-    }
-
-    private boolean isValidTiming(int startTimeIndex, int endTimeIndex, int dayIndex) {
-        if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
-            return false;
-        }
-        return true;
-    }
-
     public void updateTimetable(String[] parsedArguments) throws KolinuxException {
         try {
             String moduleCode = parsedArguments[0].toUpperCase();
@@ -420,14 +298,93 @@ public class Timetable {
         }
     }
 
-    private int getOldLessonHours(String moduleCode, String lessonType, String day) {
-        for (Lesson lesson : lessonStorage) {
-            if (lesson.getModuleCode().equals(moduleCode) && lesson.getLessonType().equals(lessonType)
-                    && lesson.getDay().equals(day)) {
-                return lesson.getEndTimeIndex() - lesson.getStartTimeIndex();
+    /**
+     * Formats the string of the lesson which is to be printed in each box of the
+     * timetable by adding spaces to the front and back of the lesson entry.
+     *
+     * @param data The lesson information found in the timetableData
+     * @return The formatted string to be printed in each entry of the timetable
+     */
+    private String toPrint(String data) {
+        if (data != null) {
+            int spacesFront = (TABLE_COLUMN_WIDTH - data.length()) / 2;
+            int spacesBack = (TABLE_COLUMN_WIDTH - data.length()) / 2 + checkOddOrEven(data);
+            return getSpaces(spacesFront) + data + getSpaces(spacesBack) + "|";
+        }
+        return getSpaces(TABLE_COLUMN_WIDTH) + "|";
+    }
+
+    /**
+     * Adds spaces to format the timetable properly.
+     *
+     * @param numberOfSpaces The number of spaces to be added in each entry of the timetable
+     * @return The string with the spaces to be added to each entry of the timetable
+     */
+    private String getSpaces(int numberOfSpaces) {
+        return String.format("%1$" + numberOfSpaces + "s", "");
+    }
+
+    /**
+     * Checks if the length of the description for the timetable entry is even or odd,
+     * this is done in order to ensure the description is in the middle each box in the timetable.
+     * Ensures the format of the timetable is neat.
+     *
+     * @param lesson The description of the lesson
+     * @return The number of extra spaces to be added to the string to ensure proper formatting
+     */
+    private int checkOddOrEven(String lesson) {
+        if (lesson.length() % 2 == 0) {
+            return 0;
+        }
+        return 1;
+    }
+
+    public void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
+                                              String lessonType) throws KolinuxException {
+        if (storageHours > requiredHours) {
+            throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
+                    +
+                    " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
+                    +
+                    "Please readjust the input timings or modify timetable to continue\n"
+                    +
+                    "with adding this lesson to the timetable.");
+        }
+    }
+
+    private void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
+            throws KolinuxException {
+        if (requiredHours == 0) {
+            throw new KolinuxException(moduleCode + " has no " + lessonType
+                    +
+                    ".\nPlease add a different type of lesson.");
+
+        }
+    }
+
+    public boolean isLessonInTimetable(String lessonCode, String lessonType, String day) {
+        for (Lesson storedLesson : lessonStorage) {
+            String storedCode = storedLesson.getModuleCode();
+            String storedType = storedLesson.getLessonType();
+            String storedDay = storedLesson.getDay();
+            if (storedCode.equals(lessonCode) && storedType.equals(lessonType) && storedDay.equals(day)) {
+                return true;
             }
         }
-        return -1;
+        return false;
+    }
+
+    public boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
+        try {
+            for (int i = startIndex; i < endIndex; i++) {
+                if (timetableData[i][dayIndex] != null) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(INVALID_HOURS_INPUT);
+        }
     }
 
     private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
@@ -452,12 +409,21 @@ public class Timetable {
         return 0;
     }
 
+    private int getOldLessonHours(String moduleCode, String lessonType, String day) {
+        for (Lesson lesson : lessonStorage) {
+            if (lesson.getModuleCode().equals(moduleCode) && lesson.getLessonType().equals(lessonType)
+                    && lesson.getDay().equals(day)) {
+                return lesson.getEndTimeIndex() - lesson.getStartTimeIndex();
+            }
+        }
+        return -1;
+    }
+
     private int getStorageHours(String moduleCode, String lessonType) {
         int hourCount = 0;
         for (Lesson storedLesson : lessonStorage) {
-            String storedCode = storedLesson.getModuleCode();
-            String storedType = storedLesson.getLessonType();
-            if (storedCode.equals(moduleCode) && storedType.equals(lessonType)) {
+            if (storedLesson.getModuleCode().equals(moduleCode) &&
+                    storedLesson.getLessonType().equals(lessonType)) {
                 hourCount += storedLesson.getHours();
             }
         }
@@ -466,13 +432,11 @@ public class Timetable {
 
     private String[] getOldTimings(String moduleCode, String lessonType, String day) {
         String[] timings = new String[2];
-        for (Lesson storedLesson : lessonStorage) {
-            String storedCode = storedLesson.getModuleCode();
-            String storedType = storedLesson.getLessonType();
-            String storedDay = storedLesson.getDay();
-            if (storedCode.equals(moduleCode) && storedType.equals(lessonType) && storedDay.equals(day)) {
-                timings[0] = storedLesson.getStartTime();
-                timings[1] = storedLesson.getEndTime();
+        for (Lesson lesson : lessonStorage) {
+            if (lesson.getModuleCode().equals(moduleCode) && lesson.getLessonType().equals(lessonType)
+                    && lesson.getDay().equals(day)) {
+                timings[0] = lesson.getStartTime();
+                timings[1] = lesson.getEndTime();
             }
         }
         return timings;
