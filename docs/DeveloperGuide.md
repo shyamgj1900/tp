@@ -79,7 +79,9 @@ in `scheduleOfAllDates`, lessons, and exams.
 * `PlannerStorage#writeFile(String data)` which appends the data of the new `Event` to `data/planner.txt` for local
 storage.
 
-The figure below represents the sequence diagram when `planner add` is invoked:
+The figure below represents the sequence diagram when `planner add` is entered by the user:
+
+![Planner Sequence Diagram 1](assets/images/plannerAdd1.png)
 
 ### module feature
 
