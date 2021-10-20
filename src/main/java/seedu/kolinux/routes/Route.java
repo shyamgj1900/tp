@@ -20,13 +20,12 @@ public class Route {
     public static final String STOP_IT = "IT";
     public static final String STOP_UTOWN = "UTOWN";
     public static final String STOP_KENT_VALE = "KENT VALE";
-    private static final String FILEPATH_A1 = "/routeA1.txt";
-    private static final String FILEPATH_A2 = "/routeA2.txt";
-    private static final String FILEPATH_D1 = "/routeD1.txt";
-    private static final String FILEPATH_D2 = "/routeD2.txt";
-    private static final String FILEPATH_E = "/routeE.txt";
-    private static final String FILEPATH_K = "/routeK.txt";
-    public static final String FILEPATH_STOP_NAMES = "/busStopNames.txt";
+    public static final String FILEPATH_A1 = "/routeA1.txt";
+    public static final String FILEPATH_A2 = "/routeA2.txt";
+    public static final String FILEPATH_D1 = "/routeD1.txt";
+    public static final String FILEPATH_D2 = "/routeD2.txt";
+    public static final String FILEPATH_E = "/routeE.txt";
+    public static final String FILEPATH_K = "/routeK.txt";
     public static final String COMMAND_LIST_STOPS = "bus stop list";
     public static final String USER_COMMAND_DELIMITER = " /";
     public static final int TOTAL_VERTICES_A1 = 13;
@@ -35,9 +34,10 @@ public class Route {
     public static final int TOTAL_VERTICES_D2 = 12;
     public static final int TOTAL_VERTICES_E = 7;
     public static final int TOTAL_VERTICES_K = 16;
+    public static final int STOP_NUMBER_RAFFLES_HALL = 6;
 
     private String[] splitInput;
-    private String[] location;
+    private String[] busStops;
     private int[] vertexCodeA1;
     private int[] vertexCodeA2;
     private int[] vertexCodeD1;
@@ -50,6 +50,7 @@ public class Route {
     private Graph graphD2;
     private Graph graphE;
     private Graph graphK;
+    private Location location;
     private ArrayList<String> verticesA1;
     private ArrayList<String> verticesA2;
     private ArrayList<String> verticesD1;
@@ -57,8 +58,8 @@ public class Route {
     private ArrayList<String> verticesE;
     private ArrayList<String> verticesK;
 
-    public Route(String input) {
-        location = new String[2];
+    public Route(String input) throws KolinuxException, IOException {
+        busStops = new String[2];
         splitInput = input.split(USER_COMMAND_DELIMITER);
         vertexCodeA1 = new int[2];
         vertexCodeA2 = new int[2];
@@ -72,12 +73,25 @@ public class Route {
         graphD2 = new Graph(TOTAL_VERTICES_D2);
         graphE = new Graph(TOTAL_VERTICES_E);
         graphK = new Graph(TOTAL_VERTICES_K);
+        location = new Location();
         verticesA1 = new ArrayList<>();
         verticesA2 = new ArrayList<>();
         verticesD1 = new ArrayList<>();
         verticesD2 = new ArrayList<>();
         verticesE = new ArrayList<>();
         verticesK = new ArrayList<>();
+        readNodesFromFile(verticesA1, FILEPATH_A1);
+        readNodesFromFile(verticesA2, FILEPATH_A2);
+        readNodesFromFile(verticesD1, FILEPATH_D1);
+        readNodesFromFile(verticesD2, FILEPATH_D2);
+        readNodesFromFile(verticesE, FILEPATH_E);
+        readNodesFromFile(verticesK, FILEPATH_K);
+        setRoute(verticesA1, graphA1);
+        setRoute(verticesA2, graphA2);
+        setRoute(verticesD1, graphD1);
+        setRoute(verticesD2, graphD2);
+        setRoute(verticesE, graphE);
+        setRoute(verticesK, graphK);
     }
 
     /**
@@ -87,7 +101,7 @@ public class Route {
      * @param vertices contains the nodes which connect the graph
      * @param filePath the path of the input file
      * @throws KolinuxException if the user command is not in the correct format
-     * @throws IOException if the there any IO errors
+     * @throws IOException      if the there any IO errors
      */
     private void readNodesFromFile(ArrayList<String> vertices, String filePath) throws KolinuxException, IOException {
         try {
@@ -127,60 +141,22 @@ public class Route {
      *
      * @throws KolinuxException if the user command is not in the correct format
      */
-    private void getLocations() throws KolinuxException, IOException {
-        readNodesFromFile(verticesA1, FILEPATH_A1);
-        readNodesFromFile(verticesA2, FILEPATH_A2);
-        readNodesFromFile(verticesD1, FILEPATH_D1);
-        readNodesFromFile(verticesD2, FILEPATH_D2);
-        readNodesFromFile(verticesE, FILEPATH_E);
-        readNodesFromFile(verticesK, FILEPATH_K);
-        setRoute(verticesA1, graphA1);
-        setRoute(verticesA2, graphA2);
-        setRoute(verticesD1, graphD1);
-        setRoute(verticesD2, graphD2);
-        setRoute(verticesE, graphE);
-        setRoute(verticesK, graphK);
+    public void getBusStopNumber() throws KolinuxException {
         for (int i = 0; i < 2; i++) {
             if (splitInput.length < 3) {
                 throw new KolinuxException("Enter starting point and final destination.");
             }
-            location[i] = splitInput[i + 1];
-            vertexCodeA1[i] = getStopNumberAOne(location[i]);
-            vertexCodeA2[i] = getStopNumberATwo(location[i]);
-            vertexCodeD1[i] = getStopNumberDOne(location[i]);
-            vertexCodeD2[i] = getStopNumberDTwo(location[i]);
-            vertexCodeE[i] = getStopNumberE(location[i]);
-            vertexCodeK[i] = getStopNumberK(location[i]);
+            busStops[i] = splitInput[i + 1];
+            vertexCodeA1[i] = location.getStopNumberAOne(busStops[i]);
+            vertexCodeA2[i] = location.getStopNumberATwo(busStops[i]);
+            vertexCodeD1[i] = location.getStopNumberDOne(busStops[i]);
+            vertexCodeD2[i] = location.getStopNumberDTwo(busStops[i]);
+            vertexCodeE[i] = location.getStopNumberE(busStops[i]);
+            vertexCodeK[i] = location.getStopNumberK(busStops[i]);
             if (vertexCodeA1[i] < 0 && vertexCodeA2[i] < 0 && vertexCodeD1[i] < 0
                     && vertexCodeE[i] < 0 && vertexCodeD2[i] < 0 && vertexCodeK[i] < 0) {
-                throw new KolinuxException(location[i].trim() + " is not a valid bus stop name.");
+                throw new KolinuxException(busStops[i].trim() + " is not a valid bus stop name.");
             }
-        }
-    }
-
-    /**
-     * Reads the list of bus stops from the file and returns the contents
-     * of the file.
-     *
-     * @return the bus stop names present in the file
-     * @throws KolinuxException if the user command is not in the correct format
-     * @throws IOException if the there any IO errors
-     */
-    private String getBusStopList() throws KolinuxException, IOException {
-        ArrayList<String> lines = new ArrayList<>();
-        try {
-            InputStream inputStream = Main.class.getResourceAsStream(FILEPATH_STOP_NAMES);
-            if (inputStream == null) {
-                throw new KolinuxException("File not found.");
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-            return String.join("\n", lines);
-        } catch (IOException e) {
-            throw new IOException();
         }
     }
 
@@ -189,15 +165,15 @@ public class Route {
      *
      * @return Message which specifies if any routes are found
      * @throws KolinuxException if the user command is not in the correct format
-     * @throws IOException if the there any IO errors
+     * @throws IOException      if the there any IO errors
      */
     public String checkRoutes() throws KolinuxException, IOException {
         if (splitInput[0].equalsIgnoreCase(COMMAND_LIST_STOPS)) {
-            return getBusStopList();
+            return location.getBusStopList();
         }
-        getLocations();
-        String startLocation = location[0].trim().toUpperCase();
-        String endLocation = location[1].trim().toUpperCase();
+        getBusStopNumber();
+        String startLocation = busStops[0].trim().toUpperCase();
+        String endLocation = busStops[1].trim().toUpperCase();
         ArrayList<String> busNumbers = new ArrayList<>();
         boolean[] flag = new boolean[2];
         flag[0] = checkDirectRoutes(busNumbers);
@@ -266,17 +242,17 @@ public class Route {
         } else if (vertexCodeA2[0] > 0) {
             flag = checkIndirectATwo(busOne, busTwo, midLoc);
         } else if (vertexCodeD1[0] > 0) {
-            if (graphD1.isConnected(vertexCodeD1[0], getStopNumberDOne(STOP_UTOWN))) {
+            if (graphD1.isConnected(vertexCodeD1[0], location.getStopNumberDOne(STOP_UTOWN))) {
                 flag = checkIndirectDOne(busOne, busTwo, midLoc);
             }
         } else if (vertexCodeD2[0] > 0) {
-            if (graphD2.isConnected(vertexCodeD2[0], getStopNumberDTwo(STOP_UTOWN))) {
+            if (graphD2.isConnected(vertexCodeD2[0], location.getStopNumberDTwo(STOP_UTOWN))) {
                 flag = checkIndirectDTwo(busOne, busTwo, midLoc);
             }
         } else if (vertexCodeE[0] > 0) {
             flag = checkIndirectE(busOne, busTwo, midLoc);
         } else if (vertexCodeK[0] > 0) {
-            if (graphK.isConnected(vertexCodeK[0], getStopNumberK(STOP_KENT_VALE))) {
+            if (graphK.isConnected(vertexCodeK[0], location.getStopNumberK(STOP_KENT_VALE))) {
                 flag = checkIndirectK(busOne, busTwo, midLoc);
             }
         }
@@ -296,11 +272,11 @@ public class Route {
         boolean flag = false;
         busOne.add(BUS_A1);
         midLoc.add(STOP_PGP);
-        if (graphD2.isConnected(getStopNumberDTwo(STOP_PGP), vertexCodeD2[1])) {
+        if (graphD2.isConnected(location.getStopNumberDTwo(STOP_PGP), vertexCodeD2[1])) {
             busTwo.add(BUS_D2);
             flag = true;
         }
-        if (graphK.isConnected(getStopNumberK(STOP_PGP), vertexCodeK[1])) {
+        if (graphK.isConnected(location.getStopNumberK(STOP_PGP), vertexCodeK[1])) {
             busTwo.add(BUS_K);
             flag = true;
         }
@@ -320,11 +296,11 @@ public class Route {
         boolean flag = false;
         busOne.add(BUS_A2);
         midLoc.add(STOP_IT);
-        if (graphD1.isConnected(getStopNumberDOne(STOP_IT), vertexCodeD1[1])) {
+        if (graphD1.isConnected(location.getStopNumberDOne(STOP_IT), vertexCodeD1[1])) {
             busTwo.add(BUS_D1);
             flag = true;
         }
-        if (graphE.isConnected(getStopNumberE(STOP_IT), vertexCodeE[1])) {
+        if (graphE.isConnected(location.getStopNumberE(STOP_IT), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
@@ -344,11 +320,11 @@ public class Route {
         boolean flag = false;
         busOne.add(BUS_D1);
         midLoc.add(STOP_UTOWN);
-        if (graphD2.isConnected(getStopNumberDTwo(STOP_UTOWN), vertexCodeD2[1])) {
+        if (graphD2.isConnected(location.getStopNumberDTwo(STOP_UTOWN), vertexCodeD2[1])) {
             busTwo.add(BUS_D2);
             flag = true;
         }
-        if (graphE.isConnected(getStopNumberE(STOP_UTOWN), vertexCodeE[1])) {
+        if (graphE.isConnected(location.getStopNumberE(STOP_UTOWN), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
@@ -368,11 +344,11 @@ public class Route {
         boolean flag = false;
         busOne.add(BUS_D2);
         midLoc.add(STOP_UTOWN);
-        if (graphD1.isConnected(getStopNumberDOne(STOP_UTOWN), vertexCodeD1[1])) {
+        if (graphD1.isConnected(location.getStopNumberDOne(STOP_UTOWN), vertexCodeD1[1])) {
             busTwo.add(BUS_D1);
             flag = true;
         }
-        if (graphE.isConnected(getStopNumberE(STOP_UTOWN), vertexCodeE[1])) {
+        if (graphE.isConnected(location.getStopNumberE(STOP_UTOWN), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
@@ -391,19 +367,19 @@ public class Route {
     private boolean checkIndirectE(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
         busOne.add(BUS_E);
-        if (vertexCodeE[0] == 6) {
-            if (graphK.isConnected(getStopNumberK(STOP_KENT_VALE), vertexCodeK[1])) {
+        if (vertexCodeE[0] == STOP_NUMBER_RAFFLES_HALL) {
+            if (graphK.isConnected(location.getStopNumberK(STOP_KENT_VALE), vertexCodeK[1])) {
                 midLoc.add(STOP_KENT_VALE);
                 busTwo.add(BUS_K);
                 flag = true;
             }
         } else {
             midLoc.add(STOP_UTOWN);
-            if (graphD1.isConnected(getStopNumberDOne(STOP_UTOWN), vertexCodeD1[1])) {
+            if (graphD1.isConnected(location.getStopNumberDOne(STOP_UTOWN), vertexCodeD1[1])) {
                 busTwo.add(BUS_D1);
                 flag = true;
             }
-            if (graphD2.isConnected(getStopNumberDTwo(STOP_UTOWN), vertexCodeD2[1])) {
+            if (graphD2.isConnected(location.getStopNumberDTwo(STOP_UTOWN), vertexCodeD2[1])) {
                 busTwo.add(BUS_D2);
                 flag = true;
             }
@@ -424,250 +400,12 @@ public class Route {
         boolean flag = false;
         busOne.add(BUS_K);
         midLoc.add(STOP_KENT_VALE);
-        if (graphE.isConnected(getStopNumberE(STOP_KENT_VALE), vertexCodeE[1])) {
+        if (graphE.isConnected(location.getStopNumberE(STOP_KENT_VALE), vertexCodeE[1])) {
             busTwo.add(BUS_E);
             flag = true;
         }
         return flag;
     }
-
-    /**
-     * Checks the given bus stop name with the corresponding bus stop
-     * number in the graph A1 if any.
-     *
-     * @param command the bus stop name
-     * @return the corresponding bus stop number
-     */
-    public int getStopNumberAOne(String command) {
-        assert command != null;
-        switch (command.trim().toLowerCase()) {
-        case "kr bus terminal":
-            return 0;
-        case "lt13":
-            return 1;
-        case "as 5":
-            return 2;
-        case "com 2":
-            return 3;
-        case "biz 2":
-            return 4;
-        case "opp tcoms":
-            return 5;
-        case "pgp":
-            return 6;
-        case "kr mrt":
-            return 7;
-        case "lt27":
-            return 8;
-        case "uhall":
-            return 9;
-        case "opp uhc":
-            return 10;
-        case "yih":
-            return 11;
-        case "clb":
-            return 12;
-        default:
-            return -1;
-        }
-    }
-
-    /**
-     * Checks the given bus stop name with the corresponding bus stop
-     * number in the graph A2 if any.
-     *
-     * @param command the bus stop name
-     * @return the corresponding bus stop number
-     */
-    public int getStopNumberATwo(String command) {
-        assert command != null;
-        switch (command.trim().toLowerCase()) {
-        case "kr bus terminal":
-            return 0;
-        case "it":
-            return 1;
-        case "opp yih":
-            return 2;
-        case "museum":
-            return 3;
-        case "uhc":
-            return 4;
-        case "opp uhall":
-            return 5;
-        case "s 17":
-            return 6;
-        case "opp kr mrt":
-            return 7;
-        case "pgpr":
-            return 8;
-        case "tcoms":
-            return 9;
-        case "opp hssml":
-            return 10;
-        case "opp nuss":
-            return 11;
-        case "com 2":
-            return 12;
-        case "ventus":
-            return 13;
-        default:
-            return -1;
-        }
-    }
-
-    /**
-     * Checks the given bus stop name with the corresponding bus stop
-     * number in the graph D1 if any.
-     *
-     * @param command the bus stop name
-     * @return the corresponding bus stop number
-     */
-    public int getStopNumberDOne(String command) {
-        assert command != null;
-        switch (command.trim().toLowerCase()) {
-        case "opp hssml":
-            return 0;
-        case "opp nuss":
-            return 1;
-        case "com 2":
-            return 2;
-        case "ventus":
-            return 3;
-        case "it":
-            return 4;
-        case "opp yih":
-            return 5;
-        case "museum":
-            return 6;
-        case "utown":
-            return 7;
-        case "yih":
-            return 8;
-        case "clb":
-            return 9;
-        case "lt13":
-            return 10;
-        case "as 5":
-            return 11;
-        case "biz 2":
-            return 12;
-        default:
-            return -1;
-        }
-    }
-
-    /**
-     * Checks the given bus stop name with the corresponding bus stop
-     * number in the graph D2 if any.
-     *
-     * @param command the bus stop name
-     * @return the corresponding bus stop number
-     */
-    public int getStopNumberDTwo(String command) {
-        assert command != null;
-        switch (command.trim().toLowerCase()) {
-        case "pgp":
-            return 0;
-        case "kr mrt":
-            return 1;
-        case "lt27":
-            return 2;
-        case "uhall":
-            return 3;
-        case "opp uhc":
-            return 4;
-        case "museum":
-            return 5;
-        case "utown":
-            return 6;
-        case "uhc":
-            return 7;
-        case "opp uhall":
-            return 8;
-        case "s 17":
-            return 9;
-        case "opp kr mrt":
-            return 10;
-        case "pgpr":
-            return 11;
-        default:
-            return -1;
-        }
-    }
-
-    /**
-     * Checks the given bus stop name with the corresponding bus stop
-     * number in the graph E if any.
-     *
-     * @param command the bus stop name
-     * @return the corresponding bus stop number
-     */
-    public int getStopNumberE(String command) {
-        assert command != null;
-        switch (command.trim().toLowerCase()) {
-        case "kent vale":
-            return 0;
-        case "ea":
-            return 1;
-        case "sde 3":
-            return 2;
-        case "it":
-            return 3;
-        case "opp yih":
-            return 4;
-        case "utown":
-            return 5;
-        case "raffles hall":
-            return 6;
-        default:
-            return -1;
-        }
-    }
-
-    /**
-     * Checks the given bus stop name with the corresponding bus stop
-     * number in the graph K if any.
-     *
-     * @param command the bus stop name
-     * @return the corresponding bus stop number
-     */
-    public int getStopNumberK(String command) {
-        assert command != null;
-        switch (command.trim().toLowerCase()) {
-        case "pgp":
-            return 0;
-        case "kr mrt":
-            return 1;
-        case "lt27":
-            return 2;
-        case "uhall":
-            return 3;
-        case "opp uhc":
-            return 4;
-        case "yih":
-            return 5;
-        case "clb":
-            return 6;
-        case "opp sde 3":
-            return 7;
-        case "japanese pri school":
-            return 8;
-        case "kent vale":
-            return 9;
-        case "museum":
-            return 10;
-        case "uhc":
-            return 11;
-        case "opp uhall":
-            return 12;
-        case "s 17":
-            return 13;
-        case "opp kr mrt":
-            return 14;
-        case "pgpr":
-            return 15;
-        default:
-            return -1;
-        }
-    }
 }
+
+
