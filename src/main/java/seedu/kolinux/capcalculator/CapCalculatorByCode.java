@@ -11,6 +11,14 @@ public class CapCalculatorByCode extends CapCalculator {
 
     protected ModuleDb moduleDb;
 
+    private boolean isValidGrade(String moduleGrade) {
+        return moduleGrade.equals("A+") || moduleGrade.equals("A") || moduleGrade.equals("A-")
+                || moduleGrade.equals("B+") || moduleGrade.equals("B") || moduleGrade.equals("B-")
+                || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
+                || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
+                || moduleGrade.equals("U");
+    }
+    
     /**
      * Construct the superclass of this object and initialize moduleDb in order to retrieve 
      * module information from the database. Module details are retrieved from input string
@@ -38,6 +46,10 @@ public class CapCalculatorByCode extends CapCalculator {
                 continue;
             }
             String grade = moduleDescriptions[1];
+            if (!isValidGrade(grade)) {
+                invalidModules.add(commandDescriptions[i + 2]);
+                continue;
+            }
             modules.storeModuleCodeGrade(moduleCode, grade);
         }
     }

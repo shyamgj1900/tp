@@ -14,22 +14,6 @@ import java.util.logging.Level;
 public class ModuleListCapCommand extends Command {
     
     private CapCalculatorByCode calculator;
-    private String moduleDescriptionList;
-
-    /**
-     * Check if a string is numeric or not.
-     * 
-     * @param input The string being checked.
-     * @return true if the string can be converted to numerical value, false otherwise.
-     */
-    private boolean isNumeric(String input) {
-        try {
-            Double.parseDouble(input);
-        } catch (NumberFormatException exception) {
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Constructor of this object. Format the modules and grades stored in module list and pass it to the
@@ -38,13 +22,6 @@ public class ModuleListCapCommand extends Command {
      * @param commandDescriptions Command input from user which is used to determine the calculator type.
      */
     public ModuleListCapCommand(String[] commandDescriptions) {
-        /*moduleDescriptionList = "cap code";
-        for (ModuleDetails module : moduleList.getMyModules()) {
-            String moduleCode = module.getModuleCode();
-            String moduleGrade = module.getGrade();
-            String moduleDescription = moduleCode + "/" + moduleGrade;
-            moduleDescriptionList += " " + moduleDescription;
-        }*/
         if (!commandDescriptions[0].equals("")) {
             this.calculator = new GradeSuggestionCalculator(moduleList, commandDescriptions[0]);
         } else {
