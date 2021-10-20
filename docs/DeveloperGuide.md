@@ -89,11 +89,11 @@ The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRo
 When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
 the `input` string to the `Route` class. The operation is implemented in the following way.
 
-* The overriden function `executeCommand()` calls the Route#checkRoutes() method. 
-* The Route#checkRoutes() contains the Route#getLocations(), Route#checkDirectRoutes(ArrayList<String> busNumbers) and Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
-* Route#getLocations() - Reads the connected graphs from the text file using the Route#readNodesFromFile(ArrayList<String> vertices, String filePath) and sets the route by adding the respective edges of the graph using the Route#setRoute(ArrayList<String> vertices, Graph graph) method.
-* Route#checkDirectRoutes(ArrayList<String> busNumbers) - Check whether there is a direct bus route between the 2 user given bus stops by calling the Graph#isConnected(int u, int v) method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
-* Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+* The overriden function `executeCommand()` calls the `Route#checkRoutes()` method. 
+* The `Route#checkRoutes()` contains the `Route#getLocations()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)` and `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
+* `Route#getLocations()` - Reads the connected graphs from the text file using the `Route#readNodesFromFile(ArrayList<String> vertices, String filePath)` and sets the route by adding the respective edges of the graph using the `Route#setRoute(ArrayList<String> vertices, Graph graph)` method.
+* `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
+* `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
 
 ## Product scope
 ### Target user profile:
