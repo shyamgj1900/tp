@@ -11,6 +11,7 @@ import seedu.kolinux.commands.TimetableCommand;
 import seedu.kolinux.commands.ExitCommand;
 import seedu.kolinux.exceptions.KolinuxException;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class Parser {
      * @param input User input
      * @return Command
      */
-    public static Command parseCommand(String input) throws KolinuxException {
+    public static Command parseCommand(String input) throws KolinuxException, IOException {
 
         String trimmedInput = input.trim();
         String commandWord = trimmedInput.split(" ", 2)[0];

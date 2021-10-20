@@ -11,14 +11,14 @@ public class BusRouteTest {
 
     @Test
     public void enterStopName_checkStopName_validStopName() {
-        Route route = new Route(VALID_STOP_NAME);
-        assertEquals(7, route.getStopNumberDOne(VALID_STOP_NAME));
+        Location location = new Location();
+        assertEquals(7, location.getStopNumberDOne(VALID_STOP_NAME));
     }
 
     @Test
     public void enterStopName_checkStopName_invalidStopName() {
-        Route route = new Route(INVALID_STOP_NAME);
-        assertEquals(-1, route.getStopNumberDOne(INVALID_STOP_NAME));
+        Location location = new Location();
+        assertEquals(-1, location.getStopNumberDOne(INVALID_STOP_NAME));
     }
 
     @Test
