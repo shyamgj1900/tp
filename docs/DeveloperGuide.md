@@ -82,7 +82,20 @@ The figure below represents the sequence diagram when `planner add` is invoked:
 
 ### module feature
 
-### cap calculator feature
+### cap calculator by code feature
+
+This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
+the input modules and grades from user as a string array in `modules` when the object is constructed
+once the command `cap code` is given from user, along with the other essential methods used for cap calculation.
+
+When `CapCalculator#executeCapCalculator()` is executed, the following methods are invoked:
+
+- `CapCalculator#checkModulesNotEmpty()` — which ensures that the `modules` attribute of the object is not empty.
+- `CapCalculator#getCap()` — which is the methods used to do all the cap calculation.
+- `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
+
+Below is a simplified sequence diagram showing important steps of how `cap code` works:
+
 
 ### bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
