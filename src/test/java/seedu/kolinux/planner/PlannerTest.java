@@ -2,6 +2,7 @@ package seedu.kolinux.planner;
 
 import org.junit.jupiter.api.Test;
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.module.timetable.Lesson;
 import seedu.kolinux.module.timetable.Timetable;
 
@@ -12,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlannerTest {
 
-    private Planner planner = new Planner();
+    private ModuleList moduleList = new ModuleList();
+    private Planner planner = new Planner(moduleList);
     private Timetable timetable = new Timetable();
 
     private static final String[][] VALID_LESSON_ARGUMENTS
