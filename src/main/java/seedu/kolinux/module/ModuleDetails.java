@@ -164,9 +164,7 @@ public class ModuleDetails {
     public String getEndTime() {
         try {
             int examHours = 0;
-            for (int i = 0; i < semesterData.size(); i++) {
-                examHours = (semesterData.get(i).getAsJsonObject().get("examDuration").getAsInt()) / 60;
-            }
+            examHours = (semesterData.get(SEMESTER_1).getAsJsonObject().get("examDuration").getAsInt()) / 60;
             String time = getStartTime();
             String[] timings = time.split(":");
             int endTiming = Integer.parseInt(timings[0]) + examHours;
