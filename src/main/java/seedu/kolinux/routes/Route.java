@@ -34,7 +34,7 @@ public class Route {
     public static final int TOTAL_VERTICES_D2 = 12;
     public static final int TOTAL_VERTICES_E = 7;
     public static final int TOTAL_VERTICES_K = 16;
-    public static final int RAFFLES_HALL_STOP = 6;
+    public static final int STOP_NUMBER_RAFFLES_HALL = 6;
 
     private String[] splitInput;
     private String[] busStops;
@@ -367,7 +367,7 @@ public class Route {
     private boolean checkIndirectE(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
         busOne.add(BUS_E);
-        if (vertexCodeE[0] == RAFFLES_HALL_STOP) {
+        if (vertexCodeE[0] == STOP_NUMBER_RAFFLES_HALL) {
             if (graphK.isConnected(location.getStopNumberK(STOP_KENT_VALE), vertexCodeK[1])) {
                 midLoc.add(STOP_KENT_VALE);
                 busTwo.add(BUS_K);
