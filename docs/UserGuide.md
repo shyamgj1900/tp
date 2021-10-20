@@ -27,6 +27,7 @@ for the NUS internal shuttle bus.
     * [`module list`](#list-modules-from-module-list-module-list)
     * [`module view`](#view-module-details-module-view)
     * [`module grade`](#set-a-modules-grade-in-module-list-module-grade)
+    * [`module cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap)
   * [`timetable`](#timetable-timetable)
     * [`timetable add`](#add-lessons-to-timetable--timetable-add)
     * [`timetable delete`](#delete-lessons-from-timetable--timetable-delete)
@@ -38,6 +39,8 @@ for the NUS internal shuttle bus.
     * [`planner delete`](#delete-an-event-from-planner-planner-delete)
   * [`bus`](#nus-bus-route-finder-bus)
   * [`cap`](#cap-calculator-cap)
+    * [`cap mc`](#calculate-cap-using-modular-credit-cap-mc)
+    * [`cap code`](#calculate-cap-using-module-code-cap-code)
   * [`help`](#view-menu-help)
   * [`bye`](#exit-bye)
 * [FAQ](#faq)
@@ -233,7 +236,7 @@ Based on your available grade, your cap for this semester is 5.00
 ....................................................................
 ```
 
-This feature also allows user to know the minimum grade to get for the other modules in order to achieve desired CAP by including the CAP at the end of the command.
+This feature also provides user with the minimum grade to get for the other modules in order to achieve desired CAP by including the CAP at the end of the command.
 
 Format: `module cap DESIRED_CAP`
 
@@ -516,12 +519,13 @@ The CAP calculator is an essential tool for many NUS students to keep track on t
 current semester. User can choose between different formats of module and the respective grade to allow more command 
 flexibility.
 
-Format: `cap mc MC/GRADE` or `cap code CODE/GRADE`
+#### Calculate CAP using modular credit: `cap mc`
+
+Format: `cap mc MC/GRADE`
 
 Example of usage:
 
 * `cap mc 4/A 6/B+ 4/B 4/B- 4/A+`
-* `cap code CS2113T/A CS2101/C CG2027/B-`
 
 Demo:
 
@@ -529,8 +533,22 @@ Demo:
 cap 4A 6B+ 4B 4B- 4A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
+```
+
+#### Calculate CAP using module code: `cap code`
+
+Format: `cap code CODE/GRADE`
+
+Example of usage:
+
+* `cap code CS2113T/A CS2101/C CG2027/B-`
+
+Demo:
+
+```
 cap code CS2113T/A CS2101/C CG2027/B-
 Your CAP for this semester will be 3.40 if you get your desired grades!
+....................................................................
 ```
 
 ### View menu: `help`
@@ -542,18 +560,28 @@ Demo:
 ```
 help
 Here are the list of commands:
-1. cap MC_AND_GRADES  - Calculates the total cap for the semester
-2. view MODULE_CODE - View the module details
+1. cap mc MC/GRADE - Calculates the total cap for the semester from MC
+2. cap code MODULE_CODE/GRADE - Calculates the total cap for the semester from MODULE_CODE
 3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
-4. store_module MODULE_CODE - Add a module to your module list
-5. delete_module MODULE_CODE - Delete a module from your module list
-6. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-7. planner list DATE - Lists events on a certain date
-8. planner delete DATE - Delete an event on a certain date
-9. timetable add DESCRIPTION/DAY/START_TIME/END_TIME - Add lesson to timetable
-10. timetable clear - Remove all lessons from timetable
-11. help - View this menu again
-12. bye - Exit Kolinux
+4. bus stop list - List all the bus stop names
+5. module view MODULE_CODE - View the module details
+6. module store MODULE_CODE - Add a module to your module list
+7. module delete MODULE_CODE - Delete a module from your module list
+8. module list - List all modules stored in your module list
+9. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
+10. module cap - Calculate the overall CAP of modules stored in your module list
+11. module cap DESIRED_CAP - Calculate the average minimum grade for the other modules needed
+    to achieve DESIRED_CAP
+12. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
+13. planner list DATE - Lists events on a certain date
+14. planner delete DATE - Delete an event on a certain date
+15. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
+16. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
+    - shift a lesson to another timing
+17. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
+18. timetable view - Print the timetable on CLI
+19. help - View this menu again
+20. bye - Exit Kolinux
 ....................................................................
 ```
 
