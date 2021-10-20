@@ -1,8 +1,5 @@
 package seedu.kolinux.module;
 
-import seedu.kolinux.capcalculator.CapCalculator;
-import seedu.kolinux.capcalculator.ModuleListCapCalculator;
-import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.timetable.Timetable;
 
 import java.time.OffsetDateTime;
@@ -140,6 +137,12 @@ public class ModuleList {
                 System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
             } else {
                 System.out.println("No exam");
+            }
+            String grade = module.getGrade();
+            if (grade.equals("0")) {
+                System.out.println("Final grade: N/A");
+            } else {
+                System.out.println("Final grade: " + grade);
             }
             System.out.println(HORIZONTAL_LINE);
         }

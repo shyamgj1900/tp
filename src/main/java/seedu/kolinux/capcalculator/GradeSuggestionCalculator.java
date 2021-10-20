@@ -1,6 +1,8 @@
 package seedu.kolinux.capcalculator;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleDetails;
+import seedu.kolinux.module.ModuleList;
 
 /**
  * Represents CAP calculator used for suggesting grade based on stored modules in module list and desired CAP
@@ -8,18 +10,10 @@ import seedu.kolinux.exceptions.KolinuxException;
  */
 public class GradeSuggestionCalculator extends CapCalculatorByCode {
     
-    private static final String UNAVAILABLE_GRADE = "0";
-    
     private String userDesiredCap;
-
-    /**
-     * Construct the superclass of this object and store desired CAP from user.
-     * 
-     * @param input Formatted description of modules and the respective grades from module list.
-     * @param userDesiredCap Desired CAP of user.
-     */
-    public GradeSuggestionCalculator(String input, String userDesiredCap) {
-        super(input);
+    
+    public GradeSuggestionCalculator(ModuleList modules, String userDesiredCap) {
+        super(modules);
         this.userDesiredCap = userDesiredCap;
     }
 
@@ -29,24 +23,17 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      * @throws KolinuxException if desired CAP is invalid.
      */
     public void checkInvalidDesiredCap() throws KolinuxException {
-        double cap = Double.parseDouble(userDesiredCap);
+        double cap;
+        try {
+            cap = Double.parseDouble(userDesiredCap);
+        } catch (NumberFormatException exception) {
+            String errorMessage = "CAP must be a number";
+            throw new KolinuxException(errorMessage);
+        }
         if (cap > 5.0) {
             String errorMessage = "CAP cannot exceed 5.0";
             throw new KolinuxException(errorMessage);
         }
-    }
-
-    /**
-     * Check if the module is needed for CAP calculation or not.
-     * 
-     * @param module Description of module which include the module code and grade.
-     * @return true if the module is not needed for calculation, false otherwise.
-     */
-    private boolean isInvalidModule(String module) {
-        String[] moduleDescriptions = module.split("/");
-        String grade = moduleDescriptions[1];
-        return grade.equals(SATISFACTORY_GRADE) || grade.equals(UNSATISFACTORY_GRADE) 
-                || grade.equals(UNAVAILABLE_GRADE);
     }
 
     /**
@@ -56,12 +43,11 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      */
     private double getMcModulesWithGrade() {
         double totalMc = 0.0;
-        for (String module : modules) {
-            if (isInvalidModule(module)) {
+        for (ModuleDetails module : modules.getMyModules()) {
+            if (module.containsSuGrade() || module.containsNullGrade()) {
                 continue;
             }
-            int mc = getMc(module);
-            totalMc += mc;
+            totalMc += totalMc += Integer.parseInt(module.getModuleCredit());
         }
         return totalMc;
     }
@@ -74,7 +60,8 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
     private double getMcModulesWithoutGrade() {
         double totalMc = 0.0;
         for (String module : invalidModules) {
-            int mc = getMc(module);
+            String moduleCode = module.split("/")[0];
+            double mc = Double.parseDouble(moduleDb.getModuleInfo(moduleCode).getModuleCredit());
             totalMc += mc;
         }
         return totalMc;
