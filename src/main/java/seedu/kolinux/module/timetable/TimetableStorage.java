@@ -9,42 +9,16 @@ import java.util.ArrayList;
 
 import static seedu.kolinux.module.timetable.Timetable.filePath;
 import static seedu.kolinux.module.timetable.Timetable.lessonStorage;
-import static seedu.kolinux.module.timetable.Timetable.CORRUPT_STORAGE;
+
 
 /** Represents the methods to interact with timetable text file. */
 public class TimetableStorage {
 
-    /**
-     * Loads the content of the timetable.txt file onto the 2D timetable array and lessonStorage array list
-     * to carry out any timetable commands given by user.
-     *
-     * @param fileContents Array list of the contents of the timetable text file
-     * @param lessons Array list of the lessons which have been extracted from timetable text file
-     * @throws KolinuxException If the format of the file content for timetable inputting is incorrect
-     */
-    public static void loadContent(ArrayList<String> fileContents, ArrayList<Lesson> lessons)
-            throws KolinuxException {
-        try {
-            for (String fileContent : fileContents) {
-                String[] content = fileContent.split("/");
-                if (content[1].equals("TUT")) {
-                    Timetable.addLesson(new Tutorial(content));
-                } else if (content[1].equals("LEC")) {
-                    Timetable.addLesson(new Lecture(content));
-                } else if (content[1].equals("LAB")) {
-                    Timetable.addLesson(new Lab(content));
-                }
-            }
-        } catch (KolinuxException exception) {
-            clearFile();
-            throw new KolinuxException(CORRUPT_STORAGE);
-        }
-    }
 
     /**
      * Saves the new lessons input by user onto the timetable to timetable.txt.
      */
-    public static void writeToFile() {
+    public void writeToFile() {
         try {
             FileWriter fw = new FileWriter(filePath);
             for (Lesson lesson : lessonStorage) {
@@ -63,7 +37,7 @@ public class TimetableStorage {
      *
      * @param filePath The expected file path of timetable text file
      */
-    public static void createFilePath(String filePath)  {
+    public void createFilePath(String filePath)  {
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -77,7 +51,7 @@ public class TimetableStorage {
     /**
      * Clears all the information present in the timetable.txt in case of file corruption.
      */
-    public static void clearFile() {
+    public void clearFile() {
         try {
             FileWriter fw = new FileWriter(filePath);
             fw.write("");

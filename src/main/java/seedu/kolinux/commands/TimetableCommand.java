@@ -9,6 +9,7 @@ import java.util.logging.Level;
 /** Represents the command that interacts with the timetable. */
 public class TimetableCommand extends Command {
 
+    public static Timetable timetable = new Timetable(moduleList);
     private String subCommand;
     private String[] parsedArguments;
     public static final String INVALID_TIMETABLE_ARGUMENT_MESSAGE = "Ensure command has one of the "
@@ -34,7 +35,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult addLesson() throws KolinuxException {
-        Timetable.inputLesson(parsedArguments, moduleList);
+        timetable.inputLesson(parsedArguments);
         logger.log(Level.INFO, "User added a module to timetable");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
@@ -42,7 +43,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult deleteLesson() throws KolinuxException {
-        Timetable.deleteLesson(parsedArguments);
+        timetable.deleteLesson(parsedArguments);
         logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
                 +
                 " from the timetable.");
@@ -54,19 +55,19 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult viewTimetable() {
-        Timetable.viewTimetable();
+        timetable.viewTimetable();
         logger.log(Level.INFO, "User has printed timetable");
         return new CommandResult("Timetable has been printed above");
     }
 
     private CommandResult clearAllLessons() {
-        Timetable.clearTimetable();
+        timetable.clearTimetable();
         logger.log(Level.INFO, "User has cleared timetable");
         return new CommandResult("Timetable has been cleared completely");
     }
 
     private CommandResult updateLesson() throws KolinuxException {
-        Timetable.updateTimetable(parsedArguments, moduleList);
+        timetable.updateTimetable(parsedArguments);
         logger.log(Level.INFO, "User has updated the timetable.");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
