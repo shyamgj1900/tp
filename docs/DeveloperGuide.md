@@ -4,8 +4,8 @@
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module`](#module-feature)
   * [`cap`](#cap-calculator-by-code-feature)
+  * [`module store/delete`](#store/delete-a-module-by-module-code)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -135,7 +135,32 @@ The class diagram below shows the associations between `Planner`, `ModuleSyncer`
 
 ![Planner Class Diagram](assets/images/plannerAddCD.png)
 
-### module feature
+### Store/delete a module by module code
+
+The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
+
+- `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)`
+- `ModuleList#deleteModuleByCode(String code)`
+
+❕ Notes about the methods:
+
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a`ModuleDetails` instance corresponding to a kwy module code is appended to list in `moduleList`
+
+The input format for storage and deletion of modules is as follows:
+
+- Storage: `module store MODULE_CODE`
+
+- Deletion: `module delete MODULE_CODE`
+
+  
+
+Given below are examples of the usage of `module store/delete` and how the store/delete system behaves at each step.
+
+Step 1: The user launches the application. `myModules` , the list of `ModuleDetails` instances, is initialized with the latest saved modules from local storage. If no modules are stored, the resulting list will be empty.
+
+Example: `myModules` is initialized with single `ModuleDetails` instance corresponding to `CS2113T`
+
+![moduleListInit](assets/images/moduleListInit.png)
 
 ### cap calculator by code feature
 
@@ -173,7 +198,7 @@ the `input` string to the `Route` class. The operation is implemented in the fol
 * is reasonably comfortable using CLI apps
 
 ### Value proposition:
- 
+
 Users can manage all important university related tasks (Module Manager, Event Planner, Timetable, Bus Route Finder, 
 and CAP calculator) in a single integrated platform.
 
@@ -229,7 +254,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 
    * Test case: `planner add project meeting/20211020/0700/0800`
-      
+     
       Expected: Event is not added to the list. Error message regarding date and time format printed as output.
 
 
@@ -239,21 +264,21 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 
    * Other incorrect commands to try: `planner add something wrong//`, `planner add something amazing/ 3pm to 4pm`
-      
+     
       Expected: Similar to previous cases where an error message regarding the format of command is printed as output.
 
 2. Adding an event with time conflicts with at least one existing event, lesson, or exam to the Planner.
 
 
   * Prerequisites: Add the event by `planner add conflict test/2022-05-05/0800/1100`. Add the module
-  `module store cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
-  _Do note 2021-05-05 is a Thursday._
+    `module store cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
+    _Do note 2021-05-05 is a Thursday._
 
 
   * Test case: `planner list 2022-05-05`
 
      Expected: The event `conflict test`, lesson `CS2113T LEC`, exam `CS2113T Exam` are displayed as output.
-   
+
 
   * Test case: `planner add love conflicts/2022-05-05/xxxx/yyyy` where `xxxx` and `yyyy` are start times and end
     times respectively which overlaps with any of the events listed.
