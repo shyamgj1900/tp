@@ -62,6 +62,16 @@ public class ModuleList {
 
         return moduleCode + " not found in the list";
     }
+    
+    public void storeModuleMcGrade(int mc, String grade) {
+        ModuleDetails mod = new ModuleDetails(mc, grade);
+        myModules.add(mod);
+    }
+    
+    public void storeModuleCodeGrade(String code, String grade) {
+        ModuleDetails mod = new ModuleDetails(code, grade);
+        myModules.add(mod);
+    }
 
     /**
      * Stores the moduleDetails corresponding to a given module code in the myModules list.
@@ -138,6 +148,12 @@ public class ModuleList {
                 System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
             } else {
                 System.out.println("No exam");
+            }
+            String grade = module.getGrade();
+            if (grade.equals("0")) {
+                System.out.println("Final grade: NA");
+            } else {
+                System.out.println("Final grade: " + grade);
             }
             System.out.println(HORIZONTAL_LINE);
         }

@@ -38,17 +38,17 @@ public class ModuleListCapCommand extends Command {
      * @param commandDescriptions Command input from user which is used to determine the calculator type.
      */
     public ModuleListCapCommand(String[] commandDescriptions) {
-        moduleDescriptionList = "cap code";
+        /*moduleDescriptionList = "cap code";
         for (ModuleDetails module : moduleList.getMyModules()) {
             String moduleCode = module.getModuleCode();
             String moduleGrade = module.getGrade();
             String moduleDescription = moduleCode + "/" + moduleGrade;
             moduleDescriptionList += " " + moduleDescription;
-        }
-        if (isNumeric(commandDescriptions[0])) {
-            this.calculator = new GradeSuggestionCalculator(moduleDescriptionList, commandDescriptions[0]);
+        }*/
+        if (!commandDescriptions[0].equals("")) {
+            this.calculator = new GradeSuggestionCalculator(moduleList, commandDescriptions[0]);
         } else {
-            this.calculator = new ModuleListCapCalculator(moduleDescriptionList);
+            this.calculator = new ModuleListCapCalculator(moduleList);
         } 
     }
     

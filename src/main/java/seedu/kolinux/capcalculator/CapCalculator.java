@@ -1,6 +1,8 @@
 package seedu.kolinux.capcalculator;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleDetails;
+import seedu.kolinux.module.ModuleList;
 
 import java.util.ArrayList;
 
@@ -22,15 +24,13 @@ public abstract class CapCalculator {
     
     protected static final String TWO_DECIMAL_FORMAT = "%.2f";
     
-    protected ArrayList<String> modules;
+    //protected ArrayList<String> modules;
+    //protected ArrayList<String> invalidModules;
+    
+    protected ModuleList modules;
     protected ArrayList<String> invalidModules;
-
-    /**
-     * Construct this calculator object and initialize necessary attributes to store module descriptions from user.
-     * 
-     * @param input Command input from user which contains the module descriptions.
-     */
-    public CapCalculator(String input) {
+    
+    /*public CapCalculator(String input) {
         modules = new ArrayList<>();
         invalidModules = new ArrayList<>();
         String[] commandDescriptions = input.split(" ");
@@ -42,6 +42,11 @@ public abstract class CapCalculator {
             modules.add(commandDescriptions[i + 2]);
         }
         assert !modules.isEmpty();
+    }*/
+    
+    public CapCalculator() {
+        modules = new ModuleList();
+        invalidModules = new ArrayList<>();
     }
 
     /**
@@ -50,7 +55,7 @@ public abstract class CapCalculator {
      * @throws KolinuxException If the modules attribute is empty. Show an error message to the user.
      */
     protected void checkModulesNotEmpty() throws KolinuxException {
-        if (modules.isEmpty()) {
+        if (modules.getMyModulesSize() == 0 && invalidModules.isEmpty()) {
             String errorMessage;
             String className = this.getClass().getName().split("\\.")[CLASSNAME_POSITION];
             switch (className) {
@@ -79,7 +84,7 @@ public abstract class CapCalculator {
      * @param module The current module that is being checked.
      * @return true if the module has an S/U grade, false otherwise.
      */
-    protected boolean containsSuGrade(String module) {
+    /*protected boolean containsSuGrade(String module) {
         String[] moduleDescriptions = module.split("/");
         if (moduleDescriptions.length == 1) {
             invalidModules.add(module);
@@ -87,7 +92,7 @@ public abstract class CapCalculator {
         }
         String grade = moduleDescriptions[INFO_TYPE_POSITION];
         return grade.equals(SATISFACTORY_GRADE) || grade.equals(UNSATISFACTORY_GRADE);
-    }
+    }*/
 
     /**
      * Extracts modular credit from a module description.
@@ -95,7 +100,7 @@ public abstract class CapCalculator {
      * @param module Description of module which contains modular credit and grade.
      * @return Modular credit.
      */
-    protected abstract int getMc(String module);
+    protected abstract int getMc(ModuleDetails module);
 
     /**
      * Extracts grade point from a module description.
@@ -103,7 +108,7 @@ public abstract class CapCalculator {
      * @param module Description of module which contains modular credit and grade.
      * @return Grade point.
      */
-    protected double getGradePoint(String module) {
+    /*protected double getGradePoint(String module) {
         String[] moduleDescriptions = module.split("/");
         String grade = moduleDescriptions[INFO_TYPE_POSITION];
         switch (grade) {
@@ -132,7 +137,7 @@ public abstract class CapCalculator {
             invalidModules.add(module);
             return INVALID_GRADE;
         }
-    }
+    }*/
 
     /**
      * Calculate CAP based on a previously calculated CAP and the current module.
@@ -143,7 +148,7 @@ public abstract class CapCalculator {
      * @param gradePoint The grade point of the current module to be calculated into CAP.
      * @return The overall CAP up to the current module.
      */
-    protected double getCurrentCap(int totalMc, double cap, int mc, double gradePoint) {
+    protected double calculateCurrentCap(int totalMc, double cap, int mc, double gradePoint) {
         return ((cap * totalMc) + (gradePoint * mc)) / (totalMc + mc);
     }
 
@@ -152,18 +157,21 @@ public abstract class CapCalculator {
      * 
      * @return The overall CAP formatted to two decimal places.
      */
-    protected String getCap() {
+    /*protected String getCap() {
         int totalMc = 0;
         double cap = 0;
-        for (String module : modules) {
-            if (containsSuGrade(module)) {
+        for (ModuleDetails module : modules.getMyModules()) {
+            //if (containsSuGrade(module)) {
+            //    continue;
+            //}
+            if (module.containsSuGrade()) {
                 continue;
             }
             int mc = getMc(module);
-            if (mc == INVALID_MC) {
-                continue;
-            }
-            double gradePoint = getGradePoint(module);
+            //if (mc == INVALID_MC) {
+            //    continue;
+            //}
+            double gradePoint = module.getGradePoint();
             if (gradePoint == INVALID_GRADE) {
                 continue;
             }
@@ -172,7 +180,9 @@ public abstract class CapCalculator {
             assert cap <= MAX_CAP;
         }
         return String.format(TWO_DECIMAL_FORMAT, cap);
-    }
+    }*/
+    
+    protected abstract String getCap();
 
     /**
      * Check if this object detects any invalid input module description from user.
@@ -180,8 +190,18 @@ public abstract class CapCalculator {
      * @throws KolinuxException When invalid module descriptions are found. Show an error message to the user
      *     containing all the invalid module descriptions.
      */
+    /*protected void checkInvalidModules() throws KolinuxException {
+        if (!(invalidModules.getMyModulesSize() == 0)) {
+            StringBuilder errorMessage = new StringBuilder("Invalid module info found: ");
+            for (ModuleDetails module : invalidModules.getMyModules()) {
+                errorMessage.append(module).append(" ");
+            }
+            throw new KolinuxException(errorMessage.toString());
+        }
+    }*/
+
     protected void checkInvalidModules() throws KolinuxException {
-        if (!invalidModules.isEmpty()) {
+        if (!(invalidModules.isEmpty())) {
             StringBuilder errorMessage = new StringBuilder("Invalid module info found: ");
             for (String module : invalidModules) {
                 errorMessage.append(module).append(" ");

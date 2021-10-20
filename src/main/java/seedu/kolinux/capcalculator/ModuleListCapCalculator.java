@@ -1,6 +1,8 @@
 package seedu.kolinux.capcalculator;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleDetails;
+import seedu.kolinux.module.ModuleList;
 
 /**
  * Represents CAP calculator used for calculation from stored modules in module list.
@@ -8,14 +10,13 @@ import seedu.kolinux.exceptions.KolinuxException;
 public class ModuleListCapCalculator extends CapCalculatorByCode {
 
     private static final String UNAVAILABLE_GRADE = "0";
+    
+    public ModuleListCapCalculator(ModuleList modules) {
+        super(modules);
+    }
 
-    /**
-     * Construct the superclass of this object.
-     * 
-     * @param input Formatted description of modules and the respective grades from module list.
-     */
-    public ModuleListCapCalculator(String input) {
-        super(input);
+    protected int getMc(ModuleDetails module) {
+        return Integer.parseInt(module.getModuleCredit());
     }
 
     /**
@@ -24,9 +25,8 @@ public class ModuleListCapCalculator extends CapCalculatorByCode {
      * @throws KolinuxException if there is no module with available grade stored.
      */
     private void checkAllModulesNotAvailable() throws KolinuxException {
-        for (String module : modules) {
-            String[] moduleDescriptions = module.split("/");
-            if (!moduleDescriptions[1].equals(UNAVAILABLE_GRADE)) {
+        for (ModuleDetails module : modules.getMyModules()) {
+            if (!module.getGrade().equals(UNAVAILABLE_GRADE)) {
                 return;
             }
         }
