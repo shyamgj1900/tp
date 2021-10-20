@@ -8,9 +8,10 @@ import seedu.kolinux.module.ModuleDetails;
 public class CapCalculatorByMc extends CapCalculator {
 
     /**
-     * Construct the superclass of this object.
+     * Construct the superclass of this object, then store the module details from user input in modules and
+     * invalidModules accordingly.
      * 
-     * @param input Command input from user which contains the module descriptions.
+     * @param input Command input from user which contains the modular credits and their respective grade.
      */
     public CapCalculatorByMc(String input) {
         super();
@@ -31,6 +32,7 @@ public class CapCalculatorByMc extends CapCalculator {
         }
     }
 
+    @Override
     protected String getCap() {
         int totalMc = 0;
         double cap = 0;

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public abstract class CapCalculator {
     
     private static final int CLASSNAME_POSITION = 3;
-    private static final int INFO_TYPE_POSITION = 1;
     
     protected static final int INVALID_GRADE = -1;
     protected static final int INVALID_MC = -1;
@@ -22,7 +21,10 @@ public abstract class CapCalculator {
     
     protected ModuleList modules;
     protected ArrayList<String> invalidModules;
-    
+
+    /**
+     * Construct this object by initializing modules and invalidModules attributes.
+     */
     public CapCalculator() {
         modules = new ModuleList();
         invalidModules = new ArrayList<>();
@@ -31,7 +33,7 @@ public abstract class CapCalculator {
     /**
      * Check if the modules attribute in this object is empty.
      * 
-     * @throws KolinuxException If the modules attribute is empty. Show an error message to the user.
+     * @throws KolinuxException If the modules attribute is empty in order to show an error message to the user.
      */
     protected void checkModulesNotEmpty() throws KolinuxException {
         if (modules.getMyModulesSize() == 0 && invalidModules.isEmpty()) {

@@ -59,12 +59,26 @@ public class ModuleList {
 
         return moduleCode + " not found in the list";
     }
-    
+
+    /**
+     * Store a module in myModules when only the modular credit and its grade are given.
+     * This method is only used CapCalculator object.
+     * 
+     * @param mc Modular credit which will be stored
+     * @param grade The corresponding grade to be stored
+     */
     public void storeModuleMcGrade(int mc, String grade) {
         ModuleDetails mod = new ModuleDetails(mc, grade);
         myModules.add(mod);
     }
-    
+
+    /**
+     * Store a module in myModules when only the module code and its grade are needed from the module.
+     * This method is only used CapCalculator object.
+     *
+     * @param code Module code which will be stored
+     * @param grade The corresponding grade to be stored
+     */
     public void storeModuleCodeGrade(String code, String grade) {
         ModuleDetails mod = new ModuleDetails(code, grade);
         myModules.add(mod);
@@ -148,7 +162,7 @@ public class ModuleList {
             }
             String grade = module.getGrade();
             if (grade.equals("0")) {
-                System.out.println("Final grade: NA");
+                System.out.println("Final grade: N/A");
             } else {
                 System.out.println("Final grade: " + grade);
             }

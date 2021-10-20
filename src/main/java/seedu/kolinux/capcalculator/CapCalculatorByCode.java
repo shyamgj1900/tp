@@ -13,9 +13,10 @@ public class CapCalculatorByCode extends CapCalculator {
 
     /**
      * Construct the superclass of this object and initialize moduleDb in order to retrieve 
-     * module information from the database.
+     * module information from the database. Module details are retrieved from input string
+     * and store in according module list.
      * 
-     * @param input Command input from user which contains the module descriptions.
+     * @param input Command input from user which contains the module codes and their grade.
      */
     public CapCalculatorByCode(String input) {
         super();
@@ -40,7 +41,12 @@ public class CapCalculatorByCode extends CapCalculator {
             modules.storeModuleCodeGrade(moduleCode, grade);
         }
     }
-    
+
+    /**
+     * Constructor used when module details are retrieved from moduleList of Kolinux instead of user's input.
+     * 
+     * @param modules List of modules stored in moduleList of Kolinux.
+     */
     public CapCalculatorByCode(ModuleList modules) {
         super();
         moduleDb = new ModuleDb().getPreInitModuleDb();
@@ -63,6 +69,7 @@ public class CapCalculatorByCode extends CapCalculator {
         return Integer.parseInt(moduleCredit);
     }
 
+    @Override
     protected String getCap() {
         int totalMc = 0;
         double cap = 0;

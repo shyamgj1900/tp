@@ -15,6 +15,7 @@ public class ModuleListCapCalculator extends CapCalculatorByCode {
         super(modules);
     }
 
+    @Override
     protected int getMc(ModuleDetails module) {
         return Integer.parseInt(module.getModuleCredit());
     }
