@@ -389,11 +389,11 @@ public class Timetable {
     public static int getHours(ModuleList moduleList, String moduleCode, String lessonType) {
         for (ModuleDetails module : moduleList.myModules) {
             if (lessonType.equals("TUT") && module.moduleCode.equals(moduleCode)) {
-                return (int) module.getTutorialHours();
+                return (int) Math.round(module.getTutorialHours());
             } else if (lessonType.equals("LEC") && module.moduleCode.equals(moduleCode)) {
-                return (int) module.getLectureHours();
+                return (int) Math.round(module.getLectureHours());
             } else if (lessonType.equals("LAB") && module.moduleCode.equals(moduleCode)) {
-                return (int) module.getLabHours();
+                return (int) Math.round(module.getLabHours());
             }
         }
         return 0;
