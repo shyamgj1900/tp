@@ -9,7 +9,7 @@ import java.io.IOException;
 public class BusRouteCommand extends Command {
     private Route route;
 
-    public BusRouteCommand(String input) {
+    public BusRouteCommand(String input) throws KolinuxException, IOException {
         route = new Route(input);
     }
 
