@@ -2,11 +2,10 @@
 * [Acknowledgements](#acknowledgements)
 * [Design](#design)
 * [Implementation](#implementation)
-  * [`timetable add`](#timetable-add-feature)
-    * [Notes about method](#notes-about-the-methods)
-  * [`planner add`](#planner-add-feature)
+  * [`timetable add`](#add-to-timetable-feature)
+  * [`planner add`](#add-to-planner-feature)
+  * [`cap`](#cap-calculator-by-code-feature)
   * [`module store/delete`](#store/delete-a-module-by-module-code)
-  * [`cap`](#cap-calculator-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -22,7 +21,23 @@
 
 ## Design
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+### Main Components of the Architecture
+
+The `Kolinux` class is responsible for initializing the main components upon start-up of the application, and 
+deciding the execution path of the application through the main components based on reading the user inputs.
+
+
+The application consists of the following main components responsible for the high-level execution of a user input:
+1. `Parser`: Makes sense from the user input and decides the execution path.
+2. `Ui`: User interface of the application.
+3. `Command`: Parent class of all available commands on the application.
+4. `CommandResult`: Returns feedback to the user about the result of execution.
+
+
+The sequence diagram below shows a high-level overview of the interaction between entities during the execution
+of a user input _(XYZCommand represents any class that inherits from Command)_.
+
+![Overview Sequence Diagram](assets/images/overviewSeq.png)
 
 ## Implementation
 
@@ -70,7 +85,7 @@ The Add to Planner mechanism is facilitated by `Planner`. Before adding an event
 time conflicts with existing events/lessons/exams. Events are only added if there are no time conflicts or the 
 user authorised the addition of a conflicted `Event`. Events added to the `Planner` are stored in a list 
 `scheduleOfAllDates` which contains all added `Event` by the user. The events added are also written to the internal 
-storage `data/timetable.txt` which saves the user data locally.
+storage `data/planner.txt` which saves the user data locally. 
 
 The feature is implemented by `Planner#addEvent(Event event, boolean allowConflict)` which invokes the following
 methods:
@@ -84,6 +99,41 @@ The figure below represents the sequence diagram when `planner add` is entered b
 ![Planner Sequence Diagram 1](assets/images/plannerAddSeq1.png)
 
 ![Planner_Sequence_Diagram_2](assets/images/plannerAddSeq2.png)
+
+The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that lessons and
+exams may be fetched in addition to `scheduleOfAllDates` for the `event` to check time conflicts against. The
+integration in the method is mainly done via the `Planner#filterPlanner(String date)` call. The code snippet below
+shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(String date)`. The return value
+`filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
+is to be added.
+
+```
+    private boolean hasTimeConflict(Event eventToBeAdded) {
+        ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
+        String startTime = eventToBeAdded.getStartTime();
+        String endTime = eventToBeAdded.getEndTime();
+        for (Event event : filteredPlanner) {
+            if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+```
+
+The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
+1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of events consisting
+of the lessons and exams occurring on `date` using the data fetched from `Timetable` and `ModuleList`.
+2. Get the list from `ModuleSyncer`, and add the events in `scheduleOfAllDates` that are occurring on `date` via 
+a `Stream`.
+3. Return the list.
+
+The list returned will then be used by `event` to check for any time conflicts.
+
+The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
+`ExamsGetter`.
+
+![Planner Class Diagram](assets/images/plannerAddCD.png)
 
 ### Store/delete a module by module code
 
