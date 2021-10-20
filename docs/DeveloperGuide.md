@@ -152,11 +152,15 @@ and CAP calculator) in a single integrated platform.
 <li> Should work on any mainstream OS as long as it has Java 11 or above installed. </li>
 <li> A user with above average typing speed for regular English text (i.e. not code, not system admin commands) 
 should be able to accomplish most of the tasks faster using commands than using the mouse.</li>
+<li> Should be able to execute every command from the user within one second. </li>
 </ol>
 
 ## Glossary
 
 * *Mainstream OS*: Windows, Linux, Unix, OS-X
+* *Event*: Personal event added to the Planner by the user
+* *Lesson*: Class (Lecture, Tutorial, or Lab) for a particular module added to the Timetable by the user
+* *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
 
