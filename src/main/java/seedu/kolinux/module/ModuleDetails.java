@@ -40,6 +40,32 @@ public class ModuleDetails {
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
+    public ModuleDetails(int moduleCredit, String grade) {
+        String mc = Integer.toString(moduleCredit);
+        
+        this.moduleCode = null;
+        this.moduleCredit = mc;
+        this.faculty = null;
+        this.description = null;
+        this.title = null;
+        this.department = null;
+        this.workload = null;
+        this.semesterData = null;
+        this.grade = grade;
+    }
+    
+    public ModuleDetails(String moduleCode, String grade) {
+        this.moduleCode = moduleCode;
+        this.moduleCredit = null;
+        this.faculty = null;
+        this.description = null;
+        this.title = null;
+        this.department = null;
+        this.workload = null;
+        this.semesterData = null;
+        this.grade = grade;
+    }
+
     public void setGrade(String newGrade) {
         grade = newGrade;
     }
@@ -164,6 +190,47 @@ public class ModuleDetails {
      */
     public String getEncodedFormat() {
         return moduleCode + "/" + grade;
+    }
+
+    /**
+     * Return a grade point corresponding to the grade of this object.
+     * 
+     * @return Grade point in double type
+     */
+    public double getGradePoint() {
+        switch (grade) {
+        case "A+":
+        case "A":
+            return 5.0;
+        case "A-":
+            return 4.5;
+        case "B+":
+            return 4.0;
+        case "B":
+            return 3.5;
+        case "B-":
+            return 3.0;
+        case "C+":
+            return 2.5;
+        case "C":
+            return 2.0;
+        case "D+":
+            return 1.5;
+        case "D":
+            return 1.0;
+        case "F":
+            return 0.0;
+        default:
+            return -1; // Invalid grade
+        }
+    }
+    
+    public boolean containsSuGrade() {
+        return grade.equals("S") || grade.equals("U");
+    }
+    
+    public boolean containsNullGrade() {
+        return grade.equals("0");
     }
 
     /**
