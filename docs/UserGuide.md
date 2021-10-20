@@ -29,7 +29,9 @@ for the NUS internal shuttle bus.
     * [`module grade`](#set-a-modules-grade-in-module-list-module-grade)
   * [`timetable`](#timetable-timetable)
     * [`timetable add`](#add-lessons-to-timetable--timetable-add)
-    * [`timetable clear`](#clear-timetable-timetable-clear)
+    * [`timetable delete`](#delete-lessons-from-timetable--timetable-delete)
+    * [`timetable view`](#view-timetable-on-cli--timetable-view)
+    * [`timetable update`](#update-a-lesson-to-another-timing-your-timetable--timetable-update)
   * [`planner`](#event-planner-planner)
     * [`planner add`](#add-an-event-to-planner-planner-add)
     * [`planner list`](#list-events-planner-list)
@@ -76,8 +78,10 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `module view`     | View module details                                             | `module view MODULE_CODE`                          |
 | `module grade`    | Set the grade of a module in the module list by its module code | `module grade CODE/GRADE`                          |
 | `module cap`      | Calculate overall CAP of modules in the module list             | `module cap`                                       |
-| `timetable add`   | Add a lesson to your timetable                                  | `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`|
-| `timetable clear` | Clears all lessons in your timetable                            | `timetable clear`                                  |
+| `timetable add`   | Add a lesson to your timetable                                  | `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`|
+| `timetable delete`| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY`     |
+| `timetable view`  | View timetable on CLI                                           | `timetable view`                                   |
+| `timetable update`| Update a lesson to another timing your timetable                | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`|
 | `planner add` 	| Add a new event to your schedule on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date                            | `planner list DATE`                                |
 | `planner delete` 	| Delete an event on a particular date                            | `planner delete DATE`                              |
@@ -252,38 +256,147 @@ manager. It also provides users an aesthetic visual representation of their time
 
 #### Add lessons to timetable : `timetable add`
 
-Format: `timetable add DESCRIPTION/DAY/START_TIME/END_TIME`
+Format: `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`
 
-* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
-* `DAY` must be from between Monday to Friday where `DAY` is not case-sensitive
+* Ensure `MODULE_CODE` is stored in the module list using 
+[`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable
+* `LESSON_TYPE` needs to be one of the following: 
+  * `TUT` refers to tutorial
+  * `LEC` refers to lecture
+  * `LAB` refers to lab
+* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours 
+`0600` and `2100`
+* `DAY` must be from between `Monday` and `Friday`
+* `MODULE_CODE`,`LESSON_TYPE` and `DAY`  are not case-sensitive
+  * i.e. `CS1010` is the same as `cs1010`
+  * i.e. `TUT` is the same as `tut` or `Tut`
+  * i.e. `monday` is the same as `MONDAY`
+
+
+Example of usage:
+
+* `timetable add CS1010/TUT/Monday/1200/1400`
+* `timetable add CS2113T/LEC/friday/1600/1800`
+
+Demo:
+```
+timetable add CS1010/TUT/Monday/1200/1400
+Lesson has been added to timetable
+....................................................................
+```
+❕ Note: Ensure `MODULE_CODE` is stored in the module list using
+[`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
+the modules added to module list can be added to the timetable
+#### Delete lessons from timetable : `timetable delete`
+
+Format: `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
+
+* Ensure `MODULE_CODE` is stored in the module list using
+  [`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable
+* `LESSON_TYPE` needs to be one of the following:
+  * `TUT` refers to tutorial
+  * `LEC` refers to lecture
+  * `LAB` refers to lab
+* `DAY` must be from between `Monday` and `Friday`
+* `MODULE_CODE`,`LESSON_TYPE` and `DAY`  are not case-sensitive
+  * i.e. `CS1010` is the same as `cs1010`
+  * i.e. `TUT` is the same as `tut` or `Tut`
   * i.e. `monday` is the same as `MONDAY`
 
 Example of usage:
 
-* `timetable add CS1010 TUT/Monday/1200/1400`
-* `timetable add CS2113T LEC/friday/1600/1800`
+* `timetable delete cs1010/lec/tuesday`
+* `timetable delete CS2113T/LEC/Friday`
 
 Demo:
 ```
-timetable add CS1010 TUT/Monday/1200/1400
-Lesson has been added to timetable
+timetable delete cs1010/lec/tuesday
+CS1010 LEC tuesday has been deleted from timetable
 ....................................................................
 ```
+#### View timetable on CLI : `timetable view`
 
-#### Clear timetable: `timetable clear`
+Format: `timetable view`
+
+Example of usage:
+
+* `timetable add CS1010/LEC/monday/1900/2000` followed by `timetable view`
 
 Demo:
 ```
-timetable clear
-Timetable has been cleared completely
+timetable add CS1010/LEC/monday/1900/2000
+CS1010 LEC has been added to timetable
+....................................................................
+timetable view
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|             |       MONDAY       |       TUESDAY      |      WEDNESDAY     |      THURSDAY      |       FRIDAY       |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|0600 - 0700  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|0700 - 0800  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|0800 - 0900  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|0900 - 1000  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1000 - 1100  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1100 - 1200  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1200 - 1300  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1300 - 1400  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1400 - 1500  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1500 - 1600  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1600 - 1700  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1700 - 1800  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1800 - 1900  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1900 - 2000  |     CS1010 LEC     |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|2000 - 2100  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+Timetable has been printed above
+....................................................................
+```
+#### Update a lesson to another timing your timetable : `timetable update`
+
+Format: `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`
+
+* `LESSON_TYPE` needs to be one of the following:
+  * `TUT` refers to tutorial
+  * `LEC` refers to lecture
+  * `LAB` refers to lab
+* `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours
+  `0600` and `2100`
+* `DAY` must be from between `Monday` and `Friday`
+* `MODULE_CODE`,`LESSON_TYPE` and `DAY`  are not case-sensitive
+  * i.e. `CS1010` is the same as `cs1010`
+  * i.e. `TUT` is the same as `tut` or `Tut`
+  * i.e. `monday` is the same as `MONDAY`
+
+Example of usage:
+
+* `timetable update cs1010/lec/tuesday/monday/1200`
+* `timetable update CS2113T/LEC/Friday/Monday/1300`
+
+Demo:
+```
+timetable update cs1010/lec/tuesday/monday/1200
+CS1010 LEC has been updated
 ....................................................................
 ```
 
 ### Event Planner: `planner`
 
 The event planner works by allowing users to `add`, `delete`, and `list` any events happening on a specific date. 
-This is for users to manage their schedules daily. This feature is also integrated with the timetable so that users 
-will also be able to view their lessons on specific dates.
+This is for users to manage their schedules daily. This feature is also integrated with the timetable and the module 
+manager so that users will also be able to view their lessons and exams on specific dates.
 
 #### Add an event to Planner: `planner add`
 
@@ -336,8 +449,9 @@ planner list 2021-10-10
 ....................................................................
 ```
 
-❕ Note: The `list` will include all the events and lessons occurring on the `DATE` specified.
+❕ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to add lessons._
+_Exams are added to the list automatically as modules are stored in the [`module`](#module-manager-module) manager._
 
 #### Delete an event from Planner: `planner delete`
 
@@ -364,14 +478,15 @@ An event has been deleted from your schedule successfully!
 ....................................................................
 planner list 2021-11-05
 2021-11-05
-07:00 - 07:30 10km run (id: 7)
-15:00 - 17:00 Watch movie (id: 1)
+07:00 - 07:30 10km run
+15:00 - 17:00 Watch movie
 ....................................................................
 ```
 
 ❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
-Hence, users are not allowed to delete lessons added via the `timetable` from the `planner`.
+Hence, users are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
+_Exams will be automatically deleted as modules are deleted from the [`module`](#module-manager-module) manager._
 
 ### NUS Bus Route Finder: `bus`
 
@@ -466,6 +581,8 @@ computer, in the same folder as `Kolinux.jar`. The data will be automatically re
 Kolinux automatically creates a directory `/data` upon the first start up. The directory consists of the files:
 
 `logger.log` - User activity log of the most recent session.
+
+`moduleList.txt` - Module manager data of the user.
 
 `planner.txt` - Planner data of the user.
 

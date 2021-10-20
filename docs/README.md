@@ -1,4 +1,4 @@
-![Kolinux Logo](assets/images/logo.png)
+![Kolinux Logo](assets/images/kolinux_logo.png)
 
 # Kolinux
 

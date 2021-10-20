@@ -24,6 +24,7 @@ planner add Family dinner/2021-02-05/2000/1800
 planner list 2021-10-05
 module store CS1010
 timetable add CS1010/TUT/tuesday/1000/1100
+timetable view
 planner list 2021-10-19
 timetable clear
 bus /opp nuss /raffles hall
