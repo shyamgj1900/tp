@@ -166,7 +166,7 @@ public class Route {
      * @throws KolinuxException if the user command is not in the correct format
      * @throws IOException if the there any IO errors
      */
-    private String getBusStopNames() throws KolinuxException, IOException {
+    private String getBusStopList() throws KolinuxException, IOException {
         ArrayList<String> lines = new ArrayList<>();
         try {
             InputStream inputStream = Main.class.getResourceAsStream(FILEPATH_STOP_NAMES);
@@ -193,7 +193,7 @@ public class Route {
      */
     public String checkRoutes() throws KolinuxException, IOException {
         if (splitInput[0].equalsIgnoreCase(COMMAND_LIST_STOPS)) {
-            return getBusStopNames();
+            return getBusStopList();
         }
         getLocations();
         String startLocation = location[0].trim().toUpperCase();
