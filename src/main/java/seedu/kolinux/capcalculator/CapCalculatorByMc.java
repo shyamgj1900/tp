@@ -7,14 +7,7 @@ import seedu.kolinux.module.ModuleDetails;
  */
 public class CapCalculatorByMc extends CapCalculator {
 
-    /**
-     * Construct the superclass of this object, then store the module details from user input in modules and
-     * invalidModules accordingly.
-     * 
-     * @param input Command input from user which contains the modular credits and their respective grade.
-     */
-    public CapCalculatorByMc(String input) {
-        super();
+    private void getInputModules(String input) {
         String[] commandDescriptions = input.split(" ");
         if (commandDescriptions.length <= 2) {
             return;
@@ -22,7 +15,7 @@ public class CapCalculatorByMc extends CapCalculator {
         int moduleCount = commandDescriptions.length - 2;
         for (int i = 0; i < moduleCount; i++) {
             try {
-                String[] moduleDescriptions = commandDescriptions[i + 2].split("/");
+                String[] moduleDescriptions = commandDescriptions[i + 2].split(DIVIDER);
                 int moduleCredit = Integer.parseInt(moduleDescriptions[0]);
                 String grade = moduleDescriptions[1];
                 modules.storeModuleMcGrade(moduleCredit, grade);
@@ -30,6 +23,16 @@ public class CapCalculatorByMc extends CapCalculator {
                 invalidModules.add(commandDescriptions[i + 2]);
             }
         }
+    }
+    
+    /**
+     * Construct the superclass of this object, then store the module details from user input.
+     * 
+     * @param input Command input from user which contains the modular credits and their respective grade.
+     */
+    public CapCalculatorByMc(String input) {
+        super();
+        getInputModules(input);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class CapCalculatorByMc extends CapCalculator {
             int mc = Integer.parseInt(module.getModuleCredit());
             double gradePoint = module.getGradePoint();
             if (gradePoint == INVALID_GRADE || mc < 1) {
-                invalidModules.add(module.getModuleCredit() + "/" + module.getGrade());
+                invalidModules.add(module.getModuleCredit() + DIVIDER + module.getGrade());
                 continue;
             }
             cap = calculateCurrentCap(totalMc, cap, mc, gradePoint);

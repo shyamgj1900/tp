@@ -20,23 +20,14 @@ public class CapCalculatorByCode extends CapCalculator {
                 || moduleGrade.equals("U");
     }
     
-    /**
-     * Construct the superclass of this object and initialize moduleDb in order to retrieve 
-     * module information from the database. Module details are retrieved from input string
-     * and store in according module list.
-     * 
-     * @param input Command input from user which contains the module codes and their grade.
-     */
-    public CapCalculatorByCode(String input) {
-        super();
-        moduleDb = new ModuleDb().getPreInitModuleDb();
+    private void getInputModules(String input) {
         String[] commandDescriptions = input.split(" ");
         if (commandDescriptions.length <= 2) {
             return;
         }
         int moduleCount = commandDescriptions.length - 2;
         for (int i = 0; i < moduleCount; i++) {
-            String[] moduleDescriptions = commandDescriptions[i + 2].split("/");
+            String[] moduleDescriptions = commandDescriptions[i + 2].split(DIVIDER);
             if (moduleDescriptions.length != 2) {
                 invalidModules.add(commandDescriptions[i + 2]);
                 continue;
@@ -54,6 +45,18 @@ public class CapCalculatorByCode extends CapCalculator {
             modules.storeModuleCodeGrade(moduleCode, grade);
         }
     }
+    
+    /**
+     * Construct the superclass of this object and initialize moduleDb in order to retrieve 
+     * module information from the database. Module details are then retrieved from input string.
+     * 
+     * @param input Command input from user which contains the module codes and their grade.
+     */
+    public CapCalculatorByCode(String input) {
+        super();
+        moduleDb = new ModuleDb().getPreInitModuleDb();
+        getInputModules(input);
+    }
 
     /**
      * Constructor used when module details are retrieved from moduleList of Kolinux instead of user's input.
@@ -66,22 +69,6 @@ public class CapCalculatorByCode extends CapCalculator {
         this.modules = (CalculatorModuleList)modules;
     }
 
-    /**
-     * Extracts modular credit from a module description.
-     *
-     * @param module Module details which only contains module code and its grade.
-     * @return Modular credit.
-     */
-    protected int getMc(ModuleDetails module) {
-        String moduleCode = module.getModuleCode();
-        ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
-        if (moduleInfo == null) {
-            return INVALID_MC;
-        }
-        String moduleCredit = moduleInfo.getModuleCredit();
-        return Integer.parseInt(moduleCredit);
-    }
-
     @Override
     protected String getCap() {
         int totalMc = 0;
@@ -90,10 +77,19 @@ public class CapCalculatorByCode extends CapCalculator {
             if (module.containsSuGrade()) {
                 continue;
             }
-            int mc = getMc(module);
+
             double gradePoint = module.getGradePoint();
+            
+            int mc = INVALID_MC;
+            String moduleCode = module.getModuleCode();
+            ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
+            if (moduleInfo != null) {
+                String moduleCredit = moduleInfo.getModuleCredit();
+                mc = Integer.parseInt(moduleCredit);
+            }
+            
             if (gradePoint == INVALID_GRADE || mc == INVALID_MC) {
-                invalidModules.add(module.getModuleCode() + "/" + module.getGrade());
+                invalidModules.add(module.getModuleCode() + DIVIDER + module.getGrade());
                 continue;
             }
             cap = calculateCurrentCap(totalMc, cap, mc, gradePoint);
