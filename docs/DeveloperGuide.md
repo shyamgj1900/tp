@@ -4,8 +4,8 @@
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`cap`](#cap-calculator-by-code-feature)
   * [`module store/delete`](#store/delete-a-module-by-module-code)
+  * [`cap code`](#cap-calculator-by-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -187,17 +187,33 @@ The `module delete` operation follows a similar sequence. Instead of calling the
 ### cap calculator by code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
-the input modules and grades from user as a string array in `modules` when the object is constructed
-once the command `cap code` is given from user, along with the other essential methods used for cap calculation.
+the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
+of `ModuleList` dedicated for cap calculation. 
 
-When `CapCalculator#executeCapCalculator()` is executed, the following methods are invoked:
+When the command `cap code` is given by the user, the constructor is called to retrieve and store the modules 
+from the input. After the object construction is done, `CapCalculator#executeCapCalculator()` method is then 
+invoked for the cap calculation. 
 
-- `CapCalculator#checkModulesNotEmpty()` — which ensures that the `modules` attribute of the object is not empty.
-- `CapCalculator#getCap()` — which is the methods used to do all the cap calculation.
-- `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
+In order to achieve these functionalities, the following methods 
+from `CapCalculatorByCode` are invoked.
 
-Below is a simplified sequence diagram showing important steps of how `cap code` works:
+* `CapCalculatorByCode#getInputModules(String input)` — which retrieves the module codes and grades from String input
+and store them as `CalculatorModuleList`
+* `CapCalculatorByCode#getCap()` — which is the methods used to do all the cap calculation.
 
+In addition, the following methods implemented in `CapCalculator` are also invoked to ensure an error-free
+functionality.
+
+* `CapCalculator#executeCommand()` — which is an overridden method from `Command` is used to facilitate cap calculation
+and exception handling methods.
+* `CapCalculator#checkModulesNotEmpty()` — which ensures that the module list of the object is not empty.
+* `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
+
+Below is the sequence diagrams showing important steps of how `cap code` operates:
+
+![Cap Code Sequence Diagram 1](assets/images/capCodeSeq1.png)
+
+![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
 
 ### bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
