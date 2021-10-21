@@ -16,6 +16,7 @@
 * [Instructions for manual testing](#instructions-for-manual-testing)
 ## Acknowledgements
 
+* User Guide and Developer Guide of [AddressBook Level-3](https://se-education.org/addressbook-level3/)
 * [NUSMods API](https://api.nusmods.com/v2/) 
 * [GSON](https://github.com/google/gson)
 
