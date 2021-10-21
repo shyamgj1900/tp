@@ -126,7 +126,11 @@ Step 3: The user executes `module delete CS2101` command to delete the instance 
 
 
 
-The following sequence diagram models how the store operation works:
+The following sequence diagram models how the `module store` operation works:
+
+![Module Store Sequence Diagram](assets/images/moduleStoreSequence.png)
+
+The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
 
 
 
