@@ -4,8 +4,8 @@
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`cap`](#cap-calculator-by-code-feature)
   * [`module store/delete`](#store/delete-a-module-by-module-code)
+  * [`cap code`](#cap-calculator-by-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -144,7 +144,7 @@ The `ModuleCommand` class extends the `Command` class and handles all module rel
 
 ❕ Notes about the methods:
 
-`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a`ModuleDetails` instance corresponding to a kwy module code is appended to list in `moduleList`
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to list in `moduleList`
 
 The input format for storage and deletion of modules is as follows:
 
@@ -162,20 +162,58 @@ Example: `myModules` is initialized with single `ModuleDetails` instance corresp
 
 ![moduleListInit](assets/images/moduleListInit.png)
 
+
+
+Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
+
+![moduleListInit](assets/images/moduleStore.png)
+
+
+
+Step 3: The user executes `module delete CS2101` command to delete the instance of `ModuleDetais` corresponding to `CS2101` from `myModules`. The `module delete` prefix ensures `ModuleList#deleteModuleByCode(String code)` is called. 
+
+![moduleListInit](assets/images/moduleListInit.png)
+
+
+
+The following sequence diagram models how the `module store` operation works:
+
+![Module Store Sequence Diagram](assets/images/moduleStoreSequence.png)
+
+The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
+
+
+
 ### cap calculator by code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
-the input modules and grades from user as a string array in `modules` when the object is constructed
-once the command `cap code` is given from user, along with the other essential methods used for cap calculation.
+the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
+of `ModuleList` dedicated for cap calculation. 
 
-When `CapCalculator#executeCapCalculator()` is executed, the following methods are invoked:
+When the command `cap code` is given by the user, the constructor is called to retrieve and store the modules 
+from the input. After the object construction is done, `CapCalculator#executeCapCalculator()` method is then 
+invoked for the cap calculation. 
 
-- `CapCalculator#checkModulesNotEmpty()` — which ensures that the `modules` attribute of the object is not empty.
-- `CapCalculator#getCap()` — which is the methods used to do all the cap calculation.
-- `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
+In order to achieve these functionalities, the following methods 
+from `CapCalculatorByCode` are invoked.
 
-Below is a simplified sequence diagram showing important steps of how `cap code` works:
+* `CapCalculatorByCode#getInputModules(String input)` — which retrieves the module codes and grades from String input
+and store them as `CalculatorModuleList`
+* `CapCalculatorByCode#getCap()` — which is the methods used to do all the cap calculation.
 
+In addition, the following methods implemented in `CapCalculator` are also invoked to ensure an error-free
+functionality.
+
+* `CapCalculator#executeCommand()` — which is an overridden method from `Command` is used to facilitate cap calculation
+and exception handling methods.
+* `CapCalculator#checkModulesNotEmpty()` — which ensures that the module list of the object is not empty.
+* `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
+
+Below is the sequence diagrams showing important steps of how `cap code` operates:
+
+![Cap Code Sequence Diagram 1](assets/images/capCodeSeq1.png)
+
+![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
 
 ### bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
@@ -187,6 +225,10 @@ the `input` string to the `Route` class. The operation is implemented in the fol
 * `Route#getBusStopNumber()` - Converts the user given bus stop names to bus stop numbers which can then be used to find if the bus stops are connected.
 * `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
 * `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+
+The following sequence diagram explains the bus routes feature.
+
+![sequenceDiagram](assets/images/BusRoutes.png)
 
 ## Product scope
 ### Target user profile:
@@ -242,6 +284,32 @@ should be able to accomplish most of the tasks faster using commands than using 
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
+
+### Storing a module by module code
+
+1. Storing a new module with a valid code
+
+   - Test case: `module store CS2113T`
+
+     Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
+
+2. Storing a module with an invalid code (non-existent module)
+
+   - Test case: `module store invalid_module`
+
+     Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
+
+3. Storing a pre-existing module in the list
+
+   - Test case: `module store CS2113T`
+
+     Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
+
+     
+
+4. 
+
+   
 
 ### Adding an event to Planner
 
