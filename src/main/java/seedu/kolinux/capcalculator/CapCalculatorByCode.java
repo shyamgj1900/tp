@@ -69,22 +69,6 @@ public class CapCalculatorByCode extends CapCalculator {
         this.modules = (CalculatorModuleList)modules;
     }
 
-    /**
-     * Extracts modular credit from a module description.
-     *
-     * @param module Module details which only contains module code and its grade.
-     * @return Modular credit.
-     */
-    protected int getMc(ModuleDetails module) {
-        String moduleCode = module.getModuleCode();
-        ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
-        if (moduleInfo == null) {
-            return INVALID_MC;
-        }
-        String moduleCredit = moduleInfo.getModuleCredit();
-        return Integer.parseInt(moduleCredit);
-    }
-
     @Override
     protected String getCap() {
         int totalMc = 0;
@@ -93,8 +77,17 @@ public class CapCalculatorByCode extends CapCalculator {
             if (module.containsSuGrade()) {
                 continue;
             }
-            int mc = getMc(module);
+
             double gradePoint = module.getGradePoint();
+            
+            int mc = INVALID_MC;
+            String moduleCode = module.getModuleCode();
+            ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
+            if (moduleInfo != null) {
+                String moduleCredit = moduleInfo.getModuleCredit();
+                mc = Integer.parseInt(moduleCredit);
+            }
+            
             if (gradePoint == INVALID_GRADE || mc == INVALID_MC) {
                 invalidModules.add(module.getModuleCode() + "/" + module.getGrade());
                 continue;
