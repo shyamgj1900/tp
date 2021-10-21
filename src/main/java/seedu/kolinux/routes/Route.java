@@ -280,8 +280,8 @@ public class Route {
                 getBusStopNumber();
                 flag = checkDirectRoutes(busNumbers);
                 if (flag) {
-                    return "There are no viable bus services from " + startLocation + " to " + endLocation +
-                            ". But you can take bus " + busNumbers + " from " + oppositeStops[i][1] + " to "
+                    return "There are no viable bus services from " + startLocation + " to " + endLocation
+                            + ". But you can take bus " + busNumbers + " from " + oppositeStops[i][1] + " to "
                             + endLocation;
                 }
             } else if (startLocation.equalsIgnoreCase(oppositeStops[i][1])) {
@@ -289,8 +289,8 @@ public class Route {
                 getBusStopNumber();
                 flag = checkDirectRoutes(busNumbers);
                 if (flag) {
-                    return "There are no viable bus services from " + startLocation + " to " + endLocation +
-                            ". But you can take bus " + busNumbers + " from " + oppositeStops[i][0] + " to "
+                    return "There are no viable bus services from " + startLocation + " to " + endLocation
+                            + ". But you can take bus " + busNumbers + " from " + oppositeStops[i][0] + " to "
                             + endLocation;
                 }
             }
