@@ -215,6 +215,32 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 ## Instructions for manual testing
 
+### Storing a module by module code
+
+1. Storing a new module with a valid code
+
+   - Test case: `module store CS2113T`
+
+     Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
+
+2. Storing a module with an invalid code (non-existent module)
+
+   - Test case: `module store invalid_module`
+
+     Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
+
+3. Storing a pre-existing module in the list
+
+   - Test case: `module store CS2113T`
+
+     Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
+
+     
+
+4. 
+
+   
+
 ### Adding an event to Planner
 
 1. Adding an event with no time conflicts with any existing events, lessons, or exams to the Planner.
