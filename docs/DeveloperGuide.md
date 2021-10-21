@@ -188,6 +188,10 @@ the `input` string to the `Route` class. The operation is implemented in the fol
 * `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
 * `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
 
+The following sequence diagram explains the bus routes feature.
+
+![sequenceDiagram](assets/images/BusRoutes.png)
+
 ## Product scope
 ### Target user profile:
 
