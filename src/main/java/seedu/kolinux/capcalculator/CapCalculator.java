@@ -16,6 +16,8 @@ public abstract class CapCalculator {
     protected static final int INVALID_MC = -1;
     
     protected static final double MAX_CAP = 5.0;
+
+    protected static final String DIVIDER = "/";
     
     protected static final String TWO_DECIMAL_FORMAT = "%.2f";
     
