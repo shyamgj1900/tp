@@ -5,6 +5,8 @@ import seedu.kolinux.module.timetable.Timetable;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
+import static seedu.kolinux.commands.TimetableCommand.timetable;
+
 /**
  * ModuleList class contains and facilitate operations on the myModules list.
  */
@@ -92,7 +94,7 @@ public class ModuleList {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
                 myModules.remove(i);
-                Timetable.deleteAllOfModule(code);
+                timetable.deleteAllOfModule(code);
                 return "Successfully deleted module: " + code;
             }
         }
