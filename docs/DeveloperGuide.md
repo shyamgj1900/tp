@@ -188,9 +188,13 @@ The `module delete` operation follows a similar sequence. Instead of calling the
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
 the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
-of `ModuleList` dedicated for cap calculation. Once the command is given, the constructor is called 
-to retrieve and store the modules from the input, then `CapCalculator#executeCapCalculator()` method 
-is invoked for the calculation. In order to achieve these functionalities, the following methods 
+of `ModuleList` dedicated for cap calculation. 
+
+When the command `cap code` is given by the user, the constructor is called to retrieve and store the modules 
+from the input. After the object construction is done, `CapCalculator#executeCapCalculator()` method is then 
+invoked for the cap calculation. 
+
+In order to achieve these functionalities, the following methods 
 from `CapCalculatorByCode` are invoked.
 
 * `CapCalculatorByCode#getInputModules(String input)` — which retrieves the module codes and grades from String input
@@ -205,8 +209,11 @@ and exception handling methods.
 * `CapCalculator#checkModulesNotEmpty()` — which ensures that the module list of the object is not empty.
 * `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
 
-Below is a simplified sequence diagram showing important steps of how `cap code` functions:
+Below is the sequence diagrams showing important steps of how `cap code` operates:
 
+![Cap Code Sequence Diagram 1](assets/images/capCodeSeq1.png)
+
+![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
 
 ### bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
