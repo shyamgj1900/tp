@@ -144,7 +144,7 @@ The `ModuleCommand` class extends the `Command` class and handles all module rel
 
 ❕ Notes about the methods:
 
-`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a`ModuleDetails` instance corresponding to a kwy module code is appended to list in `moduleList`
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to list in `moduleList`
 
 The input format for storage and deletion of modules is as follows:
 
@@ -161,6 +161,28 @@ Step 1: The user launches the application. `myModules` , the list of `ModuleDeta
 Example: `myModules` is initialized with single `ModuleDetails` instance corresponding to `CS2113T`
 
 ![moduleListInit](assets/images/moduleListInit.png)
+
+
+
+Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
+
+![moduleListInit](assets/images/moduleStore.png)
+
+
+
+Step 3: The user executes `module delete CS2101` command to delete the instance of `ModuleDetais` corresponding to `CS2101` from `myModules`. The `module delete` prefix ensures `ModuleList#deleteModuleByCode(String code)` is called. 
+
+![moduleListInit](assets/images/moduleListInit.png)
+
+
+
+The following sequence diagram models how the `module store` operation works:
+
+![Module Store Sequence Diagram](assets/images/moduleStoreSequence.png)
+
+The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
+
+
 
 ### cap calculator by code feature
 
@@ -246,6 +268,32 @@ should be able to accomplish most of the tasks faster using commands than using 
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
+
+### Storing a module by module code
+
+1. Storing a new module with a valid code
+
+   - Test case: `module store CS2113T`
+
+     Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
+
+2. Storing a module with an invalid code (non-existent module)
+
+   - Test case: `module store invalid_module`
+
+     Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
+
+3. Storing a pre-existing module in the list
+
+   - Test case: `module store CS2113T`
+
+     Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
+
+     
+
+4. 
+
+   
 
 ### Adding an event to Planner
 
