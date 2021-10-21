@@ -15,7 +15,7 @@ public class CapCalculatorByMc extends CapCalculator {
         int moduleCount = commandDescriptions.length - 2;
         for (int i = 0; i < moduleCount; i++) {
             try {
-                String[] moduleDescriptions = commandDescriptions[i + 2].split("/");
+                String[] moduleDescriptions = commandDescriptions[i + 2].split(DIVIDER);
                 int moduleCredit = Integer.parseInt(moduleDescriptions[0]);
                 String grade = moduleDescriptions[1];
                 modules.storeModuleMcGrade(moduleCredit, grade);
@@ -46,7 +46,7 @@ public class CapCalculatorByMc extends CapCalculator {
             int mc = Integer.parseInt(module.getModuleCredit());
             double gradePoint = module.getGradePoint();
             if (gradePoint == INVALID_GRADE || mc < 1) {
-                invalidModules.add(module.getModuleCredit() + "/" + module.getGrade());
+                invalidModules.add(module.getModuleCredit() + DIVIDER + module.getGrade());
                 continue;
             }
             cap = calculateCurrentCap(totalMc, cap, mc, gradePoint);

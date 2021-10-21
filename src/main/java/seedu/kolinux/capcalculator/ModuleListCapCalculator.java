@@ -15,11 +15,6 @@ public class ModuleListCapCalculator extends CapCalculatorByCode {
         super(modules);
     }
 
-    @Override
-    protected int getMc(ModuleDetails module) {
-        return Integer.parseInt(module.getModuleCredit());
-    }
-
     /**
      * Check if all the stored modules do not have available grade.
      * 
