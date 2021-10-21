@@ -20,16 +20,7 @@ public class CapCalculatorByCode extends CapCalculator {
                 || moduleGrade.equals("U");
     }
     
-    /**
-     * Construct the superclass of this object and initialize moduleDb in order to retrieve 
-     * module information from the database. Module details are retrieved from input string
-     * and store in according module list.
-     * 
-     * @param input Command input from user which contains the module codes and their grade.
-     */
-    public CapCalculatorByCode(String input) {
-        super();
-        moduleDb = new ModuleDb().getPreInitModuleDb();
+    private void getInputModules(String input) {
         String[] commandDescriptions = input.split(" ");
         if (commandDescriptions.length <= 2) {
             return;
@@ -53,6 +44,18 @@ public class CapCalculatorByCode extends CapCalculator {
             }
             modules.storeModuleCodeGrade(moduleCode, grade);
         }
+    }
+    
+    /**
+     * Construct the superclass of this object and initialize moduleDb in order to retrieve 
+     * module information from the database. Module details are then retrieved from input string.
+     * 
+     * @param input Command input from user which contains the module codes and their grade.
+     */
+    public CapCalculatorByCode(String input) {
+        super();
+        moduleDb = new ModuleDb().getPreInitModuleDb();
+        getInputModules(input);
     }
 
     /**
