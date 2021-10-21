@@ -1,22 +1,27 @@
-# User Guide
+# Welcome to Kolinux User Guide! 😃
 
 ## Introduction
 
-Kolinux is designed and built to help NUS freshmen to better integrate into university life by allowing them to 
+_Kolinux_ helps NUS freshmen to better integrate into university life by allowing them to 
 **manage their work** and **learn more about NUS**, all in a **single integrated platform**. It is optimized for CLI 
 users so that they can access the information that they require faster by typing in commands easily.
 
-Kolinux offers a wide range of features for freshmen. These features include a **module manager**
+_Kolinux_ offers a wide range of features for freshmen. These features include a **module manager**
 for freshmen to manage their modules and view information about them, a **timetable** to view their classes, an 
 **event planner** for freshmen to organise their schedule for the day, a **CAP calculator**, and a **route finder** 
 for the NUS internal shuttle bus.
 
+This user guide brings you on a tour around _Kolinux_ and gives you step-by-step instructions on using its features.
+Alternatively, you may visit the [Table of Contents](#table-of-contents) for quick access to any of the features. You
+may also navigate to the [List of Commands](#list-of-commands) to view a summary of all our available commands and
+their usages.
+
 ### Latest Releases
 
 * 💥 `v2.0` _Coming soon_
-* 💥 `v1.0` Released on Oct 12, 2021.
+* 💥 [`v1.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases) Released on Oct 12, 2021.
 
-## Content
+## Table of Contents
 
 * [Quick Start](#quick-start)
 * [List of Commands](#list-of-commands)
@@ -38,6 +43,8 @@ for the NUS internal shuttle bus.
     * [`planner list`](#list-events-planner-list)
     * [`planner delete`](#delete-an-event-from-planner-planner-delete)
   * [`bus`](#nus-bus-route-finder-bus)
+    * [`bus`](#bus-route-search-bus)
+    * [`bus stop list`](#list-of-all-bus-stop-names-bus-stop-list) 
   * [`cap`](#cap-calculator-cap)
     * [`cap mc`](#calculate-cap-using-modular-credit-cap-mc)
     * [`cap code`](#calculate-cap-using-module-code-cap-code)
@@ -45,6 +52,7 @@ for the NUS internal shuttle bus.
   * [`bye`](#exit-bye)
 * [FAQ](#faq)
 * [Data Storage](#data-storage)
+* [Contact Us](#contact-us)
 
 ## Quick Start
 
@@ -53,9 +61,10 @@ for the NUS internal shuttle bus.
 1. Ensure that you have Java 11 or above installed.
 2. Download the latest version of `Kolinux.jar` from [here](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases).
 3. Copy `Kolinux.jar` to an empty folder.
-4. On the command prompt, navigate to the folder `Kolinux.jar` is stored.
-5. Launch `Kolinux.jar` using `java -jar Kolinux.jar`.
-6. Enter commands to use Kolinux.
+4. Start the command prompt.
+5. Navigate to the folder `Kolinux.jar` is stored on the command prompt.
+6. Launch `Kolinux.jar` using `java -jar Kolinux.jar`.
+7. Enter commands to use _Kolinux_.
 
 Demo:
 ```
@@ -78,19 +87,21 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `module store`	| Store a module in the module list			                      | `module store MODULE_CODE`			               |
 | `module delete`	| Delete a module from the module list			                  | `module delete MODULE_CODE`			               |
 | `module list`     | List all stored modules from the module list                    | `module list`                                      |
-| `module view`     | View module details                                             | `module view MODULE_CODE`                          |
-| `module grade`    | Set the grade of a module in the module list by its module code | `module grade CODE/GRADE`                          |
-| `module cap`      | Calculate overall CAP of modules in the module list             | `module cap`                                       |
+| `module view`     | View module information                                         | `module view MODULE_CODE`                          |
+| `module grade`    | Set the grade of a module in the module list by its module code | `module grade MODULE_CODE/GRADE`                          |
+| `module cap`      | Calculate CAP given modules and grades in the module list       | `module cap`                                       |
+| `module cap`      | Get average grade needed to get desired CAP from module list    | `module cap DESIRED_CAP`                           |
 | `timetable add`   | Add a lesson to your timetable                                  | `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`|
 | `timetable delete`| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY`     |
-| `timetable view`  | View timetable on CLI                                           | `timetable view`                                   |
-| `timetable update`| Update a lesson to another timing your timetable                | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`|
+| `timetable view`  | View timetable                                                  | `timetable view`                                   |
+| `timetable update`| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`|
 | `planner add` 	| Add a new event to your schedule on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | `planner list` 	| List the events on a particular date                            | `planner list DATE`                                |
 | `planner delete` 	| Delete an event on a particular date                            | `planner delete DATE`                              |
 | `bus`         	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
-| `bus stop list` | Lists all the bus stops in the NUS shuttle bus routes          | `bus stop list`                                     |
-| `cap`         	| Calculate the total CAP given a set of grades                   | `cap MC_GRADE`                             	       |
+| `bus stop list`   | Lists all the bus stops in the NUS shuttle bus routes           | `bus stop list`                                    |
+| `cap mc`         	| Calculate CAP using a set of modular credits and grades         | `cap mc MC/GRADE`                            	   |
+| `cap code`        | Calculate CAP using a set of module codes and grades            | `cap code MODULE_CODE/GRADE`                              |
 | `help`        	| View the different commands available          	              | `help`                                     	       |
 | `bye`         	| Exit Kolinux                                   	              | `bye`                                      	       |
 
@@ -107,16 +118,19 @@ Kolinux provides a **single integrated platform** consisting of **5 core feature
 
 ### Module Manager: `module`
 
-The module manager allows users to `store`, `delete`, and `list` the modules they are taking for the semester. Users 
-are also able to `view` important information regarding a module, such as the description and workload requirements. 
-In addition, users are able to set a `grade` on the modules in their list for the purpose of CAP calculation using our 
-in-built CAP calculator.
+The module manager allows users to [`store`](#add-modules-to-module-list-by-code-module-store), 
+[`delete`](#delete-modules-from-module-list-by-code-module-delete), and 
+[`list`](#list-modules-from-module-list-module-list) the modules they are taking for the semester. Users 
+are also able to [`view`](#view-module-details-module-view) important information regarding a module, such as the 
+description and workload requirements. In addition, users are able to set a 
+[`grade`](#set-a-modules-grade-in-module-list-module-grade) on the modules in their list for the purpose of 
+[`cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap) calculation and grades suggestion.
 
 #### Add modules to module list by code: `module store`
 
 Format: `module store MODULE_CODE `
 
-- `MODULE_CODE` needs to be in uppercase letters
+- `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
 
 Example of usage:
 
@@ -133,7 +147,7 @@ Successfully stored module: CS2113T
 
 Format: `module delete MODULE_CODE `
 
-- `MODULE_CODE` needs to be in uppercase letters
+- `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
 
 Example of usage:
 
@@ -237,7 +251,8 @@ Based on your available grade, your cap for this semester is 5.00
 ....................................................................
 ```
 
-This feature also provides user with the minimum grade to get for the other modules in order to achieve desired CAP by including the CAP at the end of the command.
+This feature also provides user with the minimum grade to get for the other modules in order to achieve desired CAP 
+by including the CAP at the end of the command.
 
 Format: `module cap DESIRED_CAP`
 
@@ -255,8 +270,13 @@ in order to achieve your desired CAP
 
 ### Timetable: `timetable`
 
-This feature allows users to `add` and `clear` lessons from their timetable based on the modules added in the module
-manager. It also provides users an aesthetic visual representation of their timetable on CLI interface.
+This feature allows users to [`add`](#add-lessons-to-timetable--timetable-add) and 
+[`delete`](#delete-lessons-from-timetable--timetable-delete) lessons from their timetable based on the modules 
+added in the module manager. 
+Users are also able to [`update`](#update-a-lesson-to-another-timing-your-timetable--timetable-update)
+their existing lessons to another time slot.
+It also provides users an aesthetic visual representation of their timetable for users to 
+[`view`](#view-timetable-on-cli--timetable-view) on CLI.
 
 #### Add lessons to timetable : `timetable add`
 
@@ -291,6 +311,7 @@ Lesson has been added to timetable
 ❕ Note: Ensure `MODULE_CODE` is stored in the module list using
 [`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
 the modules added to module list can be added to the timetable
+
 #### Delete lessons from timetable : `timetable delete`
 
 Format: `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
@@ -398,7 +419,9 @@ CS1010 LEC has been updated
 
 ### Event Planner: `planner`
 
-The event planner works by allowing users to `add`, `delete`, and `list` any events happening on a specific date. 
+The event planner works by allowing users to [`add`](#add-an-event-to-planner-planner-add), 
+[`delete`](#delete-an-event-from-planner-planner-delete), and 
+[`list`](#list-events-planner-list) any events happening on a specific date. 
 This is for users to manage their schedules daily. This feature is also integrated with the timetable and the module 
 manager so that users will also be able to view their lessons and exams on specific dates.
 
@@ -428,7 +451,7 @@ An event has been added to your schedule successfully!
 ....................................................................
 ```
 
-❕ Note: Users who attempt to add an event that has a time conflict with another event will need to 
+❕ Note: Users who attempt to add an event that has a time conflict with another event/lesson/exam will need to 
 give additional confirmation if they wish to proceed.
 
 #### List events: `planner list`
@@ -465,7 +488,7 @@ Format: `planner delete DATE`
 
 This command has two steps:
 1. Input the command as shown in the format above.
-2. The schedule of events on `DATE` will be displayed, find the ID of the event you wish to delete.
+2. Find the ID of the event you wish to delete from on the schedule of events on `DATE` displayed.
 3. Input the ID to delete the event.
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
@@ -494,15 +517,17 @@ _Exams will be automatically deleted as modules are deleted from the [`module`](
 
 ### NUS Bus Route Finder: `bus`
 
-The route finder helps users to find if there are bus routes between any two NUS shuttle service bus stops. The users are recommended buses they can
-take to reach their destination. The users also have the ability to view all the bus stop names which are covered by the NUS shuttle bus service. 
+The route finder helps users to find if there are [`bus`](#bus-route-search-bus) routes between any two NUS shuttle 
+service bus stops. Users are recommended buses they can take to reach their destination. 
+Users also have the ability to view the [`bus stop list`](#list-of-all-bus-stop-names-bus-stop-list) which contains 
+all the bus stop names which are covered by the NUS shuttle bus service. 
 This feature allows users to get familiarised with the NUS internal shuttle bus route.
 
 #### Bus route search: `bus`
 
 Format: `bus /start_location /end_location`
 
-* Bus stop names are not case sensitive
+* Bus stop names are not case-sensitive
 
 Example of usage:
 
@@ -552,9 +577,13 @@ where the user needs to change and board another bus (only single change routes 
 
 ### CAP Calculator: `cap`
 
-The CAP calculator is an essential tool for many NUS students to keep track on their CAP and set desired grades for the
-current semester. User can choose between different formats of module and the respective grade to allow more command 
-flexibility.
+The CAP calculator helps users to keep track on their CAP and set desired grades for the
+current semester. Users can choose between different formats of module 
+([`cap mc`](#calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#calculate-cap-using-module-code-cap-code)) 
+and the respective grade to allow more command flexibility.
+
+❕ Visit [`module cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
+be used with the module manager.
 
 #### Calculate CAP using modular credit: `cap mc`
 
@@ -653,4 +682,11 @@ Kolinux automatically creates a directory `/data` upon the first start up. The d
 
 `timetable.txt` - Timetable data of the user.
 
-❗ Users are advised not to modify these files as it can corrupt important user data.
+❗ Users are strongly advised not to modify these files as it can corrupt important user data and cause data loss.
+
+## Contact Us
+
+Our team welcomes users to contact us when faced with issues that this user guide fails to cover. We are
+also open to any suggestions that users may have to improve _Kolinux_. 😃
+
+User may find our contact information [here](AboutUs.md).
