@@ -89,6 +89,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `planner list` 	| List the events on a particular date                            | `planner list DATE`                                |
 | `planner delete` 	| Delete an event on a particular date                            | `planner delete DATE`                              |
 | `bus`         	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
+| `bus stop list` | Lists all the bus stops in the NUS shuttle bus routes          | `bus stop list`                                     |
 | `cap`         	| Calculate the total CAP given a set of grades                   | `cap MC_GRADE`                             	       |
 | `help`        	| View the different commands available          	              | `help`                                     	       |
 | `bye`         	| Exit Kolinux                                   	              | `bye`                                      	       |
@@ -493,8 +494,11 @@ _Exams will be automatically deleted as modules are deleted from the [`module`](
 
 ### NUS Bus Route Finder: `bus`
 
-The route finder helps users to find if there are bus routes between any two NUS bus stops. This feature allows users
-to get familiarised with the NUS internal shuttle bus route.
+The route finder helps users to find if there are bus routes between any two NUS shuttle service bus stops. The users are recommended buses they can
+take to reach their destination. The users also have the ability to view all the bus stop names which are covered by the NUS shuttle bus service. 
+This feature allows users to get familiarised with the NUS internal shuttle bus route.
+
+#### Bus route search: `bus`
 
 Format: `bus /start_location /end_location`
 
@@ -511,7 +515,40 @@ Bus [D2] goes from PGP to MUSEUM
 ....................................................................
 ```
 
-❕ Note: Only routes for buses A1, D1, D2 and E have been implemented so far.
+#### List of all bus stop names: `bus stop list`
+
+Format: `bus stop list`
+
+Example of usage:
+
+* `bus stop list`
+
+Demo:
+
+```
+._______________________________________________________________________________________________________.
+|_____BUS_A1_____|_____BUS_A2_____|_____BUS_D1_____|_____BUS_D2_____|_____BUS_E_____|_______BUS_K_______|
+|KR BUS TERMINAL |KR BUS TERMINAL |OPP HSSML       |PGP             |KENT VALE      |PGP                |
+|LT13            |IT              |OPP NUSS        |KR MRT          |EA             |KR MRT             |
+|AS 5            |OPP YIH         |COM 2           |LT27            |SDE 3          |LT27               |
+|COM 2           |MUSEUM          |VENTUS          |UHALL           |IT             |UHALL              |
+|BIZ 2           |UHC             |IT              |OPP UHC         |OPP YIH        |OPP UHC            |
+|OPP TCOMS       |OPP UHALL       |OPP YIH         |MUSEUM          |UTOWN          |YIH                |
+|PGP             |S 17            |MUSEUM          |UTOWN           |RAFFLES HALL   |CLB                |
+|KR MRT          |OPP KR MRT      |UTOWN           |UHC             |               |OPP SDE 3          |
+|LT27            |PGPR            |YIH             |OPP UHALL       |               |JAPANESE PRI SCHOOL|
+|UHALL           |TCOMS           |CLB             |S 17            |               |KENT VALE          |
+|OPP UHC         |OPP HSSML       |LT13            |OPP KR MRT      |               |MUSEUM             |
+|YIH             |OPP NUSS        |AS 5            |PGPR            |               |UHC                |
+|CLB             |COM 2           |BIZ 2           |                |               |OPP UHALL          |
+|                |VENTUS          |                |                |               |S 17               |
+|                |                |                |                |               |OPP KR MRT         |
+|________________|________________|________________|________________|_______________|PGPR_______________|
+....................................................................
+```
+
+❕ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
+where the user needs to change and board another bus (only single change routes are recommended).
 
 ### CAP Calculator: `cap`
 
