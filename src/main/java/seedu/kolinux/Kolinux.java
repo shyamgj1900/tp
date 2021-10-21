@@ -5,21 +5,22 @@ import seedu.kolinux.commands.CommandResult;
 import seedu.kolinux.commands.ExitCommand;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleListStorage;
-import seedu.kolinux.module.timetable.Timetable;
 import seedu.kolinux.planner.Planner;
 import seedu.kolinux.util.KolinuxLogger;
 import seedu.kolinux.util.Parser;
-import seedu.kolinux.util.Storage;
+import seedu.kolinux.util.DirectoryCreator;
 import seedu.kolinux.util.Ui;
 
 import java.io.IOException;
 import java.util.Scanner;
 
+import static seedu.kolinux.commands.TimetableCommand.timetable;
+
 /** Represents the operations to start and run Kolinux. */
 public class Kolinux {
 
     private Ui ui = new Ui();
-    private Storage storage = new Storage();
+    private DirectoryCreator directoryCreator = new DirectoryCreator();
     private KolinuxLogger kolinuxLogger = new KolinuxLogger();
     private Planner planner = new Planner();
 
@@ -28,10 +29,10 @@ public class Kolinux {
      */
     private void initKolinux() {
         try {
-            storage.initStorage();
+            directoryCreator.initDirectory();
             kolinuxLogger.initLogger();
             planner.initPlanner();
-            Timetable.initTimetable();
+            timetable.initTimetable();
             ModuleListStorage.setupStorage();
         } catch (KolinuxException exception) {
             ui.showErrorMessage(exception);

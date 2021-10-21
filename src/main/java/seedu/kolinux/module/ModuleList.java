@@ -1,12 +1,11 @@
 package seedu.kolinux.module;
 
-import seedu.kolinux.capcalculator.CapCalculator;
-import seedu.kolinux.capcalculator.ModuleListCapCalculator;
-import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.timetable.Timetable;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+
+import static seedu.kolinux.commands.TimetableCommand.timetable;
 
 /**
  * ModuleList class contains and facilitate operations on the myModules list.
@@ -95,7 +94,7 @@ public class ModuleList {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
                 myModules.remove(i);
-                Timetable.deleteAllOfModule(code);
+                timetable.deleteAllOfModule(code);
                 return "Successfully deleted module: " + code;
             }
         }
@@ -138,6 +137,12 @@ public class ModuleList {
                 System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
             } else {
                 System.out.println("No exam");
+            }
+            String grade = module.getGrade();
+            if (grade.equals("0")) {
+                System.out.println("Final grade: N/A");
+            } else {
+                System.out.println("Final grade: " + grade);
             }
             System.out.println(HORIZONTAL_LINE);
         }

@@ -2,11 +2,10 @@
 * [Acknowledgements](#acknowledgements)
 * [Design](#design)
 * [Implementation](#implementation)
-  * [`timetable add`](#timetable-add-feature)
-    * [Notes about method](#notes-about-the-methods)
-  * [`planner add`](#planner-add-feature)
-  * [`module`](#module-feature)
-  * [`cap`](#cap-calculator-feature)
+  * [`timetable add`](#add-to-timetable-feature)
+  * [`planner add`](#add-to-planner-feature)
+  * [`cap`](#cap-calculator-by-code-feature)
+  * [`module store/delete`](#store/delete-a-module-by-module-code)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -22,13 +21,30 @@
 
 ## Design
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+### Main Components of the Architecture
+
+The `Kolinux` class is responsible for initializing the main components upon start-up of the application, and 
+deciding the execution path of the application through the main components based on reading the user inputs.
+
+
+The application consists of the following main components responsible for the high-level execution of a user input:
+1. `Parser`: Makes sense from the user input and decides the execution path.
+2. `Ui`: User interface of the application.
+3. `Command`: Parent class of all available commands on the application.
+4. `CommandResult`: Returns feedback to the user about the result of execution.
+
+
+The sequence diagram below shows a high-level overview of the interaction between entities during the execution
+of a user input _(XYZCommand represents any class that inherits from Command)_.
+
+![Overview Sequence Diagram](assets/images/overviewSeq.png)
 
 ## Implementation
 
-### timetable add feature
+### Add to timetable feature
 
-The timetable add mechanism is facilitated by `Timetable`. The lessons added to `Timetable` 
+The timetable add mechanism is facilitated by `Timetable` where the format of the input is as such: 
+`timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`. The lessons added to `Timetable` 
 via inputLesson(String[] lessonDetails) is stored in the `lessonStorage` within the program via 
 the method `addLesson(Lesson lesson)` and locally in `TimetableStorage` which saves it 
 to `timetable.txt` file to constantly save the lessons' data. It implements the following operations:
@@ -37,7 +53,7 @@ to `timetable.txt` file to constantly save the lessons' data. It implements the 
 to `timetableStorage` based on the type of lesson it is, which is included in the lessonDetail.
 * TimetableStorage#writeToFile() - Saves the lesson details to `timetable.txt` locally.
 
-#### Notes about the methods:
+#### ❕ Notes about the methods:
 
 * String[] lessonDetails consists of MODULE_CODE, LESSON_TYPE (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
 DAY, START_TIME, END_TIME. 
@@ -69,7 +85,7 @@ The Add to Planner mechanism is facilitated by `Planner`. Before adding an event
 time conflicts with existing events/lessons/exams. Events are only added if there are no time conflicts or the 
 user authorised the addition of a conflicted `Event`. Events added to the `Planner` are stored in a list 
 `scheduleOfAllDates` which contains all added `Event` by the user. The events added are also written to the internal 
-storage `data/timetable.txt` which saves the user data locally.
+storage `data/planner.txt` which saves the user data locally. 
 
 The feature is implemented by `Planner#addEvent(Event event, boolean allowConflict)` which invokes the following
 methods:
@@ -78,9 +94,73 @@ in `scheduleOfAllDates`, lessons, and exams.
 * `PlannerStorage#writeFile(String data)` which appends the data of the new `Event` to `data/planner.txt` for local
 storage.
 
-The figure below represents the sequence diagram when `planner add` is invoked:
+The figure below represents the sequence diagram when `planner add` is entered by the user:
 
-### module feature
+![Planner Sequence Diagram 1](assets/images/plannerAddSeq1.png)
+
+![Planner_Sequence_Diagram_2](assets/images/plannerAddSeq2.png)
+
+The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that lessons and
+exams may be fetched in addition to `scheduleOfAllDates` for the `event` to check time conflicts against. The
+integration in the method is mainly done via the `Planner#filterPlanner(String date)` call. The code snippet below
+shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(String date)`. The return value
+`filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
+is to be added.
+
+```
+    private boolean hasTimeConflict(Event eventToBeAdded) {
+        ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
+        String startTime = eventToBeAdded.getStartTime();
+        String endTime = eventToBeAdded.getEndTime();
+        for (Event event : filteredPlanner) {
+            if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+```
+
+The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
+1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of events consisting
+of the lessons and exams occurring on `date` using the data fetched from `Timetable` and `ModuleList`.
+2. Get the list from `ModuleSyncer`, and add the events in `scheduleOfAllDates` that are occurring on `date` via 
+a `Stream`.
+3. Return the list.
+
+The list returned will then be used by `event` to check for any time conflicts.
+
+The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
+`ExamsGetter`.
+
+![Planner Class Diagram](assets/images/plannerAddCD.png)
+
+### Store/delete a module by module code
+
+The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
+
+- `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)`
+- `ModuleList#deleteModuleByCode(String code)`
+
+❕ Notes about the methods:
+
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a`ModuleDetails` instance corresponding to a kwy module code is appended to list in `moduleList`
+
+The input format for storage and deletion of modules is as follows:
+
+- Storage: `module store MODULE_CODE`
+
+- Deletion: `module delete MODULE_CODE`
+
+  
+
+Given below are examples of the usage of `module store/delete` and how the store/delete system behaves at each step.
+
+Step 1: The user launches the application. `myModules` , the list of `ModuleDetails` instances, is initialized with the latest saved modules from local storage. If no modules are stored, the resulting list will be empty.
+
+Example: `myModules` is initialized with single `ModuleDetails` instance corresponding to `CS2113T`
+
+![moduleListInit](assets/images/moduleListInit.png)
 
 ### cap calculator by code feature
 
@@ -118,7 +198,7 @@ the `input` string to the `Route` class. The operation is implemented in the fol
 * is reasonably comfortable using CLI apps
 
 ### Value proposition:
- 
+
 Users can manage all important university related tasks (Module Manager, Event Planner, Timetable, Bus Route Finder, 
 and CAP calculator) in a single integrated platform.
 
@@ -151,11 +231,15 @@ and CAP calculator) in a single integrated platform.
 <li> Should work on any mainstream OS as long as it has Java 11 or above installed. </li>
 <li> A user with above average typing speed for regular English text (i.e. not code, not system admin commands) 
 should be able to accomplish most of the tasks faster using commands than using the mouse.</li>
+<li> Should be able to execute every command from the user within one second. </li>
 </ol>
 
 ## Glossary
 
 * *Mainstream OS*: Windows, Linux, Unix, OS-X
+* *Event*: Personal event added to the Planner by the user
+* *Lesson*: Class (Lecture, Tutorial, or Lab) for a particular module added to the Timetable by the user
+* *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
 
@@ -170,7 +254,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 
    * Test case: `planner add project meeting/20211020/0700/0800`
-      
+     
       Expected: Event is not added to the list. Error message regarding date and time format printed as output.
 
 
@@ -180,21 +264,21 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 
    * Other incorrect commands to try: `planner add something wrong//`, `planner add something amazing/ 3pm to 4pm`
-      
+     
       Expected: Similar to previous cases where an error message regarding the format of command is printed as output.
 
 2. Adding an event with time conflicts with at least one existing event, lesson, or exam to the Planner.
 
 
   * Prerequisites: Add the event by `planner add conflict test/2022-05-05/0800/1100`. Add the module
-  `module store cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
-  _Do note 2021-05-05 is a Thursday._
+    `module store cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
+    _Do note 2021-05-05 is a Thursday._
 
 
   * Test case: `planner list 2022-05-05`
 
      Expected: The event `conflict test`, lesson `CS2113T LEC`, exam `CS2113T Exam` are displayed as output.
-   
+
 
   * Test case: `planner add love conflicts/2022-05-05/xxxx/yyyy` where `xxxx` and `yyyy` are start times and end
     times respectively which overlaps with any of the events listed.

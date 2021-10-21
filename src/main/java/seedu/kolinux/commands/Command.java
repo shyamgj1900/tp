@@ -3,7 +3,6 @@ package seedu.kolinux.commands;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
-import seedu.kolinux.module.ModuleListStorage;
 import seedu.kolinux.util.Prompt;
 
 import java.io.FileNotFoundException;
@@ -23,10 +22,6 @@ public abstract class Command {
 
     public Command(String argument) {
         this.argument = argument;
-    }
-
-    protected boolean isEmptyArgument() {
-        return argument.isEmpty();
     }
 
     /**
