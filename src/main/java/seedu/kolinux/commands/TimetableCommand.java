@@ -1,7 +1,7 @@
 package seedu.kolinux.commands;
 
 import seedu.kolinux.exceptions.KolinuxException;
-import seedu.kolinux.module.timetable.Timetable;
+import seedu.kolinux.timetable.Timetable;
 
 
 import java.util.logging.Level;
@@ -35,7 +35,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult addLesson() throws KolinuxException {
-        timetable.inputLesson(parsedArguments);
+        timetable.executeAddSubCommand(parsedArguments);
         logger.log(Level.INFO, "User added a module to timetable");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
@@ -43,7 +43,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult deleteLesson() throws KolinuxException {
-        timetable.deleteLesson(parsedArguments);
+        timetable.executeDeleteSubCommand(parsedArguments);
         logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
                 +
                 " from the timetable.");
@@ -55,7 +55,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult viewTimetable() {
-        timetable.viewTimetable();
+        timetable.executeViewTimetable();
         logger.log(Level.INFO, "User has printed timetable");
         return new CommandResult("Timetable has been printed above");
     }
@@ -67,7 +67,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult updateLesson() throws KolinuxException {
-        timetable.updateTimetable(parsedArguments);
+        timetable.executeUpdateSubCommand(parsedArguments);
         logger.log(Level.INFO, "User has updated the timetable.");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +

@@ -24,6 +24,7 @@ public class ModuleDetails {
     private static final int OFFSET = 8;
     private static final int SEMESTER_1 = 0;
     private static final int SEMESTER_2 = 1;
+    private static final int WORD_LIMIT = 50;
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
                          String description, String title, String department, double[] workload,
@@ -238,13 +239,13 @@ public class ModuleDetails {
      */
     @Override
     public String toString() {
-        int i = 50;
+        int i = WORD_LIMIT;
         description = description.replaceAll("\n", " ");
         StringBuilder sb = new StringBuilder(description);
         while (i < description.length()) {
             if ((description.charAt(i) == ' ') && (description.charAt(i + 1) != '\n')) {
                 sb.setCharAt(i, '\n');
-                i += 50;
+                i += WORD_LIMIT;
             } else {
                 i++;
             }
