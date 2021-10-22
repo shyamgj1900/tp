@@ -27,7 +27,7 @@ public class TimetableCommand extends Command {
     private static final String CLEAR_SUBCOMMAND = "clear";
     private static final String UPDATE_SUBCOMMAND = "update";
     private static final String DELETE_SUBCOMMAND = "delete";
-    private static final String VIEW_SUBCOMMAND = "view";
+    private static final String VIEW_SUBCOMMAND = "display";
 
     public TimetableCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -35,7 +35,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult addLesson() throws KolinuxException {
-        timetable.executeAddSubCommand(parsedArguments);
+        timetable.executeAdd(parsedArguments);
         logger.log(Level.INFO, "User added a module to timetable");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
@@ -43,7 +43,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult deleteLesson() throws KolinuxException {
-        timetable.executeDeleteSubCommand(parsedArguments);
+        timetable.executeDelete(parsedArguments);
         logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
                 +
                 " from the timetable.");
@@ -54,8 +54,8 @@ public class TimetableCommand extends Command {
                 " has been deleted from timetable");
     }
 
-    private CommandResult viewTimetable() {
-        timetable.executeViewTimetable();
+    private CommandResult displayTimetable() {
+        timetable.executeView();
         logger.log(Level.INFO, "User has printed timetable");
         return new CommandResult("Timetable has been printed above");
     }
@@ -67,7 +67,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult updateLesson() throws KolinuxException {
-        timetable.executeUpdateSubCommand(parsedArguments);
+        timetable.executeUpdate(parsedArguments);
         logger.log(Level.INFO, "User has updated the timetable.");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
@@ -82,7 +82,7 @@ public class TimetableCommand extends Command {
         case CLEAR_SUBCOMMAND:
             return clearAllLessons();
         case VIEW_SUBCOMMAND:
-            return viewTimetable();
+            return displayTimetable();
         case DELETE_SUBCOMMAND:
             return deleteLesson();
         case UPDATE_SUBCOMMAND:

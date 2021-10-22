@@ -1,0 +1,106 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide footbox
+
+participant ":Parser" as parser
+participant ":TimetableCommand" as command
+participant ":Timetable" as table
+participant ":addSubCommand" as subCommand
+participant ":Lesson" as lesson
+participant ":TimetableStorage" as storage
+participant ":CommandResult" as result
+[-> parser : parseCommand(input)
+
+activate parser
+
+parser -> parser : parseSubCommand(subInput, commandWord)
+activate parser
+
+create command
+parser -> command : new TimetableCommand(subCommand, parsedArguments)
+
+activate command
+
+command --> parser : command
+
+deactivate command
+
+parser --> parser : command
+deactivate parser
+
+parser -->[ : command
+deactivate parser
+
+
+[-> command : executeCommand()
+activate command
+
+
+command -> command : addLesson()
+activate command
+
+create table
+command -> table : new Timetable(moduleList)
+activate table
+
+table -> table : executeAdd(lessonDetails)
+activate table
+
+create subCommand
+table -> subCommand : new addSubCommand()
+activate subCommand
+
+subCommand -> subCommand : inputLesson(lessonDetails)
+activate subCommand
+
+create lesson
+subCommand -> lesson : new Lesson()
+activate lesson
+
+lesson --> subCommand : lesson
+deactivate lesson
+subCommand -> subCommand : addToTimetable(lesson)
+activate subCommand
+
+create storage
+subCommand -> storage : new TimetableStorage()
+activate storage
+storage -> storage : writeToFile()
+activate storage
+
+storage --> storage
+deactivate storage
+
+storage --> subCommand
+deactivate storage
+subCommand --> subCommand
+
+deactivate subCommand
+subCommand --> subCommand
+deactivate subCommand
+
+subCommand --> table
+table --> table
+deactivate table
+
+deactivate subCommand
+table --> command
+deactivate table
+
+create result
+command -> result : new CommandResult()
+activate result
+
+result --> command : result
+deactivate result
+command --> command : result
+deactivate command
+
+command -->[ : result
+deactivate command
+deactivate table
+
+
+
+@enduml

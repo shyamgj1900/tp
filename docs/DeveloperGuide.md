@@ -92,7 +92,7 @@ Example 3: Adding a lab to the `lessonStorage` ( lesson of type `LAB` )
 
 The following sequence diagram shows the `timetable add` operation:
 
-![Sequence Diagram](assets/images/addToTimetableSequence.png)
+![Sequence Diagram](assets/images/TimetableAddSequenceDiagram.png)
 
 
 ### Add to Planner feature

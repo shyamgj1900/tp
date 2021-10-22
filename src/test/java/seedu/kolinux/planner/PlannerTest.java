@@ -171,7 +171,7 @@ public class PlannerTest {
         planner.clearEvents();
         timetable.clearTimetable();
         Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
-        timetable.addSubcommand.addLessonToTimetable(lesson);
+        timetable.addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
         assertEquals(VALID_LIST_4, planner.listEvents("2021-10-22", false));
@@ -184,7 +184,7 @@ public class PlannerTest {
         planner.clearEvents();
         timetable.clearTimetable();
         Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
-        timetable.addSubcommand.addLessonToTimetable(lesson);
+        timetable.addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
         assertEquals(VALID_LIST_5, planner.listEvents("2021-10-22", true));
