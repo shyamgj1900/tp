@@ -1,8 +1,7 @@
 package seedu.kolinux.module;
 
-import seedu.kolinux.module.timetable.Timetable;
+import seedu.kolinux.timetable.DeleteSubCommand;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 import static seedu.kolinux.commands.TimetableCommand.timetable;
@@ -94,7 +93,7 @@ public class ModuleList {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
                 myModules.remove(i);
-                timetable.deleteAllOfModule(code);
+                timetable.deleteByModuleList(code);
                 return "Successfully deleted module: " + code;
             }
         }

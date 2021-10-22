@@ -2,8 +2,8 @@ package seedu.kolinux.planner;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
-import seedu.kolinux.module.timetable.Lesson;
-import seedu.kolinux.module.timetable.Timetable;
+import seedu.kolinux.timetable.lesson.Lesson;
+import seedu.kolinux.timetable.Timetable;
 import seedu.kolinux.util.Parser;
 
 import java.text.ParseException;

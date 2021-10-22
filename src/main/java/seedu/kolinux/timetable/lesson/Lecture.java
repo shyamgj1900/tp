@@ -1,4 +1,4 @@
-package seedu.kolinux.module.timetable;
+package seedu.kolinux.timetable.lesson;
 
 import seedu.kolinux.exceptions.KolinuxException;
 
