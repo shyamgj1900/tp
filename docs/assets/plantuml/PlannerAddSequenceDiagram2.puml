@@ -1,12 +1,14 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
+!include Style.puml
+
 hide footbox
 
-participant ":PlannerCommand" as plc
-participant ":Prompt" as prompt
-participant ":Planner" as planner
-participant ":PlannerStorage" as pls
+participant ":PlannerCommand" as plc COMMANDS_COLOR
+participant ":Prompt" as prompt UTIL_COLOR
+participant ":Planner" as planner PLANNER_COLOR
+participant ":PlannerStorage" as pls PLANNER_COLOR
 
 group sd handleConflict
 
