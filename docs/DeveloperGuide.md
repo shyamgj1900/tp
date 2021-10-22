@@ -16,6 +16,7 @@
 * [Instructions for manual testing](#instructions-for-manual-testing)
 ## Acknowledgements
 
+* User Guide and Developer Guide of [AddressBook Level-3](https://se-education.org/addressbook-level3/)
 * [NUSMods API](https://api.nusmods.com/v2/) 
 * [GSON](https://github.com/google/gson)
 
@@ -23,16 +24,28 @@
 
 ### Main Components of the Architecture
 
-The `Kolinux` class is responsible for initializing the main components upon start-up of the application, and 
+The `Main` class is responsible for initializing the main components upon start-up of the application, and 
 deciding the execution path of the application through the main components based on reading the user inputs.
 
-
 The application consists of the following main components responsible for the high-level execution of a user input:
-1. `Parser`: Makes sense from the user input and decides the execution path.
-2. `Ui`: User interface of the application.
-3. `Command`: Parent class of all available commands on the application.
-4. `CommandResult`: Returns feedback to the user about the result of execution.
+1. `Kolinux`: Initializes the components in the correct sequence, and connects them up with each other.
+2. `util.Ui`: User interface of the application.
+3. `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
+4. `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
+5. `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
+6. `commands`: Collection of user commands that determines execution.
+7. `routes`: Collection of classes used by Route Finder feature.
+8. `module`: Collection of classes used by Module Manager feature.
+9. `module.timetable`: Sub-collection of classes used by Timetable feature.
+10. `planner`: Collection of classes used by Planner feature.
+11. `capcalculator`: Collection of classes used by CAP Calculator feature.
 
+The architecture diagram below shows a high-level overview of how components interact with each other. 
+
+❕ _Note: Interactions between collections of classes are not shown for simplicity. Visit the 
+[Implementation](#implementation) section for more detailed representations of such interactions._
+
+![Overview Architecture Diagram](assets/images/overviewArchitecture.png)
 
 The sequence diagram below shows a high-level overview of the interaction between entities during the execution
 of a user input _(XYZCommand represents any class that inherits from Command)_.
@@ -41,21 +54,24 @@ of a user input _(XYZCommand represents any class that inherits from Command)_.
 
 ## Implementation
 
+This section describes some noteworthy details on how some features are implemented along with more detailed
+representations of the interactions between components.
+
 ### Add to timetable feature
 
 The timetable add mechanism is facilitated by `Timetable` where the format of the input is as such: 
 `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`. The lessons added to `Timetable` 
-via inputLesson(String[] lessonDetails) is stored in the `lessonStorage` within the program via 
+via `inputLesson(String[] lessonDetails)` is stored in the `lessonStorage` within the program via 
 the method `addLesson(Lesson lesson)` and locally in `TimetableStorage` which saves it 
 to `timetable.txt` file to constantly save the lessons' data. It implements the following operations:
 
-* Timetable#inputLesson(String[] lessonDetail) containing Timetable#addLesson(Lesson lesson) - Adds the lesson 
+* `Timetable#inputLesson(String[] lessonDetail)` containing `Timetable#addLesson(Lesson lesson)` - Adds the lesson 
 to `timetableStorage` based on the type of lesson it is, which is included in the lessonDetail.
 * TimetableStorage#writeToFile() - Saves the lesson details to `timetable.txt` locally.
 
 #### ❕ Notes about the methods:
 
-* String[] lessonDetails consists of MODULE_CODE, LESSON_TYPE (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
+* `String[] lessonDetails` consists of MODULE_CODE, LESSON_TYPE (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
 DAY, START_TIME, END_TIME. 
 * Lesson class is inherited by Tutorial, Lecture and Lab to add lessons based on the LESSON_TYPE as shown 
 in the example below.
