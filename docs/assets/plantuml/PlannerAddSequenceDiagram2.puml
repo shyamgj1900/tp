@@ -1,0 +1,59 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide footbox
+
+participant ":PlannerCommand" as plc
+participant ":Prompt" as prompt
+participant ":Planner" as planner
+
+group sd conflict
+
+planner -> planner : hasTimeConflict(event)
+activate planner
+
+planner --> planner : hasConflict
+deactivate planner
+
+opt hasTimeConflict && !allowConflict
+
+planner --> plc : exception
+
+plc -> plc : getReplyFromPrompt(exception.getMessage())
+activate plc
+
+create prompt
+plc -> prompt
+activate prompt
+
+prompt --> plc : prompt
+deactivate prompt
+
+plc -> prompt : getReply()
+activate prompt
+
+prompt --> plc : reply
+deactivate prompt
+
+destroy prompt
+
+plc --> plc : reply
+deactivate plc
+
+alt reply.equalsIgnoreCase("yes")
+
+plc -> planner : addEvent(event, true)
+activate planner
+
+planner --> plc
+deactivate planner
+
+else else
+
+plc-->[ : exception
+
+end
+end
+end
+
+@enduml

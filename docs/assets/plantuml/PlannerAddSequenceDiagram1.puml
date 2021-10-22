@@ -10,10 +10,10 @@ participant ":Planner" as planner
 participant ":PlannerStorage" as pls
 participant ":CommandResult" as res
 
-[->parser : parseCommand(input)
+[->parser : parseCommand(userInput)
 activate parser
 
-parser -> parser : parseSubCommand(subInput, commandWord)
+parser -> parser : parseSubCommand(argument, COMMAND_PLANNER)
 activate parser
 
 create plc
@@ -21,7 +21,7 @@ parser -> plc : new PlannerCommand(subCommand, parsedArguments)
 activate plc
 
 create planner
-plc -> planner : new Planner()
+plc -> planner : new Planner(moduleList)
 activate planner
 
 create pls
@@ -56,19 +56,22 @@ activate event
 event -> plc : event
 deactivate event
 
-plc -> planner : addEvent(event, allowConflict)
+plc -> planner : addEvent(event, false)
 activate planner
 
 ref over plc, planner : conflict
 
-planner -> pls : writeToFile(data)
+planner -> pls : writeFile(event.toData())
 activate pls
+
+pls --> planner
 deactivate pls
 
+planner --> plc
 deactivate planner
 
 create res
-plc -> res : new CommandResult(feedbackToUser)
+plc -> res : new CommandResult(ADD_EVENT_MESSAGE)
 activate res
 
 res --> plc : result

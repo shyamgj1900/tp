@@ -114,7 +114,7 @@ The figure below represents the sequence diagram when `planner add` is entered b
 
 ![Planner Sequence Diagram 1](assets/images/PlannerAddSequenceDiagram1.png)
 
-![Planner_Sequence_Diagram_2](assets/images/plannerAddSeq2.png)
+![Planner_Sequence_Diagram_2](assets/images/PlannerAddSequenceDiagram2.png)
 
 The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that lessons and
 exams may be fetched in addition to `scheduleOfAllDates` for the `event` to check time conflicts against. The
