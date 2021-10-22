@@ -59,7 +59,7 @@ deactivate event
 plc -> planner : addEvent(event, false)
 activate planner
 
-ref over plc, planner : conflict
+ref over plc, planner, pls : handleConflict
 
 planner -> pls : writeFile(event.toData())
 activate pls

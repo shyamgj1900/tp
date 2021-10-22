@@ -6,8 +6,9 @@ hide footbox
 participant ":PlannerCommand" as plc
 participant ":Prompt" as prompt
 participant ":Planner" as planner
+participant ":PlannerStorage" as pls
 
-group sd conflict
+group sd handleConflict
 
 planner -> planner : hasTimeConflict(event)
 activate planner
@@ -44,6 +45,12 @@ alt reply.equalsIgnoreCase("yes")
 
 plc -> planner : addEvent(event, true)
 activate planner
+
+planner -> pls : writeFile(event.toData())
+activate pls
+
+pls --> planner
+deactivate pls
 
 planner --> plc
 deactivate planner
