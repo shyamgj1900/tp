@@ -66,7 +66,7 @@ public class CapCalculatorByCode extends CapCalculator {
     public CapCalculatorByCode(ModuleList modules) {
         super();
         moduleDb = new ModuleDb().getPreInitModuleDb();
-        this.modules = (CalculatorModuleList)modules;
+        this.modules = new CalculatorModuleList(modules);
     }
 
     @Override
