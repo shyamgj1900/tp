@@ -26,7 +26,7 @@ plc -> plc : getReplyFromPrompt(exception.getMessage())
 activate plc
 
 create prompt
-plc -> prompt
+plc -> prompt : new Prompt(exception.getMessage())
 activate prompt
 
 prompt --> plc : prompt
