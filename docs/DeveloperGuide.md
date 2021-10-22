@@ -112,7 +112,7 @@ storage.
 
 The figure below represents the sequence diagram when `planner add` is entered by the user:
 
-![Planner Sequence Diagram 1](assets/images/plannerAddSeq1.png)
+![Planner Sequence Diagram 1](assets/images/PlannerAddSequenceDiagram1.png)
 
 ![Planner_Sequence_Diagram_2](assets/images/plannerAddSeq2.png)
 
