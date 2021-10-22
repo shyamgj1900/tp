@@ -2,11 +2,10 @@
 * [Acknowledgements](#acknowledgements)
 * [Design](#design)
 * [Implementation](#implementation)
-  * [`timetable add`](#timetable-add-feature)
-    * [Notes about method](#notes-about-the-methods)
-  * [`planner add`](#planner-add-feature)
+  * [`timetable add`](#add-to-timetable-feature)
+  * [`planner add`](#add-to-planner-feature)
   * [`module store/delete`](#store/delete-a-module-by-module-code)
-  * [`cap`](#cap-calculator-feature)
+  * [`cap code`](#cap-calculator-by-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -17,14 +16,46 @@
 * [Instructions for manual testing](#instructions-for-manual-testing)
 ## Acknowledgements
 
+* User Guide and Developer Guide of [AddressBook Level-3](https://se-education.org/addressbook-level3/)
 * [NUSMods API](https://api.nusmods.com/v2/) 
 * [GSON](https://github.com/google/gson)
 
 ## Design
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+### Main Components of the Architecture
+
+The `Main` class is responsible for initializing the main components upon start-up of the application, and 
+deciding the execution path of the application through the main components based on reading the user inputs.
+
+The application consists of the following main components responsible for the high-level execution of a user input:
+1. `Kolinux`: Initializes the components in the correct sequence, and connects them up with each other.
+2. `util.Ui`: User interface of the application.
+3. `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
+4. `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
+5. `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
+6. `commands`: Collection of user commands that determines execution.
+7. `routes`: Collection of classes used by Route Finder feature.
+8. `module`: Collection of classes used by Module Manager feature.
+9. `module.timetable`: Sub-collection of classes used by Timetable feature.
+10. `planner`: Collection of classes used by Planner feature.
+11. `capcalculator`: Collection of classes used by CAP Calculator feature.
+
+The architecture diagram below shows a high-level overview of how components interact with each other. 
+
+❕ _Note: Interactions between collections of classes are not shown for simplicity. Visit the 
+[Implementation](#implementation) section for more detailed representations of such interactions._
+
+![Overview Architecture Diagram](assets/images/overviewArchitecture.png)
+
+The sequence diagram below shows a high-level overview of the interaction between entities during the execution
+of a user input _(XYZCommand represents any class that inherits from Command)_.
+
+![Overview Sequence Diagram](assets/images/overviewSeq.png)
 
 ## Implementation
+
+This section describes some noteworthy details on how some features are implemented along with more detailed
+representations of the interactions between components.
 
 ### Add to timetable feature
 
@@ -70,7 +101,7 @@ The Add to Planner mechanism is facilitated by `Planner`. Before adding an event
 time conflicts with existing events/lessons/exams. Events are only added if there are no time conflicts or the 
 user authorised the addition of a conflicted `Event`. Events added to the `Planner` are stored in a list 
 `scheduleOfAllDates` which contains all added `Event` by the user. The events added are also written to the internal 
-storage `data/timetable.txt` which saves the user data locally.
+storage `data/planner.txt` which saves the user data locally. 
 
 The feature is implemented by `Planner#addEvent(Event event, boolean allowConflict)` which invokes the following
 methods:
@@ -85,6 +116,41 @@ The figure below represents the sequence diagram when `planner add` is entered b
 
 ![Planner_Sequence_Diagram_2](assets/images/plannerAddSeq2.png)
 
+The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that lessons and
+exams may be fetched in addition to `scheduleOfAllDates` for the `event` to check time conflicts against. The
+integration in the method is mainly done via the `Planner#filterPlanner(String date)` call. The code snippet below
+shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(String date)`. The return value
+`filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
+is to be added.
+
+```
+    private boolean hasTimeConflict(Event eventToBeAdded) {
+        ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
+        String startTime = eventToBeAdded.getStartTime();
+        String endTime = eventToBeAdded.getEndTime();
+        for (Event event : filteredPlanner) {
+            if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+```
+
+The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
+1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of events consisting
+of the lessons and exams occurring on `date` using the data fetched from `Timetable` and `ModuleList`.
+2. Get the list from `ModuleSyncer`, and add the events in `scheduleOfAllDates` that are occurring on `date` via 
+a `Stream`.
+3. Return the list.
+
+The list returned will then be used by `event` to check for any time conflicts.
+
+The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
+`ExamsGetter`.
+
+![Planner Class Diagram](assets/images/plannerAddCD.png)
+
 ### Store/delete a module by module code
 
 The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
@@ -94,7 +160,7 @@ The `ModuleCommand` class extends the `Command` class and handles all module rel
 
 ❕ Notes about the methods:
 
-`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a`ModuleDetails` instance corresponding to a kwy module code is appended to list in `moduleList`
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to list in `moduleList`
 
 The input format for storage and deletion of modules is as follows:
 
@@ -112,20 +178,58 @@ Example: `myModules` is initialized with single `ModuleDetails` instance corresp
 
 ![moduleListInit](assets/images/moduleListInit.png)
 
+
+
+Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
+
+![moduleListInit](assets/images/moduleStore.png)
+
+
+
+Step 3: The user executes `module delete CS2101` command to delete the instance of `ModuleDetais` corresponding to `CS2101` from `myModules`. The `module delete` prefix ensures `ModuleList#deleteModuleByCode(String code)` is called. 
+
+![moduleListInit](assets/images/moduleListInit.png)
+
+
+
+The following sequence diagram models how the `module store` operation works:
+
+![Module Store Sequence Diagram](assets/images/moduleStoreSequence.png)
+
+The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
+
+
+
 ### cap calculator by code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
-the input modules and grades from user as a string array in `modules` when the object is constructed
-once the command `cap code` is given from user, along with the other essential methods used for cap calculation.
+the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
+of `ModuleList` dedicated for cap calculation. 
 
-When `CapCalculator#executeCapCalculator()` is executed, the following methods are invoked:
+When the command `cap code` is given by the user, the constructor is called to retrieve and store the modules 
+from the input. After the object construction is done, `CapCalculator#executeCapCalculator()` method is then 
+invoked for the cap calculation. 
 
-- `CapCalculator#checkModulesNotEmpty()` — which ensures that the `modules` attribute of the object is not empty.
-- `CapCalculator#getCap()` — which is the methods used to do all the cap calculation.
-- `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
+In order to achieve these functionalities, the following methods 
+from `CapCalculatorByCode` are invoked.
 
-Below is a simplified sequence diagram showing important steps of how `cap code` works:
+* `CapCalculatorByCode#getInputModules(String input)` — which retrieves the module codes and grades from String input
+and store them as `CalculatorModuleList`
+* `CapCalculatorByCode#getCap()` — which is the methods used to do all the cap calculation.
 
+In addition, the following methods implemented in `CapCalculator` are also invoked to ensure an error-free
+functionality.
+
+* `CapCalculator#executeCommand()` — which is an overridden method from `Command` is used to facilitate cap calculation
+and exception handling methods.
+* `CapCalculator#checkModulesNotEmpty()` — which ensures that the module list of the object is not empty.
+* `CapCalculator#checkInvalidModules()` — which checks if there are any invalid modules after the cap calculation.
+
+Below is the sequence diagrams showing important steps of how `cap code` operates:
+
+![Cap Code Sequence Diagram 1](assets/images/capCodeSeq1.png)
+
+![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
 
 ### bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
@@ -133,10 +237,14 @@ When the user invokes and uses the bus routes feature the `BusRouteCommand` cons
 the `input` string to the `Route` class. The operation is implemented in the following way.
 
 * The overriden function `executeCommand()` calls the `Route#checkRoutes()` method. 
-* The `Route#checkRoutes()` contains the `Route#getLocations()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)` and `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
-* `Route#getLocations()` - Reads the connected graphs from the text file using the `Route#readNodesFromFile(ArrayList<String> vertices, String filePath)` and sets the route by adding the respective edges of the graph using the `Route#setRoute(ArrayList<String> vertices, Graph graph)` method.
+* The `Route#checkRoutes()` contains the `Route#getBusStopNumber()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)` and `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
+* `Route#getBusStopNumber()` - Converts the user given bus stop names to bus stop numbers which can then be used to find if the bus stops are connected.
 * `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
 * `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+
+The following sequence diagram explains the bus routes feature.
+
+![sequenceDiagram](assets/images/BusRoutes.png)
 
 ## Product scope
 ### Target user profile:
@@ -192,6 +300,32 @@ should be able to accomplish most of the tasks faster using commands than using 
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
+
+### Storing a module by module code
+
+1. Storing a new module with a valid code
+
+   - Test case: `module store CS2113T`
+
+     Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
+
+2. Storing a module with an invalid code (non-existent module)
+
+   - Test case: `module store invalid_module`
+
+     Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
+
+3. Storing a pre-existing module in the list
+
+   - Test case: `module store CS2113T`
+
+     Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
+
+     
+
+4. 
+
+   
 
 ### Adding an event to Planner
 

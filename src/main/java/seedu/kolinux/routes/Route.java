@@ -38,6 +38,8 @@ public class Route {
 
     private String[] splitInput;
     private String[] busStops;
+    private String startLocation;
+    private String endLocation;
     private int[] vertexCodeA1;
     private int[] vertexCodeA2;
     private int[] vertexCodeD1;
@@ -57,10 +59,16 @@ public class Route {
     private ArrayList<String> verticesD2;
     private ArrayList<String> verticesE;
     private ArrayList<String> verticesK;
+    private String[][] oppositeStops = {{"KR MRT", "OPP KR MRT"}, {"LT27", "S 17"}, {"UHALL", "OPP UHALL"},
+            {"OPP UHC", "UHC"}, {"YIH", "OPP YIH"}, {"CLB", "IT"}, {"EA", "JAPANESE PRI SCHOOL"}, {"PGP", "PGPR"},
+            {"SDE 3", "OPP SDE 3"}, {"VENTUS", "LT13"}, {"OPP HSSML", "BIZ 2"}, {"TCOMS", "OPP TCOMS"}};
 
     public Route(String input) throws KolinuxException, IOException {
         busStops = new String[2];
         splitInput = input.split(USER_COMMAND_DELIMITER);
+        System.arraycopy(splitInput, 1, busStops, 0, 2);
+        startLocation = busStops[0].trim().toUpperCase();
+        endLocation = busStops[1].trim().toUpperCase();
         vertexCodeA1 = new int[2];
         vertexCodeA2 = new int[2];
         vertexCodeD1 = new int[2];
@@ -146,7 +154,6 @@ public class Route {
             if (splitInput.length < 3) {
                 throw new KolinuxException("Enter starting point and final destination.");
             }
-            busStops[i] = splitInput[i + 1];
             vertexCodeA1[i] = location.getStopNumberAOne(busStops[i]);
             vertexCodeA2[i] = location.getStopNumberATwo(busStops[i]);
             vertexCodeD1[i] = location.getStopNumberDOne(busStops[i]);
@@ -172,8 +179,6 @@ public class Route {
             return location.getBusStopList();
         }
         getBusStopNumber();
-        String startLocation = busStops[0].trim().toUpperCase();
-        String endLocation = busStops[1].trim().toUpperCase();
         ArrayList<String> busNumbers = new ArrayList<>();
         boolean[] flag = new boolean[2];
         flag[0] = checkDirectRoutes(busNumbers);
@@ -183,7 +188,7 @@ public class Route {
             ArrayList<String> midLocation = new ArrayList<>();
             flag[1] = checkIndirectRoutes(busNumberOne, busNumberTwo, midLocation);
             if (!flag[1]) {
-                return "There are no viable bus services from " + startLocation + " to " + endLocation;
+                return checkAlternateRoutes(busNumbers);
             }
             return "Take bus " + busNumberOne + " then change to bus " + busNumberTwo + " at " + midLocation.get(0);
         }
@@ -257,6 +262,40 @@ public class Route {
             }
         }
         return flag;
+    }
+
+    /**
+     * Checks if there is an alternate route from the opposite bus stop of the
+     * starting location.
+     *
+     * @param busNumbers bus number which connects the two locations
+     * @return Message which specifies if any alternate routes are found
+     * @throws KolinuxException if the user command is not in the correct format
+     */
+    private String checkAlternateRoutes(ArrayList<String> busNumbers) throws KolinuxException {
+        boolean flag;
+        for (int i = 0; i < 12; i++) {
+            if (startLocation.equalsIgnoreCase(oppositeStops[i][0])) {
+                busStops[0] = oppositeStops[i][1];
+                getBusStopNumber();
+                flag = checkDirectRoutes(busNumbers);
+                if (flag) {
+                    return "There are no viable bus services from " + startLocation + " to " + endLocation
+                            + ". But you can take bus " + busNumbers + " from " + oppositeStops[i][1] + " to "
+                            + endLocation;
+                }
+            } else if (startLocation.equalsIgnoreCase(oppositeStops[i][1])) {
+                busStops[0] = oppositeStops[i][0];
+                getBusStopNumber();
+                flag = checkDirectRoutes(busNumbers);
+                if (flag) {
+                    return "There are no viable bus services from " + startLocation + " to " + endLocation
+                            + ". But you can take bus " + busNumbers + " from " + oppositeStops[i][0] + " to "
+                            + endLocation;
+                }
+            }
+        }
+        return "There are no viable bus services from " + startLocation + " to " + endLocation;
     }
 
     /**

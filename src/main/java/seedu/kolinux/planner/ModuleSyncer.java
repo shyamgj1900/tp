@@ -32,7 +32,7 @@ public class ModuleSyncer {
         this.date = date;
         getLessonsOnDate();
         convertLessonListToEventList();
-        getExamsOnDate(moduleList, date);
+        getExamsOnDate(moduleList);
     }
 
     public ArrayList<Event> getLessonsAndExamsAsEventsOnDate() {
@@ -45,13 +45,12 @@ public class ModuleSyncer {
      * convertedLessonsOnDate. The module list will always be updated with the latest version.
      *
      * @param moduleList Module list stored by the user
-     * @param date Date specified
      */
-    private void getExamsOnDate(ModuleList moduleList, String date) {
+    private void getExamsOnDate(ModuleList moduleList) {
         ExamsGetter examsGetter = new ExamsGetter(moduleList);
         ArrayList<Event> examsOnDate = examsGetter.getExams();
         for (Event exam : examsOnDate) {
-            if (exam.getDate().equals(date)) {
+            if (exam.getDate().equals(this.date)) {
                 lessonsAndExamsAsEventsOnDate.add(exam);
             }
         }

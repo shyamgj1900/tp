@@ -2,9 +2,6 @@ package seedu.kolinux.timetable.subcommand;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.timetable.lesson.Lesson;
-import seedu.kolinux.timetable.subcommand.AddSubcommand;
-import seedu.kolinux.timetable.subcommand.DeleteSubcommand;
-import seedu.kolinux.timetable.subcommand.Subcommand;
 
 import java.util.Objects;
 
@@ -14,8 +11,8 @@ import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 public class UpdateSubcommand extends Subcommand {
 
-    private AddSubcommand addSubCommand = new AddSubcommand();
-    private DeleteSubcommand deleteSubCommand = new DeleteSubcommand();
+    private AddSubcommand addSubcommand = new AddSubcommand();
+    private DeleteSubcommand deleteSubcommand = new DeleteSubcommand();
 
     public UpdateSubcommand() {
 
@@ -38,8 +35,8 @@ public class UpdateSubcommand extends Subcommand {
             }
             String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
             if (isLessonInTimetable(moduleCode, lessonType, oldDay)) {
-                deleteSubCommand.deleteLesson(parsedArguments);
-                addSubCommand.inputLesson(parameters);
+                deleteSubcommand.deleteLesson(parsedArguments);
+                addSubcommand.inputLesson(parameters);
             } else {
                 throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
             }
