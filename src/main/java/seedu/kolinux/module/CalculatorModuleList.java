@@ -4,6 +4,14 @@ package seedu.kolinux.module;
  * Used for storing module list specifically for cap calculation operations.
  */
 public class CalculatorModuleList extends ModuleList {
+    
+    public CalculatorModuleList() {
+        
+    }
+    
+    public CalculatorModuleList(ModuleList moduleList) {
+        this.myModules = moduleList.getMyModules();
+    }
 
     /**
      * Store a module in myModules when only the modular credit and its grade are given.
