@@ -1,0 +1,83 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide footbox
+
+participant ":Parser" as parser
+participant ":PlannerCommand" as plc
+participant ":Event" as event
+participant ":Planner" as planner
+participant ":PlannerStorage" as pls
+participant ":CommandResult" as res
+
+[->parser : parseCommand(input)
+activate parser
+
+parser -> parser : parseSubCommand(subInput, commandWord)
+activate parser
+
+create plc
+parser -> plc : new PlannerCommand(subCommand, parsedArguments)
+activate plc
+
+create planner
+plc -> planner : new Planner()
+activate planner
+
+create pls
+planner -> pls : new PlannerStorage()
+activate pls
+
+pls --> planner : plannerStorage
+deactivate pls
+
+planner --> plc : planner
+deactivate planner
+
+plc --> parser : command
+deactivate plc
+
+parser --> parser : command
+deactivate parser
+
+parser-->[ : command
+deactivate parser
+
+[->plc : executeCommand()
+activate plc
+
+plc -> plc : handleAddCommand()
+activate plc
+
+create event
+plc -> event : new Event(parsedArguments)
+activate event
+
+event -> plc : event
+deactivate event
+
+plc -> planner : addEvent(event, allowConflict)
+activate planner
+
+ref over plc, planner : conflict
+
+planner -> pls : writeToFile(data)
+activate pls
+deactivate pls
+
+deactivate planner
+
+create res
+plc -> res : new CommandResult(feedbackToUser)
+activate res
+
+res --> plc : result
+deactivate res
+
+plc --> plc : result
+deactivate plc
+
+plc-->[ : result
+deactivate plc
+
+@enduml
