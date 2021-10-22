@@ -16,5 +16,7 @@ bin/
 /text-ui-test/ACTUAL.txt
 text-ui-test/EXPECTED-UNIX.TXT
 planner.txt
+moduleList.txt
 logger.log
+logger.log.lck
 timetable.txt
