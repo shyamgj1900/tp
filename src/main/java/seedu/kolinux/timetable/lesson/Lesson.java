@@ -1,7 +1,7 @@
 package seedu.kolinux.timetable.lesson;
 
 import seedu.kolinux.exceptions.KolinuxException;
-import seedu.kolinux.timetable.SubCommand;
+import seedu.kolinux.timetable.subcommand.Subcommand;
 
 /** Lesson class which stores all the attributes of a lesson to be input into the timetable. */
 public class Lesson {
@@ -17,7 +17,7 @@ public class Lesson {
     public static String [] schoolHours = new String [] {"0600", "0700", "0800", "0900", "1000", "1100",
             "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100"};
     public static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
-    private SubCommand messages = new SubCommand();
+    private Subcommand messages = new Subcommand();
 
     public Lesson(String[] parsedArguments) throws KolinuxException {
         try {

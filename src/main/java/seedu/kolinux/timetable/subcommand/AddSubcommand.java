@@ -1,4 +1,4 @@
-package seedu.kolinux.timetable;
+package seedu.kolinux.timetable.subcommand;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
@@ -17,10 +17,9 @@ import static seedu.kolinux.timetable.Timetable.moduleList;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
-public class AddSubCommand extends SubCommand {
+public class AddSubcommand extends Subcommand {
 
-    public AddSubCommand() {
-
+    public AddSubcommand() {
     }
 
     /**

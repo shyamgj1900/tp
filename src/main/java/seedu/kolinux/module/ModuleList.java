@@ -1,7 +1,5 @@
 package seedu.kolinux.module;
 
-import seedu.kolinux.timetable.DeleteSubCommand;
-
 import java.util.ArrayList;
 
 import static seedu.kolinux.commands.TimetableCommand.timetable;

@@ -1,4 +1,4 @@
-package seedu.kolinux.timetable;
+package seedu.kolinux.timetable.subcommand;
 
 import seedu.kolinux.exceptions.KolinuxException;
 
@@ -10,9 +10,9 @@ import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.Timetable.timetableData;
 import static seedu.kolinux.timetable.Timetable.timetableStorage;
 
-public class DeleteSubCommand extends SubCommand {
+public class DeleteSubcommand extends Subcommand {
 
-    public DeleteSubCommand() {
+    public DeleteSubcommand() {
 
     }
 

@@ -1,6 +1,6 @@
-package seedu.kolinux.timetable;
+package seedu.kolinux.timetable.subcommand;
 
-public class SubCommand {
+public class Subcommand {
 
     public static final int ROW_SIZE = 16;
     public static final int COLUMN_SIZE = 6;
@@ -56,7 +56,7 @@ public class SubCommand {
     public static final int TABLE_COLUMN_WIDTH = 20;
     public static final int TABLE_FIRST_COLUMN_WIDTH = 13;
 
-    public SubCommand() {
+    public Subcommand() {
 
     }
 }

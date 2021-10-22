@@ -1,7 +1,10 @@
-package seedu.kolinux.timetable;
+package seedu.kolinux.timetable.subcommand;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.timetable.lesson.Lesson;
+import seedu.kolinux.timetable.subcommand.AddSubcommand;
+import seedu.kolinux.timetable.subcommand.DeleteSubcommand;
+import seedu.kolinux.timetable.subcommand.Subcommand;
 
 import java.util.Objects;
 
@@ -9,12 +12,12 @@ import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
-public class UpdateSubCommand extends SubCommand {
+public class UpdateSubcommand extends Subcommand {
 
-    private AddSubCommand addSubCommand = new AddSubCommand();
-    private DeleteSubCommand deleteSubCommand = new DeleteSubCommand();
+    private AddSubcommand addSubCommand = new AddSubcommand();
+    private DeleteSubcommand deleteSubCommand = new DeleteSubcommand();
 
-    public UpdateSubCommand() {
+    public UpdateSubcommand() {
 
     }
 

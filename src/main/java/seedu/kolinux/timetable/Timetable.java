@@ -6,6 +6,10 @@ import seedu.kolinux.timetable.lesson.Lab;
 import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.lesson.Tutorial;
+import seedu.kolinux.timetable.subcommand.AddSubcommand;
+import seedu.kolinux.timetable.subcommand.DeleteSubcommand;
+import seedu.kolinux.timetable.subcommand.UpdateSubcommand;
+import seedu.kolinux.timetable.subcommand.ViewSubcommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,9 +26,9 @@ public class Timetable {
 
     public static TimetableStorage timetableStorage = new TimetableStorage();
     public static ModuleList moduleList;
-    public AddSubCommand addSubCommand = new AddSubCommand();
-    public DeleteSubCommand deleteSubCommand = new DeleteSubCommand();
-    public UpdateSubCommand updateSubCommand = new UpdateSubCommand();
+    public AddSubcommand addSubcommand = new AddSubcommand();
+    public DeleteSubcommand deleteSubCommand = new DeleteSubcommand();
+    public UpdateSubcommand updateSubcommand = new UpdateSubcommand();
     private static final int ROW_SIZE = 16;
     private static final int COLUMN_SIZE = 6;
     public static String [][] timetableData = new String[ROW_SIZE][COLUMN_SIZE];
@@ -74,13 +78,13 @@ public class Timetable {
             String[] content = fileContent.split("/");
             switch (content[1]) {
             case "TUT":
-                addSubCommand.addLessonToTimetable(new Tutorial(content));
+                addSubcommand.addLessonToTimetable(new Tutorial(content));
                 break;
             case "LEC":
-                addSubCommand.addLessonToTimetable(new Lecture(content));
+                addSubcommand.addLessonToTimetable(new Lecture(content));
                 break;
             case "LAB":
-                addSubCommand.addLessonToTimetable(new Lab(content));
+                addSubcommand.addLessonToTimetable(new Lab(content));
                 break;
             default:
                 timetableStorage.clearFile();
@@ -90,33 +94,34 @@ public class Timetable {
     }
 
     public void executeViewTimetable() {
-        new ViewSubCommand().viewTimetable();
+        new ViewSubcommand().viewTimetable();
     }
 
     public void executeAddSubCommand(String[] parsedArguments) throws KolinuxException {
+
         try {
             String lessonType = parsedArguments[1].toUpperCase();
             String moduleCode = parsedArguments[0].toUpperCase();
-            if (!addSubCommand.isLessonInModuleList(moduleList, moduleCode)) {
+            if (!addSubcommand.isLessonInModuleList(moduleList, moduleCode)) {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
-            int requiredHours = addSubCommand.getHours(moduleList, moduleCode, lessonType);
-            addSubCommand.checkZeroWorkload(requiredHours, moduleCode, lessonType);
+            int requiredHours = addSubcommand.getHours(moduleList, moduleCode, lessonType);
+            addSubcommand.checkZeroWorkload(requiredHours, moduleCode, lessonType);
             int inputHours = getIndex(parsedArguments[4], schoolHours) - getIndex(parsedArguments[3], schoolHours);
-            int storageHours = addSubCommand.getStorageHours(moduleCode, lessonType) + inputHours;
-            addSubCommand.checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
+            int storageHours = addSubcommand.getStorageHours(moduleCode, lessonType) + inputHours;
+            addSubcommand.checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
 
             if (lessonType.startsWith("TUT")) {
-                addSubCommand.addLessonToTimetable(new Tutorial(parsedArguments));
+                addSubcommand.addLessonToTimetable(new Tutorial(parsedArguments));
             } else if (lessonType.startsWith("LEC")) {
-                addSubCommand.addLessonToTimetable(new Lecture(parsedArguments));
+                addSubcommand.addLessonToTimetable(new Lecture(parsedArguments));
             } else if (lessonType.startsWith("LAB")) {
-                addSubCommand.addLessonToTimetable(new Lab(parsedArguments));
+                addSubcommand.addLessonToTimetable(new Lab(parsedArguments));
             } else {
-                throw new KolinuxException(addSubCommand.INVALID_ADD_FORMAT);
+                throw new KolinuxException(addSubcommand.INVALID_ADD_FORMAT);
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(addSubCommand.INVALID_ADD_FORMAT);
+            throw new KolinuxException(addSubcommand.INVALID_ADD_FORMAT);
         }
     }
 
@@ -125,7 +130,7 @@ public class Timetable {
     }
 
     public void executeUpdateSubCommand(String[] parsedArguments) throws KolinuxException {
-        updateSubCommand.updateTimetable(parsedArguments);
+        updateSubcommand.updateTimetable(parsedArguments);
     }
 
     public void deleteByModuleList(String moduleCode) {

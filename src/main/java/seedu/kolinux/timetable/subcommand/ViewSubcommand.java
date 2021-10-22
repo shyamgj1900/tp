@@ -1,11 +1,11 @@
-package seedu.kolinux.timetable;
+package seedu.kolinux.timetable.subcommand;
 
 import static seedu.kolinux.timetable.Timetable.timetableData;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
-public class ViewSubCommand extends SubCommand {
+public class ViewSubcommand extends Subcommand {
 
-    public ViewSubCommand() {
+    public ViewSubcommand() {
 
     }
 
