@@ -24,6 +24,9 @@
 
 ### Main Components of the Architecture
 
+{TO BE UPDATED - architecture description, architecture diagram, individual component class diagrams, legend for color
+coding of components}
+
 The `Main` class is responsible for initializing the main components upon start-up of the application, and 
 deciding the execution path of the application through the main components based on reading the user inputs.
 
@@ -97,27 +100,36 @@ The following sequence diagram shows the `timetable add` operation:
 
 ### Add to Planner feature
 
-The Add to Planner mechanism is facilitated by `Planner`. Before adding an event, the `Event` is first checked for any
-time conflicts with existing events/lessons/exams. Events are only added if there are no time conflicts or the 
-user authorised the addition of a conflicted `Event`. Events added to the `Planner` are stored in a list 
-`scheduleOfAllDates` which contains all added `Event` by the user. The events added are also written to the internal 
-storage `data/planner.txt` which saves the user data locally. 
+The Add to Planner mechanism is mainly facilitated by `PlannerCommand` and `Planner`. After entering the appropriate
+input to add an `Event` to the `Planner`, `PlannerCommand` is constructed with `subCommand` `"add"` and the
+relevant `parsedArguments`. The constructor of `PlannerCommand` involves creation of `Planner` and `PlannerStorage`
+to initialize the adding and writing to file operations.
 
-The feature is implemented by `Planner#addEvent(Event event, boolean allowConflict)` which invokes the following
-methods:
-* `Planner#hasTimeConflict(Event event)` which checks for any time conflicts between `event` and any existing events
-in `scheduleOfAllDates`, lessons, and exams.
-* `PlannerStorage#writeFile(String data)` which appends the data of the new `Event` to `data/planner.txt` for local
-storage.
+Before the `Event` is added, it is first checked for any time conflicts with existing events/lessons/exams. `Event`s
+are only added if there are no time conflicts or the user allowed the addition of the conflicted `Event` through a
+`Prompt` to get a confirmation from the user. `Event`s added to the `Planner` are stored in a list
+`scheduleOfAllDates` which contains all added `Event`s by the user. The data in this list is also written to the
+internal storage `data/planner.txt` through `PlannerStorage` which saves the user data locally.
 
-The figure below represents the sequence diagram when `planner add` is entered by the user:
+This mechanism is implemented by the following methods:
+* `Planner#addEvent(Event event, boolean allowConflict)`: Attempts to add `event` to `scheduleOfAllDates` by invoking
+the following methods:
+    * `Planner#hasTimeConflict(Event event)`: Checks for any time conflicts between `event` and any existing `Event`s
+    in `scheduleOfAllDates`, lessons, and exams.
+    * `PlannerStorage#writeFile(String data)`: Appends the data of the newly added `Event` to `data/planner.txt` for 
+    local storage.
+
+* `PlannerCommand#getReplyFromPrompt(String question)`: Gets user confirmation to allow or cancel the add operation
+in case of a time conflict.
+
+The figures below represent the sequence diagrams of the Add to Planner mechanism:
 
 ![Planner Sequence Diagram 1](assets/images/PlannerAddSequenceDiagram1.png)
 
-![Planner_Sequence_Diagram_2](assets/images/plannerAddSeq2.png)
+![Planner_Sequence_Diagram_2](assets/images/PlannerAddSequenceDiagram2.png)
 
-The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that lessons and
-exams may be fetched in addition to `scheduleOfAllDates` for the `event` to check time conflicts against. The
+The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that `Lesson`s and
+exams may be fetched in addition to `scheduleOfAllDates` containing the `Event`s to check time conflicts against. The
 integration in the method is mainly done via the `Planner#filterPlanner(String date)` call. The code snippet below
 shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(String date)`. The return value
 `filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
@@ -138,16 +150,20 @@ is to be added.
 ```
 
 The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
-1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of events consisting
-of the lessons and exams occurring on `date` using the data fetched from `Timetable` and `ModuleList`.
+1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of `Event`s that are
+constructed using the information of the lessons and exams occurring on `date` using the data fetched from `Timetable` 
+and `ModuleList`. Note that an `ExamsGetter` is used by `ModuleSyncer` to interact with `ModuleList` to get the exam 
+dates and times of the modules stored by `ModuleList`.
 2. Get the list from `ModuleSyncer`, and add the events in `scheduleOfAllDates` that are occurring on `date` via 
 a `Stream`.
 3. Return the list.
 
-The list returned will then be used by `event` to check for any time conflicts.
+The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
 The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
 `ExamsGetter`.
+
+{TO BE CHANGED}
 
 ![Planner Class Diagram](assets/images/plannerAddCD.png)
 

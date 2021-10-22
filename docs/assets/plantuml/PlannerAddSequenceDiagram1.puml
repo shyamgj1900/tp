@@ -1,19 +1,21 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
+!include Style.puml
+
 hide footbox
 
-participant ":Parser" as parser
-participant ":PlannerCommand" as plc
-participant ":Event" as event
-participant ":Planner" as planner
-participant ":PlannerStorage" as pls
-participant ":CommandResult" as res
+participant ":Parser" as parser UTIL_COLOR
+participant ":PlannerCommand" as plc COMMANDS_COLOR
+participant ":Event" as event PLANNER_COLOR
+participant ":Planner" as planner PLANNER_COLOR
+participant ":PlannerStorage" as pls PLANNER_COLOR
+participant ":CommandResult" as res COMMANDS_COLOR
 
-[->parser : parseCommand(input)
+[->parser : parseCommand(userInput)
 activate parser
 
-parser -> parser : parseSubCommand(subInput, commandWord)
+parser -> parser : parseSubCommand(argument, COMMAND_PLANNER)
 activate parser
 
 create plc
@@ -21,7 +23,7 @@ parser -> plc : new PlannerCommand(subCommand, parsedArguments)
 activate plc
 
 create planner
-plc -> planner : new Planner()
+plc -> planner : new Planner(moduleList)
 activate planner
 
 create pls
@@ -56,19 +58,22 @@ activate event
 event -> plc : event
 deactivate event
 
-plc -> planner : addEvent(event, allowConflict)
+plc -> planner : addEvent(event, false)
 activate planner
 
-ref over plc, planner : conflict
+ref over plc, planner, pls : handleConflict
 
-planner -> pls : writeToFile(data)
+planner -> pls : writeFile(event.toData())
 activate pls
+
+pls --> planner
 deactivate pls
 
+planner --> plc
 deactivate planner
 
 create res
-plc -> res : new CommandResult(feedbackToUser)
+plc -> res : new CommandResult(ADD_EVENT_MESSAGE)
 activate res
 
 res --> plc : result
