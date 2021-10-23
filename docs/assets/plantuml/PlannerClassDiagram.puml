@@ -57,14 +57,14 @@ class ExamsGetter {
     - retrieveModuleExams(): void
 }
 
-PlannerCommand --> Planner
-Kolinux -> Planner
-Planner --> PlannerStorage
-Planner .> ModuleSyncer
-ModuleSyncer .> ExamsGetter
-PlannerCommand .> Event
-Event <.. ModuleSyncer
-Event <.. ExamsGetter
-Event <.. Planner
+PlannerCommand --> "1" Planner
+Kolinux -> "1" Planner
+Planner --> "1" PlannerStorage
+Planner .> "0..1" ModuleSyncer
+ModuleSyncer .> "0..1" ExamsGetter
+PlannerCommand .> "0..1" Event
+Event "*" <-- ModuleSyncer
+Event "*" <-- ExamsGetter
+Event "*" <- Planner
 
 @enduml
