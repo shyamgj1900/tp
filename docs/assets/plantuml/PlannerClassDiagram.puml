@@ -42,8 +42,7 @@ class PlannerStorage {
 
 class ModuleSyncer {
     - date: String
-    - lessonsOnDate: ArrayList<Lesson>
-    - lessonsAndExamsAsEventsOnDate: ArrayList<Event>
+    - lessonsOnDate: Lesson[*]
     + ModuleSyncer(moduleList : ModuleList, date: String)
     - getExamsOnDate(moduleList : ModuleList): void
     - getLessonsOnDate(): void
@@ -51,20 +50,19 @@ class ModuleSyncer {
 }
 
 class ExamsGetter {
-    - exams: ArrayList<Event>
     - moduleList: ModuleList
     + ExamsGetter(moduleList: ModuleList)
     - retrieveModuleExams(): void
 }
 
-PlannerCommand --> "1" Planner
-Kolinux -> "1" Planner
-Planner --> "1" PlannerStorage
+PlannerCommand --> "1" Planner : planner
+Kolinux -> "1" Planner : planner
+Planner --> "1" PlannerStorage : plannerStorage
 Planner .> "0..1" ModuleSyncer
 ModuleSyncer .> "0..1" ExamsGetter
 PlannerCommand .> "0..1" Event
-Event "*" <-- ModuleSyncer
-Event "*" <-- ExamsGetter
-Event "*" <- Planner
+Event "*" <-- ModuleSyncer : lessonsAndExamsAsEventsOnDate
+Event "*" <-- ExamsGetter : exams
+Event "*" <- Planner : scheduleOfAllDates
 
 @enduml
