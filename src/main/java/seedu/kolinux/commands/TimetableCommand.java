@@ -35,7 +35,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult addLesson() throws KolinuxException {
-        timetable.executeAddSubCommand(parsedArguments);
+        timetable.executeAdd(parsedArguments);
         logger.log(Level.INFO, "User added a module to timetable");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
@@ -43,7 +43,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult deleteLesson() throws KolinuxException {
-        timetable.executeDeleteSubCommand(parsedArguments);
+        timetable.executeDelete(parsedArguments);
         logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
                 +
                 " from the timetable.");
@@ -55,7 +55,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult viewTimetable() {
-        timetable.executeViewTimetable();
+        timetable.executeView();
         logger.log(Level.INFO, "User has printed timetable");
         return new CommandResult("Timetable has been printed above");
     }
@@ -67,7 +67,7 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult updateLesson() throws KolinuxException {
-        timetable.executeUpdateSubCommand(parsedArguments);
+        timetable.executeUpdate(parsedArguments);
         logger.log(Level.INFO, "User has updated the timetable.");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
