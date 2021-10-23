@@ -69,6 +69,7 @@ The application consists of the following main components responsible for the hi
    * `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
    * `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
    * `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
+   * `util.Prompt`: Created when user confirmation is required to perform certain operations.
 3. `commands`: Collection of user commands that determines execution.
 4. `routes`: Collection of classes used by Bus Route Finder feature.
 5. `module`: Collection of classes used by Module Manager feature.
@@ -81,7 +82,15 @@ The architecture diagram below shows a high-level overview of how components int
 ❕ _Note: Each component is coded with a different colour and the same colour coding is applied to the rest of this 
 document._
 
-![Overview Architecture Diagram](assets/images/overviewArchitecture.png)
+![Overview Architecture Diagram](assets/images/ArchitectureDiagram.png)
+
+#### Commands Component
+
+The class diagram below describes the `commands` component.
+
+❕ _Note: ..Command in this diagram represents HelpCommand, ExitCommand, and InvalidCommand._
+
+
 
 #### Module Component
 
@@ -89,7 +98,7 @@ document._
 
 #### Planner Component
 
-The class diagram below describes the interactions within the `planner` component
+The class diagram below describes the interactions within the `planner` component.
 
 ![Planner Class Diagram](assets/images/PlannerClassDiagram.png)
 
@@ -233,7 +242,7 @@ The list returned will then be used to check for any time conflicts with `eventT
 The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
 `ExamsGetter`.
 
-{TO BE CHANGED}
+{TO BE CHANGED TO OD/SD}
 
 ![Planner Class Diagram](assets/images/plannerAddCD.png)
 
