@@ -1,4 +1,4 @@
-package seedu.kolinux.timetable.subCommand;
+package seedu.kolinux.timetable.subcommand;
 
 import static seedu.kolinux.timetable.Timetable.timetableData;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;

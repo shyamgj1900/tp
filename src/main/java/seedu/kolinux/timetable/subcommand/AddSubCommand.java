@@ -1,4 +1,4 @@
-package seedu.kolinux.timetable.subCommand;
+package seedu.kolinux.timetable.subcommand;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;

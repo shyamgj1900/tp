@@ -27,7 +27,7 @@ public class TimetableCommand extends Command {
     private static final String CLEAR_SUBCOMMAND = "clear";
     private static final String UPDATE_SUBCOMMAND = "update";
     private static final String DELETE_SUBCOMMAND = "delete";
-    private static final String VIEW_SUBCOMMAND = "display";
+    private static final String VIEW_SUBCOMMAND = "view";
 
     public TimetableCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -54,7 +54,7 @@ public class TimetableCommand extends Command {
                 " has been deleted from timetable");
     }
 
-    private CommandResult displayTimetable() {
+    private CommandResult viewTimetable() {
         timetable.executeView();
         logger.log(Level.INFO, "User has printed timetable");
         return new CommandResult("Timetable has been printed above");
@@ -82,7 +82,7 @@ public class TimetableCommand extends Command {
         case CLEAR_SUBCOMMAND:
             return clearAllLessons();
         case VIEW_SUBCOMMAND:
-            return displayTimetable();
+            return viewTimetable();
         case DELETE_SUBCOMMAND:
             return deleteLesson();
         case UPDATE_SUBCOMMAND:

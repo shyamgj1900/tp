@@ -73,7 +73,7 @@ public class ModuleSyncer {
 
         assert ((dayAsInteger >= 1) && (dayAsInteger <= 7));
         String day = Parser.parseDay(dayAsInteger);
-        lessonsOnDate = (ArrayList<Lesson>) timetable.lessonStorage
+        lessonsOnDate = (ArrayList<Lesson>) Timetable.lessonStorage
                 .stream()
                 .filter(lesson -> day.equalsIgnoreCase(lesson.getDay()))
                 .collect(Collectors.toList());

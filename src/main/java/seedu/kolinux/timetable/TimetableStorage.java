@@ -18,6 +18,7 @@ public class TimetableStorage {
     public TimetableStorage(ArrayList<Lesson> lessonStorage) {
         this.lessonStorage = lessonStorage;
     }
+
     /**
      * Saves the new lessons input by user onto the timetable to timetable.txt.
      */

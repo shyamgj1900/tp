@@ -1,4 +1,4 @@
-package seedu.kolinux.timetable.subCommand;
+package seedu.kolinux.timetable.subcommand;
 
 public class SubCommand {
 

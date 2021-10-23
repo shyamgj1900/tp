@@ -5,7 +5,7 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.Timetable;
-import seedu.kolinux.timetable.subCommand.AddSubCommand;
+import seedu.kolinux.timetable.subcommand.AddSubCommand;
 
 import java.util.Arrays;
 

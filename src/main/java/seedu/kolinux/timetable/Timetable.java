@@ -6,10 +6,10 @@ import seedu.kolinux.timetable.lesson.Lab;
 import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.lesson.Tutorial;
-import seedu.kolinux.timetable.subCommand.AddSubCommand;
-import seedu.kolinux.timetable.subCommand.ViewSubCommand;
-import seedu.kolinux.timetable.subCommand.DeleteSubCommand;
-import seedu.kolinux.timetable.subCommand.UpdateSubCommand;
+import seedu.kolinux.timetable.subcommand.AddSubCommand;
+import seedu.kolinux.timetable.subcommand.ViewSubCommand;
+import seedu.kolinux.timetable.subcommand.DeleteSubCommand;
+import seedu.kolinux.timetable.subcommand.UpdateSubCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;

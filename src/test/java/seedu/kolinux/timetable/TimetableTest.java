@@ -8,8 +8,8 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lesson;
-import seedu.kolinux.timetable.subCommand.AddSubCommand;
-import seedu.kolinux.timetable.subCommand.SubCommand;
+import seedu.kolinux.timetable.subcommand.AddSubCommand;
+import seedu.kolinux.timetable.subcommand.SubCommand;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
