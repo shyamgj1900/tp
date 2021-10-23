@@ -5,6 +5,7 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.Timetable;
+import seedu.kolinux.timetable.subCommand.AddSubCommand;
 
 import java.util.Arrays;
 
@@ -15,6 +16,7 @@ public class PlannerTest {
     private ModuleList moduleList = new ModuleList();
     private Planner planner = new Planner(moduleList);
     private Timetable timetable = new Timetable(moduleList);
+    private AddSubCommand addSubCommand = new AddSubCommand();
 
     private static final String[][] VALID_LESSON_ARGUMENTS
             = new String[][]{{"CS2113T", "LEC", "Friday", "1600", "1800"},
@@ -171,7 +173,7 @@ public class PlannerTest {
         planner.clearEvents();
         timetable.clearTimetable();
         Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
-        timetable.addSubCommand.addToTimetable(lesson);
+        addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
         assertEquals(VALID_LIST_4, planner.listEvents("2021-10-22", false));
@@ -184,7 +186,7 @@ public class PlannerTest {
         planner.clearEvents();
         timetable.clearTimetable();
         Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
-        timetable.addSubCommand.addToTimetable(lesson);
+        addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
         assertEquals(VALID_LIST_5, planner.listEvents("2021-10-22", true));

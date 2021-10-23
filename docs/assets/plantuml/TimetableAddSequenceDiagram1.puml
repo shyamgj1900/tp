@@ -1,12 +1,14 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
+!include Style.puml
+
 hide footbox
 
-participant ":Parser" as parser
-participant ":TimetableCommand" as command
-participant ":Timetable" as table
-participant ":CommandResult" as result
+participant ":Parser" as parser UTIL_COLOR
+participant ":TimetableCommand" as command COMMANDS_COLOR
+participant ":Timetable" as table TIMETABLE_COLOR
+participant ":CommandResult" as result COMMANDS_COLOR
 
 [-> parser : parseCommand(input)
 

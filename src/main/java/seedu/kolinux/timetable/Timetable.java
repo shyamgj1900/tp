@@ -21,15 +21,16 @@ import java.util.Scanner;
  */
 public class Timetable {
 
-    public static TimetableStorage timetableStorage = new TimetableStorage();
     public static ModuleList moduleList;
-    public AddSubCommand addSubCommand = new AddSubCommand();
-    public DeleteSubCommand deleteSubCommand = new DeleteSubCommand();
-    public UpdateSubCommand updateSubCommand = new UpdateSubCommand();
     private static final int ROW_SIZE = 16;
     private static final int COLUMN_SIZE = 6;
     public static String [][] timetableData = new String[ROW_SIZE][COLUMN_SIZE];
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
+    public static TimetableStorage timetableStorage = new TimetableStorage(lessonStorage);
+    private ViewSubCommand viewSubCommand = new ViewSubCommand();
+    private AddSubCommand addSubCommand = new AddSubCommand();
+    private DeleteSubCommand deleteSubCommand = new DeleteSubCommand();
+    private UpdateSubCommand updateSubCommand = new UpdateSubCommand();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
     public static final String CORRUPT_STORAGE = "Your timetable storage file is corrupted, "
@@ -71,6 +72,7 @@ public class Timetable {
      */
     private void loadContent(ArrayList<String> fileContents)
             throws KolinuxException {
+        AddSubCommand addSubCommand = new AddSubCommand();
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
             switch (content[1]) {
@@ -91,7 +93,7 @@ public class Timetable {
     }
 
     public void executeView() {
-        new ViewSubCommand().viewTimetable();
+        viewSubCommand.viewTimetable();
     }
 
     public void executeAdd(String[] parsedArguments) throws KolinuxException {

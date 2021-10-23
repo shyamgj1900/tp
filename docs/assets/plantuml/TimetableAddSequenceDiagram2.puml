@@ -3,10 +3,11 @@
 
 hide footbox
 
+!include Style.puml
 
-participant ":Timetable" as table
-participant ":AddSubCommand" as subCommand
-participant ":TimetableStorage" as storage
+participant ":Timetable" as table TIMETABLE_COLOR
+participant ":AddSubCommand" as subCommand TIMETABLE_COLOR
+participant ":TimetableStorage" as storage TIMETABLE_COLOR
 
 group sd Timetable add operation
 

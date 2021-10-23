@@ -1,5 +1,16 @@
 # Developer Guide
+
+This Developer Guide is designed for developers interested in working with Kolinux in the following manner:
+1. Customise Kolunix for specific operating needs
+2. Extend the functionality of Kolinux
+
+This guide will bring you through the [overall design](#design) of Kolinux, the various 
+[implementations](#implementation) and their mechanisms. We have also provided insights into our target users
+to allow you to better understand the reasons behind the various methods of implementations.
+
+## Table of Contents
 * [Acknowledgements](#acknowledgements)
+* [Setting up and Getting started](#setting-up-and-getting-started)
 * [Design](#design)
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
@@ -19,6 +30,28 @@
 * User Guide and Developer Guide of [AddressBook Level-3](https://se-education.org/addressbook-level3/)
 * [NUSMods API](https://api.nusmods.com/v2/) 
 * [GSON](https://github.com/google/gson)
+
+## Setting up and getting started
+
+### Setting up
+
+1. Fork this repo and clone into your computer
+2. Configure JDK: Ensure your IDE is configured to JDK 11
+3. Import the project as a Gradle Project 
+4. Verify the setup by running `seedu.Kolinux.Main`
+   1. Try out a few commands and ensure they're working properly
+   2. Run the tests and ensure all of them past the test cases
+
+### Before writing code
+
+1. Configure the code style
+   1. Ensure that your coding style matches ours
+2. Set up CI 
+   1. This project comes with a `gradle.yml` file so each time you push, github will run the CI for your project
+   automatically.
+3. Learn the design
+   1. Look through the overall design by looking through [Kolinux's overall architecture](#design)
+   
 
 ## Design
 
@@ -93,7 +126,7 @@ Example 3: Adding a lab to the `lessonStorage` ( lesson of type `LAB` )
 
 ![Example 3](assets/images/timetableAdd3.png)
 
-The following sequence diagrams shows the `timetable add` operation:
+The following sequence diagrams shows the `timetable add` mechanism:
 
 ❕Note: The sequence diagram for the add mechanism has been split into 2 parts for better readability:
 * The following diagram shows the sequence of parsing the user input and executing `TimetableCommand#addLesson()`
@@ -107,8 +140,14 @@ file via `TimetableStorage#writeToFile()`
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram2.png)
 
-The `AddSubCommand#isLessonInModuleList(moduleList, moduleCode)` integrates `Timetable` and `ModuleList` 
-which ensures the lessons are being added to the timetable are first added to the `ModuleList` 
+* The following sequence diagram illustrates the checks done before adding to the timetable and one of them is the 
+`AddSubCommand#isLessonInModuleList(moduleList, moduleCode)`. This integrates `Timetable` and `ModuleList` which 
+ensures a module's lessons being added to the timetable has its `moduleCode` first added to the `ModuleList` 
+else it will throw an exception to add the module.
+* Another check done is to check if the slot between `START_TIME` and `END_TIME` is not occupied by another lesson,
+likewise it will throw an exception.
+
+![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram3.png)
 ### Add to Planner feature
 
 The Add to Planner mechanism is mainly facilitated by `PlannerCommand` and `Planner`. After entering the appropriate

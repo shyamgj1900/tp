@@ -5,14 +5,19 @@ import seedu.kolinux.timetable.lesson.Lesson;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static seedu.kolinux.timetable.Timetable.filePath;
-import static seedu.kolinux.timetable.Timetable.lessonStorage;
 
 
 /** Represents the methods to interact with timetable text file. */
 public class TimetableStorage {
 
+    private ArrayList<Lesson> lessonStorage;
+
+    public TimetableStorage(ArrayList<Lesson> lessonStorage) {
+        this.lessonStorage = lessonStorage;
+    }
     /**
      * Saves the new lessons input by user onto the timetable to timetable.txt.
      */

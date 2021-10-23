@@ -1,9 +1,11 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-participant ":AddSubCommand" as subCommand
-participant ":Lesson" as lesson
-participant ":TimetableStorage" as storage
+!include Style.puml
+
+participant ":AddSubCommand" as subCommand TIMETABLE_COLOR
+participant ":Lesson" as lesson TIMETABLE_COLOR
+participant ":TimetableStorage" as storage TIMETABLE_COLOR
 
 hide footbox
 

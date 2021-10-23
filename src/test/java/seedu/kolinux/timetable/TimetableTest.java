@@ -8,6 +8,7 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lesson;
+import seedu.kolinux.timetable.subCommand.AddSubCommand;
 import seedu.kolinux.timetable.subCommand.SubCommand;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,6 +29,7 @@ public class TimetableTest {
     private static final ModuleDb moduleDb = new ModuleDb();
     private ModuleList moduleList = new ModuleList();
     private Timetable timetable = new Timetable(moduleList);
+    private AddSubCommand addSubCommand = new AddSubCommand();
 
 
     @BeforeAll
@@ -44,7 +46,7 @@ public class TimetableTest {
     public void addLessonToTimetable_validInput_lessonAdded() throws KolinuxException {
         timetable.clearTimetable();
         Lesson lesson = new Lesson(VALID_ADD_ARGUMENTS);
-        timetable.addSubCommand.addToTimetable(lesson);
+        addSubCommand.addToTimetable(lesson);
         assertEquals(timetable.timetableData[getIndex("1200", schoolHours)][getIndex("monday", days)],
                 "CS1231 TUT");
         timetable.clearTimetable();
@@ -55,7 +57,7 @@ public class TimetableTest {
         try {
             timetable.clearTimetable();
             Lesson lesson = new Lesson(INVALID_ADD_TIMING);
-            timetable.addSubCommand.addToTimetable(lesson);
+            addSubCommand.addToTimetable(lesson);
             timetable.clearTimetable();
         } catch (KolinuxException exception) {
             assertEquals(SubCommand.INVALID_ADD_FORMAT, exception.getMessage());
@@ -68,8 +70,8 @@ public class TimetableTest {
             timetable.clearTimetable();
             Lesson firstLesson = new Lesson(VALID_ADD_ARGUMENTS);
             Lesson secondLesson = new Lesson(INACCESSIBLE_ADD_PERIOD);
-            timetable.addSubCommand.addToTimetable(firstLesson);
-            timetable.addSubCommand.addToTimetable(secondLesson);
+            addSubCommand.addToTimetable(firstLesson);
+            addSubCommand.addToTimetable(secondLesson);
             timetable.clearTimetable();
         } catch (KolinuxException exception) {
             assertEquals(SubCommand.INACCESSIBLE_PERIOD, exception.getMessage());
@@ -101,9 +103,9 @@ public class TimetableTest {
     public void deleteLesson_validLesson_lessonDeleted() throws KolinuxException {
         timetable.clearTimetable();
         Lesson lesson = new Lesson(VALID_ADD_ARGUMENTS);
-        timetable.addSubCommand.addToTimetable(lesson);
+        addSubCommand.addToTimetable(lesson);
         timetable.executeDelete(VALID_ADD_ARGUMENTS);
-        assertFalse(timetable.addSubCommand.isLessonInTimetable("CS1010", "TUT", "monday"));
+        assertFalse(addSubCommand.isLessonInTimetable("CS1010", "TUT", "monday"));
         timetable.clearTimetable();
     }
 
@@ -115,7 +117,6 @@ public class TimetableTest {
             timetable.clearTimetable();
         } catch (KolinuxException e) {
             assertEquals("CS1231 TUT" + SubCommand.MISSING_LESSON_TO_DELETE, e.getMessage());
-
         }
     }
 
@@ -136,9 +137,9 @@ public class TimetableTest {
         moduleList.storeModuleByCode("CS1231", moduleDb);
         timetable.executeAdd(VALID_ADD_ARGUMENTS);
         timetable.executeUpdate(UPDATE_LESSON_ARGUMENTS);
-        assertFalse(timetable.addSubCommand.isLessonInTimetable("CS1231",
+        assertFalse(addSubCommand.isLessonInTimetable("CS1231",
                 "TUT", "monday"));
-        assertTrue(timetable.addSubCommand.isLessonInTimetable("CS1231",
+        assertTrue(addSubCommand.isLessonInTimetable("CS1231",
                 "TUT", "tuesday"));
         timetable.clearTimetable();
     }
