@@ -6,7 +6,10 @@ import seedu.kolinux.exceptions.KolinuxException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 public class BusRouteTest {
     private static final String[] VALID_STOP_NAME = {"LT13", "Opp YIH", "Ventus", "Opp UHC", "UTown", "CLB"};
