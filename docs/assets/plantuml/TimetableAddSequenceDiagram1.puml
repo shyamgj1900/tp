@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide footbox
+
+participant ":Parser" as parser
+participant ":TimetableCommand" as command
+participant ":Timetable" as table
+participant ":CommandResult" as result
+
+[-> parser : parseCommand(input)
+
+activate parser
+
+parser -> parser : parseSubCommand(subInput, commandWord)
+activate parser
+
+create command
+parser -> command : new TimetableCommand(subCommand, lessonDetails)
+
+activate command
+
+command --> parser : command
+
+deactivate command
+
+parser --> parser : command
+deactivate parser
+
+parser -->[ : command
+deactivate parser
+
+
+[-> command : executeCommand()
+activate command
+
+
+command -> command : addLesson()
+activate command
+create table
+command -> table : new Timetable(moduleList)
+activate table
+table--> command
+deactivate table
+
+ref over table : Timetable add operation
+
+
+create result
+command -> result : new CommandResult(ADD_LESSON_MESSAGE)
+activate result
+
+result --> command : result
+deactivate result
+command --> command : result
+deactivate command
+
+command -->[ : result
+deactivate command
+
+
+
+
+@enduml

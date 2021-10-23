@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+participant ":AddSubCommand" as subCommand
+participant ":Lesson" as lesson
+participant ":TimetableStorage" as storage
+
+hide footbox
+
+group sd Timetable checks before adding
+
+
+alt isLessonInModuleList(moduleList, moduleCode) || \n isPeriodFree(start, end, day)
+create lesson
+subCommand -> lesson : new Lesson()
+activate lesson
+lesson --> subCommand
+deactivate lesson
+
+
+subCommand -> subCommand : addToTimetable(lesson)
+activate subCommand
+subCommand -> storage : writeToFile()
+activate storage
+storage --> subCommand
+deactivate storage
+subCommand -->[
+deactivate subCommand
+
+else else
+
+subCommand -->[ : exception
+
+end
+end
+@enduml

@@ -93,11 +93,22 @@ Example 3: Adding a lab to the `lessonStorage` ( lesson of type `LAB` )
 
 ![Example 3](assets/images/timetableAdd3.png)
 
-The following sequence diagram shows the `timetable add` operation:
+The following sequence diagrams shows the `timetable add` operation:
 
-![Sequence Diagram](assets/images/TimetableAddSequenceDiagram.png)
+❕Note: The sequence diagram for the add mechanism has been split into 2 parts for better readability:
+* The following diagram shows the sequence of parsing the user input and executing `TimetableCommand#addLesson()`
+for the `timetbale add` command
 
+![Sequence Diagram1](assets/images/TimetableAddSequenceDiagram1.png)
 
+* The following diagram shows the sequence of adding the specified lesson from the user input to the 
+timetable via `Timetable#executeAdd(lessonDetails)` which is then written to the `timetable.txt` storage 
+file via `TimetableStorage#writeToFile()`
+
+![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram2.png)
+
+The `AddSubCommand#isLessonInModuleList(moduleList, moduleCode)` integrates `Timetable` and `ModuleList` 
+which ensures the lessons are being added to the timetable are first added to the `ModuleList` 
 ### Add to Planner feature
 
 The Add to Planner mechanism is mainly facilitated by `PlannerCommand` and `Planner`. After entering the appropriate
