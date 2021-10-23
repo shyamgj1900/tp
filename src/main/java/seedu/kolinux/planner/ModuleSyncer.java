@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import static seedu.kolinux.commands.TimetableCommand.timetable;
+
 /** Represents the methods needed to sync with the module list to fetch lessons and exams data. */
 public class ModuleSyncer {
 
