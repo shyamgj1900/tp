@@ -1,10 +1,12 @@
-# Developer Guide
+# Welcome to Kolinux Developer Guide 😎
 
-This Developer Guide is designed for developers interested in working with Kolinux in the following manner:
-1. Customise Kolunix for specific operating needs
-2. Extend the functionality of Kolinux
+## Introduction
 
-This guide will bring you through the [overall design](#design) of Kolinux, the various 
+This Developer Guide is designed for developers interested in working with _Kolinux_ in the following manner:
+1. Customise _Kolinux_ for specific operating needs
+2. Extend the functionality of _Kolinux_
+
+This guide will bring you through the [overall design](#design) of _Kolinux_, the various 
 [implementations](#implementation) and their mechanisms. We have also provided insights into our target users
 to allow you to better understand the reasons behind the various methods of implementations.
 
@@ -35,7 +37,7 @@ to allow you to better understand the reasons behind the various methods of impl
 
 ### Setting up
 
-1. Fork this repo and clone into your computer
+1. Fork our [repository](https://github.com/AY2122S1-CS2113T-W11-1/tp) and clone into your computer
 2. Configure JDK: Ensure your IDE is configured to JDK 11
 3. Import the project as a Gradle Project 
 4. Verify the setup by running `seedu.Kolinux.Main`
@@ -45,10 +47,10 @@ to allow you to better understand the reasons behind the various methods of impl
 ### Before writing code
 
 1. Configure the code style
-   1. Ensure that your coding style matches ours
+   1. Ensure that your coding style matches our coding style
 2. Set up CI 
-   1. This project comes with a `gradle.yml` file so each time you push, github will run the CI for your project
-   automatically.
+   1. This project comes with a `gradle.yml` file so each time you push, Github will run the continuous integration 
+   for your project automatically.
 3. Learn the design
    1. Look through the overall design by looking through [Kolinux's overall architecture](#design)
    
@@ -57,36 +59,70 @@ to allow you to better understand the reasons behind the various methods of impl
 
 ### Main Components of the Architecture
 
-{TO BE UPDATED - architecture description, architecture diagram, individual component class diagrams, legend for color
-coding of components}
+This section describes the overall design architecture of _Kolinux_.
 
 The `Main` class is responsible for initializing the main components upon start-up of the application, and 
 deciding the execution path of the application through the main components based on reading the user inputs.
 
 The application consists of the following main components responsible for the high-level execution of a user input:
 1. `Kolinux`: Initializes the components in the correct sequence, and connects them up with each other.
-2. `util.Ui`: User interface of the application.
-3. `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
-4. `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
-5. `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
-6. `commands`: Collection of user commands that determines execution.
-7. `routes`: Collection of classes used by Route Finder feature.
-8. `module`: Collection of classes used by Module Manager feature.
-9. `module.timetable`: Sub-collection of classes used by Timetable feature.
-10. `planner`: Collection of classes used by Planner feature.
-11. `capcalculator`: Collection of classes used by CAP Calculator feature.
+2. `util`: Collection of utility classes.
+   * `util.Ui`: User interface of the application.
+   * `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
+   * `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
+   * `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
+   * `util.Prompt`: Created when user confirmation is required to perform certain operations.
+3. `commands`: Collection of user commands that determines execution.
+4. `routes`: Collection of classes used by Bus Route Finder feature.
+5. `module`: Collection of classes used by Module Manager feature.
+6. `timetable`: Collection of classes used by Timetable feature.
+7. `planner`: Collection of classes used by Planner feature.
+8. `capcalculator`: Collection of classes used by CAP Calculator feature.
 
 The architecture diagram below shows a high-level overview of how components interact with each other. 
 
-❕ _Note: Interactions between collections of classes are not shown for simplicity. Visit the 
-[Implementation](#implementation) section for more detailed representations of such interactions._
+❕ _Note: Each component is coded with a different colour and the same colour coding is applied to the rest of this 
+document._
 
-![Overview Architecture Diagram](assets/images/overviewArchitecture.png)
+![Overview Architecture Diagram](assets/images/ArchitectureDiagram.png)
+
+#### Commands Component
+
+The class diagram below describes the `commands` component.
+
+❕ _Note: XYZCommand in this diagram represents HelpCommand, ExitCommand, and InvalidCommand._
+
+![Commands Class Diagram](assets/images/CommandsClassDiagram.png)
+
+All `..Command` inherit from the abstract `Command` class, which has interactions with `KolinuxLogger` so that
+every command execution has a corresponding log in `data/logger.log`. `Command` also has a dependency on `Prompt`,
+which functions to seek user confirmation below proceeding with the operation. Only `PlannerCommand` is using this
+inherited attributed in the current version. The interactions between each individual command and other components are 
+also shown in the diagram above. These interactions will be further elaborated in the sections below.
+
+#### Module Component
+
+#### Timetable Component
+
+#### Planner Component
+
+The class diagram below describes the interactions within the `planner` component.
+
+![Planner Class Diagram](assets/images/PlannerClassDiagram.png)
+
+The `Planner` class is the main part in this component that is responsible for all `planner` related command
+executions. The `Planner` maintains a list of all existing `Event`s, and an association with `PlannerStorage` for
+storage of `Event`s data in `data/planner.txt`. To communicate with other components such as `timetable` and `module`,
+the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and exams data for `Planner`.
+
+#### CAP Calculator Component
+
+#### Bus Routes Finder Component
 
 The sequence diagram below shows a high-level overview of the interaction between entities during the execution
 of a user input _(XYZCommand represents any class that inherits from Command)_.
 
-![Overview Sequence Diagram](assets/images/overviewSeq.png)
+![Overview Sequence Diagram](assets/images/OverviewSequenceDiagram.png)
 
 ## Implementation
 
@@ -148,6 +184,7 @@ else it will throw an exception to add the module.
 likewise it will throw an exception.
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram3.png)
+
 ### Add to Planner feature
 
 The Add to Planner mechanism is mainly facilitated by `PlannerCommand` and `Planner`. After entering the appropriate
@@ -213,11 +250,11 @@ The list returned will then be used to check for any time conflicts with `eventT
 The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
 `ExamsGetter`.
 
-{TO BE CHANGED}
+{TO BE CHANGED TO OD/SD}
 
 ![Planner Class Diagram](assets/images/plannerAddCD.png)
 
-### Store/delete a module by module code
+### Store/delete a module by module code feature
 
 The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
 
@@ -266,7 +303,7 @@ The `module delete` operation follows a similar sequence. Instead of calling the
 
 
 
-### cap calculator by code feature
+### CAP Calculator by module code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
 the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
@@ -297,7 +334,7 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 
 ![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
 
-### bus routes feature
+### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
 When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
 the `input` string to the `Route` class. The operation is implemented in the following way.

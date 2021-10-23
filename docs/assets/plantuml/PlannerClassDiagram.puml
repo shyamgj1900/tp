@@ -1,0 +1,82 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include Style.puml
+
+hide circle
+
+package planner <<Rectangle>> {
+    class Planner
+    class Event
+    class PlannerStorage
+    class ModuleSyncer
+    class ExamsGetter
+}
+
+package commands <<Rectangle>> {
+    class PlannerCommand
+}
+
+class PlannerCommand COMMANDS_COLOR {
+    - subCommand: String
+    - parsedArguments : String[*]
+    + PlannerCommand(subCommand: String, parsedArguments: String[])
+    + executeCommand(): void
+}
+
+class Kolinux KOLINUX_COLOR {
+    + run(): void
+}
+
+class Planner PLANNER_COLOR {
+    - moduleList: ModuleList
+    + Planner(moduleList : ModuleList)
+    + initPlanner(): void
+    + addEvent(event: Event, allowConflict: boolean): void
+    + listEvents(date: String, withId: boolean): String
+    + deleteEvent(date: String): void
+}
+
+class Event PLANNER_COLOR {
+    - description: String
+    - date: LocalDate
+    - startTime: LocalTime
+    - endTime: LocalTime
+    - id: int
+    - isLesson: boolean = false
+    + Event(parsedArguments: String[])
+}
+
+class PlannerStorage PLANNER_COLOR {
+    - {static} file: File
+    + writeFile(eventData: String): void
+    + rewriteFile(eventDataStrings: ArrayList<String>): void
+    + readFIle(): ArrayList<String>
+}
+
+class ModuleSyncer PLANNER_COLOR {
+    - date: String
+    - lessonsOnDate: Lesson[*]
+    + ModuleSyncer(moduleList : ModuleList, date: String)
+    - getExamsOnDate(moduleList : ModuleList): void
+    - getLessonsOnDate(): void
+    - convertLessonListToEventList(): void
+}
+
+class ExamsGetter PLANNER_COLOR {
+    - moduleList: ModuleList
+    + ExamsGetter(moduleList: ModuleList)
+    - retrieveModuleExams(): void
+}
+
+PlannerCommand --> "1" Planner : planner
+Kolinux -> "1" Planner : planner
+Planner --> "1" PlannerStorage : plannerStorage
+Planner .> "0..1" ModuleSyncer
+ModuleSyncer ..> "0..1" ExamsGetter
+PlannerCommand .> "0..1" Event
+Event "*" <-- ModuleSyncer : lessonsAndExamsAsEventsOnDate
+Event "*" <-- ExamsGetter : exams
+Event "*" <- Planner : scheduleOfAllDates
+
+@enduml
