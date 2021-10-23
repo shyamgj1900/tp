@@ -88,9 +88,15 @@ document._
 
 The class diagram below describes the `commands` component.
 
-❕ _Note: ..Command in this diagram represents HelpCommand, ExitCommand, and InvalidCommand._
+❕ _Note: XYZCommand in this diagram represents HelpCommand, ExitCommand, and InvalidCommand._
 
+![Commands Class Diagram](assets/images/CommandsClassDiagram.png)
 
+All `..Command` inherit from the abstract `Command` class, which has interactions with `KolinuxLogger` so that
+every command execution has a corresponding log in `data/logger.log`. `Command` also has a dependency on `Prompt`,
+which functions to seek user confirmation below proceeding with the operation. Only `PlannerCommand` is using this
+inherited attributed in the current version. The interactions between each individual command and other components are 
+also shown in the diagram above. These interactions will be further elaborated in the sections below.
 
 #### Module Component
 
