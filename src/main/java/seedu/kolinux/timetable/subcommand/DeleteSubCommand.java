@@ -10,13 +10,13 @@ import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.Timetable.timetableData;
 import static seedu.kolinux.timetable.Timetable.timetableStorage;
 
-public class DeleteSubcommand extends Subcommand {
+public class DeleteSubCommand extends SubCommand {
 
-    public DeleteSubcommand() {
+    public DeleteSubCommand() {
 
     }
 
-    public void deleteFromTimetable(String moduleCode, String lessonType, int dayIndex) {
+    private void deleteFromTimetable(String moduleCode, String lessonType, int dayIndex) {
         String description = moduleCode + " " + lessonType;
         for (int i = 0; i < ROW_SIZE; i++) {
             assert dayIndex < COLUMN_SIZE;
