@@ -105,7 +105,7 @@ the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and
 The sequence diagram below shows a high-level overview of the interaction between entities during the execution
 of a user input _(XYZCommand represents any class that inherits from Command)_.
 
-![Overview Sequence Diagram](assets/images/overviewSeq.png)
+![Overview Sequence Diagram](assets/images/OverviewSequenceDiagram.png)
 
 ## Implementation
 
