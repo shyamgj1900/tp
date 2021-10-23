@@ -84,12 +84,12 @@ public class Route {
         verticesD2 = new ArrayList<>();
         verticesE = new ArrayList<>();
         verticesK = new ArrayList<>();
-        readNodesFromFile(verticesA1, FILEPATH_A1);
-        readNodesFromFile(verticesA2, FILEPATH_A2);
-        readNodesFromFile(verticesD1, FILEPATH_D1);
-        readNodesFromFile(verticesD2, FILEPATH_D2);
-        readNodesFromFile(verticesE, FILEPATH_E);
-        readNodesFromFile(verticesK, FILEPATH_K);
+        readTextFromFile(verticesA1, FILEPATH_A1);
+        readTextFromFile(verticesA2, FILEPATH_A2);
+        readTextFromFile(verticesD1, FILEPATH_D1);
+        readTextFromFile(verticesD2, FILEPATH_D2);
+        readTextFromFile(verticesE, FILEPATH_E);
+        readTextFromFile(verticesK, FILEPATH_K);
         setRoute(verticesA1, graphA1);
         setRoute(verticesA2, graphA2);
         setRoute(verticesD1, graphD1);
@@ -102,12 +102,12 @@ public class Route {
      * Reads the contents from the file which consists of the path
      * of the graph.
      *
-     * @param vertices contains the nodes which connect the graph
+     * @param lines contains the nodes which connect the graph
      * @param filePath the path of the input file
      * @throws KolinuxException if the user command is not in the correct format
      * @throws IOException      if the there any IO errors
      */
-    private void readNodesFromFile(ArrayList<String> vertices, String filePath) throws KolinuxException, IOException {
+    public static void readTextFromFile(ArrayList<String> lines, String filePath) throws KolinuxException, IOException {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
             if (inputStream == null) {
@@ -116,7 +116,7 @@ public class Route {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
-                vertices.add(line);
+                lines.add(line);
             }
         } catch (IOException e) {
             throw new IOException();
@@ -165,9 +165,8 @@ public class Route {
      *
      * @return Message which specifies if any routes are found
      * @throws KolinuxException if the user command is not in the correct format
-     * @throws IOException      if the there any IO errors
      */
-    public String checkRoutes() throws KolinuxException, IOException {
+    public String checkRoutes() throws KolinuxException {
         getBusStopNumber();
         ArrayList<String> busNumbers = new ArrayList<>();
         boolean[] flag = new boolean[2];
@@ -191,7 +190,7 @@ public class Route {
      * @param busNumbers buses of the connected bus stops
      * @return true if connected, false otherwise
      */
-    private boolean checkDirectRoutes(ArrayList<String> busNumbers) {
+    public boolean checkDirectRoutes(ArrayList<String> busNumbers) {
         boolean flag = false;
         if (graphA1.isConnected(vertexCodeA1[0], vertexCodeA1[1])) {
             busNumbers.add(BUS_A1);
@@ -230,7 +229,7 @@ public class Route {
      * @param midLoc is the intermediate bus stop
      * @return true if connected, false otherwise
      */
-    private boolean checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
+    public boolean checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         if (vertexCodeA1[0] > 0 && checkIndirectAOne(busOne, busTwo, midLoc)) {
             return true;
         }
