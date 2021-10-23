@@ -1,20 +1,22 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+!include Style.puml
+
 hide circle
 
-class PlannerCommand {
+class PlannerCommand COMMANDS_COLOR {
     - subCommand: String
-    - parsedArguments : String[]
+    - parsedArguments : String[*]
     + PlannerCommand(subCommand: String, parsedArguments: String[])
     + executeCommand(): void
 }
 
-class Kolinux {
+class Kolinux KOLINUX_COLOR {
     + run(): void
 }
 
-class Planner {
+class Planner PLANNER_COLOR {
     - moduleList: ModuleList
     + Planner(moduleList : ModuleList)
     + initPlanner(): void
@@ -23,7 +25,7 @@ class Planner {
     + deleteEvent(date: String): void
 }
 
-class Event {
+class Event PLANNER_COLOR {
     - description: String
     - date: LocalDate
     - startTime: LocalTime
@@ -33,14 +35,14 @@ class Event {
     + Event(parsedArguments: String[])
 }
 
-class PlannerStorage {
+class PlannerStorage PLANNER_COLOR {
     - {static} file: File
     + writeFile(eventData: String): void
     + rewriteFile(eventDataStrings: ArrayList<String>): void
     + readFIle(): ArrayList<String>
 }
 
-class ModuleSyncer {
+class ModuleSyncer PLANNER_COLOR {
     - date: String
     - lessonsOnDate: Lesson[*]
     + ModuleSyncer(moduleList : ModuleList, date: String)
@@ -49,7 +51,7 @@ class ModuleSyncer {
     - convertLessonListToEventList(): void
 }
 
-class ExamsGetter {
+class ExamsGetter PLANNER_COLOR {
     - moduleList: ModuleList
     + ExamsGetter(moduleList: ModuleList)
     - retrieveModuleExams(): void

@@ -10,3 +10,5 @@
 !define MAIN_COLOR #FF0000
 
 skinparam defaultFontSize 15
+skinparam classAttributeIconSize 0
+skinparam nodesep 60
