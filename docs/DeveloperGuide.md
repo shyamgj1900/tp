@@ -1,4 +1,6 @@
-# Developer Guide
+# Welcome to Kolinux Developer Guide 😎
+
+## Introduction
 
 This Developer Guide is designed for developers interested in working with _Kolinux_ in the following manner:
 1. Customise _Kolinux_ for specific operating needs
