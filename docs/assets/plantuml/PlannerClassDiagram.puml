@@ -5,6 +5,18 @@
 
 hide circle
 
+package planner <<Rectangle>> {
+    class Planner
+    class Event
+    class PlannerStorage
+    class ModuleSyncer
+    class ExamsGetter
+}
+
+package commands <<Rectangle>> {
+    class PlannerCommand
+}
+
 class PlannerCommand COMMANDS_COLOR {
     - subCommand: String
     - parsedArguments : String[*]
@@ -61,7 +73,7 @@ PlannerCommand --> "1" Planner : planner
 Kolinux -> "1" Planner : planner
 Planner --> "1" PlannerStorage : plannerStorage
 Planner .> "0..1" ModuleSyncer
-ModuleSyncer .> "0..1" ExamsGetter
+ModuleSyncer ..> "0..1" ExamsGetter
 PlannerCommand .> "0..1" Event
 Event "*" <-- ModuleSyncer : lessonsAndExamsAsEventsOnDate
 Event "*" <-- ExamsGetter : exams
