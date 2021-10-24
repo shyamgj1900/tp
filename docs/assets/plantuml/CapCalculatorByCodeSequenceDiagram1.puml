@@ -1,0 +1,86 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+
+participant ":Parser" as parser UTIL_COLOR
+participant ":CalculateCapCommand" as command COMMANDS_COLOR
+participant ":CapCalculatorByCode" as calculator CAPCALCULATOR_COLOR
+participant ":CommandResult" as result COMMANDS_COLOR
+
+[->parser : parseCommand(userInput)
+activate parser
+
+create command
+parser -> command : new CalculateCapCommand(input)
+activate command
+
+create calculator
+command -> calculator : new CapCalculatorByCode(input)
+activate calculator
+
+ref over calculator : createCalculator
+
+calculator --> command : calculator
+deactivate calculator
+
+command --> parser : command
+deactivate command
+
+parser -->[ : command
+deactivate parser
+
+[->command : executeCommand()
+activate command
+
+command -> calculator : executeCapCalculator()
+activate calculator
+
+calculator -> calculator : checkModulesNotEmpty()
+activate calculator
+
+opt modules and invalidModules are empty
+
+calculator -->[ : exception
+
+end
+
+calculator --> calculator
+deactivate calculator
+
+calculator -> calculator : getCap()
+activate calculator
+
+ref over calculator : capCalculation
+
+calculator --> calculator : cap
+deactivate calculator
+
+calculator -> calculator : checkInvalidModules()
+activate calculator
+
+opt invalidModules is empty
+
+calculator -->[ : exception
+
+end
+
+calculator --> calculator
+deactivate calculator
+
+calculator --> command : cap
+deactivate calculator
+
+create result
+command --> result : new CommandResult(capMessage)
+activate result
+
+result --> command : result
+deactivate result
+
+command -->[ : result
+deactivate command
+
+@enduml
