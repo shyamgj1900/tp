@@ -3,10 +3,10 @@ package seedu.kolinux.timetable.subcommand;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
-import seedu.kolinux.timetable.lesson.Lab;
-import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.lesson.Tutorial;
+import seedu.kolinux.timetable.lesson.Lecture;
+import seedu.kolinux.timetable.lesson.Lab;
 
 import java.util.Objects;
 
@@ -17,9 +17,10 @@ import static seedu.kolinux.timetable.Timetable.moduleList;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
-public class AddSubcommand extends Subcommand {
 
-    public AddSubcommand() {
+public class AddSubCommand extends SubCommand {
+
+    public AddSubCommand() {
     }
 
     /**
@@ -30,7 +31,7 @@ public class AddSubcommand extends Subcommand {
      * @param lesson Lesson which is to be added to the timetable
      * @throws KolinuxException If the format of user input is incorrect
      */
-    public void addLessonToTimetable(Lesson lesson) throws KolinuxException {
+    public void addToTimetable(Lesson lesson) throws KolinuxException {
         String moduleCode = lesson.getModuleCode();
         String lessonType = lesson.getLessonType();
         String description = moduleCode + " " + lessonType;
@@ -66,11 +67,11 @@ public class AddSubcommand extends Subcommand {
             checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
 
             if (lessonType.startsWith("TUT")) {
-                addLessonToTimetable(new Tutorial(parsedArguments));
+                addToTimetable(new Tutorial(parsedArguments));
             } else if (lessonType.startsWith("LEC")) {
-                addLessonToTimetable(new Lecture(parsedArguments));
+                addToTimetable(new Lecture(parsedArguments));
             } else if (lessonType.startsWith("LAB")) {
-                addLessonToTimetable(new Lab(parsedArguments));
+                addToTimetable(new Lab(parsedArguments));
             } else {
                 throw new KolinuxException(INVALID_ADD_FORMAT);
             }

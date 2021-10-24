@@ -1,5 +1,18 @@
-# Developer Guide
+# Welcome to Kolinux Developer Guide 😎
+
+## Introduction
+
+This Developer Guide is designed for developers interested in working with _Kolinux_ in the following manner:
+1. Customise _Kolinux_ for specific operating needs
+2. Extend the functionality of _Kolinux_
+
+This guide will bring you through the [overall design](#design) of _Kolinux_, the various 
+[implementations](#implementation) and their mechanisms. We have also provided insights into our target users
+to allow you to better understand the reasons behind the various methods of implementations.
+
+## Table of Contents
 * [Acknowledgements](#acknowledgements)
+* [Setting up and Getting started](#setting-up-and-getting-started)
 * [Design](#design)
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
@@ -20,37 +33,96 @@
 * [NUSMods API](https://api.nusmods.com/v2/) 
 * [GSON](https://github.com/google/gson)
 
+## Setting up and getting started
+
+### Setting up
+
+1. Fork our [repository](https://github.com/AY2122S1-CS2113T-W11-1/tp) and clone into your computer
+2. Configure JDK: Ensure your IDE is configured to JDK 11
+3. Import the project as a Gradle Project 
+4. Verify the setup by running `seedu.Kolinux.Main`
+   1. Try out a few commands and ensure they're working properly
+   2. Run the tests and ensure all of them past the test cases
+
+### Before writing code
+
+1. Configure the code style
+   1. Ensure that your coding style matches our coding style
+2. Set up CI 
+   1. This project comes with a `gradle.yml` file so each time you push, Github will run the continuous integration 
+   for your project automatically.
+3. Learn the design
+   1. Look through the overall design by looking through [Kolinux's overall architecture](#design)
+   
+
 ## Design
 
 ### Main Components of the Architecture
+
+This section describes the overall design architecture of _Kolinux_.
 
 The `Main` class is responsible for initializing the main components upon start-up of the application, and 
 deciding the execution path of the application through the main components based on reading the user inputs.
 
 The application consists of the following main components responsible for the high-level execution of a user input:
 1. `Kolinux`: Initializes the components in the correct sequence, and connects them up with each other.
-2. `util.Ui`: User interface of the application.
-3. `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
-4. `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
-5. `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
-6. `commands`: Collection of user commands that determines execution.
-7. `routes`: Collection of classes used by Route Finder feature.
-8. `module`: Collection of classes used by Module Manager feature.
-9. `module.timetable`: Sub-collection of classes used by Timetable feature.
-10. `planner`: Collection of classes used by Planner feature.
-11. `capcalculator`: Collection of classes used by CAP Calculator feature.
+2. `util`: Collection of utility classes.
+   * `util.Ui`: User interface of the application.
+   * `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
+   * `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
+   * `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
+   * `util.Prompt`: Created when user confirmation is required to perform certain operations.
+3. `commands`: Collection of user commands that determines execution.
+4. `routes`: Collection of classes used by Bus Route Finder feature.
+5. `module`: Collection of classes used by Module Manager feature.
+6. `timetable`: Collection of classes used by Timetable feature.
+7. `planner`: Collection of classes used by Planner feature.
+8. `capcalculator`: Collection of classes used by CAP Calculator feature.
 
 The architecture diagram below shows a high-level overview of how components interact with each other. 
 
-❕ _Note: Interactions between collections of classes are not shown for simplicity. Visit the 
-[Implementation](#implementation) section for more detailed representations of such interactions._
+❕ _Note: Each component is coded with a different colour and the same colour coding is applied to the rest of this 
+document._
 
-![Overview Architecture Diagram](assets/images/overviewArchitecture.png)
+![Overview Architecture Diagram](assets/images/ArchitectureDiagram.png)
+
+#### Commands Component
+
+The class diagram below describes the `commands` component.
+
+❕ _Note: XYZCommand in this diagram represents HelpCommand, ExitCommand, and InvalidCommand._
+
+![Commands Class Diagram](assets/images/CommandsClassDiagram.png)
+
+All `..Command` inherit from the abstract `Command` class, which has interactions with `KolinuxLogger` so that
+every command execution has a corresponding log in `data/logger.log`. `Command` also has a dependency on `Prompt`,
+which functions to seek user confirmation below proceeding with the operation. Only `PlannerCommand` is using this
+inherited attributed in the current version. The interactions between each individual command and other components are 
+also shown in the diagram above. These interactions will be further elaborated in the sections below.
+
+#### Module Component
+
+#### Timetable Component
+
+#### Planner Component
+
+The class diagram below describes the interactions within the `planner` component.
+
+![Planner Class Diagram](assets/images/PlannerClassDiagram.png)
+
+The `Planner` class is the main part in this component that is responsible for all `planner` related command
+executions. The `Planner` maintains a list of all existing `Event`s, and an association with `PlannerStorage` for
+storage of `Event`s data in `data/planner.txt`. To communicate with other components such as `timetable` and `module`,
+the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and exams data for `Planner`.
+
+#### CAP Calculator Component
+
+#### Bus Routes Finder Component
 
 The sequence diagram below shows a high-level overview of the interaction between entities during the execution
 of a user input _(XYZCommand represents any class that inherits from Command)_.
 
-![Overview Sequence Diagram](assets/images/overviewSeq.png)
+![Overview Sequence Diagram](assets/images/OverviewSequenceDiagram.png)
 
 ## Implementation
 
@@ -90,34 +162,61 @@ Example 3: Adding a lab to the `lessonStorage` ( lesson of type `LAB` )
 
 ![Example 3](assets/images/timetableAdd3.png)
 
-The following sequence diagram shows the `timetable add` operation:
+The following sequence diagrams shows the `timetable add` mechanism:
 
-![Sequence Diagram](assets/images/addToTimetableSequence.png)
+❕Note: The sequence diagram for the add mechanism has been split into 2 parts for better readability:
+* The following diagram shows the sequence of parsing the user input and executing `TimetableCommand#addLesson()`
+for the `timetbale add` command
 
+![Sequence Diagram1](assets/images/TimetableAddSequenceDiagram1.png)
+
+* The following diagram shows the sequence of adding the specified lesson from the user input to the 
+timetable via `Timetable#executeAdd(lessonDetails)` which is then written to the `timetable.txt` storage 
+file via `TimetableStorage#writeToFile()`
+
+![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram2.png)
+
+* The following sequence diagram illustrates the checks done before adding to the timetable and one of them is the 
+`AddSubCommand#isLessonInModuleList(moduleList, moduleCode)`. This integrates `Timetable` and `ModuleList` which 
+ensures a module's lessons being added to the timetable has its `moduleCode` first added to the `ModuleList` 
+else it will throw an exception to add the module.
+* Another check done is to check if the slot between `START_TIME` and `END_TIME` is not occupied by another lesson,
+likewise it will throw an exception.
+
+![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram3.png)
 
 ### Add to Planner feature
 
-The Add to Planner mechanism is facilitated by `Planner`. Before adding an event, the `Event` is first checked for any
-time conflicts with existing events/lessons/exams. Events are only added if there are no time conflicts or the 
-user authorised the addition of a conflicted `Event`. Events added to the `Planner` are stored in a list 
-`scheduleOfAllDates` which contains all added `Event` by the user. The events added are also written to the internal 
-storage `data/planner.txt` which saves the user data locally. 
+The Add to Planner mechanism is mainly facilitated by `PlannerCommand` and `Planner`. After entering the appropriate
+input to add an `Event` to the `Planner`, `PlannerCommand` is constructed with `subCommand` `"add"` and the
+relevant `parsedArguments`. The constructor of `PlannerCommand` involves creation of `Planner` and `PlannerStorage`
+to initialize the adding and writing to file operations.
 
-The feature is implemented by `Planner#addEvent(Event event, boolean allowConflict)` which invokes the following
-methods:
-* `Planner#hasTimeConflict(Event event)` which checks for any time conflicts between `event` and any existing events
-in `scheduleOfAllDates`, lessons, and exams.
-* `PlannerStorage#writeFile(String data)` which appends the data of the new `Event` to `data/planner.txt` for local
-storage.
+Before the `Event` is added, it is first checked for any time conflicts with existing events/lessons/exams. `Event`s
+are only added if there are no time conflicts or the user allowed the addition of the conflicted `Event` through a
+`Prompt` to get a confirmation from the user. `Event`s added to the `Planner` are stored in a list
+`scheduleOfAllDates` which contains all added `Event`s by the user. The data in this list is also written to the
+internal storage `data/planner.txt` through `PlannerStorage` which saves the user data locally.
 
-The figure below represents the sequence diagram when `planner add` is entered by the user:
+This mechanism is implemented by the following methods:
+* `Planner#addEvent(Event event, boolean allowConflict)`: Attempts to add `event` to `scheduleOfAllDates` by invoking
+the following methods:
+    * `Planner#hasTimeConflict(Event event)`: Checks for any time conflicts between `event` and any existing `Event`s
+    in `scheduleOfAllDates`, lessons, and exams.
+    * `PlannerStorage#writeFile(String data)`: Appends the data of the newly added `Event` to `data/planner.txt` for 
+    local storage.
 
-![Planner Sequence Diagram 1](assets/images/plannerAddSeq1.png)
+* `PlannerCommand#getReplyFromPrompt(String question)`: Gets user confirmation to allow or cancel the add operation
+in case of a time conflict.
 
-![Planner_Sequence_Diagram_2](assets/images/plannerAddSeq2.png)
+The figures below represent the sequence diagrams of the Add to Planner mechanism:
 
-The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that lessons and
-exams may be fetched in addition to `scheduleOfAllDates` for the `event` to check time conflicts against. The
+![Planner Sequence Diagram 1](assets/images/PlannerAddSequenceDiagram1.png)
+
+![Planner_Sequence_Diagram_2](assets/images/PlannerAddSequenceDiagram2.png)
+
+The `Planner#hasTimeConflict(Event event)` method is integrated with `Timetable` and `ModuleList` so that `Lesson`s and
+exams may be fetched in addition to `scheduleOfAllDates` containing the `Event`s to check time conflicts against. The
 integration in the method is mainly done via the `Planner#filterPlanner(String date)` call. The code snippet below
 shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(String date)`. The return value
 `filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
@@ -138,20 +237,24 @@ is to be added.
 ```
 
 The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
-1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of events consisting
-of the lessons and exams occurring on `date` using the data fetched from `Timetable` and `ModuleList`.
+1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of `Event`s that are
+constructed using the information of the lessons and exams occurring on `date` using the data fetched from `Timetable` 
+and `ModuleList`. Note that an `ExamsGetter` is used by `ModuleSyncer` to interact with `ModuleList` to get the exam 
+dates and times of the modules stored by `ModuleList`.
 2. Get the list from `ModuleSyncer`, and add the events in `scheduleOfAllDates` that are occurring on `date` via 
 a `Stream`.
 3. Return the list.
 
-The list returned will then be used by `event` to check for any time conflicts.
+The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
 The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
 `ExamsGetter`.
 
+{TO BE CHANGED TO OD/SD}
+
 ![Planner Class Diagram](assets/images/plannerAddCD.png)
 
-### Store/delete a module by module code
+### Store/delete a module by module code feature
 
 The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
 
@@ -200,7 +303,7 @@ The `module delete` operation follows a similar sequence. Instead of calling the
 
 
 
-### cap calculator by code feature
+### CAP Calculator by module code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
 the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
@@ -231,7 +334,7 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 
 ![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
 
-### bus routes feature
+### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
 When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
 the `input` string to the `Route` class. The operation is implemented in the following way.

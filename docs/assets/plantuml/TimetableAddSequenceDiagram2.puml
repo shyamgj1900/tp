@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide footbox
+
+!include Style.puml
+
+participant ":Timetable" as table TIMETABLE_COLOR
+participant ":AddSubCommand" as subCommand TIMETABLE_COLOR
+participant ":TimetableStorage" as storage TIMETABLE_COLOR
+
+group sd Timetable add operation
+
+table -> table : executeAdd(lessonDetails)
+activate table
+create subCommand
+table -> subCommand : new addSubCommand()
+activate subCommand
+
+subCommand --> table
+deactivate subCommand
+table -> table : executeAdd(lessonDetails)
+activate table
+activate subCommand
+
+create storage
+subCommand -> storage
+activate storage
+
+storage --> subCommand
+deactivate storage
+
+table -> subCommand : inputLesson(lessonDetails)
+ref over subCommand, storage : Timetable checks before adding
+deactivate storage
+
+subCommand --> table
+deactivate subCommand
+table --> table
+deactivate table
+
+table -->[
+deactivate table
+end
+
+
+@enduml
