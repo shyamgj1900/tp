@@ -21,6 +21,7 @@ import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 public class AddSubCommand extends SubCommand {
 
     public AddSubCommand() {
+
     }
 
     /**
@@ -80,7 +81,7 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-    public int getStorageHours(String moduleCode, String lessonType) {
+    private int getStorageHours(String moduleCode, String lessonType) {
         int hourCount = 0;
         for (Lesson storedLesson : lessonStorage) {
             if (storedLesson.getModuleCode().equals(moduleCode)
@@ -91,7 +92,7 @@ public class AddSubCommand extends SubCommand {
         return hourCount;
     }
 
-    public int getHours(ModuleList moduleList, String moduleCode, String lessonType) {
+    private int getHours(ModuleList moduleList, String moduleCode, String lessonType) {
         for (ModuleDetails module : moduleList.myModules) {
             if (lessonType.equals("TUT") && module.moduleCode.equals(moduleCode)) {
                 return (int) Math.round(module.getTutorialHours());
@@ -105,7 +106,7 @@ public class AddSubCommand extends SubCommand {
     }
 
 
-    public boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
+    private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
         for (ModuleDetails module : moduleList.myModules) {
             if (Objects.equals(module.moduleCode, moduleCode)) {
                 return true;
@@ -114,7 +115,7 @@ public class AddSubCommand extends SubCommand {
         return false;
     }
 
-    public void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
+    private void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
             throws KolinuxException {
         if (requiredHours == 0) {
             throw new KolinuxException(moduleCode + " has no " + lessonType
@@ -123,7 +124,7 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-    public void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
+    private void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
                                        String lessonType) throws KolinuxException {
         if (storageHours > requiredHours) {
             throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
@@ -136,7 +137,7 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-    public boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
+    private boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
         try {
             for (int i = startIndex; i < endIndex; i++) {
                 if (timetableData[i][dayIndex] != null) {

@@ -97,7 +97,8 @@ public class Timetable {
     }
 
     public void executeAdd(String[] parsedArguments) throws KolinuxException {
-        addSubCommand.inputLesson(parsedArguments);
+        AddSubCommand addCommand = new AddSubCommand();
+        addCommand.inputLesson(parsedArguments);
     }
 
     public void executeDelete(String[] parsedArguments) throws KolinuxException {
@@ -130,7 +131,7 @@ public class Timetable {
             }
         }
         lessonStorage.clear();
-        timetableStorage.writeToFile();
+        timetableStorage.clearFile();
     }
 
 }
