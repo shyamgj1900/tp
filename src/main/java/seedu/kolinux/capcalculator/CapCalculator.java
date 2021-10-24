@@ -89,7 +89,7 @@ public abstract class CapCalculator {
      */
     protected void checkInvalidModules() throws KolinuxException {
         if (!(invalidModules.isEmpty())) {
-            StringBuilder errorMessage = new StringBuilder("Invalid module info found: ");
+            StringBuilder errorMessage = new StringBuilder("Invalid module info format found: ");
             for (String module : invalidModules) {
                 errorMessage.append(module).append(" ");
             }
