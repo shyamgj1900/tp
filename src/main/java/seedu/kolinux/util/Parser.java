@@ -98,8 +98,6 @@ public class Parser {
             return new TimetableCommand(subCommand, parsedArguments);
         case COMMAND_MODULE:
             return new ModuleCommand(subCommand, parsedArguments);
-        /*case COMMAND_CAP:
-            return new CalculateCapCommand(subCommand, parsedArguments);*/
         default:
             throw new KolinuxException("Internal error occurred, please try again.");
         }

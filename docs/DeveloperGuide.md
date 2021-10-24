@@ -119,6 +119,8 @@ the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and
 
 #### Bus Routes Finder Component
 
+### Command Execution
+
 The sequence diagram below shows a high-level overview of the interaction between entities during the execution
 of a user input _(XYZCommand represents any class that inherits from Command)_.
 
@@ -247,12 +249,13 @@ a `Stream`.
 
 The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
-The class diagram below shows the associations between `Planner`, `ModuleSyncer`, `Timetable`, `ModuleList`, and 
-`ExamsGetter`.
+The object diagrams below show the interactions before and after `Planner#filterPlanner(String date)` is invoked to 
+fetch `Lesson`s and exam information from `Timetable` and `ModuleList` respectively. Assume there is one `Lesson` 
+and one exam occurring on the same `date`, and there is one `Event` initially stored in `scheduleOfAllDates`.
 
-{TO BE CHANGED TO OD/SD}
+![Planner Before Object Diagram](assets/images/PlannerObjectDiagramBefore.png)
 
-![Planner Class Diagram](assets/images/plannerAddCD.png)
+![Planner After Object Diagram](assets/images/PlannerObjectDiagramAfter.png)
 
 ### Store/delete a module by module code feature
 
@@ -333,6 +336,8 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 ![Cap Code Sequence Diagram 1](assets/images/capCodeSeq1.png)
 
 ![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
+
+![Cap Code Sequence Diagram 3](assets/images/capCodeSeq3.png)
 
 ### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
