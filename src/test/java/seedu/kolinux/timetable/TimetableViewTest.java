@@ -307,7 +307,7 @@ public class TimetableViewTest {
         timetable.clearTimetable();
         timetable.executeView();
         String expectedString = EMPTY_TIMETABLE.replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
-        assertEquals(EMPTY_TIMETABLE, output.toString().trim());
+        assertEquals(expectedString, output.toString().trim());
     }
 
     @Test
@@ -318,7 +318,7 @@ public class TimetableViewTest {
         timetable.executeView();
         String expectedString = ONE_LESSON_IN_TIMETABLE.replaceAll("\\n|\\r\\n",
                 System.getProperty("line.separator"));
-        assertEquals(ONE_LESSON_IN_TIMETABLE, output.toString().trim());
+        assertEquals(expectedString, output.toString().trim());
     }
 
 }
