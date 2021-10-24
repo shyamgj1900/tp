@@ -347,7 +347,7 @@ the `input` string to the `Route` class. The operation is implemented in the fol
 
 The following sequence diagram explains the bus routes feature.
 
-![sequenceDiagram](assets/images/BusRoutes.png)
+![sequenceDiagram](assets/images/BusRouteSequence.png)
 
 ## Product scope
 ### Target user profile:

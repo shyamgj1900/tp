@@ -130,10 +130,8 @@ public class Route {
      * @param graph is the graph which forms the bus route
      * @throws KolinuxException if the user command is not in the correct format
      */
-    private void setRoute(ArrayList<String> vertices, Graph graph) throws KolinuxException {
-        if (vertices.size() == 0) {
-            throw new KolinuxException("Route doesn't exist. Please make sure text file has vertices of the graph.");
-        }
+    private void setRoute(ArrayList<String> vertices, Graph graph) {
+        assert vertices.size() != 0;
         for (String v : vertices) {
             String[] vertex = v.split(" ");
             graph.addEdge(Integer.parseInt(vertex[0]), Integer.parseInt((vertex[1])));
