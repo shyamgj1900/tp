@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+!include Style.puml
+
+object "<u>planner:Planner" as planner PLANNER_COLOR
+object "<u>:Event" as event1 PLANNER_COLOR
+object "<u>:Event" as event2 PLANNER_COLOR
+object "<u>:Event" as lesson PLANNER_COLOR
+object "<u>:Event" as exam PLANNER_COLOR
+
+note "Event constructed from lesson" as N1
+note "Event constructed from exam" as N2
+
+lesson - N1
+exam -- N2
+
+planner -left-> "scheduleOfAllDates" event1
+planner .up.> "filteredPlanner" event2
+planner .right.> "filteredPlanner" lesson
+planner .down.> "filteredPlanner" exam
+
+@enduml
