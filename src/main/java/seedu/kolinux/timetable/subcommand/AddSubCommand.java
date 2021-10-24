@@ -54,25 +54,25 @@ public class AddSubCommand extends SubCommand {
         timetableStorage.writeToFile();
     }
 
-    public void inputLesson(String[] parsedArguments) throws KolinuxException {
+    public void inputLesson(String[] lessonDetails) throws KolinuxException {
         try {
-            String lessonType = parsedArguments[1].toUpperCase();
-            String moduleCode = parsedArguments[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String moduleCode = lessonDetails[0].toUpperCase();
             if (!isLessonInModuleList(moduleList, moduleCode)) {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
             int requiredHours = getHours(moduleList, moduleCode, lessonType);
             checkZeroWorkload(requiredHours, moduleCode, lessonType);
-            int inputHours = getIndex(parsedArguments[4], schoolHours) - getIndex(parsedArguments[3], schoolHours);
+            int inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
             int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
             checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
 
             if (lessonType.startsWith("TUT")) {
-                addToTimetable(new Tutorial(parsedArguments));
+                addToTimetable(new Tutorial(lessonDetails));
             } else if (lessonType.startsWith("LEC")) {
-                addToTimetable(new Lecture(parsedArguments));
+                addToTimetable(new Lecture(lessonDetails));
             } else if (lessonType.startsWith("LAB")) {
-                addToTimetable(new Lab(parsedArguments));
+                addToTimetable(new Lab(lessonDetails));
             } else {
                 throw new KolinuxException(INVALID_ADD_FORMAT);
             }

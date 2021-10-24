@@ -72,7 +72,6 @@ public class Timetable {
      */
     private void loadContent(ArrayList<String> fileContents)
             throws KolinuxException {
-        AddSubCommand addSubCommand = new AddSubCommand();
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
             switch (content[1]) {
@@ -96,17 +95,16 @@ public class Timetable {
         viewSubCommand.viewTimetable();
     }
 
-    public void executeAdd(String[] parsedArguments) throws KolinuxException {
-        AddSubCommand addCommand = new AddSubCommand();
-        addCommand.inputLesson(parsedArguments);
+    public void executeAdd(String[] lessonDetails) throws KolinuxException {
+        addSubCommand.inputLesson(lessonDetails);
     }
 
-    public void executeDelete(String[] parsedArguments) throws KolinuxException {
-        deleteSubCommand.deleteLesson(parsedArguments);
+    public void executeDelete(String[] lessonDetails) throws KolinuxException {
+        deleteSubCommand.deleteLesson(lessonDetails);
     }
 
-    public void executeUpdate(String[] parsedArguments) throws KolinuxException {
-        updateSubCommand.updateTimetable(parsedArguments);
+    public void executeUpdate(String[] lessonDetails) throws KolinuxException {
+        updateSubCommand.updateTimetable(lessonDetails);
     }
 
     public void deleteByModuleList(String moduleCode) {
