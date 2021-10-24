@@ -22,7 +22,7 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      * 
      * @throws KolinuxException if desired CAP is invalid.
      */
-    public void checkInvalidDesiredCap() throws KolinuxException {
+    private void checkInvalidDesiredCap() throws KolinuxException {
         double cap;
         try {
             cap = Double.parseDouble(userDesiredCap);
