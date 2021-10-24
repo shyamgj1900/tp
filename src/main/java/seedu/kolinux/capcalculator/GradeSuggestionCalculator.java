@@ -65,8 +65,8 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
             totalMc += mc;
         }
         if (totalMc == 0) {
-            String errorMessage = "Grade suggestion is not available as " +
-                    "every modules already have their grade available";
+            String errorMessage = "Grade suggestion is not available as "
+                    + "every modules already have their grade available";
             throw new KolinuxException(errorMessage);
         }
         return totalMc;
