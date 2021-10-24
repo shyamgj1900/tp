@@ -100,28 +100,48 @@ public class ModuleDetails {
     }
 
     public double getTutorialHours() {
-        tutorialHours = workload[1];
-        return tutorialHours;
+        try {
+            tutorialHours = workload[1];
+            return tutorialHours;
+        } catch (NullPointerException exception) {
+            return -1;
+        }
     }
 
     public double getLectureHours() {
-        lectureHours = workload[0];
-        return lectureHours;
+        try {
+            lectureHours = workload[0];
+            return lectureHours;
+        } catch (NullPointerException exception) {
+            return -1;
+        }
     }
 
     public double getLabHours() {
-        labHours = workload[2];
-        return labHours;
+        try {
+            labHours = workload[2];
+            return labHours;
+        } catch (NullPointerException exception) {
+            return -1;
+        }
     }
 
     public double getProjectHours() {
-        projectHours = workload[3];
-        return projectHours;
+        try {
+            projectHours = workload[3];
+            return projectHours;
+        } catch (NullPointerException exception) {
+            return -1;
+        }
     }
 
     public double getPreparationHours() {
-        preparationHours = workload[4];
-        return preparationHours;
+        try {
+            preparationHours = workload[4];
+            return preparationHours;
+        } catch (NullPointerException exception) {
+            return -1;
+        }
     }
 
     public String[] getExamDateTime() {
