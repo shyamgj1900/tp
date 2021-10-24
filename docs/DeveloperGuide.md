@@ -334,6 +334,8 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 
 ![Cap Code Sequence Diagram 2](assets/images/capCodeSeq2.png)
 
+![Cap Code Sequence Diagram 3](assets/images/capCodeSeq3.png)
+
 ### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
 When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
