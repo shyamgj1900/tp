@@ -1,5 +1,6 @@
 package seedu.kolinux.timetable;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TimetableViewTest {
+
 
     private static final String EMPTY_TIMETABLE = "+-------------+--------------------+--------------------"
             +
@@ -276,7 +278,8 @@ public class TimetableViewTest {
     private ModuleList moduleList = new ModuleList();
     private Timetable timetable = new Timetable(moduleList);
     private AddSubCommand addSubCommand = new AddSubCommand();
-    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream output = new ByteArrayOutputStream();
+    private final PrintStream standardOut = System.out;
 
 
     @BeforeAll
@@ -289,24 +292,30 @@ public class TimetableViewTest {
         moduleList.clear();
     }
 
+    @BeforeEach
+    public void setUp() {
+        System.setOut(new PrintStream(output));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        System.setOut(standardOut);
+    }
+
     @Test
     void viewTimetable_noLessonInTimetable_emptyTimetablePrinted() {
-        System.setOut(new PrintStream(outputStreamCaptor));
         timetable.clearTimetable();
         timetable.executeView();
-        assertEquals(EMPTY_TIMETABLE, outputStreamCaptor.toString()
-                .trim());
+        assertEquals(EMPTY_TIMETABLE, output.toString().trim());
     }
 
     @Test
     void viewTimetable_oneLessonInTimetable_TimetablePrinted() throws KolinuxException {
-        System.setOut(new PrintStream(outputStreamCaptor));
         timetable.clearTimetable();
         moduleList.storeModuleByCode("CS1231", moduleDb);
         timetable.executeAdd(VALID_ADD_TUTORIAL_ARGUMENTS);
         timetable.executeView();
-        assertEquals(ONE_LESSON_IN_TIMETABLE, outputStreamCaptor.toString()
-                .trim());
+        assertEquals(ONE_LESSON_IN_TIMETABLE, output.toString().trim());
     }
 
 }
