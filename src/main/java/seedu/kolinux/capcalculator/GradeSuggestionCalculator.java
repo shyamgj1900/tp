@@ -57,12 +57,17 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      * 
      * @return Total MC.
      */
-    private double getMcModulesWithoutGrade() {
+    private double getMcModulesWithoutGrade() throws KolinuxException {
         double totalMc = 0.0;
         for (String module : invalidModules) {
             String moduleCode = module.split(DIVIDER)[0];
             double mc = Double.parseDouble(moduleDb.getModuleInfo(moduleCode).getModuleCredit());
             totalMc += mc;
+        }
+        if (totalMc == 0) {
+            String errorMessage = "Grade suggestion is not available as " +
+                    "every modules already have their grade available";
+            throw new KolinuxException(errorMessage);
         }
         return totalMc;
     }
@@ -119,7 +124,7 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      * 
      * @return The average minimum grade that the user needs.
      */
-    private String getExpectedGrades() {
+    private String getExpectedGrades() throws KolinuxException {
         double currentCap = Double.parseDouble(getCap());
         double mcModuleWithGrade = getMcModulesWithGrade();
         double mcModuleWithoutGrade = getMcModulesWithoutGrade();
