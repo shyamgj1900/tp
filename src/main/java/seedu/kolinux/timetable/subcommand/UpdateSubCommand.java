@@ -9,12 +9,12 @@ import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
-public class UpdateSubcommand extends Subcommand {
+public class UpdateSubCommand extends SubCommand {
 
-    private AddSubcommand addSubcommand = new AddSubcommand();
-    private DeleteSubcommand deleteSubcommand = new DeleteSubcommand();
+    private AddSubCommand addSubcommand = new AddSubCommand();
+    private DeleteSubCommand deleteSubcommand = new DeleteSubCommand();
 
-    public UpdateSubcommand() {
+    public UpdateSubCommand() {
 
     }
 

@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+!include Style.puml
+
+component Main MAIN_COLOR
+component Kolinux KOLINUX_COLOR
+
+package util UTIL_COLOR {
+    component Ui UTIL_COLOR
+    component Parser UTIL_COLOR
+    component DirectoryCreator UTIL_COLOR
+    component KolinuxLogger UTIL_COLOR
+    component Prompt UTIL_COLOR
+}
+
+package commands COMMANDS_COLOR {
+}
+
+package exceptions EXCEPTIONS_COLOR {
+    component KolinuxException EXCEPTIONS_COLOR
+}
+
+package module MODULE_COLOR {
+}
+
+package planner PLANNER_COLOR {
+}
+
+package routes ROUTES_COLOR {
+}
+
+package timetable TIMETABLE_COLOR {
+}
+
+package capcalculator CAPCALCULATOR_COLOR {
+}
+
+Main .up.> Kolinux
+Kolinux -up-> Ui
+Kolinux .up.> Parser
+Kolinux -up-> DirectoryCreator
+Kolinux -up-> KolinuxLogger
+Kolinux -right-> planner
+Kolinux .down.> module
+Kolinux .down.> timetable
+Kolinux .up.> commands
+Parser .up.> commands
+Ui .up.> commands
+commands .down.> Prompt
+commands -down-> KolinuxLogger
+commands -down-> module
+commands -up-> routes
+commands -up-> capcalculator
+commands -up-> timetable
+commands -down-> planner
+
+@enduml

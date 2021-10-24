@@ -1,0 +1,68 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+
+participant ":PlannerCommand" as plc COMMANDS_COLOR
+participant ":Prompt" as prompt UTIL_COLOR
+participant ":Planner" as planner PLANNER_COLOR
+participant ":PlannerStorage" as pls PLANNER_COLOR
+
+group sd handleConflict
+
+planner -> planner : hasTimeConflict(event)
+activate planner
+
+planner --> planner : hasConflict
+deactivate planner
+
+opt hasTimeConflict && !allowConflict
+
+planner --> plc : exception
+
+plc -> plc : getReplyFromPrompt(exception.getMessage())
+activate plc
+
+create prompt
+plc -> prompt : new Prompt(exception.getMessage())
+activate prompt
+
+prompt --> plc : prompt
+deactivate prompt
+
+plc -> prompt : getReply()
+activate prompt
+
+prompt --> plc : reply
+deactivate prompt
+
+destroy prompt
+
+plc --> plc : reply
+deactivate plc
+
+alt reply.equalsIgnoreCase("yes")
+
+plc -> planner : addEvent(event, true)
+activate planner
+
+planner -> pls : writeFile(event.toData())
+activate pls
+
+pls --> planner
+deactivate pls
+
+planner --> plc
+deactivate planner
+
+else else
+
+plc-->[ : exception
+
+end
+end
+end
+
+@enduml

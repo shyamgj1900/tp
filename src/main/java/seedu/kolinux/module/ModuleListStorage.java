@@ -64,7 +64,7 @@ public class ModuleListStorage {
         try {
             File storedModules = new File(STORAGE_PATH);
             if (!storedModules.createNewFile()) {
-                System.out.println("Loading from " + STORAGE_PATH);
+                System.out.println("Data loaded from " + STORAGE_PATH);
                 loadStoredModules(storedModules);
             }
         } catch (FileNotFoundException e) {

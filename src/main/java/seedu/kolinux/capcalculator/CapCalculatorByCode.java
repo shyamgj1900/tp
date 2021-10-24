@@ -27,7 +27,8 @@ public class CapCalculatorByCode extends CapCalculator {
         }
         int moduleCount = commandDescriptions.length - 2;
         for (int i = 0; i < moduleCount; i++) {
-            String[] moduleDescriptions = commandDescriptions[i + 2].split(DIVIDER);
+            String inputModule = commandDescriptions[i + 2].toUpperCase();
+            String[] moduleDescriptions = inputModule.split(DIVIDER);
             if (moduleDescriptions.length != 2) {
                 invalidModules.add(commandDescriptions[i + 2]);
                 continue;

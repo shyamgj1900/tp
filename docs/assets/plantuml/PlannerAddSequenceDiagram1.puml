@@ -1,0 +1,88 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+
+participant ":Parser" as parser UTIL_COLOR
+participant ":PlannerCommand" as plc COMMANDS_COLOR
+participant ":Event" as event PLANNER_COLOR
+participant ":Planner" as planner PLANNER_COLOR
+participant ":PlannerStorage" as pls PLANNER_COLOR
+participant ":CommandResult" as res COMMANDS_COLOR
+
+[->parser : parseCommand(userInput)
+activate parser
+
+parser -> parser : parseSubCommand(argument, COMMAND_PLANNER)
+activate parser
+
+create plc
+parser -> plc : new PlannerCommand(subCommand, parsedArguments)
+activate plc
+
+create planner
+plc -> planner : new Planner(moduleList)
+activate planner
+
+create pls
+planner -> pls : new PlannerStorage()
+activate pls
+
+pls --> planner : plannerStorage
+deactivate pls
+
+planner --> plc : planner
+deactivate planner
+
+plc --> parser : command
+deactivate plc
+
+parser --> parser : command
+deactivate parser
+
+parser-->[ : command
+deactivate parser
+
+[->plc : executeCommand()
+activate plc
+
+plc -> plc : handleAddCommand()
+activate plc
+
+create event
+plc -> event : new Event(parsedArguments)
+activate event
+
+event -> plc : event
+deactivate event
+
+plc -> planner : addEvent(event, false)
+activate planner
+
+ref over plc, planner, pls : handleConflict
+
+planner -> pls : writeFile(event.toData())
+activate pls
+
+pls --> planner
+deactivate pls
+
+planner --> plc
+deactivate planner
+
+create res
+plc -> res : new CommandResult(ADD_EVENT_MESSAGE)
+activate res
+
+res --> plc : result
+deactivate res
+
+plc --> plc : result
+deactivate plc
+
+plc-->[ : result
+deactivate plc
+
+@enduml
