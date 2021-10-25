@@ -1,0 +1,68 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+skinparam classAttributeIconSize 0
+
+hide circle
+
+class BusRouteCommand
+
+package "routes" <<rectangle>> {
+  class Location
+  class Route
+  class Graph
+}
+
+class BusRouteCommand {
+   -input: String
+   -splitinput: String[]
+   +BusRouteCommand(input: String)
+   +executeCommand(): CommandResult
+}
+
+class Location {
+   +getBusStopList(): String
+   +getStopNumberAOne(command: String): int
+   +getStopNumberATwo(command: String): int
+   +getStopNumberDOne(command: String): int
+   +getStopNumberDTwo(command: String): int
+   +getStopNumberE(command: String): int
+   +getStopNumberK(command: String): int
+}
+
+class Route {
+   -busStops: String[]
+   -startLocation: String
+   -endLocation: String
+   -vertexCodeA1: String[]
+   -vertexCodeA2: String[]
+   -vertexCodeD1: String[]
+   -vertexCodeD2: String[]
+   -vertexCodeE: String[]
+   -vertexCodeK: String[]
+   -graph: Graphp[]
+   -vertices: Arraylist<String>[]
+   +setRoute(vertices: Arraylist<String>, graph: Graph): void
+   +getBusStopNumber(): void
+   +checkRoutes(): String
+   +checkDirectRoutes(busNumbers: Arraylist<String>): boolean
+   +checkIndirectRoutes(busOne: Arraylist<String>, busTwo: Arraylist<String>, midLoc: Arraylist<String>): boolean
+   +checkAlternateRoutes(busNumbers: Arraylist<String): boolean
+}
+
+class Graph {
+   -vertex: int
+   -adj: Arraylist<Integer>[]
+   +addEdge(u: int, v: int): void
+   +isConnected(u: int, v: int): boolean
+}
+
+BusRouteCommand -> "1" Location : location
+BusRouteCommand --> "0..1" Route : route
+Route -> "1" Location : location
+Route --> "6" Graph : graph
+Location .> "0..1"Route
+
+@enduml

@@ -55,7 +55,7 @@ create event
 plc -> event : new Event(parsedArguments)
 activate event
 
-event -> plc : event
+event --> plc : event
 deactivate event
 
 plc -> planner : addEvent(event, false)

@@ -1,0 +1,61 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+participant ":Parser" #DarkSalmon
+participant ":BusRouteCommand" #LightBlue
+-> ":Parser": parseCommand(input: String)
+activate ":Parser"
+create ":BusRouteCommand"
+":Parser" -> ":BusRouteCommand"
+activate ":BusRouteCommand"
+return command
+deactivate ":BusRouteCommand"
+<-- ":Parser": command
+deactivate ":Parser"
+-> ":BusRouteCommand": executeCommand()
+activate ":BusRouteCommand"
+alt command == bus stop list
+create ":Location"
+":BusRouteCommand" -> ":Location"
+activate ":Location"
+return
+deactivate ":Location"
+":BusRouteCommand" -> ":Location": getBusStopList()
+activate ":Location"
+":Location" --> ":BusRouteCommand": List of all stops
+deactivate ":Location"
+destroy ":Location"
+else else
+create ":Route"
+":BusRouteCommand" -> ":Route"
+activate ":Route"
+return
+deactivate ":Route"
+":BusRouteCommand" -> ":Route": checkRoutes()
+activate ":Route"
+":Route" -> ":Route": getBusStopNames()
+activate ":Route"
+deactivate ":Route"
+":Route" -> ":Route": checkDirectRoutes(busNumbers: Arraylist<String>)
+activate ":Route"
+deactivate ":Route"
+opt no direct routes
+":Route" -> ":Route": checkIndirectRoutes(busOne: Arraylist<String>, busTwo: Arraylist<String>, midLoc: Arraylist<String>)
+activate ":Route"
+deactivate ":Route"
+opt no direct and indirect routes
+":Route" -> ":Route": checkAlternateRoutes(busNumbers: Arraylist<String>)
+activate ":Route"
+deactivate ":Route"
+end opt
+end opt
+":Route" --> ":BusRouteCommand": message
+destroy ":Route"
+end
+deactivate ":Route"
+<-- ":BusRouteCommand": result
+deactivate ":BusRouteCommand"
+@enduml

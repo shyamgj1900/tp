@@ -8,7 +8,7 @@ import static seedu.kolinux.commands.TimetableCommand.timetable;
  * ModuleList class contains and facilitate operations on the myModules list.
  */
 public class ModuleList {
-    public static final String HORIZONTAL_LINE = "....................................................................";
+    public final String horizontalLine = "....................................................................";
     public ArrayList<ModuleDetails> myModules = new ArrayList<>();
 
     public ArrayList<ModuleDetails> getMyModules() {
@@ -107,23 +107,23 @@ public class ModuleList {
             String title = module.getTitle();
             double lectureHours = module.getLectureHours();
             System.out.println(code + " " + title + "\n\nWorkload:");
-            if (lectureHours != 0) {
+            if (lectureHours > 0) {
                 System.out.println("Lecture: " + lectureHours + " hours");
             }
             double tutorialHours = module.getTutorialHours();
-            if (tutorialHours != 0) {
+            if (tutorialHours > 0) {
                 System.out.println("Tutorial: " + tutorialHours + " hours");
             }
             double labHours = module.getLabHours();
-            if (labHours != 0) {
+            if (labHours > 0) {
                 System.out.println("Lab: " + labHours + " hours");
             }
             double projectHours = module.getProjectHours();
-            if (projectHours != 0) {
+            if (projectHours > 0) {
                 System.out.println("Project Work: " + projectHours + " hours");
             }
             double preparationHours = module.getPreparationHours();
-            if (preparationHours != 0) {
+            if (preparationHours > 0) {
                 System.out.println("Preparation: " + preparationHours + " hours");
             }
             String examDate = module.getDate();
@@ -141,7 +141,7 @@ public class ModuleList {
             } else {
                 System.out.println("Final grade: " + grade);
             }
-            System.out.println(HORIZONTAL_LINE);
+            System.out.println(horizontalLine);
         }
         System.out.print("Remember to add the module's lessons to the timetable based on the workload");
     }
