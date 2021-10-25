@@ -63,6 +63,7 @@ public class PlannerCommand extends Command {
             if (reply.equalsIgnoreCase(YES)) {
                 planner.addEvent(event, true);
             } else {
+                logger.log(Level.INFO, "User cancelled the planner add operation.");
                 throw new KolinuxException(CANCEL_ADD_ERROR);
             }
         }
@@ -94,6 +95,7 @@ public class PlannerCommand extends Command {
         String idList = planner.listEvents(parsedArguments[0], true);
         String id = getReplyFromPrompt(ENTER_ID_PROMPT + idList);
         if (id.equalsIgnoreCase(NO)) {
+            logger.log(Level.INFO, "User cancelled the planner delete operation.");
             throw new KolinuxException(CANCEL_DELETE_ERROR);
         }
         planner.deleteEvent(id);
