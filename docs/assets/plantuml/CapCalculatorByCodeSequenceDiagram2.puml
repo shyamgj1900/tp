@@ -44,7 +44,7 @@ activate calculator
 
 loop for all input modules
 
-alt contains invalid format or invalid code or invalid grade
+alt contains invalid format/invalid code/invalid grade
 
 calculator -> invalidModules : add(commandDescriptions[i + 2])
 activate invalidModules
