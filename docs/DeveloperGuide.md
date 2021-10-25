@@ -309,15 +309,14 @@ The `module delete` operation follows a similar sequence. Instead of calling the
 ### CAP Calculator by module code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
-the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
-of `ModuleList` dedicated for cap calculation. 
+the input modules and grades from user as a `CalculatorModuleList`, which is a subclass of `ModuleList` 
+dedicated for cap calculation. 
 
 When the command `cap code` is given by the user, the constructor is called to retrieve and store the modules 
 from the input. After the object construction is done, `CapCalculator#executeCapCalculator()` method is then 
 invoked for the cap calculation. 
 
-In order to achieve these functionalities, the following methods 
-from `CapCalculatorByCode` are invoked.
+In order to achieve these functionalities, the following methods from `CapCalculatorByCode` are invoked.
 
 * `CapCalculatorByCode#getInputModules(String input)` — which retrieves the module codes and grades from String input
 and store them as `CalculatorModuleList`
