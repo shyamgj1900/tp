@@ -34,7 +34,8 @@ public class PlannerCommand extends Command {
     private static final String INVALID_ARGUMENT_MESSAGE =
             "This command is not recognised, you can try:\n"
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
-                    + "planner list DATE";
+                    + "planner list DATE\n"
+                    + "planner delete DATE";
     private static final String CANCEL_ADD_ERROR = "Operation cancelled, no events were added.";
     private static final String CANCEL_DELETE_ERROR = "Operation cancelled, no events were deleted.";
 
