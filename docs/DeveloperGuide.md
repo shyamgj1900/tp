@@ -123,12 +123,12 @@ The class diagram below describes the interactions within the `routes` component
 
 ![Bus Route Class Diagram](assets/images/BusRouteClassDiagram.png)
 
-The `Route` class is the class which facilitates the checking and giving the appropriate bus routes if any.
-The `Route` helps to check whether there are direct, indirect or alternate routes between the 2 user given bus
-stops. The `Route` class has an association with `Location` and `Graph` classes. The `Graph` class is responsible to
-for building the connected directed graph and check whether any 2 vertices in the graph have a path using BFS. The 
-`Location` class helps to convert the user given bus stop name into bus stop numbers which correspond to the numbers
-in the connected graph of the bus route. The `Location` class has a dependency with `Route` as it invokes the static method
+The `Route` class is the class which facilitates the finding of a bus route if any. The `Route` class helps to check 
+whether there are direct, indirect or alternate routes between the 2 user given bus stops. The `Route` class has an 
+association with the `Location` and `Graph` classes. The `Graph` class is responsible for building the connected 
+directed graph by adding the appropriate edges and helps to check whether any 2 vertices in the graph have a path using BFS. 
+The `Location` class helps to convert the user given bus stop name into bus stop numbers which correspond to the numbers 
+in the connected graph of the bus route. The `Location` class has a dependency with `Route` as it invokes the static method 
 `readTextFromFile()`.
 
 ### Command Execution
