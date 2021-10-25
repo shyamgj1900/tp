@@ -47,12 +47,12 @@ to allow you to better understand the reasons behind the various methods of impl
 ### Before writing code
 
 1. Configure the code style
-   1. Ensure that your coding style matches our coding style
-2. Set up CI 
-   1. This project comes with a `gradle.yml` file so each time you push, Github will run the continuous integration 
+   * Ensure that your coding style matches our coding style
+2. Set up Continuous Integration
+   * This project comes with a `gradle.yml` file so each time you push, Github will run the CI
    for your project automatically.
 3. Learn the design
-   1. Look through the overall design by looking through [Kolinux's overall architecture](#design)
+   * Look through the overall design by looking through [Kolinux's overall architecture](#design)
    
 
 ## Design

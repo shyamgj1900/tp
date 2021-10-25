@@ -6,7 +6,7 @@
 hide circle
 
 package commands <<Rectangle>> {
-    abstract class Command
+    class "ABSTRACT\nCommand"
     class CommandResult
     class BusRouteCommand
     class CalculateCapCommand
@@ -37,10 +37,10 @@ package planner <<Rectangle>> PLANNER_COLOR {
 package module <<Rectangle>> MODULE_COLOR {
 }
 
-abstract class Command COMMANDS_COLOR {
+class "ABSTRACT\nCommand" COMMANDS_COLOR {
     # argument: String
     # getReplyFromPrompt(question: String): String
-    + {abstract} executeCommand(): CommandResult
+    + ABSTRACT executeCommand(): CommandResult
 }
 
 class CommandResult COMMANDS_COLOR {
@@ -81,17 +81,17 @@ class KolinuxLogger UTIL_COLOR {
 class Prompt UTIL_COLOR {
 }
 
-BusRouteCommand --|> Command
-CalculateCapCommand -right-|> Command
-XYZCommand --|> Command
-Command <|-up- ModuleCommand
-Command <|-- ModuleListCapCommand
-Command <|-- PlannerCommand
-Command <|-- TimetableCommand
-Command .> "0..1" CommandResult : "result "
-Command --> "1" KolinuxLogger : logger
-Command ..> Prompt
-Command -right-> module
+BusRouteCommand --|> "ABSTRACT\nCommand"
+CalculateCapCommand -right-|> "ABSTRACT\nCommand"
+XYZCommand --|> "ABSTRACT\nCommand"
+"ABSTRACT\nCommand" <|-up- ModuleCommand
+"ABSTRACT\nCommand" <|-- ModuleListCapCommand
+"ABSTRACT\nCommand" <|-- PlannerCommand
+"ABSTRACT\nCommand" <|-- TimetableCommand
+"ABSTRACT\nCommand" .> "0..1" CommandResult : "result "
+"ABSTRACT\nCommand" --> "1" KolinuxLogger : logger
+"ABSTRACT\nCommand" ..> Prompt
+"ABSTRACT\nCommand" -right-> module
 BusRouteCommand -up-> routes
 PlannerCommand -down-> planner
 TimetableCommand -down-> timetable

@@ -10,7 +10,8 @@ import java.util.Scanner;
 /** Represents the operations to interact with planner.txt. */
 public class PlannerStorage {
 
-    private static File file = new File("./data/planner.txt");
+    private static final String PLANNER_FILE_PATH = "./data/planner.txt";
+    private static File file = new File(PLANNER_FILE_PATH);
 
     /**
      * Creates a file with the name planner.txt
