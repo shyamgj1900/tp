@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide circle
+hide empty methods
+hide empty attributes
+
+left to right direction
+
+package module <<Rectangle>> {
+    class ModuleDb MODULE_COLOR
+    class ModuleListStorage MODULE_COLOR
+    class ModuleList MODULE_COLOR
+    class ModuleDetails MODULE_COLOR
+}
+
+package commands <<Rectangle>> {
+    class Command COMMANDS_COLOR
+    class ModuleCommand COMMANDS_COLOR
+}
+
+
+Command ^-- ModuleCommand
+ModuleCommand --> "1" ModuleDb
+ModuleCommand --> "1" ModuleListStorage
+ModuleCommand --> "1" ModuleList
+ModuleList --> "*" ModuleDetails
+@enduml
