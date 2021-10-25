@@ -102,6 +102,17 @@ also shown in the diagram above. These interactions will be further elaborated i
 
 #### Module Component
 
+The class diagram below model the associations within the `module` component
+
+![Module Class Diagram](assets/images/ModuleClassDiagram.png)
+
+
+
+The `ModuleCommand` class is responsible for the execution of all `module` related commands. It inherits references 
+to instances of `ModuleList` and `ModuleDb` from `Command`  which are utilized for maintaining a list of
+`ModuleDetails` instances and operating a database of `moduleDetails`( `ModuleDb`) respectively. `ModuleCommand` 
+also interacts with `ModuleListStorage` to facilitate the persistent storage of the contents of `ModuleList`. 
+
 #### Timetable Component
 
 The class diagram below describes the interactions within in the `timetable` component
@@ -129,18 +140,6 @@ the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and
 #### CAP Calculator Component
 
 #### Bus Routes Finder Component
-
-The class diagram below describes the interactions within the `routes` component.
-
-![Bus Route Class Diagram](assets/images/BusRouteClassDiagram.png)
-
-The `Route` class is the class which facilitates the finding of a bus route if any. The `Route` class helps to check 
-whether there are direct, indirect or alternate routes between the 2 user given bus stops. The `Route` class has an 
-association with the `Location` and `Graph` classes. The `Graph` class is responsible for building the connected 
-directed graph by adding the appropriate edges and helps to check whether any 2 vertices in the graph have a path using BFS. 
-The `Location` class helps to convert the user given bus stop name into bus stop numbers which correspond to the numbers 
-in the connected graph of the bus route. The `Location` class has a dependency with `Route` as it invokes the static method 
-`readTextFromFile()`.
 
 ### Command Execution
 
@@ -254,9 +253,9 @@ This mechanism is implemented by the following methods:
 * `Planner#addEvent(Event event, boolean allowConflict)`: Attempts to add `event` to `scheduleOfAllDates` by invoking
 the following methods:
     * `Planner#hasTimeConflict(Event event)`: Checks for any time conflicts between `event` and any existing `Event`s
-    in `scheduleOfAllDates`, lessons, and exams.
+      in `scheduleOfAllDates`, lessons, and exams.
     * `PlannerStorage#writeFile(String data)`: Appends the data of the newly added `Event` to `data/planner.txt` for 
-    local storage.
+      local storage.
 
 * `PlannerCommand#getReplyFromPrompt(String question)`: Gets user confirmation to allow or cancel the add operation
 in case of a time conflict.
@@ -332,25 +331,21 @@ Step 1: The user launches the application. `myModules` , the list of `ModuleDeta
 
 Example: `myModules` is initialized with single `ModuleDetails` instance corresponding to `CS2113T`
 
-![moduleListInit](assets/images/moduleListInit.png)
-
-
+<img src="assets/images/moduleListInit.png" width="550">
 
 Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
 
-![moduleListInit](assets/images/moduleStore.png)
-
-
+<img src="assets/images/moduleStore.png" width="550">
 
 Step 3: The user executes `module delete CS2101` command to delete the instance of `ModuleDetais` corresponding to `CS2101` from `myModules`. The `module delete` prefix ensures `ModuleList#deleteModuleByCode(String code)` is called. 
 
-![moduleListInit](assets/images/moduleListInit.png)
+<img src="assets/images/moduleListInit.png" width="550">
 
 
 
 The following sequence diagram models how the `module store` operation works:
 
-![Module Store Sequence Diagram](assets/images/moduleStoreSequence.png)
+![Module Store Sequence Diagram](assets/images/ModuleStoreSequenceDiagram.png)
 
 The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
 
@@ -390,26 +385,18 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 
 ### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
-When the user uses the bus routes feature there are mainly 2 sub commands, the first is to view all the bus stops within the NUS
-internal shuttle service and the other is to find routes and bus services between any 2 NUS internal stops. 
-
-When the user enters the command `bus stop list` the `BusRouteCommand` class instantiates a `Location` class object and invokes 
-`Location#getBusStopList()` and this returns the list of all NUS internal bus stops.
-
-When the user enters the command in the format `bus /start_location /end_location` the `BusRouteCommand` class instantiates a 
-`Route` class object and invokes the function `Route#checkRoutes()`. The following steps describe the method calls which occur 
-when this feature is used.
+When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
+the `input` string to the `Route` class. The operation is implemented in the following way.
 
 * The overriden function `executeCommand()` calls the `Route#checkRoutes()` method. 
-* The `Route#checkRoutes()` contains the `Route#getBusStopNumber()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)`, `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` and `Route#checkAlternateRoutes(Arraylist<String> busNumbers)` - Checks whether there is a direct, indirect or an alternate route between the 2 user given bus stops and returns a string depending on the result.
+* The `Route#checkRoutes()` contains the `Route#getBusStopNumber()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)` and `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
 * `Route#getBusStopNumber()` - Converts the user given bus stop names to bus stop numbers which can then be used to find if the bus stops are connected.
 * `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
 * `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
-* `Route#checkAlternateRoutes(Arraylist<String> busNumbers)` - Checks whether there is an alternate route, i.e checks whether there is a direct route between a new start bus stop located close to the user given start location and the user given end location.
 
 The following sequence diagram explains the bus routes feature.
 
-![sequenceDiagram](assets/images/BusRouteSequenceDiagram.png)
+![sequenceDiagram](assets/images/BusRouteSequence.png)
 
 ## Product scope
 ### Target user profile:
