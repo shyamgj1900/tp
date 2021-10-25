@@ -331,19 +331,15 @@ Step 1: The user launches the application. `myModules` , the list of `ModuleDeta
 
 Example: `myModules` is initialized with single `ModuleDetails` instance corresponding to `CS2113T`
 
-![moduleListInit](assets/images/moduleListInit.png)
-
-
+<img src="assets/images/moduleListInit.png" width="550">
 
 Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
 
-![moduleListInit](assets/images/moduleStore.png)
-
-
+<img src="assets/images/moduleStore.png" width="550">
 
 Step 3: The user executes `module delete CS2101` command to delete the instance of `ModuleDetais` corresponding to `CS2101` from `myModules`. The `module delete` prefix ensures `ModuleList#deleteModuleByCode(String code)` is called. 
 
-![moduleListInit](assets/images/moduleListInit.png)
+<img src="assets/images/moduleListInit.png" width="550">
 
 
 
