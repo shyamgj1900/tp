@@ -1,0 +1,66 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+
+participant ":Parser" as parser UTIL_COLOR
+participant ":ModuleCommand" as mlc COMMANDS_COLOR
+participant "moduleList:ModuleList" as mll MODULE_COLOR
+participant "ModuleStorage" as mls <<class>> MODULE_COLOR
+participant ":CommandResult" as res COMMANDS_COLOR
+
+[->parser : parseCommand(userInput)
+activate parser
+
+parser -> parser : parseSubCommand(argument, "module")
+activate parser
+
+create mlc
+parser -> mlc : new ModuleCommand(subcommand, parsedArguments)
+activate mlc
+
+mlc --> parser : command
+deactivate mlc
+
+parser --> parser : command
+deactivate parser
+
+parser-->[ : command
+deactivate parser
+
+[->mlc : executeCommand()
+activate mlc
+
+mlc -> mlc : storeModule()
+activate mlc
+
+mlc -> mll : storeModuleByCode(moduleCode, moduleDb)
+activate mll
+
+mll --> mlc : message
+deactivate mll
+
+mlc -> mls : writeToFile(data : String)
+activate mls
+
+mls --> mlc
+deactivate mls
+
+create res
+mlc -> res: new CommandResult(message)
+activate res
+
+res --> mlc: result
+deactivate res
+
+mlc --> mlc : result
+deactivate mlc
+
+mlc-->[ : result
+deactivate mlc
+
+
+
+@enduml
