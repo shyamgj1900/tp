@@ -10,6 +10,8 @@
 !define KOLINUX_COLOR #FF00E0
 !define MAIN_COLOR #FF0000
 
+!define ABSTRACT &#123;abstract&#125;
+
 skinparam defaultFontSize 15
 skinparam classAttributeIconSize 0
 skinparam nodesep 60
