@@ -86,7 +86,7 @@ public class Lesson {
      * @return Formatted information about the lesson
      */
     public String getFileContent() {
-        return moduleCode + "/" + day + "/" + startTime + "/" + endTime;
+        return moduleCode + "/" + lessonType + "/" + day + "/" + startTime + "/" + endTime;
     }
 
     /**
