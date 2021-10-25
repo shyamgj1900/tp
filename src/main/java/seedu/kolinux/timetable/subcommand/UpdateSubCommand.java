@@ -18,13 +18,13 @@ public class UpdateSubCommand extends SubCommand {
 
     }
 
-    public void updateTimetable(String[] parsedArguments) throws KolinuxException {
+    public void updateTimetable(String[] lessonDetails) throws KolinuxException {
         try {
-            String moduleCode = parsedArguments[0].toUpperCase();
-            String lessonType = parsedArguments[1].toUpperCase();
-            String oldDay = parsedArguments[2].toLowerCase();
-            String newDay = parsedArguments[3].toLowerCase();
-            String newStartTiming = parsedArguments[4];
+            String moduleCode = lessonDetails[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String oldDay = lessonDetails[2].toLowerCase();
+            String newDay = lessonDetails[3].toLowerCase();
+            String newStartTiming = lessonDetails[4];
             int startIndex = getIndex(newStartTiming, schoolHours);
             int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay);
             String[] oldTimings = getOldTimings(moduleCode, lessonType, oldDay);
@@ -35,7 +35,7 @@ public class UpdateSubCommand extends SubCommand {
             }
             String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
             if (isLessonInTimetable(moduleCode, lessonType, oldDay)) {
-                deleteSubcommand.deleteLesson(parsedArguments);
+                deleteSubcommand.deleteLesson(lessonDetails);
                 addSubcommand.inputLesson(parameters);
             } else {
                 throw new KolinuxException(MISSING_LESSON_TO_UPDATE);

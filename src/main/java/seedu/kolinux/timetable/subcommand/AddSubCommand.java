@@ -21,6 +21,7 @@ import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 public class AddSubCommand extends SubCommand {
 
     public AddSubCommand() {
+
     }
 
     /**
@@ -53,25 +54,25 @@ public class AddSubCommand extends SubCommand {
         timetableStorage.writeToFile();
     }
 
-    public void inputLesson(String[] parsedArguments) throws KolinuxException {
+    public void inputLesson(String[] lessonDetails) throws KolinuxException {
         try {
-            String lessonType = parsedArguments[1].toUpperCase();
-            String moduleCode = parsedArguments[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String moduleCode = lessonDetails[0].toUpperCase();
             if (!isLessonInModuleList(moduleList, moduleCode)) {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
             int requiredHours = getHours(moduleList, moduleCode, lessonType);
             checkZeroWorkload(requiredHours, moduleCode, lessonType);
-            int inputHours = getIndex(parsedArguments[4], schoolHours) - getIndex(parsedArguments[3], schoolHours);
+            int inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
             int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
             checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
 
             if (lessonType.startsWith("TUT")) {
-                addToTimetable(new Tutorial(parsedArguments));
+                addToTimetable(new Tutorial(lessonDetails));
             } else if (lessonType.startsWith("LEC")) {
-                addToTimetable(new Lecture(parsedArguments));
+                addToTimetable(new Lecture(lessonDetails));
             } else if (lessonType.startsWith("LAB")) {
-                addToTimetable(new Lab(parsedArguments));
+                addToTimetable(new Lab(lessonDetails));
             } else {
                 throw new KolinuxException(INVALID_ADD_FORMAT);
             }
@@ -80,7 +81,7 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-    public int getStorageHours(String moduleCode, String lessonType) {
+    private int getStorageHours(String moduleCode, String lessonType) {
         int hourCount = 0;
         for (Lesson storedLesson : lessonStorage) {
             if (storedLesson.getModuleCode().equals(moduleCode)
@@ -91,7 +92,7 @@ public class AddSubCommand extends SubCommand {
         return hourCount;
     }
 
-    public int getHours(ModuleList moduleList, String moduleCode, String lessonType) {
+    private int getHours(ModuleList moduleList, String moduleCode, String lessonType) {
         for (ModuleDetails module : moduleList.myModules) {
             if (lessonType.equals("TUT") && module.moduleCode.equals(moduleCode)) {
                 return (int) Math.round(module.getTutorialHours());
@@ -105,7 +106,7 @@ public class AddSubCommand extends SubCommand {
     }
 
 
-    public boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
+    private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
         for (ModuleDetails module : moduleList.myModules) {
             if (Objects.equals(module.moduleCode, moduleCode)) {
                 return true;
@@ -114,7 +115,7 @@ public class AddSubCommand extends SubCommand {
         return false;
     }
 
-    public void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
+    private void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
             throws KolinuxException {
         if (requiredHours == 0) {
             throw new KolinuxException(moduleCode + " has no " + lessonType
@@ -123,7 +124,7 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-    public void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
+    private void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
                                        String lessonType) throws KolinuxException {
         if (storageHours > requiredHours) {
             throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
@@ -136,7 +137,7 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-    public boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
+    private boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
         try {
             for (int i = startIndex; i < endIndex; i++) {
                 if (timetableData[i][dayIndex] != null) {
