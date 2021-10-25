@@ -18,8 +18,8 @@ their usages.
 
 ### Latest Releases
 
-* 💥 `v2.0` _Coming soon_
-* 💥 [`v1.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases) Released on Oct 12, 2021.
+* 💥 [`v2.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases) Released on Oct 26, 2021.
+* 💥 `v1.0` Released on Oct 12, 2021.
 
 ## Table of Contents
 
