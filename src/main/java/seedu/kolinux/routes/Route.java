@@ -249,7 +249,7 @@ public class Route {
      * @return Message which specifies if any alternate routes are found
      * @throws KolinuxException if the user command is not in the correct format
      */
-    private String checkAlternateRoutes(ArrayList<String> busNumbers) throws KolinuxException {
+    public String checkAlternateRoutes(ArrayList<String> busNumbers) throws KolinuxException {
         boolean flag;
         for (int i = 0; i < 12; i++) {
             if (startLocation.equalsIgnoreCase(oppositeStops[i][0])) {
