@@ -139,6 +139,17 @@ the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and
 
 #### CAP Calculator Component
 
+The class diagram below describes the interaction between `CapCalculator` and its subclasses.
+
+![CapCalculator Class Diagram](assets/images/CapCalculatorClassDiagram.png)
+
+The `CapCalculator` is an abstract representation of calculator which is inherited by every calculator classes.
+It contains the list of modules whose grade are being retrieved to calculate the overall cap within 
+`CalculatorModuleList`, which is a subclass of `ModuleList` designed specifically for `CapCalculator`. Its subclasses
+can be divided into two groups based on the module format, namely `CapCalculatorByMc` which calculates cap of modules
+containing only the modular credit and the corresponding grade, and `CapCalculatorByCode` and its subclasses which can
+retrieve modular credit of each module from `moduleDb` for the calculation.
+
 #### Bus Routes Finder Component
 
 ### Command Execution
