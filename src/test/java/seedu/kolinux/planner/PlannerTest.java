@@ -50,7 +50,7 @@ public class PlannerTest {
             = "\n15:00 - 17:00 Conflict with lecture\n"
                     + "16:00 - 18:00 CS2113T LEC";
     private static final String VALID_LIST_5
-            = "\n15:00 - 17:00 Conflict with lecture (id: 3)";
+            = "\n15:00 - 17:00 Conflict with lecture (id: 7)";
     private static final String DATETIME_ERROR
             = "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
