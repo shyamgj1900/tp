@@ -244,9 +244,9 @@ This mechanism is implemented by the following methods:
 * `Planner#addEvent(Event event, boolean allowConflict)`: Attempts to add `event` to `scheduleOfAllDates` by invoking
 the following methods:
     * `Planner#hasTimeConflict(Event event)`: Checks for any time conflicts between `event` and any existing `Event`s
-    in `scheduleOfAllDates`, lessons, and exams.
+      in `scheduleOfAllDates`, lessons, and exams.
     * `PlannerStorage#writeFile(String data)`: Appends the data of the newly added `Event` to `data/planner.txt` for 
-    local storage.
+      local storage.
 
 * `PlannerCommand#getReplyFromPrompt(String question)`: Gets user confirmation to allow or cancel the add operation
 in case of a time conflict.
@@ -340,7 +340,7 @@ Step 3: The user executes `module delete CS2101` command to delete the instance 
 
 The following sequence diagram models how the `module store` operation works:
 
-![Module Store Sequence Diagram](assets/images/moduleStoreSequence.png)
+![Module Store Sequence Diagram](assets/images/ModuleStoreSequenceDiagram.png)
 
 The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
 
