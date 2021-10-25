@@ -17,8 +17,8 @@ to allow you to better understand the reasons behind the various methods of impl
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module store/delete`](#store/delete-a-module-by-module-code)
-  * [`cap code`](#cap-calculator-by-code-feature)
+  * [`module store/delete`](#store/delete-a-module-by-module-code-feature)
+  * [`cap code`](#cap-calculator-by-module-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -104,6 +104,19 @@ also shown in the diagram above. These interactions will be further elaborated i
 
 #### Timetable Component
 
+The class diagram below describes the interactions within in the `timetable` component
+
+![Timetable Class Diagram](assets/images/TimetableClassDiagram.png)
+
+The `Timetable` class is the main part in this component that is responsible for all `timetable` related command 
+executions. `Timetable` maintains a list of all `Lesson`s in `lessonStorage` and an association with
+`TimetableStorage` for storage of `Lesson` data in `data/timetable.txt`.`Lesson` has 3 types `Tutorial`, 
+`Lecture` and `Lab` which are specified by its lesson type, `TUT`, `LEC` and `LAB` respectively. 
+`AddSubCommand`, `DeleteSubCommand`, `UpdateSubCommand` and `ViewSubCommand` are called to execute 
+`timetable add`, `timetable delete`, `timetable update` and `timetable view` commands respectively.
+
+The `Timetable` class is the 
+
 #### Planner Component
 
 The class diagram below describes the interactions within the `planner` component.
@@ -153,13 +166,13 @@ to `timetable.txt` file to constantly save the lessons' data. It implements the 
 
 * `Timetable#inputLesson(String[] lessonDetail)` containing `Timetable#addLesson(Lesson lesson)` - Adds the lesson 
 to `timetableStorage` based on the type of lesson it is, which is included in the lessonDetail.
-* TimetableStorage#writeToFile() - Saves the lesson details to `timetable.txt` locally.
+* `TimetableStorage#writeToFile()` - Saves the lesson details to `timetable.txt` locally.
 
 #### ❕ Notes about the methods:
 
-* `String[] lessonDetails` consists of MODULE_CODE, LESSON_TYPE (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
-DAY, START_TIME, END_TIME. 
-* Lesson class is inherited by Tutorial, Lecture and Lab to add lessons based on the LESSON_TYPE as shown 
+* `String[] lessonDetails` consists of `MODULE_CODE`, `LESSON_TYPE` (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
+`DAY`, `START_TIME`, `END_TIME`. 
+* Lesson class is inherited by `Tutorial`, `Lecture` and `Lab` to add lessons based on the `LESSON_TYPE` as shown 
 in the example below.
 
 Given below are the examples of the usage of `timetable add` of lessons to the timetable.
@@ -190,12 +203,39 @@ file via `TimetableStorage#writeToFile()`
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram2.png)
 
-* The following sequence diagram illustrates the checks done before adding to the timetable and one of them is the 
+* There are checks done before adding to the timetable and one of them is the 
 `AddSubCommand#isLessonInModuleList(moduleList, moduleCode)`. This integrates `Timetable` and `ModuleList` which 
 ensures a module's lessons being added to the timetable has its `moduleCode` first added to the `ModuleList` 
 else it will throw an exception to add the module.
+
+```
+    private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
+        for (ModuleDetails module : moduleList.myModules) {
+            if (Objects.equals(module.moduleCode, moduleCode)) {
+                return true;
+            }
+        }
+        return false;
+    }
+```
 * Another check done is to check if the slot between `START_TIME` and `END_TIME` is not occupied by another lesson,
 likewise it will throw an exception.
+
+```
+    private boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
+        try {
+            for (int i = startIndex; i < endIndex; i++) {
+                if (timetableData[i][dayIndex] != null) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(INVALID_HOURS_INPUT);
+        }
+    }
+```
+* The following sequence diagram illustrates both these checks.
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram3.png)
 
@@ -321,15 +361,14 @@ The `module delete` operation follows a similar sequence. Instead of calling the
 ### CAP Calculator by module code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
-the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
-of `ModuleList` dedicated for cap calculation. 
+the input modules and grades from user as a `CalculatorModuleList`, which is a subclass of `ModuleList` 
+dedicated for cap calculation. 
 
 When the command `cap code` is given by the user, the constructor is called to retrieve and store the modules 
 from the input. After the object construction is done, `CapCalculator#executeCapCalculator()` method is then 
 invoked for the cap calculation. 
 
-In order to achieve these functionalities, the following methods 
-from `CapCalculatorByCode` are invoked.
+In order to achieve these functionalities, the following methods from `CapCalculatorByCode` are invoked.
 
 * `CapCalculatorByCode#getInputModules(String input)` — which retrieves the module codes and grades from String input
 and store them as `CalculatorModuleList`
