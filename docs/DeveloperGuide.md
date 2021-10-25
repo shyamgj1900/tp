@@ -126,8 +126,6 @@ executions. `Timetable` maintains a list of all `Lesson`s in `lessonStorage` and
 `AddSubCommand`, `DeleteSubCommand`, `UpdateSubCommand` and `ViewSubCommand` are called to execute 
 `timetable add`, `timetable delete`, `timetable update` and `timetable view` commands respectively.
 
-The `Timetable` class is the 
-
 #### Planner Component
 
 The class diagram below describes the interactions within the `planner` component.
