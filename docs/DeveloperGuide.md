@@ -119,6 +119,18 @@ the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and
 
 #### Bus Routes Finder Component
 
+The class diagram below describes the interactions within the `routes` component.
+
+![Bus Route Class Diagram](assets/images/BusRouteClassDiagram.png)
+
+The `Route` class is the class which facilitates the checking and giving the appropriate bus routes if any.
+The `Route` helps to check whether there are direct, indirect or alternate routes between the 2 user given bus
+stops. The `Route` class has an association with `Location` and `Graph` classes. The `Graph` class is responsible to
+for building the connected directed graph and check whether any 2 vertices in the graph have a path using BFS. The 
+`Location` class helps to convert the user given bus stop name into bus stop numbers which correspond to the numbers
+in the connected graph of the bus route. The `Location` class has a dependency with `Route` as it invokes the static method
+`readTextFromFile()`.
+
 ### Command Execution
 
 The sequence diagram below shows a high-level overview of the interaction between entities during the execution
@@ -341,18 +353,26 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 
 ### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
-When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
-the `input` string to the `Route` class. The operation is implemented in the following way.
+When the user uses the bus routes feature there are mainly 2 sub commands, the first is to view all the bus stops within the NUS
+internal shuttle service and the other is to find routes and bus services between any 2 NUS internal stops. 
+
+When the user enters the command `bus stop list` the `BusRouteCommand` class instantiates a `Location` class object and invokes 
+`Location#getBusStopList()` and this returns the list of all NUS internal bus stops.
+
+When the user enters the command in the format `bus /start_location /end_location` the `BusRouteCommand` class instantiates a 
+`Route` class object and invokes the function `Route#checkRoutes()`. The following steps describe the method calls which occur 
+when this feature is used.
 
 * The overriden function `executeCommand()` calls the `Route#checkRoutes()` method. 
-* The `Route#checkRoutes()` contains the `Route#getBusStopNumber()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)` and `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
+* The `Route#checkRoutes()` contains the `Route#getBusStopNumber()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)`, `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` and `Route#checkAlternateRoutes(Arraylist<String> busNumbers)` - Checks whether there is a direct, indirect or an alternate route between the 2 user given bus stops and returns a string depending on the result.
 * `Route#getBusStopNumber()` - Converts the user given bus stop names to bus stop numbers which can then be used to find if the bus stops are connected.
 * `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
 * `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+* `Route#checkAlternateRoutes(Arraylist<String> busNumbers)` - Checks whether there is an alternate route, i.e checks whether there is a direct route between a new start bus stop located close to the user given start location and the user given end location.
 
 The following sequence diagram explains the bus routes feature.
 
-![sequenceDiagram](assets/images/BusRouteSequence.png)
+![sequenceDiagram](assets/images/BusRouteSequenceDiagram.png)
 
 ## Product scope
 ### Target user profile:

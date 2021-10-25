@@ -18,13 +18,13 @@ public class BusRouteCommand extends Command {
 
     public BusRouteCommand(String input) {
         this.input = input;
-        location = new Location();
         splitInput = input.split(USER_COMMAND_DELIMITER);
     }
 
     @Override
     public CommandResult executeCommand() throws KolinuxException, IOException {
         if (input.equalsIgnoreCase(COMMAND_LIST_STOPS)) {
+            location = new Location();
             return new CommandResult(location.getBusStopList());
         }
         if (splitInput.length != 3) {
