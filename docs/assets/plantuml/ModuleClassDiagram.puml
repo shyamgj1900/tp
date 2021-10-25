@@ -7,7 +7,7 @@ hide circle
 hide empty methods
 hide empty attributes
 
-left to right direction
+'left to right direction
 
 package module <<Rectangle>> {
     class ModuleDb MODULE_COLOR
@@ -23,8 +23,8 @@ package commands <<Rectangle>> {
 
 
 Command ^-- ModuleCommand
-ModuleCommand --> "1" ModuleDb
-ModuleCommand --> "1" ModuleListStorage
-ModuleCommand --> "1" ModuleList
-ModuleList --> "*" ModuleDetails
+Command --> "1" ModuleDb
+ModuleCommand ..> "1" ModuleListStorage
+Command -> "1" ModuleList
+ModuleList -> "*" ModuleDetails
 @enduml
