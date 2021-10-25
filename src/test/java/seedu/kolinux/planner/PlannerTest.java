@@ -52,7 +52,7 @@ public class PlannerTest {
             = "\n15:00 - 17:00 Conflict with lecture\n"
                     + "16:00 - 18:00 CS2113T LEC";
     private static final String VALID_LIST_5
-            = "\n15:00 - 17:00 Conflict with lecture (id: 7)";
+            = "\n15:00 - 17:00 Conflict with lecture";
     private static final String DATETIME_ERROR
             = "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
@@ -199,7 +199,8 @@ public class PlannerTest {
         addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
-        assertEquals(VALID_LIST_5, planner.listEvents("2021-10-22", true));
+        assertEquals(VALID_LIST_5 + " (id: " + event.getId() + ")",
+                planner.listEvents("2021-10-22", true));
     }
 
     @Test
