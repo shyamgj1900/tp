@@ -4,24 +4,24 @@
 !include Style.puml
 
 hide circle
-
-class SubCommand
-class Timetable
-class DeleteSubCommand
-class ViewSubCommand
 class UpdateSubCommand
+class ViewSubCommand
 class AddSubCommand
+class SubCommand
+class DeleteSubCommand
+
+
 class Lesson
 class Tutorial
 class Lecture
-class Lab
 class TimetableStorage
+class Timetable
 
 
 SubCommand ^-- DeleteSubCommand
-SubCommand ^-- ViewSubCommand
-SubCommand ^-- AddSubCommand
-SubCommand ^-- UpdateSubCommand
+ViewSubCommand --^ SubCommand
+AddSubCommand --^ SubCommand
+UpdateSubCommand --^ SubCommand
 
 Lesson ^-- Lecture
 Lesson ^-- Tutorial
@@ -45,14 +45,14 @@ class Timetable TIMETABLE_COLOR {
     - deleteSubCommand: DeleteSubCommand
     - updateSubCommand: UpdateSubCommand
     - viewSubCommand: ViewSubCommand
-    + executeAdd(lessonDetails : String[]): void
-    + executeUpdate(lessonDetails: String[]): void
-    + executeDelete(lessonDetails: String[]): void
-    + executeView(lessonDetails: String[]): void
+'    + executeAdd(lessonDetails : String[]): void
+'    + executeUpdate(lessonDetails: String[]): void
+'    + executeDelete(lessonDetails: String[]): void
+'    + executeView(lessonDetails: String[]): void
     + initTimetable(): void
-    + deleteByModuleList(moduleCode: String): void
+'    + deleteByModuleList(moduleCode: String): void
     + public clearTimetable(): void
-    - loadContent(fileContents: ArrayList<String>): void
+'    - loadContent(fileContents: ArrayList<String>): void
 
 
 }
@@ -64,13 +64,20 @@ class TimetableStorage TIMETABLE_COLOR {
     + clearFile(): void
 }
 
+class ViewSubCommand TIMETABLE_COLOR {
++ viewTimetable(): void
+'- toPrint(data: String): String
+'- getSpaces(numberOfSpaces: int): String
+'- checkOddOrEven(lesson: String): int
+}
+
 class AddSubCommand TIMETABLE_COLOR {
 + inputLesson(lessonDetails: String[]): void
 - addToTimetable(lesson: Lesson): void
-- isLessonInModuleList(moduleList: ModuleList,
-   moduleCode: String): boolean
-- isPeriodFree(startIndex: int,endIndex: int,
-dayIndex: int): boolean
+'- isLessonInModuleList(moduleList: ModuleList,
+'   moduleCode: String): boolean
+'- isPeriodFree(startIndex: int,endIndex: int,
+'dayIndex: int): boolean
 }
 
 class DeleteSubCommand TIMETABLE_COLOR {
@@ -79,21 +86,16 @@ class DeleteSubCommand TIMETABLE_COLOR {
 lessonType: String,dayIndex: int): void
 }
 
-class ViewSubCommand TIMETABLE_COLOR {
-+ viewTimetable(): void
-- toPrint(data: String): String
-- getSpaces(numberOfSpaces: int): String
-- checkOddOrEven(lesson: String): int
-}
+
 
 class UpdateSubCommand TIMETABLE_COLOR {
 + updateTimetable(lessonDetails: String[]): void
 + isLessonInTimetable(moduleCode: String,
 lessonType: String,day: String): boolean
-- getOldLessonHours(moduleCode: String,
-lessonType: String,day: String): int
-- getOldTimings(moduleCode: String,
-lessonType: String,day: String): String[]
+'- getOldLessonHours(moduleCode: String,
+'lessonType: String,day: String): int
+'- getOldTimings(moduleCode: String,
+'lessonType: String,day: String): String[]
 }
 
 class Lesson TIMETABLE_COLOR {
@@ -102,36 +104,36 @@ class Lesson TIMETABLE_COLOR {
     # day: String
     # startTime: String
     # endTime: String
-    # startTimeIndex: int
-    # endTimeIndex: int
-    # dayIndex: int
-    + {static} schoolHours: String[]
-    + {static} days: String[]
-    + getLessonType(): String
-    + getModuleCode(): String
-    + getDayIndex(): int
-    + getStartTimeIndex(): int
-    + getEndTimeIndex(): int
-    + getDay: String
-    + getStartTime: String
-    + getEndTime: String
-    + getHours(): int
-    + {static} getIndex(input: String,array: String[]): int
+'    # startTimeIndex: int
+'    # endTimeIndex: int
+'    # dayIndex: int
+'    + {static} schoolHours: String[]
+'    + {static} days: String[]
+'    + getLessonType(): String
+'    + getModuleCode(): String
+'    + getDayIndex(): int
+'    + getStartTimeIndex(): int
+'    + getEndTimeIndex(): int
+'    + getDay: String
+'    + getStartTime: String
+'    + getEndTime: String
+'    + getHours(): int
+'    + {static} getIndex(input: String,array: String[]): int
 }
 
 class Tutorial TIMETABLE_COLOR {
-    + getLessonType(): String
-    + getFileContent(): String
+'    + getLessonType(): String
+'    + getFileContent(): String
 }
 
 class Lecture TIMETABLE_COLOR {
-    + getLessonType(): String
-    + getFileContent(): String
+'    + getLessonType(): String
+'    + getFileContent(): String
 }
 
 class Lab TIMETABLE_COLOR {
-    + getLessonType(): String
-    + getFileContent(): String
+'    + getLessonType(): String
+'    + getFileContent(): String
 }
 
 class SubCommand TIMETABLE_COLOR {
