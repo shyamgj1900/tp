@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+!include Style.puml
+
+object "<u>planner:Planner" as planner PLANNER_COLOR
+object "<u>:Event" as event PLANNER_COLOR
+object "<u>moduleList:ModuleList" as mod MODULE_COLOR
+object "<u>:ModuleDetails" as details MODULE_COLOR
+object "<u>timetable:Timetable" as timetable TIMETABLE_COLOR
+object "<u>:Lesson" as lesson TIMETABLE_COLOR
+
+planner -> mod
+planner --> "scheduleOfAllDates" event
+mod --> "myModules" details
+mod <- timetable
+timetable --> "lessonStorage" lesson
+
+@enduml
