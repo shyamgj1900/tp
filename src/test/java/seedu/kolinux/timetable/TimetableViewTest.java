@@ -271,7 +271,7 @@ public class TimetableViewTest {
             +
             "+-------------+--------------------+--------------------+--------------------+--------------------"
             +
-            "+--------------------+".replaceAll("\\n|\\r\\n",
+            "+--------------------+".replaceAll("\\n",
                     System.getProperty("line.separator"));
 
     private static final String[] VALID_ADD_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "TUT", "monday",
@@ -309,7 +309,8 @@ public class TimetableViewTest {
         timetable.clearTimetable();
         timetable.executeView();
         String expectedString = EMPTY_TIMETABLE.replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
-        assertEquals(EMPTY_TIMETABLE, output.toString().trim());
+        assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
+                System.getProperty("line.separator")));
     }
 
     @Test
@@ -320,7 +321,8 @@ public class TimetableViewTest {
         timetable.executeView();
         String expectedString = ONE_LESSON_IN_TIMETABLE.replaceAll("\\n|\\r\\n",
                 System.getProperty("line.separator"));
-        assertEquals(ONE_LESSON_IN_TIMETABLE, output.toString().trim());
+        assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
+                System.getProperty("line.separator")));
     }
 
 }

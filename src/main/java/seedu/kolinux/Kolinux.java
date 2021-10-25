@@ -32,7 +32,7 @@ public class Kolinux {
             directoryCreator.initDirectory();
             kolinuxLogger.initLogger();
             planner.initPlanner();
-            timetable.initTimetable();
+//            timetable.initTimetable();
             ModuleListStorage.setupStorage();
         } catch (KolinuxException exception) {
             ui.showErrorMessage(exception);
