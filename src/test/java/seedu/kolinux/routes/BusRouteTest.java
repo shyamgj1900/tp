@@ -55,7 +55,7 @@ public class BusRouteTest {
     public void enterLocation_checkDirectRoute_validRoute() throws KolinuxException, IOException {
         String[] input = {"bus", "kr mrt", "utown"};
         ArrayList<String> busNumbers = new ArrayList<>();
-        Route route = new Route(input);
+        DirectRoute route = new DirectRoute(input);
         route.getBusStopNumber();
         assertTrue(route.checkDirectRoutes(busNumbers));
         assertEquals("[D2]", busNumbers.toString());
@@ -65,7 +65,7 @@ public class BusRouteTest {
     public void enterLocation_checkDirectRoute_invalidRoute() throws KolinuxException, IOException {
         String[] input = {"bus", "lt13", "utown"};
         ArrayList<String> busNumbers = new ArrayList<>();
-        Route route = new Route(input);
+        DirectRoute route = new DirectRoute(input);
         route.getBusStopNumber();
         assertFalse(route.checkDirectRoutes(busNumbers));
     }
@@ -76,7 +76,7 @@ public class BusRouteTest {
         ArrayList<String> busNumberOne = new ArrayList<>();
         ArrayList<String> busNumberTwo = new ArrayList<>();
         ArrayList<String> midLocation = new ArrayList<>();
-        Route route = new Route(input);
+        IndirectRoute route = new IndirectRoute(input);
         route.getBusStopNumber();
         assertTrue(route.checkIndirectRoutes(busNumberOne, busNumberTwo, midLocation));
         assertEquals("[A2]", busNumberOne.toString());
@@ -90,7 +90,7 @@ public class BusRouteTest {
         ArrayList<String> busNumberOne = new ArrayList<>();
         ArrayList<String> busNumberTwo = new ArrayList<>();
         ArrayList<String> midLocation = new ArrayList<>();
-        Route route = new Route(input);
+        IndirectRoute route = new IndirectRoute(input);
         route.getBusStopNumber();
         assertFalse(route.checkIndirectRoutes(busNumberOne, busNumberTwo, midLocation));
     }
