@@ -13,6 +13,8 @@ public class PlannerStorage {
     private static final String PLANNER_FILE_PATH = "./data/planner.txt";
     private static File file = new File(PLANNER_FILE_PATH);
 
+    private static final String EMPTY_STRING = "";
+
     /**
      * Creates a file with the name planner.txt
      */
@@ -82,7 +84,7 @@ public class PlannerStorage {
     public void clearFile() {
         try {
             FileWriter writer = new FileWriter(file);
-            writer.write("");
+            writer.write(EMPTY_STRING);
             writer.close();
         } catch (IOException exception) {
             exception.printStackTrace();
