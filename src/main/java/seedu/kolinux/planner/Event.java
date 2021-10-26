@@ -11,7 +11,7 @@ public class Event {
 
     private static final String COLON = ":";
     private static final String EMPTY_STRING = "";
-    private static final String PIPE_REGEX = "\\|";
+    private static final String DATA_DELIMITER_REGEX = "\\s*\\|\\s*";
     private static final String PIPE = "|";
 
     private static int currentEventId = 0;
@@ -65,7 +65,7 @@ public class Event {
      * @throws KolinuxException If the data line is corrupted
      */
     public Event(String data) throws KolinuxException {
-        this(data.split(PIPE_REGEX));
+        this(data.split(DATA_DELIMITER_REGEX));
     }
 
     /**

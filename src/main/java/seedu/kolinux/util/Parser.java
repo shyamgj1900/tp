@@ -29,7 +29,11 @@ public class Parser {
     private static final String COMMAND_PLANNER = "planner";
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_TIMETABLE = "timetable";
+
     private static final String EMPTY_STRING = "";
+    private static final String ILLEGAL_CHAR = "|";
+
+    private static final String ILLEGAL_CHAR_MESSAGE = "Please avoid using '|' in your input, please try again.";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -53,6 +57,10 @@ public class Parser {
      * @return Command
      */
     public static Command parseCommand(String input) throws KolinuxException, IOException {
+
+        if (input.contains(ILLEGAL_CHAR)) {
+            throw new KolinuxException(ILLEGAL_CHAR_MESSAGE);
+        }
 
         String trimmedInput = input.trim();
         String commandWord = trimmedInput.split(" ", 2)[0];
