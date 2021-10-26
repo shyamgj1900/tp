@@ -23,7 +23,7 @@ public class HelpCommand extends Command {
             + "14. planner delete DATE - Delete an event on a certain date\n"
             + "15. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable\n"
             + "16. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
-            + "    - shift a lesson to another timing\n"
+            + "    - shift a lesson to another timing with the same duration\n"
             + "17. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson\n"
             + "18. timetable view - Print the timetable on CLI\n"
             + "19. help - View this menu again\n"
