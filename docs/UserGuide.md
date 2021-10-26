@@ -232,7 +232,7 @@ CS2113T grade set to A
 ....................................................................
 ```
 
-❕ Note: The grades set using this command will be used to calculate CAP based on your module list. 
+❗ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 
 ### Calculate overall CAP from modules in module list: `module cap`
@@ -308,7 +308,7 @@ timetable add CS1010/TUT/Monday/1200/1400
 Lesson has been added to timetable
 ....................................................................
 ```
-❕ Note: Ensure `MODULE_CODE` is stored in the module list using
+❗ Note: Ensure `MODULE_CODE` is stored in the module list using
 [`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
@@ -451,7 +451,7 @@ An event has been added to your schedule successfully!
 ....................................................................
 ```
 
-❕ Note: Users who attempt to add an event that has a time conflict with another event/lesson/exam will need to 
+❗ Note: Users who attempt to add an event that has a time conflict with another event/lesson/exam will need to 
 give additional confirmation if they wish to proceed.
 
 #### List events: `planner list`
@@ -476,7 +476,7 @@ planner list 2021-10-10
 ....................................................................
 ```
 
-❕ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
+❗ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to add lessons._
 _Exams are added to the list automatically as modules are stored in the [`module`](#module-manager-module) manager._
 
@@ -510,7 +510,7 @@ planner list 2021-11-05
 ....................................................................
 ```
 
-❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
+❗ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, users are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
 _Exams will be automatically deleted as modules are deleted from the [`module`](#module-manager-module) manager._
@@ -572,7 +572,7 @@ Demo:
 ....................................................................
 ```
 
-❕ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
+❗ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
 where the user needs to change and board another bus (only single change routes are recommended).
 
 ### CAP Calculator: `cap`
@@ -582,7 +582,7 @@ current semester. Users can choose between different formats of module
 ([`cap mc`](#calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#calculate-cap-using-module-code-cap-code)) 
 and the respective grade to allow more command flexibility.
 
-❕ Visit [`module cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
+❗ Visit [`module cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
 be used with the module manager.
 
 #### Calculate CAP using modular credit: `cap mc`
