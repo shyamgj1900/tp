@@ -17,8 +17,9 @@ public class Planner {
     private PlannerStorage plannerStorage = new PlannerStorage();
     private ModuleList moduleList;
 
-    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
+    
+    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of the data is corrupted, your planner will be reset...";
     private static final String TIME_CONFLICT_PROMPT =

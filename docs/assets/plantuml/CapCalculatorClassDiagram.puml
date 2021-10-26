@@ -21,14 +21,13 @@ class "ModuleList" {
 }
 
 class "CapCalculatorByMc" {
-- getInputModules(input : String) : void
 + CapCalculatorByMc(input : String)
 # getCap() : String
 }
 
 class "CapCalculatorByCode" {
-- isValidGrade(moduleGrade : String) : boolean
-- getInputModules(input : String) : void
+- moduleDb : ModuleDb
+
 + CapCalculatorByCode(input : String)
 + CapCalculatorByCode(modules : ModuleList)
 # getCap() : String
@@ -36,7 +35,6 @@ class "CapCalculatorByCode" {
 
 class "ModuleListCapCalculator" {
 + ModuleListCapCalculator(modules : ModuleList)
-- checkAllModulesNotAvailable() : void
 + executeCapCalculator() : String
 }
 
@@ -44,12 +42,6 @@ class "GradeSuggestionCalculator" {
 - userDesiredCap : String
 
 + GradeSuggestionCalculator(modules : ModuleList, userDesiredCap : String)
-- checkInvalidDesiredCap() : void
-- getMcModulesWithGrade() : double
-- getMcModulesWithoutGrade() : double
-- getGradeLetter(gradePoint : double) : String
-- getMinimumGrade(currentCap : double, mcModuleWithGrade : double, mcModuleWithoutGrade : double) String
-- getExpectedGrade() : String
 + executeCapCalculator() : String
 }
 
@@ -60,10 +52,6 @@ class "CalculatorModuleList" {
 + storeModuleCodeGrade(code : String, grade : String) : void
 }
 
-class ModuleDb {
-
-}
-
 "ABSTRACT \n CapCalculator" ^-- "CapCalculatorByMc"
 "ABSTRACT \n CapCalculator" ^-- "CapCalculatorByCode"
 "CapCalculatorByCode" ^-- "ModuleListCapCalculator"
@@ -71,7 +59,6 @@ class ModuleDb {
 "ModuleList" ^-- CalculatorModuleList
 
 "ABSTRACT \n CapCalculator" --> "1" "CalculatorModuleList"
-"CapCalculatorByCode" --> "1" ModuleDb
 
 
 @enduml
