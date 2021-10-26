@@ -126,7 +126,7 @@ public class ModuleList {
             if (preparationHours > 0) {
                 System.out.println("Preparation: " + preparationHours + " hours");
             }
-            if (preparationHours < 0 && projectHours < 0 && labHours < 0 && tutorialHours < 0 && lectureHours < 0 ) {
+            if (preparationHours < 0 && projectHours < 0 && labHours < 0 && tutorialHours < 0 && lectureHours < 0) {
                 System.out.println("No workload information available for " + code);
             }
             String examDate = module.getDate();
