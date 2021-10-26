@@ -74,12 +74,12 @@ public class Route {
         for (int i = 0; i < 6; i++) {
             vertices[i] = new ArrayList<>();
         }
-        readTextFromFile(vertices[0], FILEPATH_A1);
-        readTextFromFile(vertices[1], FILEPATH_A2);
-        readTextFromFile(vertices[2], FILEPATH_D1);
-        readTextFromFile(vertices[3], FILEPATH_D2);
-        readTextFromFile(vertices[4], FILEPATH_E);
-        readTextFromFile(vertices[5], FILEPATH_K);
+        readFromFile(vertices[0], FILEPATH_A1);
+        readFromFile(vertices[1], FILEPATH_A2);
+        readFromFile(vertices[2], FILEPATH_D1);
+        readFromFile(vertices[3], FILEPATH_D2);
+        readFromFile(vertices[4], FILEPATH_E);
+        readFromFile(vertices[5], FILEPATH_K);
         for (int i = 0; i < 6; i++) {
             setRoute(vertices[i], graph[i]);
         }
@@ -94,7 +94,7 @@ public class Route {
      * @throws KolinuxException if the user command is not in the correct format
      * @throws IOException if the there any IO errors
      */
-    protected static void readTextFromFile(ArrayList<String> lines, String filePath) throws KolinuxException, IOException {
+    protected static void readFromFile(ArrayList<String> lines, String filePath) throws KolinuxException, IOException {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
             if (inputStream == null) {

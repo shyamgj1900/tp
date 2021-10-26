@@ -9,6 +9,7 @@ public class DirectRoute extends Route {
 
     public DirectRoute(String[] splitInput) throws KolinuxException, IOException {
         super(splitInput);
+        getBusStopNumber();
     }
 
     /**
@@ -17,8 +18,7 @@ public class DirectRoute extends Route {
      * @param busNumbers buses of the connected bus stops
      * @return true if connected, false otherwise
      */
-    public boolean checkDirectRoutes(ArrayList<String> busNumbers) throws KolinuxException {
-        getBusStopNumber();
+    public boolean checkDirectRoutes(ArrayList<String> busNumbers) {
         boolean flag = false;
         if (graph[0].isConnected(vertexCodeA1[0], vertexCodeA1[1])) {
             busNumbers.add(BUS_A1);

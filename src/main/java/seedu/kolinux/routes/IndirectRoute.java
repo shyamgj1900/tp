@@ -5,10 +5,11 @@ import seedu.kolinux.exceptions.KolinuxException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class IndirectRoute extends Route{
+public class IndirectRoute extends Route {
 
     public IndirectRoute(String[] splitInput) throws KolinuxException, IOException {
         super(splitInput);
+        getBusStopNumber();
     }
 
     /**
@@ -21,8 +22,7 @@ public class IndirectRoute extends Route{
      * @param midLoc is the intermediate bus stop
      * @return true if connected, false otherwise
      */
-    public boolean checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) throws KolinuxException {
-        getBusStopNumber();
+    public boolean checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         if (vertexCodeA1[0] > 0 && checkIndirectAOne(busOne, busTwo, midLoc)) {
             return true;
         }
