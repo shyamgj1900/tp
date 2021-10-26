@@ -10,6 +10,8 @@ import java.io.IOException;
 public class BusRouteCommand extends Command {
     public static final String COMMAND_LIST_STOPS = "bus stop list";
     public static final String USER_COMMAND_DELIMITER = " /";
+    public static final String INCORRECT_FORMAT_MESSAGE = "Enter starting point and final destination.\n"
+            + "In the format \"bus /start_location /end_location\"";
 
     private Route route;
     private String input;
@@ -28,8 +30,7 @@ public class BusRouteCommand extends Command {
             return new CommandResult(location.getBusStopList());
         }
         if (splitInput.length != 3) {
-            throw new KolinuxException("Enter starting point and final destination.\n"
-                    + "In the format \"bus /start_location /end_location\"");
+            throw new KolinuxException(INCORRECT_FORMAT_MESSAGE);
         }
         route = new Route(splitInput);
         String message = route.checkRoutes();

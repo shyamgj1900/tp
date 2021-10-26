@@ -20,6 +20,7 @@ public class Route {
     public static final String STOP_IT = "IT";
     public static final String STOP_UTOWN = "UTOWN";
     public static final String STOP_KENT_VALE = "KENT VALE";
+    public static final String FILE_NOT_FOUND_MESSAGE = "File not found.";
     public static final String FILEPATH_A1 = "/routeA1.txt";
     public static final String FILEPATH_A2 = "/routeA2.txt";
     public static final String FILEPATH_D1 = "/routeD1.txt";
@@ -97,7 +98,7 @@ public class Route {
         try {
             InputStream inputStream = Main.class.getResourceAsStream(filePath);
             if (inputStream == null) {
-                throw new KolinuxException("File not found.");
+                throw new KolinuxException(FILE_NOT_FOUND_MESSAGE);
             }
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
