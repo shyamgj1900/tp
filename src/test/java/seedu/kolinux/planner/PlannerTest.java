@@ -18,7 +18,7 @@ public class PlannerTest {
     private Timetable timetable = new Timetable(moduleList);
     private AddSubCommand addSubCommand = new AddSubCommand();
 
-    private static final String EVENT_DATA_STRING = "Some data|2021-10-25|1200|1500";
+    private static final String EVENT_DATA_STRING = "Some data | 2021-10-25|1200| 1500";
     private static final String[][] VALID_LESSON_ARGUMENTS
             = new String[][]{{"CS2113T", "LEC", "Friday", "1600", "1800"},
                 {"CS2113T", "TUT", "Wednesday", "1100", "1200"},

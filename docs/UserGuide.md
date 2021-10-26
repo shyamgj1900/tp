@@ -18,6 +18,7 @@ their usages.
 
 ### Latest Releases
 
+* 💥 `v2.1` _Coming soon_
 * 💥 [`v2.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases) Released on Oct 26, 2021.
 * 💥 `v1.0` Released on Oct 12, 2021.
 
@@ -187,7 +188,7 @@ Remember to add the module's lessons to the timetable based on the workload
 
 Format: `module view MODULE_CODE`
 
-* `MODULE_CODE` needs to be in uppercase letters
+- `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
 
 Example of usage:
 
