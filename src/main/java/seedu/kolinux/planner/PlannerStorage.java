@@ -66,10 +66,14 @@ public class PlannerStorage {
      */
     public ArrayList<String> readFile() {
         ArrayList<String> fileLines = new ArrayList<>();
+        String fileLine;
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
-                fileLines.add(scanner.nextLine());
+                fileLine = scanner.nextLine();
+                if (!fileLine.isEmpty()) {
+                    fileLines.add(fileLine);
+                }
             }
             return fileLines;
         } catch (FileNotFoundException exception) {
