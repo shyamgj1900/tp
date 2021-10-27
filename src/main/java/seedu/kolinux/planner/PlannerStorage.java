@@ -13,6 +13,8 @@ public class PlannerStorage {
     private static final String PLANNER_FILE_PATH = "./data/planner.txt";
     private static File file = new File(PLANNER_FILE_PATH);
 
+    private static final String EMPTY_STRING = "";
+
     /**
      * Creates a file with the name planner.txt
      */
@@ -58,16 +60,20 @@ public class PlannerStorage {
     }
 
     /**
-     * Reads from the file with the name planner.txt
+     * Reads from the file with the name planner.txt. Empty lines will be ignored and skipped.
      *
      * @return Array list where each entry is a line from the file, null if the file does not exist.
      */
     public ArrayList<String> readFile() {
         ArrayList<String> fileLines = new ArrayList<>();
+        String fileLine;
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
-                fileLines.add(scanner.nextLine());
+                fileLine = scanner.nextLine();
+                if (!fileLine.isEmpty()) {
+                    fileLines.add(fileLine);
+                }
             }
             return fileLines;
         } catch (FileNotFoundException exception) {
@@ -82,7 +88,7 @@ public class PlannerStorage {
     public void clearFile() {
         try {
             FileWriter writer = new FileWriter(file);
-            writer.write("");
+            writer.write(EMPTY_STRING);
             writer.close();
         } catch (IOException exception) {
             exception.printStackTrace();
