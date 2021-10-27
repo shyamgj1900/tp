@@ -84,7 +84,10 @@ public class Planner {
     }
 
     /**
-     * Initializes the planner by loading the previously saved schedule in planner.txt.
+     * Initializes the planner by loading the previously saved schedule in planner.txt. File lines
+     * that are not able to construct an Event will be removed, and the new file lines will be
+     * rewritten back to the storage. Hence, only corrupted lines will be removed while the rest of
+     * the file data can still be added as Events to the planner.
      *
      * @throws KolinuxException If the file cannot be read properly due to corruption
      */

@@ -60,7 +60,7 @@ public class PlannerStorage {
     }
 
     /**
-     * Reads from the file with the name planner.txt
+     * Reads from the file with the name planner.txt. Empty lines will be ignored and skipped.
      *
      * @return Array list where each entry is a line from the file, null if the file does not exist.
      */
