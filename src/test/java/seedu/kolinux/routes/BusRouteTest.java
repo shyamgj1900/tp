@@ -95,4 +95,13 @@ public class BusRouteTest {
         assertFalse(route.checkIndirectRoutes(busNumberOne, busNumberTwo, midLocation));
     }
 
+    @Test
+    public void enterLocation_checkDirectAlternateRoute_validRoute() throws KolinuxException, IOException {
+        String[] input = {"bus", "opp kr mrt", "lt27"};
+        ArrayList<String> busNumbers = new ArrayList<>();
+        DirectRoute route = new DirectRoute(input);
+        assertEquals("There are no viable bus services from OPP KR MRT to LT27. "
+                + "But you can take bus [A1, D2, K] from KR MRT to LT27", route.checkDirectAlternateRoutes(busNumbers));
+        assertEquals("[A1, D2, K]", busNumbers.toString());
+    }
 }
