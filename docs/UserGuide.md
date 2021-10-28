@@ -18,8 +18,8 @@ may also navigate to the [List of Commands](#2-list-of-commands) to view a summa
 their usages.
 
 The following explains the use of different icons in this user guide:
-* ❕ - Rules that you should follow when entering commands.
-* ❗ - Important notes that you should remember when using the program.
+* ❕ - Notes about the feature.
+* ❗ - Important rules that you should follow when using the program.
 * 🔗 - Links to related sections in this user guide.
 
 ### Latest Releases
@@ -319,6 +319,8 @@ Lesson has been added to timetable
 [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
+>🔗 Visit [`module`](#31-module-manager-module) for more information on the command formats.
+
 #### 3.2.2 Delete lessons from timetable : `timetable delete`
 
 **Format:** `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
@@ -480,8 +482,10 @@ planner list 2021-10-10
 ```
 
 >❕ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
-_Visit the section on [`timetable`](#32-timetable-timetable) for commands to add lessons._
-_Exams are added to the list automatically as modules are stored in the [`module`](#31-module-manager-module) manager._
+
+>🔗 Visit the section on [`timetable`](#32-timetable-timetable) for commands to add lessons.
+
+>🔗 Exams are added to the list automatically as modules are stored in the [`module`](#31-module-manager-module) manager.
 
 #### 3.3.3 Delete an event from Planner: `planner delete`
 
@@ -513,8 +517,10 @@ planner list 2021-11-05
 
 >❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, you are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
-_Visit the section on [`timetable`](#32-timetable-timetable) for commands to delete lessons._
-_Exams will be automatically deleted as modules are deleted from the [`module`](#31-module-manager-module) manager._
+
+>🔗 Visit the section on [`timetable`](#32-timetable-timetable) for commands to delete lessons.
+
+>🔗 Exams will be automatically deleted as modules are deleted from the [`module`](#31-module-manager-module) manager.
 
 ### 3.4 NUS Bus Route Finder: `bus`
 
@@ -583,7 +589,7 @@ current semester. Users can choose between different formats of module
 ([`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#352-calculate-cap-using-module-code-cap-code)) 
 and the respective grade to allow more command flexibility.
 
->❕ Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
+>🔗 Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
 be used with the module manager.
 
 #### 3.5.1 Calculate CAP using modular credit: `cap mc`
