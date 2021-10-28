@@ -68,7 +68,7 @@ their usages.
 6. Launch `Kolinux.jar` using `java -jar Kolinux.jar`.
 7. Enter commands to use _Kolinux_.
 
-Demo:
+The following is what you should expect to observe on the terminal upon start-up:
 ```
 java -jar Kolinux.jar
 
@@ -421,11 +421,11 @@ CS1010 LEC has been updated
 
 ### Event Planner: `planner`
 
-The event planner works by allowing users to [`add`](#add-an-event-to-planner-planner-add), 
+The event planner works by allowing you to [`add`](#add-an-event-to-planner-planner-add), 
 [`delete`](#delete-an-event-from-planner-planner-delete), and 
 [`list`](#list-events-planner-list) any events happening on a specific date. 
-This is for users to manage their schedules daily. This feature is also integrated with the timetable and the module 
-manager so that users will also be able to view their lessons and exams on specific dates.
+This is for you to manage your schedules daily. This feature is also integrated with the timetable and the module 
+manager so that you will also be able to view your lessons and exams on specific dates.
 
 #### Add an event to Planner: `planner add`
 
@@ -453,8 +453,8 @@ An event has been added to your schedule successfully!
 ....................................................................
 ```
 
-❗ Note: Users who attempt to add an event that has a time conflict with another event/lesson/exam will need to 
-give additional confirmation if they wish to proceed.
+❗ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
+give additional confirmation if you wish to proceed.
 
 #### List events: `planner list`
 
@@ -490,7 +490,7 @@ Format: `planner delete DATE`
 
 This command has two steps:
 1. Input the command as shown in the format above.
-2. Find the ID of the event you wish to delete from on the schedule of events on `DATE` displayed.
+2. Find the ID of the event you wish to delete from the schedule of events on `DATE` displayed.
 3. Input the ID to delete the event.
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
@@ -513,7 +513,7 @@ planner list 2021-11-05
 ```
 
 ❗ Note: Only events added via the `planner` will be displayed on the list in step 2.
-Hence, users are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
+Hence, you are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
 _Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
 _Exams will be automatically deleted as modules are deleted from the [`module`](#module-manager-module) manager._
 
@@ -678,17 +678,17 @@ Kolinux automatically creates a directory `/data` upon the first start up. The d
 
 `logger.log` - User activity log of the most recent session.
 
-`moduleList.txt` - Module manager data of the user.
+`moduleList.txt` - Your module manager data.
 
-`planner.txt` - Planner data of the user.
+`planner.txt` - Your planner data.
 
-`timetable.txt` - Timetable data of the user.
+`timetable.txt` - Your timetable data.
 
-❗ Users are strongly advised not to modify these files as it can corrupt important user data and cause data loss.
+❗ You are strongly advised not to modify these files as it can corrupt important user data and cause data loss.
 
 ## Contact Us
 
-Our team welcomes users to contact us when faced with issues that this user guide fails to cover. We are
-also open to any suggestions that users may have to improve _Kolinux_. 😃
+Our team welcomes you to contact us when faced with issues that this user guide fails to cover. We are
+also open to any suggestions that you may have to improve _Kolinux_. 😃
 
-User may find our contact information [here](AboutUs.md).
+You may find our contact information [here](AboutUs.md).
