@@ -42,6 +42,15 @@ public class Ui {
     }
 
     /**
+     * Posts a prompt to the user to seek for a reply.
+     *
+     * @param prompt Prompt
+     */
+    public void promptUser(Prompt prompt) {
+        System.out.println(prompt.getMessage());
+    }
+
+    /**
      * Prints the feedback from the command execution to the user.
      *
      * @param result Feedback after command execution
