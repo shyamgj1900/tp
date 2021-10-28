@@ -14,7 +14,7 @@ for the NUS internal shuttle bus.
 
 This user guide brings you on a tour around _Kolinux_ and gives you step-by-step instructions on using its features.
 Alternatively, you may visit the [Table of Contents](#table-of-contents) for quick access to any of the features. You
-may also navigate to the [List of Commands](#list-of-commands) to view a summary of all our available commands and
+may also navigate to the [List of Commands](#2-list-of-commands) to view a summary of all our available commands and
 their usages.
 
 ### Latest Releases
@@ -25,38 +25,38 @@ their usages.
 
 ## Table of Contents
 
-* [Quick Start](#quick-start)
-* [List of Commands](#list-of-commands)
-* [Features](#features)
-  * [`module`](#module-manager-module)
-    * [`module store`](#add-modules-to-module-list-by-code-module-store)
-    * [`module delete`](#delete-modules-from-module-list-by-code-module-delete)
-    * [`module list`](#list-modules-from-module-list-module-list)
-    * [`module view`](#view-module-details-module-view)
-    * [`module grade`](#set-a-modules-grade-in-module-list-module-grade)
-    * [`module cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap)
-  * [`timetable`](#timetable-timetable)
-    * [`timetable add`](#add-lessons-to-timetable--timetable-add)
-    * [`timetable delete`](#delete-lessons-from-timetable--timetable-delete)
-    * [`timetable view`](#view-timetable-on-cli--timetable-view)
-    * [`timetable update`](#update-a-lesson-to-another-timing-your-timetable--timetable-update)
-  * [`planner`](#event-planner-planner)
-    * [`planner add`](#add-an-event-to-planner-planner-add)
-    * [`planner list`](#list-events-planner-list)
-    * [`planner delete`](#delete-an-event-from-planner-planner-delete)
-  * [`bus`](#nus-bus-route-finder-bus)
-    * [`bus`](#bus-route-search-bus)
-    * [`bus stop list`](#list-of-all-bus-stop-names-bus-stop-list) 
-  * [`cap`](#cap-calculator-cap)
-    * [`cap mc`](#calculate-cap-using-modular-credit-cap-mc)
-    * [`cap code`](#calculate-cap-using-module-code-cap-code)
-  * [`help`](#view-menu-help)
-  * [`bye`](#exit-bye)
-* [FAQ](#faq)
-* [Data Storage](#data-storage)
-* [Contact Us](#contact-us)
+* 1 [Quick Start](#1-quick-start)
+* 2 [List of Commands](#2-list-of-commands)
+* 3 [Features](#3-features)
+  * 3.1 [`module`](#31-module-manager-module)
+    * 3.1.1 [`module store`](#311-add-modules-to-module-list-by-code-module-store)
+    * 3.1.2 [`module delete`](#312-delete-modules-from-module-list-by-code-module-delete)
+    * 3.1.3 [`module list`](#313-list-modules-from-module-list-module-list)
+    * 3.1.4 [`module view`](#314-view-module-details-module-view)
+    * 3.1.5 [`module grade`](#315-set-a-modules-grade-in-module-list-module-grade)
+    * 3.1.6 [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap)
+  * 3.2 [`timetable`](#32-timetable-timetable)
+    * 3.2.1 [`timetable add`](#321-add-lessons-to-timetable--timetable-add)
+    * 3.2.2 [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)
+    * 3.2.3 [`timetable view`](#323-view-timetable-on-cli--timetable-view)
+    * 3.2.4 [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
+  * 3.3 [`planner`](#33-event-planner-planner)
+    * 3.3.1 [`planner add`](#331-add-an-event-to-planner-planner-add)
+    * 3.3.2 [`planner list`](#332-list-events-planner-list)
+    * 3.3.3 [`planner delete`](#333-delete-an-event-from-planner-planner-delete)
+  * 3.4 [`bus`](#34-nus-bus-route-finder-bus)
+    * 3.4.1 [`bus`](#341-bus-route-search-bus)
+    * 3.4.2 [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list) 
+  * 3.5 [`cap`](#35-cap-calculator-cap)
+    * 3.5.1 [`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc)
+    * 3.5.2 [`cap code`](#352-calculate-cap-using-module-code-cap-code)
+  * 3.6 [`help`](#36-view-menu-help)
+  * 3.7 [`bye`](#37-exit-bye)
+* 4 [FAQ](#4-faq)
+* 5 [Data Storage](#5-data-storage)
+* 6 [Contact Us](#6-contact-us)
 
-## Quick Start
+## 1 Quick Start
 
 ### Installation and start-up
 
@@ -82,7 +82,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 ....................................................................
 ```
 
-## List of Commands
+## 2 List of Commands
 
 |    Command    	|                     Action                     	              |               Command Format               	       |
 |:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
@@ -108,7 +108,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | `bye`         	| Exit Kolinux                                   	              | `bye`                                      	       |
 
 
-## Features 
+## 3 Features 
 
 Kolinux provides a **single integrated platform** consisting of **5 core features**:
 
@@ -118,17 +118,17 @@ Kolinux provides a **single integrated platform** consisting of **5 core feature
 4. `bus` - Route Finder
 5. `cap` - CAP Calculator
 
-### Module Manager: `module`
+### 3.1 Module Manager: `module`
 
-The module manager allows users to [`store`](#add-modules-to-module-list-by-code-module-store), 
-[`delete`](#delete-modules-from-module-list-by-code-module-delete), and 
-[`list`](#list-modules-from-module-list-module-list) the modules they are taking for the semester. Users 
-are also able to [`view`](#view-module-details-module-view) important information regarding a module, such as the 
+The module manager allows users to [`store`](#311-add-modules-to-module-list-by-code-module-store), 
+[`delete`](#312-delete-modules-from-module-list-by-code-module-delete), and 
+[`list`](#313-list-modules-from-module-list-module-list) the modules they are taking for the semester. Users 
+are also able to [`view`](#314-view-module-details-module-view) important information regarding a module, such as the 
 description and workload requirements. In addition, users are able to set a 
-[`grade`](#set-a-modules-grade-in-module-list-module-grade) on the modules in their list for the purpose of 
-[`cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap) calculation and grades suggestion.
+[`grade`](#315-set-a-modules-grade-in-module-list-module-grade) on the modules in their list for the purpose of 
+[`cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) calculation and grades suggestion.
 
-#### Add modules to module list by code: `module store`
+#### 3.1.1 Add modules to module list by code: `module store`
 
 Format: `module store MODULE_CODE `
 
@@ -145,7 +145,7 @@ Successfully stored module: CS2113T
 ....................................................................
 ```
 
-#### Delete modules from module list by code: `module delete`
+#### 3.1.2 Delete modules from module list by code: `module delete`
 
 Format: `module delete MODULE_CODE `
 
@@ -162,7 +162,7 @@ Successfully deleted module: CS2113T
 ....................................................................
 ```
 
-#### List modules from module list: `module list`
+#### 3.1.3 List modules from module list: `module list`
 
 Format: `module list `
 
@@ -185,7 +185,7 @@ Remember to add the module's lessons to the timetable based on the workload
 ....................................................................
 ```
 
-#### View module details: `module view`
+#### 3.1.4 View module details: `module view`
 
 Format: `module view MODULE_CODE`
 
@@ -218,7 +218,7 @@ composite data types), basic sorting, and recursion.
 ....................................................................
 ```
 
-#### Set a module's grade in module list: `module grade`
+#### 3.1.5 Set a module's grade in module list: `module grade`
 
 Format: `module grade CODE/GRADE `
 
@@ -237,7 +237,7 @@ CS2113T grade set to A
 ❗ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 
-### Calculate overall CAP from modules in module list: `module cap`
+### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
 
 Format: `module cap`
 
@@ -270,22 +270,22 @@ in order to achieve your desired CAP
 ....................................................................
 ```
 
-### Timetable: `timetable`
+### 3.2 Timetable: `timetable`
 
-This feature allows users to [`add`](#add-lessons-to-timetable--timetable-add) and 
-[`delete`](#delete-lessons-from-timetable--timetable-delete) lessons from their timetable based on the modules 
+This feature allows users to [`add`](#321-add-lessons-to-timetable--timetable-add) and 
+[`delete`](#322-delete-lessons-from-timetable--timetable-delete) lessons from their timetable based on the modules 
 added in the module manager. 
-Users are also able to [`update`](#update-a-lesson-to-another-timing-your-timetable--timetable-update)
+Users are also able to [`update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
 their existing lessons to another time slot.
 It also provides users an aesthetic visual representation of their timetable for users to 
-[`view`](#view-timetable-on-cli--timetable-view) on CLI.
+[`view`](#323-view-timetable-on-cli--timetable-view) on CLI.
 
-#### Add lessons to timetable : `timetable add`
+#### 3.2.1 Add lessons to timetable : `timetable add`
 
 Format: `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`
 
 * Ensure `MODULE_CODE` is stored in the module list using 
-[`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable
+[`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
 * `LESSON_TYPE` needs to be one of the following: 
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
@@ -311,15 +311,15 @@ Lesson has been added to timetable
 ....................................................................
 ```
 ❗ Note: Ensure `MODULE_CODE` is stored in the module list using
-[`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
+[`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
-#### Delete lessons from timetable : `timetable delete`
+#### 3.2.2 Delete lessons from timetable : `timetable delete`
 
 Format: `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
 
 * Ensure `MODULE_CODE` is stored in the module list using
-  [`module store`](#add-modules-to-module-list-by-code-module-store) first before adding to timetable
+  [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
 * `LESSON_TYPE` needs to be one of the following:
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
@@ -341,7 +341,7 @@ timetable delete cs1010/lec/tuesday
 CS1010 LEC tuesday has been deleted from timetable
 ....................................................................
 ```
-#### View timetable on CLI : `timetable view`
+#### 3.2.3 View timetable on CLI : `timetable view`
 
 Format: `timetable view`
 
@@ -391,7 +391,7 @@ timetable view
 Timetable has been printed above
 ....................................................................
 ```
-#### Update a lesson to another timing your timetable : `timetable update`
+#### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
 
 Format: `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`
 
@@ -419,15 +419,15 @@ CS1010 LEC has been updated
 ....................................................................
 ```
 
-### Event Planner: `planner`
+### 3.3 Event Planner: `planner`
 
-The event planner works by allowing you to [`add`](#add-an-event-to-planner-planner-add), 
-[`delete`](#delete-an-event-from-planner-planner-delete), and 
-[`list`](#list-events-planner-list) any events happening on a specific date. 
+The event planner works by allowing you to [`add`](#331-add-an-event-to-planner-planner-add), 
+[`delete`](#333-delete-an-event-from-planner-planner-delete), and 
+[`list`](#332-list-events-planner-list) any events happening on a specific date. 
 This is for you to manage your schedules daily. This feature is also integrated with the timetable and the module 
 manager so that you will also be able to view your lessons and exams on specific dates.
 
-#### Add an event to Planner: `planner add`
+#### 3.3.1 Add an event to Planner: `planner add`
 
 Adds a new event to your schedule
 
@@ -456,7 +456,7 @@ An event has been added to your schedule successfully!
 ❗ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
 give additional confirmation if you wish to proceed.
 
-#### List events: `planner list`
+#### 3.3.2 List events: `planner list`
 
 Lists events on a particular date
 
@@ -479,10 +479,10 @@ planner list 2021-10-10
 ```
 
 ❗ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
-_Visit the section on [`timetable`](#timetable-timetable) for commands to add lessons._
-_Exams are added to the list automatically as modules are stored in the [`module`](#module-manager-module) manager._
+_Visit the section on [`timetable`](#32-timetable-timetable) for commands to add lessons._
+_Exams are added to the list automatically as modules are stored in the [`module`](#31-module-manager-module) manager._
 
-#### Delete an event from Planner: `planner delete`
+#### 3.3.3 Delete an event from Planner: `planner delete`
 
 Deletes an event from your schedule
 
@@ -514,18 +514,18 @@ planner list 2021-11-05
 
 ❗ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, you are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
-_Visit the section on [`timetable`](#timetable-timetable) for commands to delete lessons._
-_Exams will be automatically deleted as modules are deleted from the [`module`](#module-manager-module) manager._
+_Visit the section on [`timetable`](#32-timetable-timetable) for commands to delete lessons._
+_Exams will be automatically deleted as modules are deleted from the [`module`](#31-module-manager-module) manager._
 
-### NUS Bus Route Finder: `bus`
+### 3.4 NUS Bus Route Finder: `bus`
 
-The route finder helps users to find if there are [`bus`](#bus-route-search-bus) routes between any two NUS shuttle 
+The route finder helps users to find if there are [`bus`](#341-bus-route-search-bus) routes between any two NUS shuttle 
 service bus stops. Users are recommended buses they can take to reach their destination. 
-Users also have the ability to view the [`bus stop list`](#list-of-all-bus-stop-names-bus-stop-list) which contains 
+Users also have the ability to view the [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list) which contains 
 all the bus stop names which are covered by the NUS shuttle bus service. 
 This feature allows users to get familiarised with the NUS internal shuttle bus route.
 
-#### Bus route search: `bus`
+#### 3.4.1 Bus route search: `bus`
 
 Format: `bus /start_location /end_location`
 
@@ -542,7 +542,7 @@ Bus [D2] goes from PGP to MUSEUM
 ....................................................................
 ```
 
-#### List of all bus stop names: `bus stop list`
+#### 3.4.2 List of all bus stop names: `bus stop list`
 
 Format: `bus stop list`
 
@@ -577,17 +577,17 @@ Demo:
 ❗ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
 where the user needs to change and board another bus (only single change routes are recommended).
 
-### CAP Calculator: `cap`
+### 3.5 CAP Calculator: `cap`
 
 The CAP calculator helps users to keep track on their CAP and set desired grades for the
 current semester. Users can choose between different formats of module 
-([`cap mc`](#calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#calculate-cap-using-module-code-cap-code)) 
+([`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#352-calculate-cap-using-module-code-cap-code)) 
 and the respective grade to allow more command flexibility.
 
-❗ Visit [`module cap`](#calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
+❗ Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
 be used with the module manager.
 
-#### Calculate CAP using modular credit: `cap mc`
+#### 3.5.1 Calculate CAP using modular credit: `cap mc`
 
 Format: `cap mc MC/GRADE`
 
@@ -603,7 +603,7 @@ Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
 ```
 
-#### Calculate CAP using module code: `cap code`
+#### 3.5.2 Calculate CAP using module code: `cap code`
 
 Format: `cap code CODE/GRADE`
 
@@ -619,7 +619,7 @@ Your CAP for this semester will be 3.40 if you get your desired grades!
 ....................................................................
 ```
 
-### View menu: `help`
+### 3.6 View menu: `help`
 
 Views the different commands available.
 
@@ -653,7 +653,7 @@ Here are the list of commands:
 ....................................................................
 ```
 
-### Exit: `bye`
+### 3.7 Exit: `bye`
 
 Terminates Kolinux.
 
@@ -665,14 +665,14 @@ Bye! Thank you for using Kolinux
 ....................................................................
 ```
 
-## FAQ
+## 4 FAQ
 
 **Q**: How do I transfer my data to another computer? 
 
 **A**: Locate the `/data` directory stored in the same folder as `Kolinux.jar`. Copy the directory to the other 
 computer, in the same folder as `Kolinux.jar`. The data will be automatically read upon starting up `Kolinux`.
 
-## Data Storage
+## 5 Data Storage
 
 Kolinux automatically creates a directory `/data` upon the first start up. The directory consists of the files:
 
@@ -686,7 +686,7 @@ Kolinux automatically creates a directory `/data` upon the first start up. The d
 
 ❗ You are strongly advised not to modify these files as it can corrupt important user data and cause data loss.
 
-## Contact Us
+## 6 Contact Us
 
 Our team welcomes you to contact us when faced with issues that this user guide fails to cover. We are
 also open to any suggestions that you may have to improve _Kolinux_. 😃
