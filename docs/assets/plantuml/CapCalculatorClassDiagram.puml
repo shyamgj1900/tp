@@ -5,7 +5,7 @@
 
 hide circle
 
-class "ABSTRACT \n CapCalculator" {
+class "ABSTRACT \n CapCalculator" CAPCALCULATOR_COLOR {
 # invalidModules : ArrayList<String>
 
 + CapCalculator()
@@ -16,16 +16,16 @@ class "ABSTRACT \n CapCalculator" {
 + executeCapCalculator() : String
 }
 
-class "ModuleList" {
+class "ModuleList" MODULE_COLOR {
 + myModules : ArrayList<ModuleDetails>
 }
 
-class "CapCalculatorByMc" {
+class "CapCalculatorByMc" CAPCALCULATOR_COLOR {
 + CapCalculatorByMc(input : String)
 # getCap() : String
 }
 
-class "CapCalculatorByCode" {
+class "CapCalculatorByCode" CAPCALCULATOR_COLOR {
 - moduleDb : ModuleDb
 
 + CapCalculatorByCode(input : String)
@@ -33,19 +33,19 @@ class "CapCalculatorByCode" {
 # getCap() : String
 }
 
-class "ModuleListCapCalculator" {
+class "ModuleListCapCalculator" CAPCALCULATOR_COLOR {
 + ModuleListCapCalculator(modules : ModuleList)
 + executeCapCalculator() : String
 }
 
-class "GradeSuggestionCalculator" {
+class "GradeSuggestionCalculator" CAPCALCULATOR_COLOR {
 - userDesiredCap : String
 
 + GradeSuggestionCalculator(modules : ModuleList, userDesiredCap : String)
 + executeCapCalculator() : String
 }
 
-class "CalculatorModuleList" {
+class "CalculatorModuleList" MODULE_COLOR {
 + CalculatorModuleList()
 + CalculatorModuleList(moduleList : ModuleList)
 + storeModuleMcGrade(mc : int, grade : String) : void
