@@ -47,7 +47,7 @@ The following explains the use of different icons in this user guide:
     * 3.2.4 [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
   * 3.3 [`planner`](#33-event-planner-planner)
     * 3.3.1 [`planner add`](#331-add-an-event-to-planner-planner-add)
-    * 3.3.2 [`planner list`](#332-list-events-planner-list)
+    * 3.3.2 [`planner list`](#332-list-events-on-a-specific-date-planner-list)
     * 3.3.3 [`planner delete`](#333-delete-an-event-from-planner-planner-delete)
   * 3.4 [`bus`](#34-nus-bus-route-finder-bus)
     * 3.4.1 [`bus`](#341-bus-route-search-bus)
@@ -103,7 +103,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | [`timetable view`](#323-view-timetable-on-cli--timetable-view)  | View timetable                                                  | `timetable view`                                   |
 | [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`|
 | [`planner add`](#331-add-an-event-to-planner-planner-add) 	| Add a new event to your planner on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
-| [`planner list`](#332-list-events-planner-list)	| List the events in your planner on a particular date                            | `planner list DATE`                                |
+| [`planner list`](#332-list-events-on-a-specific-date-planner-list)	| List the events in your planner on a particular date                            | `planner list DATE`                                |
 | [`planner delete`](#333-delete-an-event-from-planner-planner-delete) 	| Delete an event from your planner on a particular date                            | `planner delete DATE`                              |
 | [`bus`](#341-bus-route-search-bus)        	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
 | [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list)   | Lists all the bus stops in the NUS shuttle bus routes           | `bus stop list`                                    |
@@ -428,13 +428,11 @@ CS1010 LEC has been updated
 
 The event planner works by allowing you to [`add`](#331-add-an-event-to-planner-planner-add), 
 [`delete`](#333-delete-an-event-from-planner-planner-delete), and 
-[`list`](#332-list-events-planner-list) any events happening on a specific date. 
+[`list`](#332-list-events-on-a-specific-date-planner-list) any events happening on a specific date. 
 This is for you to manage your schedules daily. This feature is also integrated with the timetable and the module 
 manager so that you will also be able to view your lessons and exams on specific dates.
 
 #### 3.3.1 Add an event to Planner: `planner add`
-
-Adds a new event to your schedule
 
 **Format:** `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
 
@@ -461,9 +459,7 @@ An event has been added to your schedule successfully!
 >❕ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
 give additional confirmation if you wish to proceed.
 
-#### 3.3.2 List events: `planner list`
-
-Lists events on a particular date
+#### 3.3.2 List events on a specific date: `planner list`
 
 **Format:** `planner list DATE`
 
@@ -488,8 +484,6 @@ _Visit the section on [`timetable`](#32-timetable-timetable) for commands to add
 _Exams are added to the list automatically as modules are stored in the [`module`](#31-module-manager-module) manager._
 
 #### 3.3.3 Delete an event from Planner: `planner delete`
-
-Deletes an event from your schedule
 
 **Format:** `planner delete DATE`
 
