@@ -1,72 +1,64 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class CapCalculator
-abstract class ModuleList
-class CapCalculatorByMc
-class CapCalculatorByCode
-class ModuleListCapCalculator
-class GradeSuggestionCalculator
-class CalculatorModuleList
-class ModuleDb
+!include Style.puml
 
-CapCalculator ^-- CapCalculatorByMc
-CapCalculator ^-- CapCalculatorByCode
-CapCalculatorByCode ^-- ModuleListCapCalculator
-CapCalculatorByCode ^-- GradeSuggestionCalculator
-ModuleList ^-- CalculatorModuleList
+hide circle
 
-CapCalculator --> "1" CalculatorModuleList
-CapCalculatorByCode --> "1" ModuleDb
-
-class CapCalculator {
+class "ABSTRACT \n CapCalculator" CAPCALCULATOR_COLOR {
 # invalidModules : ArrayList<String>
+
 + CapCalculator()
 # checkModulesNotEmpty() : void
 # calculateCurrentCap(totalMc : double, cap : double, mc : int, gradePoint : double) : double
-# getCap() : String {abstract}
+# getCap() : String ABSTRACT
 # checkInvalidModules() : void
 + executeCapCalculator() : String
 }
 
-class CapCalculatorByMc {
-- getInputModules(input : String) : void
+class "ModuleList" MODULE_COLOR {
++ myModules : ArrayList<ModuleDetails>
+}
+
+class "CapCalculatorByMc" CAPCALCULATOR_COLOR {
 + CapCalculatorByMc(input : String)
 # getCap() : String
 }
 
-class CapCalculatorByCode {
-- isValidGrade(moduleGrade : String) : boolean
-- getInputModules(input : String) : void
+class "CapCalculatorByCode" CAPCALCULATOR_COLOR {
+- moduleDb : ModuleDb
+
 + CapCalculatorByCode(input : String)
 + CapCalculatorByCode(modules : ModuleList)
 # getCap() : String
 }
 
-class ModuleListCapCalculator {
+class "ModuleListCapCalculator" CAPCALCULATOR_COLOR {
 + ModuleListCapCalculator(modules : ModuleList)
-- checkAllModulesNotAvailable() : void
 + executeCapCalculator() : String
 }
 
-class GradeSuggestionCalculator {
+class "GradeSuggestionCalculator" CAPCALCULATOR_COLOR {
 - userDesiredCap : String
+
 + GradeSuggestionCalculator(modules : ModuleList, userDesiredCap : String)
-- checkInvalidDesiredCap() : void
-- getMcModulesWithGrade() : double
-- getMcModulesWithoutGrade() : double
-- getGradeLetter(gradePoint : double) : String
-- getMinimumGrade(currentCap : double, mcModuleWithGrade : double, mcModuleWithoutGrade : double) String
-- getExpectedGrade() : String
 + executeCapCalculator() : String
 }
 
-class CalculatorModuleList {
+class "CalculatorModuleList" MODULE_COLOR {
 + CalculatorModuleList()
 + CalculatorModuleList(moduleList : ModuleList)
 + storeModuleMcGrade(mc : int, grade : String) : void
 + storeModuleCodeGrade(code : String, grade : String) : void
 }
+
+"ABSTRACT \n CapCalculator" ^-- "CapCalculatorByMc"
+"ABSTRACT \n CapCalculator" ^-- "CapCalculatorByCode"
+"CapCalculatorByCode" ^-- "ModuleListCapCalculator"
+"CapCalculatorByCode" ^-- "GradeSuggestionCalculator"
+"ModuleList" ^-- CalculatorModuleList
+
+"ABSTRACT \n CapCalculator" --> "1" "CalculatorModuleList"
 
 
 @enduml

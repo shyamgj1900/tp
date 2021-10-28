@@ -13,7 +13,7 @@ public class SubCommand {
             "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable:\n"
             +
-            "timetable update MODULE_CODE_/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
+            "timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
             +
             "Please ensure the timing for the "
             +

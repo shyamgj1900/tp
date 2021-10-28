@@ -8,6 +8,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/** Represents the logger for this application to log user activity. */
 public class KolinuxLogger {
 
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

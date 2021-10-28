@@ -1,0 +1,143 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include Style.puml
+
+hide circle
+class UpdateSubCommand
+class ViewSubCommand
+class AddSubCommand
+class SubCommand
+class DeleteSubCommand
+
+
+class Lesson
+class Tutorial
+class Lecture
+class TimetableStorage
+class Timetable
+
+
+SubCommand ^-- DeleteSubCommand
+ViewSubCommand --^ SubCommand
+AddSubCommand --^ SubCommand
+UpdateSubCommand --^ SubCommand
+
+Lesson ^-- Lecture
+Lesson ^-- Tutorial
+Lesson ^-- Lab
+
+AddSubCommand ..> "1..*" Lesson : lesson
+DeleteSubCommand ..> "1..*" Lesson : lesson
+UpdateSubCommand ..> "1..*" Lesson : lesson
+Timetable --> "1" TimetableStorage : timetableStorage
+Timetable --> "*" Lesson : lessonStorage
+'Timetable --> "4" SubCommand
+
+TimetableStorage --> "*" Lesson : lessonStorage
+
+class Timetable TIMETABLE_COLOR {
+'    + {static} lessonStorage: ArrayList<Lesson>
+'    + {static} timetableStorage: TimetableStorage
+    + {static} timetableData: String[][]
+    + {static} moduleList: ModuleList
+    - addSubCommand: AddSubCommand
+    - deleteSubCommand: DeleteSubCommand
+    - updateSubCommand: UpdateSubCommand
+    - viewSubCommand: ViewSubCommand
+'    + executeAdd(lessonDetails : String[]): void
+'    + executeUpdate(lessonDetails: String[]): void
+'    + executeDelete(lessonDetails: String[]): void
+'    + executeView(lessonDetails: String[]): void
+    + initTimetable(): void
+'    + deleteByModuleList(moduleCode: String): void
+    + public clearTimetable(): void
+'    - loadContent(fileContents: ArrayList<String>): void
+
+
+}
+
+class TimetableStorage TIMETABLE_COLOR {
+'    - lessonStorage: Lesson
+    + writeToFile(): void
+    + createFilePath(filePath:String): void
+    + clearFile(): void
+}
+
+class ViewSubCommand TIMETABLE_COLOR {
++ viewTimetable(): void
+'- toPrint(data: String): String
+'- getSpaces(numberOfSpaces: int): String
+'- checkOddOrEven(lesson: String): int
+}
+
+class AddSubCommand TIMETABLE_COLOR {
++ inputLesson(lessonDetails: String[]): void
+- addToTimetable(lesson: Lesson): void
+'- isLessonInModuleList(moduleList: ModuleList,
+'   moduleCode: String): boolean
+'- isPeriodFree(startIndex: int,endIndex: int,
+'dayIndex: int): boolean
+}
+
+class DeleteSubCommand TIMETABLE_COLOR {
++ deleteLesson(lessonDetails : String[]): void
+- deleteFromTimetable(moduleCode: String,
+lessonType: String,dayIndex: int): void
+}
+
+
+
+class UpdateSubCommand TIMETABLE_COLOR {
++ updateTimetable(lessonDetails: String[]): void
++ isLessonInTimetable(moduleCode: String,
+lessonType: String,day: String): boolean
+'- getOldLessonHours(moduleCode: String,
+'lessonType: String,day: String): int
+'- getOldTimings(moduleCode: String,
+'lessonType: String,day: String): String[]
+}
+
+class Lesson TIMETABLE_COLOR {
+    # lessonType: String
+    # moduleCode: String
+    # day: String
+    # startTime: String
+    # endTime: String
+'    # startTimeIndex: int
+'    # endTimeIndex: int
+'    # dayIndex: int
+'    + {static} schoolHours: String[]
+'    + {static} days: String[]
+'    + getLessonType(): String
+'    + getModuleCode(): String
+'    + getDayIndex(): int
+'    + getStartTimeIndex(): int
+'    + getEndTimeIndex(): int
+'    + getDay: String
+'    + getStartTime: String
+'    + getEndTime: String
+'    + getHours(): int
+'    + {static} getIndex(input: String,array: String[]): int
+}
+
+class Tutorial TIMETABLE_COLOR {
+'    + getLessonType(): String
+'    + getFileContent(): String
+}
+
+class Lecture TIMETABLE_COLOR {
+'    + getLessonType(): String
+'    + getFileContent(): String
+}
+
+class Lab TIMETABLE_COLOR {
+'    + getLessonType(): String
+'    + getFileContent(): String
+}
+
+class SubCommand TIMETABLE_COLOR {
+}
+
+
+@enduml

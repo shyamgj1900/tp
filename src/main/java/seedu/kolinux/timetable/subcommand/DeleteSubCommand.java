@@ -26,11 +26,11 @@ public class DeleteSubCommand extends SubCommand {
         }
     }
 
-    public void deleteLesson(String[] parsedArguments) throws KolinuxException {
+    public void deleteLesson(String[] lessonDetails) throws KolinuxException {
         try {
-            String moduleCode = parsedArguments[0].toUpperCase();
-            String lessonType = parsedArguments[1].toUpperCase();
-            String day = parsedArguments[2].toLowerCase();
+            String moduleCode = lessonDetails[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String day = lessonDetails[2].toLowerCase();
             int dayIndex = getIndex(day, days);
             deleteFromTimetable(moduleCode, lessonType, dayIndex);
             int removeIndex = -1;

@@ -18,7 +18,7 @@ public class Location {
      */
     public String getBusStopList() throws KolinuxException, IOException {
         ArrayList<String> lines = new ArrayList<>();
-        Route.readTextFromFile(lines, FILEPATH_STOP_NAMES);
+        Route.readFromFile(lines, FILEPATH_STOP_NAMES);
         return String.join("\n", lines);
     }
 

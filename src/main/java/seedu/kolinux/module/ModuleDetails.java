@@ -100,28 +100,48 @@ public class ModuleDetails {
     }
 
     public double getTutorialHours() {
-        tutorialHours = workload[1];
-        return tutorialHours;
+        try {
+            tutorialHours = workload[1];
+            return tutorialHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getLectureHours() {
-        lectureHours = workload[0];
-        return lectureHours;
+        try {
+            lectureHours = workload[0];
+            return lectureHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getLabHours() {
-        labHours = workload[2];
-        return labHours;
+        try {
+            labHours = workload[2];
+            return labHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getProjectHours() {
-        projectHours = workload[3];
-        return projectHours;
+        try {
+            projectHours = workload[3];
+            return projectHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getPreparationHours() {
-        preparationHours = workload[4];
-        return preparationHours;
+        try {
+            preparationHours = workload[4];
+            return preparationHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public String[] getExamDateTime() {
@@ -130,7 +150,7 @@ public class ModuleDetails {
             String newTimeFormat = examDate.replace(":00.000Z", "");
             String[] dateTime = newTimeFormat.split("T");
             return dateTime;
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }
@@ -139,7 +159,7 @@ public class ModuleDetails {
         try {
             String[] dateTime = getExamDateTime();
             return dateTime[0];
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }
@@ -157,7 +177,7 @@ public class ModuleDetails {
                 finalTime = offsetTime + ":00";
             }
             return finalTime;
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }
@@ -176,7 +196,7 @@ public class ModuleDetails {
                 endTime = endTiming + ":00";
             }
             return endTime;
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }

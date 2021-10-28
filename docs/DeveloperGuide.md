@@ -17,8 +17,8 @@ to allow you to better understand the reasons behind the various methods of impl
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module store/delete`](#store/delete-a-module-by-module-code)
-  * [`cap code`](#cap-calculator-by-code-feature)
+  * [`module store/delete`](#store/delete-a-module-by-module-code-feature)
+  * [`cap code`](#cap-calculator-by-module-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
   * [Target user profile](#target-user-profile)
@@ -47,12 +47,12 @@ to allow you to better understand the reasons behind the various methods of impl
 ### Before writing code
 
 1. Configure the code style
-   1. Ensure that your coding style matches our coding style
-2. Set up CI 
-   1. This project comes with a `gradle.yml` file so each time you push, Github will run the continuous integration 
+   * Ensure that your coding style matches our coding style
+2. Set up Continuous Integration
+   * This project comes with a `gradle.yml` file so each time you push, Github will run the CI
    for your project automatically.
 3. Learn the design
-   1. Look through the overall design by looking through [Kolinux's overall architecture](#design)
+   * Look through the overall design by looking through [Kolinux's overall architecture](#design)
    
 
 ## Design
@@ -102,7 +102,29 @@ also shown in the diagram above. These interactions will be further elaborated i
 
 #### Module Component
 
+The class diagram below model the associations within the `module` component
+
+![Module Class Diagram](assets/images/ModuleClassDiagram.png)
+
+
+
+The `ModuleCommand` class is responsible for the execution of all `module` related commands. It inherits references 
+to instances of `ModuleList` and `ModuleDb` from `Command`  which are utilized for maintaining a list of
+`ModuleDetails` instances and operating a database of `moduleDetails`( `ModuleDb`) respectively. `ModuleCommand` 
+also interacts with `ModuleListStorage` to facilitate the persistent storage of the contents of `ModuleList`. 
+
 #### Timetable Component
+
+The class diagram below describes the interactions within in the `timetable` component
+
+![Timetable Class Diagram](assets/images/TimetableClassDiagram.png)
+
+The `Timetable` class is the main part in this component that is responsible for all `timetable` related command 
+executions. `Timetable` maintains a list of all `Lesson`s in `lessonStorage` and an association with
+`TimetableStorage` for storage of `Lesson` data in `data/timetable.txt`.`Lesson` has 3 types `Tutorial`, 
+`Lecture` and `Lab` which are specified by its lesson type, `TUT`, `LEC` and `LAB` respectively. 
+`AddSubCommand`, `DeleteSubCommand`, `UpdateSubCommand` and `ViewSubCommand` are called to execute 
+`timetable add`, `timetable delete`, `timetable update` and `timetable view` commands respectively.
 
 #### Planner Component
 
@@ -116,6 +138,17 @@ storage of `Event`s data in `data/planner.txt`. To communicate with other compon
 the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and exams data for `Planner`.
 
 #### CAP Calculator Component
+
+The class diagram below describes the interaction between `CapCalculator` and its subclasses.
+
+![CapCalculator Class Diagram](assets/images/CapCalculatorClassDiagram.png)
+
+The `CapCalculator` is an abstract representation of calculator which is inherited by every calculator classes.
+It contains the list of modules whose grade are being retrieved to calculate the overall cap within 
+`CalculatorModuleList`, which is a subclass of `ModuleList` designed specifically for `CapCalculator`. Its subclasses
+can be divided into two groups based on the module format, namely `CapCalculatorByMc` which calculates cap of modules
+containing only the modular credit and the corresponding grade, and `CapCalculatorByCode` and its subclasses which can
+retrieve modular credit of each module from `moduleDb` for the calculation.
 
 #### Bus Routes Finder Component
 
@@ -141,13 +174,13 @@ to `timetable.txt` file to constantly save the lessons' data. It implements the 
 
 * `Timetable#inputLesson(String[] lessonDetail)` containing `Timetable#addLesson(Lesson lesson)` - Adds the lesson 
 to `timetableStorage` based on the type of lesson it is, which is included in the lessonDetail.
-* TimetableStorage#writeToFile() - Saves the lesson details to `timetable.txt` locally.
+* `TimetableStorage#writeToFile()` - Saves the lesson details to `timetable.txt` locally.
 
 #### ❕ Notes about the methods:
 
-* `String[] lessonDetails` consists of MODULE_CODE, LESSON_TYPE (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
-DAY, START_TIME, END_TIME. 
-* Lesson class is inherited by Tutorial, Lecture and Lab to add lessons based on the LESSON_TYPE as shown 
+* `String[] lessonDetails` consists of `MODULE_CODE`, `LESSON_TYPE` (`TUT` - tutorial, `LEC` - lecture or `LAB` - lab), 
+`DAY`, `START_TIME`, `END_TIME`. 
+* Lesson class is inherited by `Tutorial`, `Lecture` and `Lab` to add lessons based on the `LESSON_TYPE` as shown 
 in the example below.
 
 Given below are the examples of the usage of `timetable add` of lessons to the timetable.
@@ -178,12 +211,39 @@ file via `TimetableStorage#writeToFile()`
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram2.png)
 
-* The following sequence diagram illustrates the checks done before adding to the timetable and one of them is the 
+* There are checks done before adding to the timetable and one of them is the 
 `AddSubCommand#isLessonInModuleList(moduleList, moduleCode)`. This integrates `Timetable` and `ModuleList` which 
 ensures a module's lessons being added to the timetable has its `moduleCode` first added to the `ModuleList` 
 else it will throw an exception to add the module.
+
+```
+    private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
+        for (ModuleDetails module : moduleList.myModules) {
+            if (Objects.equals(module.moduleCode, moduleCode)) {
+                return true;
+            }
+        }
+        return false;
+    }
+```
 * Another check done is to check if the slot between `START_TIME` and `END_TIME` is not occupied by another lesson,
 likewise it will throw an exception.
+
+```
+    private boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
+        try {
+            for (int i = startIndex; i < endIndex; i++) {
+                if (timetableData[i][dayIndex] != null) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(INVALID_HOURS_INPUT);
+        }
+    }
+```
+* The following sequence diagram illustrates both these checks.
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram3.png)
 
@@ -204,9 +264,9 @@ This mechanism is implemented by the following methods:
 * `Planner#addEvent(Event event, boolean allowConflict)`: Attempts to add `event` to `scheduleOfAllDates` by invoking
 the following methods:
     * `Planner#hasTimeConflict(Event event)`: Checks for any time conflicts between `event` and any existing `Event`s
-    in `scheduleOfAllDates`, lessons, and exams.
+      in `scheduleOfAllDates`, lessons, and exams.
     * `PlannerStorage#writeFile(String data)`: Appends the data of the newly added `Event` to `data/planner.txt` for 
-    local storage.
+      local storage.
 
 * `PlannerCommand#getReplyFromPrompt(String question)`: Gets user confirmation to allow or cancel the add operation
 in case of a time conflict.
@@ -282,25 +342,21 @@ Step 1: The user launches the application. `myModules` , the list of `ModuleDeta
 
 Example: `myModules` is initialized with single `ModuleDetails` instance corresponding to `CS2113T`
 
-![moduleListInit](assets/images/moduleListInit.png)
-
-
+<img src="assets/images/moduleListInit.png" width="550">
 
 Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
 
-![moduleListInit](assets/images/moduleStore.png)
-
-
+<img src="assets/images/moduleStore.png" width="550">
 
 Step 3: The user executes `module delete CS2101` command to delete the instance of `ModuleDetais` corresponding to `CS2101` from `myModules`. The `module delete` prefix ensures `ModuleList#deleteModuleByCode(String code)` is called. 
 
-![moduleListInit](assets/images/moduleListInit.png)
+<img src="assets/images/moduleListInit.png" width="550">
 
 
 
 The following sequence diagram models how the `module store` operation works:
 
-![Module Store Sequence Diagram](assets/images/moduleStoreSequence.png)
+![Module Store Sequence Diagram](assets/images/ModuleStoreSequenceDiagram.png)
 
 The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
 
@@ -309,15 +365,14 @@ The `module delete` operation follows a similar sequence. Instead of calling the
 ### CAP Calculator by module code feature
 
 This cap calculation is managed using `CapCalculatorByCode`. It extends `CapCalculator` which stores
-the input modules and grades from user as a `CalculatorModuleList` in `modules`, which is a subclass 
-of `ModuleList` dedicated for cap calculation. 
+the input modules and grades from user as a `CalculatorModuleList`, which is a subclass of `ModuleList` 
+dedicated for cap calculation. 
 
 When the command `cap code` is given by the user, the constructor is called to retrieve and store the modules 
 from the input. After the object construction is done, `CapCalculator#executeCapCalculator()` method is then 
 invoked for the cap calculation. 
 
-In order to achieve these functionalities, the following methods 
-from `CapCalculatorByCode` are invoked.
+In order to achieve these functionalities, the following methods from `CapCalculatorByCode` are invoked.
 
 * `CapCalculatorByCode#getInputModules(String input)` — which retrieves the module codes and grades from String input
 and store them as `CalculatorModuleList`
@@ -352,7 +407,7 @@ the `input` string to the `Route` class. The operation is implemented in the fol
 
 The following sequence diagram explains the bus routes feature.
 
-![sequenceDiagram](assets/images/BusRouteSequence.png)
+![sequenceDiagram](assets/images/BusRouteSequenceDiagram.png)
 
 ## Product scope
 ### Target user profile:
