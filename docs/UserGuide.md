@@ -135,11 +135,11 @@ description and workload requirements. In addition, users are able to set a
 
 #### 3.1.1 Add modules to module list by code: `module store`
 
-Format: `module store MODULE_CODE `
+**Format:** `module store MODULE_CODE `
 
 - `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
 
-Example of usage:
+**Example of usage:**
 
 - `module store CS2113T`
 
@@ -152,11 +152,11 @@ Successfully stored module: CS2113T
 
 #### 3.1.2 Delete modules from module list by code: `module delete`
 
-Format: `module delete MODULE_CODE `
+**Format:** `module delete MODULE_CODE `
 
 - `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
 
-Example of usage:
+**Example of usage:**
 
 - `module delete CS2113T`
 
@@ -169,9 +169,9 @@ Successfully deleted module: CS2113T
 
 #### 3.1.3 List modules from module list: `module list`
 
-Format: `module list `
+**Format:** `module list `
 
-Example of usage:
+**Example of usage:**
 
 - `module list` when CS2113T is already stored in the list
 
@@ -192,11 +192,11 @@ Remember to add the module's lessons to the timetable based on the workload
 
 #### 3.1.4 View module details: `module view`
 
-Format: `module view MODULE_CODE`
+**Format:** `module view MODULE_CODE`
 
 - `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
 
-Example of usage:
+**Example of usage:**
 
 * `module view CS1010`
 
@@ -225,9 +225,9 @@ composite data types), basic sorting, and recursion.
 
 #### 3.1.5 Set a module's grade in module list: `module grade`
 
-Format: `module grade CODE/GRADE `
+**Format:** `module grade CODE/GRADE `
 
-Example of usage:
+**Example of usage:**
 
 - `module grade CS2113T/A` when CS2113T is already stored in the list
 
@@ -239,14 +239,14 @@ CS2113T grade set to A
 ....................................................................
 ```
 
-❗ Note: The grades set using this command will be used to calculate CAP based on your module list. 
+>❕ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 
 ### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
 
-Format: `module cap`
+**Format:** `module cap`
 
-Example of usage:
+**Example of usage:**
 
 - `module cap` when at least one module is already stored in the list with the module's grade
 
@@ -261,9 +261,9 @@ Based on your available grade, your cap for this semester is 5.00
 This feature also provides user with the minimum grade to get for the other modules in order to achieve desired CAP 
 by including the CAP at the end of the command.
 
-Format: `module cap DESIRED_CAP`
+**Format:** `module cap DESIRED_CAP`
 
-Example of usage:
+**Example of usage:**
 - `module cap 4.0` when at least one module doesn't have the grade stored
 
 Demo:
@@ -287,7 +287,7 @@ It also provides users an aesthetic visual representation of their timetable for
 
 #### 3.2.1 Add lessons to timetable : `timetable add`
 
-Format: `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`
+**Format:** `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`
 
 * Ensure `MODULE_CODE` is stored in the module list using 
 [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
@@ -304,7 +304,7 @@ Format: `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`
   * i.e. `monday` is the same as `MONDAY`
 
 
-Example of usage:
+**Example of usage:**
 
 * `timetable add CS1010/TUT/Monday/1200/1400`
 * `timetable add CS2113T/LEC/friday/1600/1800`
@@ -315,13 +315,13 @@ timetable add CS1010/TUT/Monday/1200/1400
 Lesson has been added to timetable
 ....................................................................
 ```
-❗ Note: Ensure `MODULE_CODE` is stored in the module list using
+>❕ Note: Ensure `MODULE_CODE` is stored in the module list using
 [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
 #### 3.2.2 Delete lessons from timetable : `timetable delete`
 
-Format: `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
+**Format:** `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
 
 * Ensure `MODULE_CODE` is stored in the module list using
   [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
@@ -335,7 +335,7 @@ Format: `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
   * i.e. `TUT` is the same as `tut` or `Tut`
   * i.e. `monday` is the same as `MONDAY`
 
-Example of usage:
+**Example of usage:**
 
 * `timetable delete cs1010/lec/tuesday`
 * `timetable delete CS2113T/LEC/Friday`
@@ -348,9 +348,9 @@ CS1010 LEC tuesday has been deleted from timetable
 ```
 #### 3.2.3 View timetable on CLI : `timetable view`
 
-Format: `timetable view`
+**Format:** `timetable view`
 
-Example of usage:
+**Example of usage:**
 
 * `timetable add CS1010/LEC/monday/1900/2000` followed by `timetable view`
 
@@ -398,7 +398,7 @@ Timetable has been printed above
 ```
 #### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
 
-Format: `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`
+**Format:** `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`
 
 * `LESSON_TYPE` needs to be one of the following:
   * `TUT` refers to tutorial
@@ -412,7 +412,7 @@ Format: `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
   * i.e. `TUT` is the same as `tut` or `Tut`
   * i.e. `monday` is the same as `MONDAY`
 
-Example of usage:
+**Example of usage:**
 
 * `timetable update cs1010/lec/tuesday/monday/1200`
 * `timetable update CS2113T/LEC/Friday/Monday/1300`
@@ -436,12 +436,12 @@ manager so that you will also be able to view your lessons and exams on specific
 
 Adds a new event to your schedule
 
-Format: `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
+**Format:** `planner add DESCRIPTION/DATE/START_TIME/END_TIME`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM`
 
-Example of usage:
+**Example of usage:**
 
 * `planner add MA1508E quiz/2021-10-10/1700/1800`
 
@@ -458,18 +458,18 @@ An event has been added to your schedule successfully!
 ....................................................................
 ```
 
-❗ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
+>❕ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
 give additional confirmation if you wish to proceed.
 
 #### 3.3.2 List events: `planner list`
 
 Lists events on a particular date
 
-Format: `planner list DATE`
+**Format:** `planner list DATE`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
 
-Example of usage:
+**Example of usage:**
 
 * `planner list 2021-10-10`
 
@@ -483,7 +483,7 @@ planner list 2021-10-10
 ....................................................................
 ```
 
-❗ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
+>❕ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
 _Visit the section on [`timetable`](#32-timetable-timetable) for commands to add lessons._
 _Exams are added to the list automatically as modules are stored in the [`module`](#31-module-manager-module) manager._
 
@@ -491,7 +491,7 @@ _Exams are added to the list automatically as modules are stored in the [`module
 
 Deletes an event from your schedule
 
-Format: `planner delete DATE`
+**Format:** `planner delete DATE`
 
 This command has two steps:
 1. Input the command as shown in the format above.
@@ -517,7 +517,7 @@ planner list 2021-11-05
 ....................................................................
 ```
 
-❗ Note: Only events added via the `planner` will be displayed on the list in step 2.
+>❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, you are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
 _Visit the section on [`timetable`](#32-timetable-timetable) for commands to delete lessons._
 _Exams will be automatically deleted as modules are deleted from the [`module`](#31-module-manager-module) manager._
@@ -532,11 +532,11 @@ This feature allows users to get familiarised with the NUS internal shuttle bus 
 
 #### 3.4.1 Bus route search: `bus`
 
-Format: `bus /start_location /end_location`
+**Format:** `bus /start_location /end_location`
 
 * Bus stop names are not case-sensitive
 
-Example of usage:
+**Example of usage:**
 
 * `bus /pgp /museum`
 
@@ -549,9 +549,9 @@ Bus [D2] goes from PGP to MUSEUM
 
 #### 3.4.2 List of all bus stop names: `bus stop list`
 
-Format: `bus stop list`
+**Format:** `bus stop list`
 
-Example of usage:
+**Example of usage:**
 
 * `bus stop list`
 
@@ -579,7 +579,7 @@ Demo:
 ....................................................................
 ```
 
-❗ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
+>❕ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
 where the user needs to change and board another bus (only single change routes are recommended).
 
 ### 3.5 CAP Calculator: `cap`
@@ -589,14 +589,14 @@ current semester. Users can choose between different formats of module
 ([`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#352-calculate-cap-using-module-code-cap-code)) 
 and the respective grade to allow more command flexibility.
 
-❗ Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
+>❕ Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to see how this feature can
 be used with the module manager.
 
 #### 3.5.1 Calculate CAP using modular credit: `cap mc`
 
-Format: `cap mc MC/GRADE`
+**Format:** `cap mc MC/GRADE`
 
-Example of usage:
+**Example of usage:**
 
 * `cap mc 4/A 6/B+ 4/B 4/B- 4/A+`
 
@@ -610,9 +610,9 @@ Your CAP for this semester will be 4.09 if you get your desired grades!
 
 #### 3.5.2 Calculate CAP using module code: `cap code`
 
-Format: `cap code CODE/GRADE`
+**Format:** `cap code CODE/GRADE`
 
-Example of usage:
+**Example of usage:**
 
 * `cap code CS2113T/A CS2101/C CG2027/B-`
 
@@ -689,7 +689,7 @@ _Kolinux_ automatically creates a directory `/data` upon the first start up. The
 
 `timetable.txt` - Your timetable data.
 
-❗ You are strongly advised not to modify these files as it can corrupt important user data and cause data loss.
+>❗ You are strongly advised not to modify these files as it can corrupt important user data and cause data loss.
 
 ## 6 Contact Us
 
