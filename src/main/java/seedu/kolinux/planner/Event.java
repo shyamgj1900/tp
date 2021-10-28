@@ -53,8 +53,9 @@ public class Event {
             if (startTime.compareTo(endTime) > 0) {
                 throw new KolinuxException(TIME_ORDER_ERROR);
             }
-            this.id = currentEventId;
-            currentEventId++;
+
+            this.id = currentEventId++;
+
         } catch (DateTimeParseException exception) {
             throw new KolinuxException(DATETIME_ERROR);
         } catch (NullPointerException | IndexOutOfBoundsException exception) {
