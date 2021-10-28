@@ -440,7 +440,7 @@ Example of usage:
 
 * `planner add MA1508E quiz/2021-10-10/1700/1800`
 
-Demo:
+This is what you should observe on your terminal when adding an event to your planner:
 
 ```
 planner add MA1508E quiz/2021-10-10/1700/1800
@@ -468,7 +468,7 @@ Example of usage:
 
 * `planner list 2021-10-10`
 
-Demo:
+This is what you should observe on the terminal when you list the events in your planner on a specific date:
 
 ```
 planner list 2021-10-10
@@ -495,7 +495,7 @@ This command has two steps:
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
 
-Demo:
+This is what you should observe on the terminal when you delete an event on a specific date:
 ```
 planner delete 2021-11-05
 Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):
@@ -623,7 +623,7 @@ Your CAP for this semester will be 3.40 if you get your desired grades!
 
 Views the different commands available.
 
-Demo:
+This is what you should observe on the terminal when you send a help command:
 
 ```
 help
@@ -655,9 +655,9 @@ Here are the list of commands:
 
 ### Exit: `bye`
 
-Exits Kolinux.
+Terminates Kolinux.
 
-Demo:
+This is what you should observe on the terminal upon termination:
 
 ```
 bye
