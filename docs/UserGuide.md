@@ -17,6 +17,11 @@ Alternatively, you may visit the [Table of Contents](#table-of-contents) for qui
 may also navigate to the [List of Commands](#2-list-of-commands) to view a summary of all our available commands and
 their usages.
 
+The following explains the use of different icons in this user guide:
+* ❕ - Rules that you should follow when entering commands.
+* ❗ - Important notes that you should remember when using the program.
+* 🔗 - Links to related sections in this user guide.
+
 ### Latest Releases
 
 * 💥 `v2.1` _Coming soon_
@@ -105,12 +110,12 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | [`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc)         	| Calculate CAP using a set of modular credits and grades         | `cap mc MC/GRADE`                            	   |
 | [`cap code`](#352-calculate-cap-using-module-code-cap-code)        | Calculate CAP using a set of module codes and grades            | `cap code MODULE_CODE/GRADE`                              |
 | [`help`](#36-view-menu-help)       	| View the different commands available          	              | `help`                                     	       |
-| [`bye`](#37-exit-bye)      	| Exit Kolinux                                   	              | `bye`                                      	       |
+| [`bye`](#37-exit-bye)      	| Exit _Kolinux_                                   	              | `bye`                                      	       |
 
 
 ## 3 Features 
 
-Kolinux provides a **single integrated platform** consisting of **5 core features**:
+_Kolinux_ provides a **single integrated platform** consisting of **5 core features**:
 
 1. `module` - Module Manager
 2. `timetable` - Timetable
@@ -655,7 +660,7 @@ Here are the list of commands:
 
 ### 3.7 Exit: `bye`
 
-Terminates Kolinux.
+Terminates _Kolinux_.
 
 This is what you should observe on the terminal upon termination:
 
@@ -674,7 +679,7 @@ computer, in the same folder as `Kolinux.jar`. The data will be automatically re
 
 ## 5 Data Storage
 
-Kolinux automatically creates a directory `/data` upon the first start up. The directory consists of the files:
+_Kolinux_ automatically creates a directory `/data` upon the first start up. The directory consists of the files:
 
 `logger.log` - User activity log of the most recent session.
 
