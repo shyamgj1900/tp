@@ -23,6 +23,8 @@ public class Event {
     private int id;
     private boolean isLesson = false;
 
+    private static final String EMPTY_DESCRIPTION_ERROR =
+            "Please provide a description for your event!";
     private static final String DATETIME_ERROR =
             "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
@@ -45,14 +47,17 @@ public class Event {
             this.startTime = LocalTime.parse(parsedArguments[2].replaceFirst("..", "$0:"));
             this.endTime = LocalTime.parse(parsedArguments[3].replaceFirst("..", "$0:"));
 
+            if (description.isEmpty()) {
+                throw new KolinuxException(EMPTY_DESCRIPTION_ERROR);
+            }
             if (startTime.compareTo(endTime) > 0) {
                 throw new KolinuxException(TIME_ORDER_ERROR);
             }
             this.id = currentEventId;
             currentEventId++;
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException exception) {
             throw new KolinuxException(DATETIME_ERROR);
-        } catch (NullPointerException | IndexOutOfBoundsException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             throw new KolinuxException(FORMAT_ERROR);
         }
     }
