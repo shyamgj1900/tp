@@ -3,10 +3,11 @@
 ## Introduction
 
 _Kolinux_ helps NUS freshmen to better integrate into university life by allowing them to 
-**manage their work** and **learn more about NUS**, all in a **single integrated platform**. It is optimized for CLI 
+**manage their modules and schedule**, **familiarise with the NUS internal bus system**, and **receive grade
+suggestions based on their CAP** all in a **single integrated platform**. It is optimized for CLI 
 users so that they can access the information that they require faster by typing in commands easily.
 
-_Kolinux_ offers a wide range of features for freshmen. These features include a **module manager**
+Hence, _Kolinux_ offers a wide range of features for freshmen. These features include a **module manager**
 for freshmen to manage their modules and view information about them, a **timetable** to view their classes, an 
 **event planner** for freshmen to organise their schedule for the day, a **CAP calculator**, and a **route finder** 
 for the NUS internal shuttle bus.
