@@ -3,8 +3,12 @@ package seedu.kolinux.util;
 import seedu.kolinux.commands.CommandResult;
 import seedu.kolinux.exceptions.KolinuxException;
 
+import java.util.Scanner;
+
 /** Represents the user interface. */
 public class Ui {
+
+    private Scanner scanner = new Scanner(System.in);
 
     private static final String LOGO = "\n"
             + "(_)   | |    | |(_)\n"
@@ -17,6 +21,16 @@ public class Ui {
 
     private void printDivider() {
         System.out.println(DIVIDER);
+    }
+
+    /**
+     * Reads the user input to Kolinux.
+     *
+     * @return User input
+     */
+    public String readUserInput() {
+        String userInput = scanner.nextLine();
+        return userInput;
     }
 
     /**

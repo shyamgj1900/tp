@@ -12,7 +12,6 @@ import seedu.kolinux.util.DirectoryCreator;
 import seedu.kolinux.util.Ui;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import static seedu.kolinux.commands.TimetableCommand.timetable;
 
@@ -44,10 +43,9 @@ public class Kolinux {
      */
     private void runCommandInLoop() {
 
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
-                String userInput = scanner.nextLine();
+                String userInput = ui.readUserInput();
                 Command command = Parser.parseCommand(userInput);
                 CommandResult result = command.executeCommand();
                 ui.showResultToUser(result);
