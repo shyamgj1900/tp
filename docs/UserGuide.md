@@ -46,7 +46,7 @@ their usages.
     * 3.3.3 [`planner delete`](#333-delete-an-event-from-planner-planner-delete)
   * 3.4 [`bus`](#34-nus-bus-route-finder-bus)
     * 3.4.1 [`bus`](#341-bus-route-search-bus)
-    * 3.4.2 [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list) 
+    * 3.4.2 [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list)
   * 3.5 [`cap`](#35-cap-calculator-cap)
     * 3.5.1 [`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc)
     * 3.5.2 [`cap code`](#352-calculate-cap-using-module-code-cap-code)
@@ -86,26 +86,26 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 |    Command    	|                     Action                     	              |               Command Format               	       |
 |:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
-| `module store`	| Store a module in the module list			                      | `module store MODULE_CODE`			               |
-| `module delete`	| Delete a module from the module list			                  | `module delete MODULE_CODE`			               |
-| `module list`     | List all stored modules from the module list                    | `module list`                                      |
-| `module view`     | View module information                                         | `module view MODULE_CODE`                          |
-| `module grade`    | Set the grade of a module in the module list by its module code | `module grade MODULE_CODE/GRADE`                          |
-| `module cap`      | Calculate CAP given modules and grades in the module list       | `module cap`                                       |
-| `module cap`      | Get average grade needed to get desired CAP from module list    | `module cap DESIRED_CAP`                           |
-| `timetable add`   | Add a lesson to your timetable                                  | `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`|
-| `timetable delete`| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY`     |
-| `timetable view`  | View timetable                                                  | `timetable view`                                   |
-| `timetable update`| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`|
-| `planner add` 	| Add a new event to your schedule on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
-| `planner list` 	| List the events on a particular date                            | `planner list DATE`                                |
-| `planner delete` 	| Delete an event on a particular date                            | `planner delete DATE`                              |
-| `bus`         	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
-| `bus stop list`   | Lists all the bus stops in the NUS shuttle bus routes           | `bus stop list`                                    |
-| `cap mc`         	| Calculate CAP using a set of modular credits and grades         | `cap mc MC/GRADE`                            	   |
-| `cap code`        | Calculate CAP using a set of module codes and grades            | `cap code MODULE_CODE/GRADE`                              |
-| `help`        	| View the different commands available          	              | `help`                                     	       |
-| `bye`         	| Exit Kolinux                                   	              | `bye`                                      	       |
+| [`module store`](#311-add-modules-to-module-list-by-code-module-store)	| Store a module in the module list			                      | `module store MODULE_CODE`			               |
+| [`module delete`](#312-delete-modules-from-module-list-by-code-module-delete)	| Delete a module from the module list			                  | `module delete MODULE_CODE`			               |
+| [`module list`](#313-list-modules-from-module-list-module-list)     | List all stored modules from the module list                    | `module list`                                      |
+| [`module view`](#314-view-module-details-module-view)     | View module information                                         | `module view MODULE_CODE`                          |
+| [`module grade`](#315-set-a-modules-grade-in-module-list-module-grade)    | Set the grade of a module in the module list by its module code | `module grade MODULE_CODE/GRADE`                          |
+| [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap)      | Calculate CAP given modules and grades in the module list       | `module cap`                                       |
+| [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap)      | Get average grade needed to get desired CAP from module list    | `module cap DESIRED_CAP`                           |
+| [`timetable add`](#321-add-lessons-to-timetable--timetable-add)   | Add a lesson to your timetable                                  | `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`|
+| [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY`     |
+| [`timetable view`](#323-view-timetable-on-cli--timetable-view)  | View timetable                                                  | `timetable view`                                   |
+| [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`|
+| [`planner add`](#331-add-an-event-to-planner-planner-add) 	| Add a new event to your planner on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
+| [`planner list`](#332-list-events-planner-list)	| List the events in your planner on a particular date                            | `planner list DATE`                                |
+| [`planner delete`](#333-delete-an-event-from-planner-planner-delete) 	| Delete an event from your planner on a particular date                            | `planner delete DATE`                              |
+| [`bus`](#341-bus-route-search-bus)        	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
+| [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list)   | Lists all the bus stops in the NUS shuttle bus routes           | `bus stop list`                                    |
+| [`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc)         	| Calculate CAP using a set of modular credits and grades         | `cap mc MC/GRADE`                            	   |
+| [`cap code`](#352-calculate-cap-using-module-code-cap-code)        | Calculate CAP using a set of module codes and grades            | `cap code MODULE_CODE/GRADE`                              |
+| [`help`](#36-view-menu-help)       	| View the different commands available          	              | `help`                                     	       |
+| [`bye`](#37-exit-bye)      	| Exit Kolinux                                   	              | `bye`                                      	       |
 
 
 ## 3 Features 
