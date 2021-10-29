@@ -6,15 +6,22 @@
 hide footbox
 
 actor User as user
+participant ":Ui" as ui UTIL_COLOR
 participant ":Kolinux" as kolinux KOLINUX_COLOR
 participant ":Parser" as parser UTIL_COLOR
 participant ":XYZCommand" as com COMMANDS_COLOR
 participant ":CommandResult" as res COMMANDS_COLOR
-participant ":Ui" as ui UTIL_COLOR
 
 loop Command not instance of ExitCommand
 
-user -> kolinux : userInput
+kolinux -> ui : readUserInput()
+activate ui
+
+ui -> user : read input
+user --> ui : userInput
+
+ui --> kolinux : userInput
+deactivate ui
 
 kolinux -> parser : parseCommand(userInput)
 activate parser
@@ -45,10 +52,10 @@ deactivate com
 kolinux -> ui : showResultToUser(result)
 activate ui
 
+ui -> user : print result
+
 ui --> kolinux
 deactivate ui
-
-kolinux --> user
 
 end
 
