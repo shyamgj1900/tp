@@ -46,6 +46,7 @@ Kolinux .down.> module
 Kolinux .down.> timetable
 Kolinux .up.> commands
 Parser .up.> commands
+Prompt <-right-> Ui
 Ui .up.> commands
 commands .down.> Prompt
 commands -down-> KolinuxLogger
