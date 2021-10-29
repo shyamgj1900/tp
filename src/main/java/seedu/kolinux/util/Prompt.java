@@ -1,17 +1,25 @@
 package seedu.kolinux.util;
 
-import java.util.Scanner;
-
 /** Represents a prompt for the user to give additional confirmation. */
 public class Prompt {
 
-    private Scanner scanner = new Scanner(System.in);
+    private Ui ui = new Ui();
+    private String message;
 
-    public Prompt(String prompt) {
-        System.out.println(prompt);
+    public Prompt(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void postPrompt() {
+        ui.promptUser(this);
     }
 
     public String getReply() {
-        return scanner.nextLine().trim();
+        String reply = ui.readUserInput().trim();
+        return reply;
     }
 }
