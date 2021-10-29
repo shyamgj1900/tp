@@ -33,6 +33,7 @@ public abstract class Command {
      */
     protected String getReplyFromPrompt(String question) {
         Prompt prompt = new Prompt(question);
+        prompt.postPrompt();
         return prompt.getReply();
     }
 
