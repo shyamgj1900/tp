@@ -3,6 +3,7 @@ package seedu.kolinux.planner;
 import org.junit.jupiter.api.Test;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
+import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.Timetable;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
@@ -210,7 +211,7 @@ public class PlannerTest {
     public void addEvent_eventConflictWithTimetableAllowConflict_eventAdded() throws KolinuxException {
         planner.clearEvents();
         timetable.clearTimetable();
-        Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
+        Lesson lesson = new Lecture(VALID_LESSON_ARGUMENTS[0]);
         addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
@@ -223,7 +224,7 @@ public class PlannerTest {
     public void listEvent_attemptToDeleteLessonFromPlanner_lessonHiddenFromUser() throws KolinuxException {
         planner.clearEvents();
         timetable.clearTimetable();
-        Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
+        Lesson lesson = new Lecture(VALID_LESSON_ARGUMENTS[0]);
         addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);

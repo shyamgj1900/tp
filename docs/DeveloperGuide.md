@@ -7,8 +7,9 @@ This Developer Guide is designed for developers interested in working with _Koli
 2. Extend the functionality of _Kolinux_
 
 This guide will bring you through the [overall design](#design) of _Kolinux_, the various 
-[implementations](#implementation) and their mechanisms. We have also provided insights into our target users
-to allow you to better understand the reasons behind the various methods of implementations.
+[implementations](#implementation) and their mechanisms. We have also provided insights into our 
+[target users](#target-user-profile) to allow you to better understand the reasons behind the various methods 
+of implementations.
 
 ## Table of Contents
 * [Acknowledgements](#acknowledgements)
@@ -41,7 +42,7 @@ to allow you to better understand the reasons behind the various methods of impl
 2. Configure JDK: Ensure your IDE is configured to JDK 11
 3. Import the project as a Gradle Project 
 4. Verify the setup by running `seedu.Kolinux.Main`
-   1. Try out a few commands and ensure they're working properly
+   1. [Try out a few commands](#instructions-for-manual-testing) and ensure they're working properly
    2. Run the tests and ensure all of them past the test cases
 
 ### Before writing code
@@ -79,7 +80,7 @@ The application consists of the following main components responsible for the hi
 7. `planner`: Collection of classes used by Planner feature.
 8. `capcalculator`: Collection of classes used by CAP Calculator feature.
 
-The architecture diagram below shows a high-level overview of how components interact with each other. 
+The architecture diagram below shows a high-level overview of the structure between different components. 
 
 ❕ _Note: Each component is coded with a different colour and the same colour coding is applied to the rest of this 
 document._
@@ -88,21 +89,21 @@ document._
 
 #### Commands Component
 
-The class diagram below describes the `commands` component.
+The class diagram below describes the structure of the `commands` component.
 
 ❕ _Note: XYZCommand in this diagram represents HelpCommand, ExitCommand, and InvalidCommand._
 
 ![Commands Class Diagram](assets/images/CommandsClassDiagram.png)
 
-All `..Command` inherit from the abstract `Command` class, which has interactions with `KolinuxLogger` so that
+All `Command` classes inherit from the abstract `Command` class, which has an association with `KolinuxLogger` so that
 every command execution has a corresponding log in `data/logger.log`. `Command` also has a dependency on `Prompt`,
 which functions to seek user confirmation below proceeding with the operation. Only `PlannerCommand` is using this
-inherited attributed in the current version. The interactions between each individual command and other components are 
-also shown in the diagram above. These interactions will be further elaborated in the sections below.
+inherited attributed in the current version. The structure between each individual command and other components are 
+also shown in the diagram above. These structures will be further elaborated in the sections below.
 
 #### Module Component
 
-The class diagram below model the associations within the `module` component
+The class diagram below model the structure within the `module` component
 
 ![Module Class Diagram](assets/images/ModuleClassDiagram.png)
 
@@ -115,7 +116,7 @@ also interacts with `ModuleListStorage` to facilitate the persistent storage of 
 
 #### Timetable Component
 
-The class diagram below describes the interactions within in the `timetable` component
+The class diagram below describes the structure within in the `timetable` component
 
 ![Timetable Class Diagram](assets/images/TimetableClassDiagram.png)
 
@@ -128,7 +129,7 @@ executions. `Timetable` maintains a list of all `Lesson`s in `lessonStorage` and
 
 #### Planner Component
 
-The class diagram below describes the interactions within the `planner` component.
+The class diagram below describes the structure within the `planner` component.
 
 ![Planner Class Diagram](assets/images/PlannerClassDiagram.png)
 
@@ -139,7 +140,7 @@ the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and
 
 #### CAP Calculator Component
 
-The class diagram below describes the interaction between `CapCalculator` and its subclasses.
+The class diagram below describes the structure between `CapCalculator` and its subclasses.
 
 ![CapCalculator Class Diagram](assets/images/CapCalculatorClassDiagram.png)
 
@@ -151,6 +152,18 @@ containing only the modular credit and the corresponding grade, and `CapCalculat
 retrieve modular credit of each module from `moduleDb` for the calculation.
 
 #### Bus Routes Finder Component
+The class diagram below describes the interaction between `Route` and its subclasses.
+
+![BusRoute Class Diagram](assets/images/BusRouteClassDiagram.png)
+
+The `Route` class is a higher level representation of the process to find routes. The `DirectRoute` and `IndirectRoute`
+classes inherit from the `Route` class. The `BusRouteCommand` instantiates `DirectRoute` and `IndirectRoute` objects.
+The `DirectRoute` class is responsible to check if there are any direct or direct alternate routes between the 2 user 
+given bus stops. The `IndirectRoute` class is responsible to find if there are any indirect routes between the 2 user 
+given bus stops, i.e a route wherein a user will need to switch buses at an intermediate bus stop. The process of checking
+whether 2 points on a graph are connected is facilitated by the `Graph` class and achieves this process by using BFS. A
+`Location` class object is instantiated by the `BusRouteCommand` class if the user wants to view the list of all bus stops
+in the network.
 
 ### Command Execution
 
@@ -309,7 +322,7 @@ a `Stream`.
 
 The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
-The object diagrams below show the interactions before and after `Planner#filterPlanner(String date)` is invoked to 
+The object diagrams below show the object structure in the memory before and after `Planner#filterPlanner(String date)` is invoked to 
 fetch `Lesson`s and exam information from `Timetable` and `ModuleList` respectively. Assume there is one `Lesson` 
 and one exam occurring on the same `date`, and there is one `Event` initially stored in `scheduleOfAllDates`.
 
@@ -396,16 +409,24 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 
 ### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
-When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
-the `input` string to the `Route` class. The operation is implemented in the following way.
+When the user invokes and uses the bus routes feature the `BusRouteCommand` class instantiates either a `Location` class 
+object or `DirectRoute` and `IndirectRoute` class object depending on the user input. The operation is implemented in the 
+following way.
 
-* The overriden function `executeCommand()` calls the `Route#checkRoutes()` method. 
-* The `Route#checkRoutes()` contains the `Route#getBusStopNumber()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)` and `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
-* `Route#getBusStopNumber()` - Converts the user given bus stop names to bus stop numbers which can then be used to find if the bus stops are connected.
-* `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
-* `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+* `Location#getBusStopList()` - Displays the list of all bus stops within the NUS internal bus service routes.
+* `DirectRoute#checkDirectRoutes(ArrayList<String> busNumbers)` - Checks whether there is a direct bus route between the 2 user given bus stops.
+* `IndirectRoute#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+* `DirectRoute#checkAlternateDirectRoutes(Arraylist<String> busNumbers)` - Checks whether there is a direct alternate route which involves finding a route from an opposite bus stop (if it exists) to the final location.
+* `Route#getBusStopNumber()` - Converts the user given bus stop name into the corresponding vertex number present in the graph route text file
+* `Graph#isConnected(int u, int v)` - Helps to check if 2 vertices in a graph are connected by a path using the BFS algorithm. All the methods which facilitates checking for routes call this method from the class `Graph`.
 
-The following sequence diagram explains the bus routes feature.
+❕ Some points about the graph. 
+* Each bus route has its own graph and the information is stored in text files and are loaded after the `Route` class constructor is called.
+* Graphs are modelled by taking each bus stop and assigning it a vertex number. 
+* A single bus stop may have different vertex numbers on different graphs.
+* Vertex numbers range from 0 to n - 1, where n is the total number of bus stops in the particular route
+
+The following sequence diagram gives an overview of the bus routes feature.
 
 ![sequenceDiagram](assets/images/BusRouteSequenceDiagram.png)
 
@@ -447,7 +468,6 @@ and CAP calculator) in a single integrated platform.
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
 <ol>
 <li> Should work on any mainstream OS as long as it has Java 11 or above installed. </li>
 <li> A user with above average typing speed for regular English text (i.e. not code, not system admin commands) 
@@ -483,10 +503,7 @@ should be able to accomplish most of the tasks faster using commands than using 
    - Test case: `module store CS2113T`
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
-
-     
-
-4. 
+   
 
    
 
@@ -532,4 +549,4 @@ should be able to accomplish most of the tasks faster using commands than using 
    
        Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
        operation. Entering `y` will lead to a success message, while anything else will lead to the operation cancelled.
-
+  

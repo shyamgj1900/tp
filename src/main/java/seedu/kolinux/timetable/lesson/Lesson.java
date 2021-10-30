@@ -4,7 +4,7 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.timetable.subcommand.SubCommand;
 
 /** Lesson class which stores all the attributes of a lesson to be input into the timetable. */
-public class Lesson {
+public abstract class Lesson {
 
     protected String lessonType;
     protected String moduleCode;

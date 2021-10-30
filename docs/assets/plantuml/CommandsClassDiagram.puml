@@ -40,7 +40,7 @@ package module <<Rectangle>> MODULE_COLOR {
 class "ABSTRACT\nCommand" COMMANDS_COLOR {
     # argument: String
     # getReplyFromPrompt(question: String): String
-    + ABSTRACT executeCommand(): CommandResult
+    + executeCommand(): CommandResult ABSTRACT
 }
 
 class CommandResult COMMANDS_COLOR {
