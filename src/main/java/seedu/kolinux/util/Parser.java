@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Represents the operations to parse information needed for the execution of a command.
@@ -57,31 +58,33 @@ public class Parser {
      * @return Command
      */
     public static Command parseCommand(String input) throws KolinuxException, IOException {
-
         if (input.contains(ILLEGAL_CHAR)) {
             throw new KolinuxException(ILLEGAL_CHAR_MESSAGE);
         }
+        try {
+            String trimmedInput = input.trim();
+            String commandWord = trimmedInput.split(" ", 2)[0];
+            String argument = trimmedInput.replaceFirst(commandWord, "").trim();
 
-        String trimmedInput = input.trim();
-        String commandWord = trimmedInput.split(" ", 2)[0];
-        String argument = trimmedInput.replaceFirst(commandWord, "").trim();
-
-        switch (commandWord.toLowerCase()) {
-        case COMMAND_HELP:
-            return new HelpCommand();
-        case COMMAND_CAP:
-            return new CalculateCapCommand(input);
-        case COMMAND_BUS:
-            return new BusRouteCommand(input);
-        case COMMAND_MODULE:
-            return parseSubCommand(argument, COMMAND_MODULE);
-        case COMMAND_PLANNER:
-            return parseSubCommand(argument, COMMAND_PLANNER);
-        case COMMAND_EXIT:
-            return new ExitCommand();
-        case COMMAND_TIMETABLE:
-            return parseSubCommand(argument, COMMAND_TIMETABLE);
-        default:
+            switch (commandWord.toLowerCase()) {
+            case COMMAND_HELP:
+                return new HelpCommand();
+            case COMMAND_CAP:
+                return new CalculateCapCommand(input);
+            case COMMAND_BUS:
+                return new BusRouteCommand(input);
+            case COMMAND_MODULE:
+                return parseSubCommand(argument, COMMAND_MODULE);
+            case COMMAND_PLANNER:
+                return parseSubCommand(argument, COMMAND_PLANNER);
+            case COMMAND_EXIT:
+                return new ExitCommand();
+            case COMMAND_TIMETABLE:
+                return parseSubCommand(argument, COMMAND_TIMETABLE);
+            default:
+                return new InvalidCommand();
+            }
+        } catch (PatternSyntaxException exception) {
             return new InvalidCommand();
         }
     }
