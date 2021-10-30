@@ -32,6 +32,8 @@ activate prompt
 prompt --> plc : prompt
 deactivate prompt
 
+plc -> prompt : postPrompt()
+
 plc -> prompt : getReply()
 activate prompt
 

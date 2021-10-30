@@ -79,7 +79,7 @@ The application consists of the following main components responsible for the hi
 7. `planner`: Collection of classes used by Planner feature.
 8. `capcalculator`: Collection of classes used by CAP Calculator feature.
 
-The architecture diagram below shows a high-level overview of how components interact with each other. 
+The architecture diagram below shows a high-level overview of the structure between different components. 
 
 ❕ _Note: Each component is coded with a different colour and the same colour coding is applied to the rest of this 
 document._
@@ -88,21 +88,21 @@ document._
 
 #### Commands Component
 
-The class diagram below describes the `commands` component.
+The class diagram below describes the structure of the `commands` component.
 
 ❕ _Note: XYZCommand in this diagram represents HelpCommand, ExitCommand, and InvalidCommand._
 
 ![Commands Class Diagram](assets/images/CommandsClassDiagram.png)
 
-All `..Command` inherit from the abstract `Command` class, which has interactions with `KolinuxLogger` so that
+All `Command` classes inherit from the abstract `Command` class, which has an association with `KolinuxLogger` so that
 every command execution has a corresponding log in `data/logger.log`. `Command` also has a dependency on `Prompt`,
 which functions to seek user confirmation below proceeding with the operation. Only `PlannerCommand` is using this
-inherited attributed in the current version. The interactions between each individual command and other components are 
-also shown in the diagram above. These interactions will be further elaborated in the sections below.
+inherited attributed in the current version. The structure between each individual command and other components are 
+also shown in the diagram above. These structures will be further elaborated in the sections below.
 
 #### Module Component
 
-The class diagram below model the associations within the `module` component
+The class diagram below model the structure within the `module` component
 
 ![Module Class Diagram](assets/images/ModuleClassDiagram.png)
 
@@ -115,7 +115,7 @@ also interacts with `ModuleListStorage` to facilitate the persistent storage of 
 
 #### Timetable Component
 
-The class diagram below describes the interactions within in the `timetable` component
+The class diagram below describes the structure within in the `timetable` component
 
 ![Timetable Class Diagram](assets/images/TimetableClassDiagram.png)
 
@@ -128,7 +128,7 @@ executions. `Timetable` maintains a list of all `Lesson`s in `lessonStorage` and
 
 #### Planner Component
 
-The class diagram below describes the interactions within the `planner` component.
+The class diagram below describes the structure within the `planner` component.
 
 ![Planner Class Diagram](assets/images/PlannerClassDiagram.png)
 
@@ -139,7 +139,7 @@ the `ModuleSyncer` and `ExamsGetter` are the main bridges to fetch `Lesson`s and
 
 #### CAP Calculator Component
 
-The class diagram below describes the interaction between `CapCalculator` and its subclasses.
+The class diagram below describes the structure between `CapCalculator` and its subclasses.
 
 ![CapCalculator Class Diagram](assets/images/CapCalculatorClassDiagram.png)
 
@@ -321,7 +321,7 @@ a `Stream`.
 
 The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
-The object diagrams below show the interactions before and after `Planner#filterPlanner(String date)` is invoked to 
+The object diagrams below show the object structure in the memory before and after `Planner#filterPlanner(String date)` is invoked to 
 fetch `Lesson`s and exam information from `Timetable` and `ModuleList` respectively. Assume there is one `Lesson` 
 and one exam occurring on the same `date`, and there is one `Event` initially stored in `scheduleOfAllDates`.
 
