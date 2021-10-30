@@ -125,7 +125,7 @@ public class AddSubCommand extends SubCommand {
     }
 
     private void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
-                                       String lessonType) throws KolinuxException {
+            String lessonType) throws KolinuxException {
         if (storageHours > requiredHours) {
             throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
                     +

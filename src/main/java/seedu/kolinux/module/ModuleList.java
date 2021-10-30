@@ -98,6 +98,45 @@ public class ModuleList {
         return code + " not found in the module list";
     }
 
+    public void getExamDateTime(ModuleDetails module) {
+        String examDate = module.getDate();
+        String examStartTime = module.getStartTime();
+        String examEndTime = module.getEndTime();
+        if (examDate != null && examStartTime != null && examEndTime != null) {
+            System.out.println("Exam date: " + examDate);
+            System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
+        } else {
+            System.out.println("No exam");
+        }
+    }
+
+    public void getWorkload(ModuleDetails module, String code, String title) {
+        double lectureHours = module.getLectureHours();
+        System.out.println(code + " " + title + "\n\nWorkload:");
+        if (lectureHours > 0) {
+            System.out.println("Lecture: " + lectureHours + " hours");
+        }
+        double tutorialHours = module.getTutorialHours();
+        if (tutorialHours > 0) {
+            System.out.println("Tutorial: " + tutorialHours + " hours");
+        }
+        double labHours = module.getLabHours();
+        if (labHours > 0) {
+            System.out.println("Lab: " + labHours + " hours");
+        }
+        double projectHours = module.getProjectHours();
+        if (projectHours > 0) {
+            System.out.println("Project Work: " + projectHours + " hours");
+        }
+        double preparationHours = module.getPreparationHours();
+        if (preparationHours > 0) {
+            System.out.println("Preparation: " + preparationHours + " hours");
+        }
+        if (preparationHours < 0 && projectHours < 0 && labHours < 0 && tutorialHours < 0 && lectureHours < 0) {
+            System.out.println("No workload information available for " + code);
+        }
+    }
+
     /**
      * Prints codes and titles of each module stored in the myModules list.
      */
@@ -105,39 +144,8 @@ public class ModuleList {
         for (ModuleDetails module : myModules) {
             String code = module.getModuleCode();
             String title = module.getTitle();
-            double lectureHours = module.getLectureHours();
-            System.out.println(code + " " + title + "\n\nWorkload:");
-            if (lectureHours > 0) {
-                System.out.println("Lecture: " + lectureHours + " hours");
-            }
-            double tutorialHours = module.getTutorialHours();
-            if (tutorialHours > 0) {
-                System.out.println("Tutorial: " + tutorialHours + " hours");
-            }
-            double labHours = module.getLabHours();
-            if (labHours > 0) {
-                System.out.println("Lab: " + labHours + " hours");
-            }
-            double projectHours = module.getProjectHours();
-            if (projectHours > 0) {
-                System.out.println("Project Work: " + projectHours + " hours");
-            }
-            double preparationHours = module.getPreparationHours();
-            if (preparationHours > 0) {
-                System.out.println("Preparation: " + preparationHours + " hours");
-            }
-            if (preparationHours < 0 && projectHours < 0 && labHours < 0 && tutorialHours < 0 && lectureHours < 0) {
-                System.out.println("No workload information available for " + code);
-            }
-            String examDate = module.getDate();
-            String examStartTime = module.getStartTime();
-            String examEndTime = module.getEndTime();
-            if (examDate != null && examStartTime != null && examEndTime != null) {
-                System.out.println("Exam date: " + examDate);
-                System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
-            } else {
-                System.out.println("No exam");
-            }
+            getWorkload(module, code, title);
+            getExamDateTime(module);
             String grade = module.getGrade();
             if (grade.equals("0")) {
                 System.out.println("Final grade: N/A");
