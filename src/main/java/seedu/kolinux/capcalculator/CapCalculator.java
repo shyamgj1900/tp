@@ -13,7 +13,6 @@ public abstract class CapCalculator {
     private static final int CLASSNAME_POSITION = 3;
     
     protected static final int INVALID_GRADE = -1;
-    protected static final int INVALID_MC = -1;
     
     protected static final double MAX_CAP = 5.0;
 

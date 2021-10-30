@@ -18,7 +18,12 @@ public class CapCalculatorByCode extends CapCalculator {
                 || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
                 || moduleGrade.equals("U");
     }
-    
+
+    /**
+     * Read and store the modules from user's input into this calculator.
+     * 
+     * @param input String of module descriptions from user.
+     */
     private void getInputModules(String input) {
         String[] commandDescriptions = input.split(" ");
         if (commandDescriptions.length <= 2) {
@@ -45,7 +50,12 @@ public class CapCalculatorByCode extends CapCalculator {
             modules.storeModuleCodeGrade(moduleCode, grade);
         }
     }
-    
+
+    /**
+     * Get the stored modules from Kolinux's module list and store them in this calculator.
+     * 
+     * @param moduleList The list of modules stored in Kolinux.
+     */
     private void getInputModules(ModuleList moduleList) {
         for (ModuleDetails module : moduleList.getMyModules()) {
             if (module.containsNullGrade()) {
