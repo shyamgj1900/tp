@@ -28,7 +28,14 @@ public abstract class Lesson {
             this.startTimeIndex = getIndex(startTime, schoolHours);
             this.endTimeIndex = getIndex(endTime, schoolHours);
             this.dayIndex = getIndex(day, days);
+            checkTimingAndDay();
         } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(SubCommand.INVALID_ADD_FORMAT);
+        }
+    }
+
+    public void checkTimingAndDay() throws KolinuxException {
+        if (dayIndex == 0 || startTimeIndex == 0 || endTimeIndex == 0) {
             throw new KolinuxException(SubCommand.INVALID_ADD_FORMAT);
         }
     }

@@ -14,8 +14,6 @@ import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.Timetable.timetableData;
 import static seedu.kolinux.timetable.Timetable.timetableStorage;
 import static seedu.kolinux.timetable.Timetable.moduleList;
-import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
-import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 
 public class AddSubCommand extends SubCommand {
@@ -45,6 +43,11 @@ public class AddSubCommand extends SubCommand {
         if (!isPeriodFree(startTimeIndex, endTimeIndex, dayIndex)) {
             throw new KolinuxException(INACCESSIBLE_PERIOD);
         }
+        int requiredHours = getHours(moduleList, moduleCode, lessonType);
+        checkZeroWorkload(requiredHours, moduleCode, lessonType);
+        int inputHours = endTimeIndex - startTimeIndex;
+        int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
+        checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
         for (int i = startTimeIndex; i < endTimeIndex; i++) {
             assert dayIndex < COLUMN_SIZE;
             assert i < ROW_SIZE;
@@ -61,12 +64,6 @@ public class AddSubCommand extends SubCommand {
             if (!isLessonInModuleList(moduleList, moduleCode)) {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
-            int requiredHours = getHours(moduleList, moduleCode, lessonType);
-            checkZeroWorkload(requiredHours, moduleCode, lessonType);
-            int inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
-            int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
-            checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
-
             if (lessonType.startsWith("TUT")) {
                 addToTimetable(new Tutorial(lessonDetails));
             } else if (lessonType.startsWith("LEC")) {
@@ -127,7 +124,7 @@ public class AddSubCommand extends SubCommand {
     private void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
             String lessonType) throws KolinuxException {
         if (storageHours > requiredHours) {
-            throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
+            throw new KolinuxException(" Input hours for " + moduleCode + " " + lessonType
                     +
                     " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
                     +
