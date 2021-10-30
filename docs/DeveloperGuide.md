@@ -151,6 +151,18 @@ containing only the modular credit and the corresponding grade, and `CapCalculat
 retrieve modular credit of each module from `moduleDb` for the calculation.
 
 #### Bus Routes Finder Component
+The class diagram below describes the interaction between `Route` and its subclasses.
+
+![BusRoute Class Diagram](assets/images/BusRouteClassDiagram.png)
+
+The `Route` class is a higher level representation of the process to find routes. The `DirectRoute` and `IndirectRoute`
+classes inherit from the `Route` class. The `BusRouteCommand` instantiates `DirectRoute` and `IndirectRoute` objects.
+The `DirectRoute` class is responsible to check if there are any direct or direct alternate routes between the 2 user 
+given bus stops. The `IndirectRoute` class is responsible to find if there are any indirect routes between the 2 user 
+given bus stops, i.e a route wherein a user will need to switch buses at an intermediate bus stop. The process of checking
+whether 2 points on a graph are connected is facilitated by the `Graph` class and achieves this process by using BFS. A
+`Location` class object is instantiated by the `BusRouteCommand` class if the user wants to view the list of all bus stops
+in the network.
 
 ### Command Execution
 
@@ -396,16 +408,24 @@ Below is the sequence diagrams showing important steps of how `cap code` operate
 
 ### Bus routes feature
 The bus routes feature is facilitated by the `BusRouteCommand` class. The `BusRouteCommand` class extends the `Command` class. 
-When the user invokes and uses the bus routes feature the `BusRouteCommand` constructor creates a `Route` class object and passes
-the `input` string to the `Route` class. The operation is implemented in the following way.
+When the user invokes and uses the bus routes feature the `BusRouteCommand` class instantiates either a `Location` class 
+object or `DirectRoute` and `IndirectRoute` class object depending on the user input. The operation is implemented in the 
+following way.
 
-* The overriden function `executeCommand()` calls the `Route#checkRoutes()` method. 
-* The `Route#checkRoutes()` contains the `Route#getBusStopNumber()`, `Route#checkDirectRoutes(ArrayList<String> busNumbers)` and `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is a direct or an indirect route between the 2 user given bus stops and returns a string depending on the result.
-* `Route#getBusStopNumber()` - Converts the user given bus stop names to bus stop numbers which can then be used to find if the bus stops are connected.
-* `Route#checkDirectRoutes(ArrayList<String> busNumbers)` - Check whether there is a direct bus route between the 2 user given bus stops by calling the `Graph#isConnected(int u, int v)` method which uses BFS to check if any 2 points in the directed unweighted graph are connected.
-* `Route#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+* `Location#getBusStopList()` - Displays the list of all bus stops within the NUS internal bus service routes.
+* `DirectRoute#checkDirectRoutes(ArrayList<String> busNumbers)` - Checks whether there is a direct bus route between the 2 user given bus stops.
+* `IndirectRoute#checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc)` - Checks whether there is an alternate route between the 2 user given bus stops which requires a single change of bus at an intermediate bus stop.
+* `DirectRoute#checkAlternateDirectRoutes(Arraylist<String> busNumbers)` - Checks whether there is a direct alternate route which involves finding a route from an opposite bus stop (if it exists) to the final location.
+* `Route#getBusStopNumber()` - Converts the user given bus stop name into the corresponding vertex number present in the graph route text file
+* `Graph#isConnected(int u, int v)` - Helps to check if 2 vertices in a graph are connected by a path using the BFS algorithm. All the methods which facilitates checking for routes call this method from the class `Graph`.
 
-The following sequence diagram explains the bus routes feature.
+❕ Some points about the graph. 
+* Each bus route has its own graph and the information is stored in text files and are loaded after the `Route` class constructor is called.
+* Graphs are modelled by taking each bus stop and assigning it a vertex number. 
+* A single bus stop may have different vertex numbers on different graphs.
+* Vertex numbers range from 0 to n - 1, where n is the total number of bus stops in the particular route
+
+The following sequence diagram gives an overview of the bus routes feature.
 
 ![sequenceDiagram](assets/images/BusRouteSequenceDiagram.png)
 
