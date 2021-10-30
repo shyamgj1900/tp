@@ -8,9 +8,6 @@ public class SubCommand {
     public static final String UPDATING_TO_SAME_TIMING = "You are updating the lesson to the same "
             +
             "timing as before.\nPlease update lesson to a different timing.";
-    public static final String INVALID_HOURS_INPUT = "Please ensure the timing for the "
-            +
-            "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable:\n"
             +
             "timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
@@ -53,6 +50,20 @@ public class SubCommand {
     public static final String TIMETABLE_ROW_DIVIDER = "+-------------+--------------------+----------"
             +
             "----------+--------------------+--------------------+--------------------+";
+    public static final String INVALID_LESSON_FORMAT = "Please ensure the LESSON_TYPE entered is in one of "
+            +
+            "the following format:\n 1. LEC\n2. TUT\n3. LAB";
+    public static final String INVALID_DAY_TIME = "1. Please ensure the days are within Monday to Friday "
+            +
+            "and spelt fully.\n2. Please ensure the timings are within the school hours: 0600 - 2100\n"
+            +
+            "3. Please ensure the timings are by the hour.\n"
+            +
+            "   Timings like 1230 or 1110 are not accepted in order to maintain\n"
+            +
+            "   readability of timetable view on CLI.\n"
+            +
+            "4. Please ensure the START_TIME is earlier than the END_TIME";
     public static final int TABLE_COLUMN_WIDTH = 20;
     public static final int TABLE_FIRST_COLUMN_WIDTH = 13;
 

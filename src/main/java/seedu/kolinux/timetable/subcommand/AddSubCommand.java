@@ -38,13 +38,12 @@ public class AddSubCommand extends SubCommand {
         int startTimeIndex = lesson.getStartTimeIndex();
         int endTimeIndex = lesson.getEndTimeIndex();
         if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
-            throw new KolinuxException(INVALID_ADD_FORMAT);
+            throw new KolinuxException(INVALID_ADD_FORMAT + "\n\n" + INVALID_DAY_TIME);
         }
         if (!isPeriodFree(startTimeIndex, endTimeIndex, dayIndex)) {
             throw new KolinuxException(INACCESSIBLE_PERIOD);
         }
         int requiredHours = getHours(moduleList, moduleCode, lessonType);
-        checkZeroWorkload(requiredHours, moduleCode, lessonType);
         int inputHours = endTimeIndex - startTimeIndex;
         int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
         checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
@@ -64,6 +63,7 @@ public class AddSubCommand extends SubCommand {
             if (!isLessonInModuleList(moduleList, moduleCode)) {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
+            int requiredHours = getHours(moduleList, moduleCode, lessonType);
             if (lessonType.startsWith("TUT")) {
                 addToTimetable(new Tutorial(lessonDetails));
             } else if (lessonType.startsWith("LEC")) {
@@ -71,8 +71,9 @@ public class AddSubCommand extends SubCommand {
             } else if (lessonType.startsWith("LAB")) {
                 addToTimetable(new Lab(lessonDetails));
             } else {
-                throw new KolinuxException(INVALID_ADD_FORMAT);
+                throw new KolinuxException(INVALID_LESSON_FORMAT);
             }
+            checkZeroWorkload(requiredHours, moduleCode, lessonType);
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_ADD_FORMAT);
         }
@@ -143,7 +144,7 @@ public class AddSubCommand extends SubCommand {
             }
             return true;
         } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_HOURS_INPUT);
+            throw new KolinuxException(INVALID_DAY_TIME);
         }
     }
 
