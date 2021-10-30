@@ -10,14 +10,14 @@ public class SubCommand {
             "timing as before.\nPlease update lesson to a different timing.";
     public static final String INVALID_UPDATE_FORMAT = "Please check the format of updating timetable:\n"
             +
-            "timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
+            "timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME\n"
             +
             "Please ensure the timing for the "
             +
             "lesson falls within the school hours: 0600 - 2100";
     public static final String INVALID_DELETE_FORMAT = "Please check the format of deleting from timetable:\n"
             +
-            "timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
+            "timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME\n"
             +
             "e.g. timetable delete CS1010/TUT/Monday\n"
             +

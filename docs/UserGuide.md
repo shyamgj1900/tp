@@ -306,12 +306,12 @@ It also provides users an aesthetic visual representation of their timetable for
 
 **Example of usage:**
 
-* `timetable add CS1010/TUT/Monday/1200/1400`
+* `timetable add CS1010/TUT/Monday/1200/1300`
 * `timetable add CS2113T/LEC/friday/1600/1800`
 
 Demo:
 ```
-timetable add CS1010/TUT/Monday/1200/1400
+timetable add CS1010/TUT/Monday/1200/1300
 Lesson has been added to timetable
 ....................................................................
 ```
@@ -320,15 +320,15 @@ Lesson has been added to timetable
 the modules added to module list can be added to the timetable
 
 >⚠️ ️Note: Please also note that the timetable has been built to only take lesson of durations in multiples of 1 hour.
-> This has been done so to ensure readability of the timetable on CLI when you input 
-> [`timetable view`](#323-view-timetable-on-cli--timetable-view). So if you will not be allowed to enter e.g. 30 min 
-> slots of lessons onto the timetable.
+> This has been done to ensure readability of the timetable on CLI when you input 
+> [`timetable view`](#323-view-timetable-on-cli--timetable-view). So you will not be allowed to enter e.g. 30 min 
+> slots of lessons onto the timetable like 1130.
 
 >🔗 Visit [`module`](#31-module-manager-module) for more information on the command formats.
 
 #### 3.2.2 Delete lessons from timetable : `timetable delete`
 
-**Format:** `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
+**Format:** `timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME`
 
 * Ensure `MODULE_CODE` is stored in the module list using
   [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
@@ -344,13 +344,13 @@ the modules added to module list can be added to the timetable
 
 **Example of usage:**
 
-* `timetable delete cs1010/lec/tuesday`
-* `timetable delete CS2113T/LEC/Friday`
+* `timetable delete cs1010/lec/tuesday/1200`
+* `timetable delete CS2113T/LEC/Friday/1800`
 
 Demo:
 ```
-timetable delete cs1010/lec/tuesday
-CS1010 LEC tuesday has been deleted from timetable
+timetable delete cs1010/lec/tuesday/1800
+CS1010 LEC 1800 tuesday has been deleted from timetable
 ....................................................................
 ```
 #### 3.2.3 View timetable on CLI : `timetable view`
@@ -428,7 +428,7 @@ Timetable has been printed above
 
 Demo:
 ```
-timetable update cs1010/lec/tuesday/monday/1200
+timetable update cs1010/lec/tuesday/1300/monday/1200
 CS1010 LEC has been updated
 ....................................................................
 ```

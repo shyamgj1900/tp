@@ -49,7 +49,9 @@ public class TimetableCommand extends Command {
                 " from the timetable.");
         return new CommandResult(parsedArguments[0].toUpperCase()
                 +
-                " " + parsedArguments[1].toUpperCase() + " " + parsedArguments[2].toLowerCase()
+                " " + parsedArguments[1].toUpperCase() + " " + parsedArguments[3] + " "
+                +
+                parsedArguments[2].toLowerCase()
                 +
                 " has been deleted from timetable");
     }

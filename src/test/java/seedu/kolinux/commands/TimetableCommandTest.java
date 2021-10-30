@@ -13,9 +13,9 @@ public class TimetableCommandTest {
 
     private static final String[] VALID_ADD_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "lec", "friday",
             "1700", "1800"};
-    private static final String[] VALID_DELETE_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "lec", "friday"};
-    private static final String[] VALID_UPDATE_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "lec", "friday", "monday",
-            "1800"};
+    private static final String[] VALID_DELETE_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "lec", "friday", "1700"};
+    private static final String[] VALID_UPDATE_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "lec", "friday", "1700",
+            "monday", "1800"};
     private static final String INVALID_COMMAND_MESSAGE = "Ensure command has one of the following formats:\n"
             +
             "1. timetable add LESSON_TYPE/MODULE_CODE/DAY/START_TIME\n"
@@ -58,7 +58,7 @@ public class TimetableCommandTest {
         TimetableCommand addCommand = new TimetableCommand("add", VALID_ADD_TUTORIAL_ARGUMENTS);
         addCommand.executeCommand();
         TimetableCommand deleteCommand = new TimetableCommand("delete", VALID_DELETE_TUTORIAL_ARGUMENTS);
-        assertEquals("CS1231 LEC friday has been deleted from timetable",
+        assertEquals("CS1231 LEC 1700 friday has been deleted from timetable",
                 deleteCommand.executeCommand().getFeedbackToUser());
     }
 
