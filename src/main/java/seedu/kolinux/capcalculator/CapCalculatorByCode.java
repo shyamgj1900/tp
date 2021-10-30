@@ -3,7 +3,6 @@ package seedu.kolinux.capcalculator;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
-import seedu.kolinux.module.CalculatorModuleList;
 
 /**
  * Represents CAP calculator used when the user's input module descriptions are based on module code.
@@ -47,6 +46,16 @@ public class CapCalculatorByCode extends CapCalculator {
         }
     }
     
+    private void getInputModules(ModuleList moduleList) {
+        for (ModuleDetails module : moduleList.getMyModules()) {
+            if (module.containsNullGrade()) {
+                invalidModules.add(module.getModuleCode() + DIVIDER + module.getGrade());
+                continue;
+            }
+            modules.storeModule(module);
+        }
+    }
+    
     /**
      * Construct the superclass of this object and initialize moduleDb in order to retrieve 
      * module information from the database. Module details are then retrieved from input string.
@@ -62,12 +71,12 @@ public class CapCalculatorByCode extends CapCalculator {
     /**
      * Constructor used when module details are retrieved from moduleList of Kolinux instead of user's input.
      * 
-     * @param modules List of modules stored in moduleList of Kolinux.
+     * @param moduleList List of modules stored in moduleList of Kolinux.
      */
-    public CapCalculatorByCode(ModuleList modules) {
+    public CapCalculatorByCode(ModuleList moduleList) {
         super();
         moduleDb = new ModuleDb().getPreInitModuleDb();
-        this.modules = new CalculatorModuleList(modules);
+        getInputModules(moduleList);
     }
 
     @Override
@@ -81,18 +90,11 @@ public class CapCalculatorByCode extends CapCalculator {
 
             double gradePoint = module.getGradePoint();
             
-            int mc = INVALID_MC;
             String moduleCode = module.getModuleCode();
             ModuleDetails moduleInfo = moduleDb.getModuleInfo(moduleCode);
-            if (moduleInfo != null) {
-                String moduleCredit = moduleInfo.getModuleCredit();
-                mc = Integer.parseInt(moduleCredit);
-            }
+            String moduleCredit = moduleInfo.getModuleCredit();
+            int mc = Integer.parseInt(moduleCredit);
             
-            if (gradePoint == INVALID_GRADE || mc == INVALID_MC) {
-                invalidModules.add(module.getModuleCode() + DIVIDER + module.getGrade());
-                continue;
-            }
             cap = calculateCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
             assert cap <= MAX_CAP;
