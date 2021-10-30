@@ -27,35 +27,44 @@ deactivate ":Location"
 activate ":Location"
 ":Location" --> ":BusRouteCommand": List of all stops
 deactivate ":Location"
-destroy ":Location"
 else else
-create ":Route"
-":BusRouteCommand" -> ":Route"
-activate ":Route"
-return
-deactivate ":Route"
-":BusRouteCommand" -> ":Route": checkRoutes()
-activate ":Route"
-":Route" -> ":Route": getBusStopNames()
-activate ":Route"
-deactivate ":Route"
-":Route" -> ":Route": checkDirectRoutes(busNumbers: Arraylist<String>)
-activate ":Route"
-deactivate ":Route"
-opt no direct routes
-":Route" -> ":Route": checkIndirectRoutes(busOne: Arraylist<String>, busTwo: Arraylist<String>, midLoc: Arraylist<String>)
-activate ":Route"
-deactivate ":Route"
-opt no direct and indirect routes
-":Route" -> ":Route": checkAlternateRoutes(busNumbers: Arraylist<String>)
-activate ":Route"
-deactivate ":Route"
-end opt
-end opt
-":Route" --> ":BusRouteCommand": message
-destroy ":Route"
+":BusRouteCommand" -> ":BusRouteCommand": getBusRoutes()
+activate ":BusRouteCommand"
+create ":DirectRoute"
+":BusRouteCommand" -> ":DirectRoute": checkDirectRoute()
+activate ":DirectRoute"
+":DirectRoute" -> ":DirectRoute": getBusStopNames()
+activate ":DirectRoute"
+deactivate ":DirectRoute"
+":DirectRoute" --> ":BusRouteCommand"
+deactivate ":DirectRoute"
+create ":IndirectRoute"
+":BusRouteCommand" -> ":IndirectRoute"
+activate ":IndirectRoute"
+":IndirectRoute" -> ":IndirectRoute": getBusStopNames()
+activate ":IndirectRoute"
+deactivate ":IndirectRoute"
+":IndirectRoute" --> ":BusRouteCommand":
+deactivate ":IndirectRoute"
+alt direct route
+":BusRouteCommand" -> ":DirectRoute": checkDirectRoute()
+activate ":DirectRoute"
+":DirectRoute" --> ":BusRouteCommand"
+deactivate ":DirectRoute"
+else indirect Route
+":BusRouteCommand" -> ":IndirectRoute": checkIndirectRoute()
+activate ":IndirectRoute"
+":IndirectRoute" --> ":BusRouteCommand"
+deactivate ":IndirectRoute"
+else else
+":BusRouteCommand" -> ":DirectRoute": checkAlternateRoute()
+activate ":DirectRoute"
+":DirectRoute" --> ":BusRouteCommand"
+deactivate ":DirectRoute"
 end
-deactivate ":Route"
+":BusRouteCommand" --> ":BusRouteCommand": message
+deactivate ":BusRouteCommand"
+end
 <-- ":BusRouteCommand": result
 deactivate ":BusRouteCommand"
 @enduml

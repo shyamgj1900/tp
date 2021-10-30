@@ -13,12 +13,14 @@ package "routes" <<rectangle>> {
   class Location
   class Route
   class Graph
+  class DirectRoute
+  class IndirectRoute
 }
 
 class BusRouteCommand {
    -input: String
    -splitinput: String[]
-   +BusRouteCommand(input: String)
+   +getBusRoute(): String
    +executeCommand(): CommandResult
 }
 
@@ -42,14 +44,20 @@ class Route {
    -vertexCodeD2: String[]
    -vertexCodeE: String[]
    -vertexCodeK: String[]
-   -graph: Graphp[]
+   -graph: Graph[]
    -vertices: Arraylist<String>[]
    +setRoute(vertices: Arraylist<String>, graph: Graph): void
    +getBusStopNumber(): void
-   +checkRoutes(): String
+   {static} readFromFile(): void
+}
+
+class DirectRoute {
    +checkDirectRoutes(busNumbers: Arraylist<String>): boolean
-   +checkIndirectRoutes(busOne: Arraylist<String>, busTwo: Arraylist<String>, midLoc: Arraylist<String>): boolean
-   +checkAlternateRoutes(busNumbers: Arraylist<String): boolean
+   +checkDirectAlternateRoutes(busNumbers: Arraylist<String>): String
+}
+
+class IndirectRoute {
+   +checkIndirectRoutes(busOne: Arraylist<String>, busTwo: Arraylist<String>, midLoc: Arraylist<String>)
 }
 
 class Graph {
@@ -59,10 +67,13 @@ class Graph {
    +isConnected(u: int, v: int): boolean
 }
 
-BusRouteCommand -> "1" Location : location
-BusRouteCommand --> "0..1" Route : route
+BusRouteCommand --> "0..1" Location : location
+BusRouteCommand -> "0..1" DirectRoute : directroute
+BusRouteCommand -> "0..1" IndirectRoute : indirectroute
 Route -> "1" Location : location
-Route --> "6" Graph : graph
-Location .> "0..1"Route
+Route -> "6" Graph : graph
+Route <|-- DirectRoute
+Route <|-- IndirectRoute
+Location .> Route
 
 @enduml
