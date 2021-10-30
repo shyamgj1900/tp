@@ -9,7 +9,6 @@ participant ":CapCalculatorByCode" as calculator CAPCALCULATOR_COLOR
 participant "module:ModuleDetails" as module MODULE_COLOR
 participant ":ModuleDb" as moduleDb MODULE_COLOR
 participant "moduleInfo:ModuleDetails" as moduleInfo MODULE_COLOR
-participant "invalidModules:ArrayList" as invalidModules MODULE_COLOR
 
 group sd capCalculation
 
@@ -33,25 +32,11 @@ activate moduleDb
 moduleDb --> calculator : moduleInfo
 deactivate moduleDb
 
-opt moduleInfo is not null
-
 calculator -> moduleInfo : getModuleCredit()
 activate moduleInfo
 
 moduleInfo --> calculator : moduleCredit
 deactivate moduleInfo
-
-end
-
-opt module or grade is invalid
-
-calculator -> invalidModules : add(module.getModuleCode() + DIVIDER + module.getGrade())
-activate invalidModules
-
-invalidModules --> calculator
-deactivate invalidModules
-
-end
 
 calculator -> calculator : calculateCurrentCap(totalMc, cap, mc, gradePoint)
 activate calculator
