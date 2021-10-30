@@ -26,9 +26,8 @@ public class ModuleDetails {
     private static final int SEMESTER_2 = 1;
     private static final int WORD_LIMIT = 50;
 
-    public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
-                         String description, String title, String department, double[] workload,
-                         JsonArray semesterData) {
+    public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
+            String title, String department, double[] workload, JsonArray semesterData) {
         this.moduleCode = moduleCode;
         this.moduleCredit = moduleCredit;
         this.faculty = faculty;
@@ -260,19 +259,19 @@ public class ModuleDetails {
     @Override
     public String toString() {
         int i = WORD_LIMIT;
-        description = description.replaceAll("\n", " ");
-        StringBuilder sb = new StringBuilder(description);
-        while (i < description.length()) {
-            if ((description.charAt(i) == ' ') && (description.charAt(i + 1) != '\n')) {
-                sb.setCharAt(i, '\n');
+        String newDescription = description.replaceAll("\n", " ");
+        StringBuilder descriptionSequence = new StringBuilder(newDescription);
+        while (i < newDescription.length()) {
+            if ((newDescription.charAt(i) == ' ') && (newDescription.charAt(i + 1) != '\n')) {
+                descriptionSequence.setCharAt(i, '\n');
                 i += WORD_LIMIT;
             } else {
                 i++;
             }
-            description = sb.toString();
         }
+        String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
-                + "Credits: " + moduleCredit + "\n" + "Grade: " + grade + "\n" + description;
+                + "Credits: " + moduleCredit + "\n" + "Grade: " + grade + "\n" + formattedDescription;
     }
 
 }

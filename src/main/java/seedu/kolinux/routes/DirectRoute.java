@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class DirectRoute extends Route {
+    public static final int TOTAL_OPP_STOPS = 12;
 
     public DirectRoute(String[] splitInput) throws KolinuxException, IOException {
         super(splitInput);
@@ -57,7 +58,7 @@ public class DirectRoute extends Route {
      */
     public String checkDirectAlternateRoutes(ArrayList<String> busNumbers) throws KolinuxException {
         boolean flag;
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < TOTAL_OPP_STOPS; i++) {
             if (startLocation.equalsIgnoreCase(oppositeStops[i][0])) {
                 busStops[0] = oppositeStops[i][1];
                 getBusStopNumber();

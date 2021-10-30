@@ -23,34 +23,29 @@ public class IndirectRoute extends Route {
      * @return true if connected, false otherwise
      */
     public boolean checkIndirectRoutes(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
-        if (vertexCodeA1[0] > 0 && checkIndirectAOne(busOne, busTwo, midLoc)) {
+        if (vertexCodeA1[0] >= 0 && checkIndirectAOne(busOne, busTwo, midLoc)) {
             return true;
         }
-        if (vertexCodeA2[0] > 0 && checkIndirectATwo(busOne, busTwo, midLoc)) {
+        if (vertexCodeA2[0] >= 0 && checkIndirectATwo(busOne, busTwo, midLoc)) {
             return true;
         }
-        if (vertexCodeD1[0] > 0 && graph[2].isConnected(vertexCodeD1[0], location.getStopNumberDOne(STOP_UTOWN))) {
-            if (checkIndirectDOne(busOne, busTwo, midLoc)) {
-                return true;
-            }
-        }
-        if (vertexCodeD2[0] > 0 && graph[3].isConnected(vertexCodeD2[0], location.getStopNumberDTwo(STOP_UTOWN))) {
-            if (checkIndirectDTwo(busOne, busTwo, midLoc)) {
-                return true;
-            }
-        }
-        if (vertexCodeE[0] > 0 && checkIndirectE(busOne, busTwo, midLoc)) {
+        if (vertexCodeD1[0] >= 0 && graph[2].isConnected(vertexCodeD1[0], location.getStopNumberDOne(STOP_UTOWN))
+                && checkIndirectDOne(busOne, busTwo, midLoc)) { //extra condition because D1 is not a loop service
             return true;
         }
-        if (vertexCodeK[0] > 0 && graph[5].isConnected(vertexCodeK[0], location.getStopNumberK(STOP_KENT_VALE))) {
-            if (checkIndirectK(busOne, busTwo, midLoc)) {
-                return true;
-            }
+        if (vertexCodeD2[0] >= 0 && graph[3].isConnected(vertexCodeD2[0], location.getStopNumberDTwo(STOP_UTOWN))
+                && checkIndirectDTwo(busOne, busTwo, midLoc)) { //extra condition because D2 is not a loop service
+            return true;
+        }
+        if (vertexCodeE[0] >= 0 && checkIndirectE(busOne, busTwo, midLoc)) {
+            return true;
+        }
+        if (vertexCodeK[0] >= 0 && graph[5].isConnected(vertexCodeK[0], location.getStopNumberK(STOP_KENT_VALE))
+                && checkIndirectK(busOne, busTwo, midLoc)) { //extra condition because K is not a loop service
+            return true;
         }
         return false;
     }
-
-
 
     /**
      * Checks for indirect route in bus route A1.
