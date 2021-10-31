@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+participant ":Parser" #DarkSalmon
+participant ":BusRouteCommand" #LightBlue
+-> ":Parser": parseCommand(input: String)
+activate ":Parser"
+create ":BusRouteCommand"
+":Parser" -> ":BusRouteCommand"
+activate ":BusRouteCommand"
+return command
+deactivate ":BusRouteCommand"
+<-- ":Parser": command
+deactivate ":Parser"
+-> ":BusRouteCommand": executeCommand()
+activate ":BusRouteCommand"
+alt command == bus stop list
+create ":Location"
+":BusRouteCommand" -> ":Location"
+activate ":Location"
+return
+deactivate ":Location"
+":BusRouteCommand" -> ":Location": getBusStopList()
+activate ":Location"
+":Location" --> ":BusRouteCommand": List of all stops
+deactivate ":Location"
+else else
+":BusRouteCommand" -> ":BusRouteCommand": getBusRoutes()
+activate ":BusRouteCommand"
+create ":DirectRoute"
+":BusRouteCommand" -> ":DirectRoute": checkDirectRoute()
+activate ":DirectRoute"
+":DirectRoute" -> ":DirectRoute": getBusStopNames()
+activate ":DirectRoute"
+deactivate ":DirectRoute"
+":DirectRoute" --> ":BusRouteCommand"
+deactivate ":DirectRoute"
+create ":IndirectRoute"
+":BusRouteCommand" -> ":IndirectRoute"
+activate ":IndirectRoute"
+":IndirectRoute" -> ":IndirectRoute": getBusStopNames()
+activate ":IndirectRoute"
+deactivate ":IndirectRoute"
+":IndirectRoute" --> ":BusRouteCommand":
+deactivate ":IndirectRoute"
+alt direct route
+":BusRouteCommand" -> ":DirectRoute": checkDirectRoute()
+activate ":DirectRoute"
+":DirectRoute" --> ":BusRouteCommand"
+deactivate ":DirectRoute"
+else indirect Route
+":BusRouteCommand" -> ":IndirectRoute": checkIndirectRoute()
+activate ":IndirectRoute"
+":IndirectRoute" --> ":BusRouteCommand"
+deactivate ":IndirectRoute"
+else else
+":BusRouteCommand" -> ":DirectRoute": checkAlternateRoute()
+activate ":DirectRoute"
+":DirectRoute" --> ":BusRouteCommand"
+deactivate ":DirectRoute"
+end
+":BusRouteCommand" --> ":BusRouteCommand": message
+deactivate ":BusRouteCommand"
+end
+<-- ":BusRouteCommand": result
+deactivate ":BusRouteCommand"
+@enduml

@@ -26,9 +26,8 @@ public class ModuleDetails {
     private static final int SEMESTER_2 = 1;
     private static final int WORD_LIMIT = 50;
 
-    public ModuleDetails(String moduleCode, String moduleCredit, String faculty,
-                         String description, String title, String department, double[] workload,
-                         JsonArray semesterData) {
+    public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
+            String title, String department, double[] workload, JsonArray semesterData) {
         this.moduleCode = moduleCode;
         this.moduleCredit = moduleCredit;
         this.faculty = faculty;
@@ -100,28 +99,48 @@ public class ModuleDetails {
     }
 
     public double getTutorialHours() {
-        tutorialHours = workload[1];
-        return tutorialHours;
+        try {
+            tutorialHours = workload[1];
+            return tutorialHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getLectureHours() {
-        lectureHours = workload[0];
-        return lectureHours;
+        try {
+            lectureHours = workload[0];
+            return lectureHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getLabHours() {
-        labHours = workload[2];
-        return labHours;
+        try {
+            labHours = workload[2];
+            return labHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getProjectHours() {
-        projectHours = workload[3];
-        return projectHours;
+        try {
+            projectHours = workload[3];
+            return projectHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public double getPreparationHours() {
-        preparationHours = workload[4];
-        return preparationHours;
+        try {
+            preparationHours = workload[4];
+            return preparationHours;
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
+            return -1;
+        }
     }
 
     public String[] getExamDateTime() {
@@ -130,7 +149,7 @@ public class ModuleDetails {
             String newTimeFormat = examDate.replace(":00.000Z", "");
             String[] dateTime = newTimeFormat.split("T");
             return dateTime;
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }
@@ -139,7 +158,7 @@ public class ModuleDetails {
         try {
             String[] dateTime = getExamDateTime();
             return dateTime[0];
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }
@@ -157,7 +176,7 @@ public class ModuleDetails {
                 finalTime = offsetTime + ":00";
             }
             return finalTime;
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }
@@ -176,7 +195,7 @@ public class ModuleDetails {
                 endTime = endTiming + ":00";
             }
             return endTime;
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException | IndexOutOfBoundsException exception) {
             return null;
         }
     }
@@ -198,7 +217,7 @@ public class ModuleDetails {
      */
     public double getGradePoint() {
         switch (grade) {
-        case "A+":
+        case "A+": // Fallthrough, is equivalent grade point to "A"
         case "A":
             return 5.0;
         case "A-":
@@ -225,7 +244,7 @@ public class ModuleDetails {
     }
     
     public boolean containsSuGrade() {
-        return grade.equals("S") || grade.equals("U");
+        return grade.equals("S") || grade.equals("CS") || grade.equals("U") || grade.equals("CU");
     }
     
     public boolean containsNullGrade() {
@@ -240,19 +259,19 @@ public class ModuleDetails {
     @Override
     public String toString() {
         int i = WORD_LIMIT;
-        description = description.replaceAll("\n", " ");
-        StringBuilder sb = new StringBuilder(description);
-        while (i < description.length()) {
-            if ((description.charAt(i) == ' ') && (description.charAt(i + 1) != '\n')) {
-                sb.setCharAt(i, '\n');
+        String newDescription = description.replaceAll("\n", " ");
+        StringBuilder descriptionSequence = new StringBuilder(newDescription);
+        while (i < newDescription.length()) {
+            if ((newDescription.charAt(i) == ' ') && (newDescription.charAt(i + 1) != '\n')) {
+                descriptionSequence.setCharAt(i, '\n');
                 i += WORD_LIMIT;
             } else {
                 i++;
             }
-            description = sb.toString();
         }
+        String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
-                + "Credits: " + moduleCredit + "\n" + "Grade: " + grade + "\n" + description;
+                + "Credits: " + moduleCredit + "\n" + "Grade: " + grade + "\n" + formattedDescription;
     }
 
 }

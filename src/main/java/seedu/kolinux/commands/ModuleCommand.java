@@ -47,7 +47,8 @@ public class ModuleCommand extends Command {
                 || moduleGrade.equals("B+") || moduleGrade.equals("B") || moduleGrade.equals("B-")
                 || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
                 || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
-                || moduleGrade.equals("U") || moduleGrade.equals("0");
+                || moduleGrade.equals("U") || moduleGrade.equals("CS") || moduleGrade.equals("CU") 
+                || moduleGrade.equals("0");
     }
 
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {

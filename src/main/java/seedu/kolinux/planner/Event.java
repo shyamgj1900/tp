@@ -11,8 +11,9 @@ public class Event {
 
     private static final String COLON = ":";
     private static final String EMPTY_STRING = "";
-    private static final String PIPE_REGEX = "\\|";
+    private static final String DATA_DELIMITER_REGEX = "\\s*\\|\\s*";
     private static final String PIPE = "|";
+    private static final int EVENT_ARGUMENTS_LENGTH = 4;
 
     private static int currentEventId = 0;
 
@@ -23,12 +24,16 @@ public class Event {
     private int id;
     private boolean isLesson = false;
 
+    private static final String EMPTY_DESCRIPTION_ERROR =
+            "Please provide a description for your event!";
     private static final String DATETIME_ERROR =
             "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
                     + "Time: hhMM";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
+    private static final String TIME_SAME_ERROR =
+            "Your event cannot start and end at the same time!";
     private static final String FORMAT_ERROR =
             "Please check the format of your input! Format: planner add DESCRIPTION/DATE/START_TIME/END_TIME";
 
@@ -39,22 +44,30 @@ public class Event {
      * @throws KolinuxException If any of the information required is missing or in incorrect format.
      */
     public Event(String[] parsedArguments) throws KolinuxException {
+
+        if (parsedArguments.length != EVENT_ARGUMENTS_LENGTH) {
+            throw new KolinuxException(FORMAT_ERROR);
+        }
+
         try {
             this.description = parsedArguments[0];
             this.date = LocalDate.parse(parsedArguments[1]);
             this.startTime = LocalTime.parse(parsedArguments[2].replaceFirst("..", "$0:"));
             this.endTime = LocalTime.parse(parsedArguments[3].replaceFirst("..", "$0:"));
-
-            if (startTime.compareTo(endTime) > 0) {
-                throw new KolinuxException(TIME_ORDER_ERROR);
-            }
-            this.id = currentEventId;
-            currentEventId++;
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException exception) {
             throw new KolinuxException(DATETIME_ERROR);
-        } catch (NullPointerException | IndexOutOfBoundsException e) {
-            throw new KolinuxException(FORMAT_ERROR);
         }
+
+        if (description.isEmpty()) {
+            throw new KolinuxException(EMPTY_DESCRIPTION_ERROR);
+        }
+        if (startTime.compareTo(endTime) > 0) {
+            throw new KolinuxException(TIME_ORDER_ERROR);
+        }
+        if (startTime.equals(endTime)) {
+            throw new KolinuxException(TIME_SAME_ERROR);
+        }
+        this.id = currentEventId++;
     }
 
     /**
@@ -65,7 +78,7 @@ public class Event {
      * @throws KolinuxException If the data line is corrupted
      */
     public Event(String data) throws KolinuxException {
-        this(data.split(PIPE_REGEX));
+        this(data.split(DATA_DELIMITER_REGEX));
     }
 
     /**

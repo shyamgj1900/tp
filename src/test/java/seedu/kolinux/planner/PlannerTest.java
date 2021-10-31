@@ -3,8 +3,10 @@ package seedu.kolinux.planner;
 import org.junit.jupiter.api.Test;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
+import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.Timetable;
+import seedu.kolinux.timetable.subcommand.AddSubCommand;
 
 import java.util.Arrays;
 
@@ -15,7 +17,9 @@ public class PlannerTest {
     private ModuleList moduleList = new ModuleList();
     private Planner planner = new Planner(moduleList);
     private Timetable timetable = new Timetable(moduleList);
+    private AddSubCommand addSubCommand = new AddSubCommand();
 
+    private static final String EVENT_DATA_STRING = "Some data | 2021-10-25|1200| 1500";
     private static final String[][] VALID_LESSON_ARGUMENTS
             = new String[][]{{"CS2113T", "LEC", "Friday", "1600", "1800"},
                 {"CS2113T", "TUT", "Wednesday", "1100", "1200"},
@@ -30,12 +34,17 @@ public class PlannerTest {
             = new String[]{"Something worse", "2021-10-26", "0700"};
     private static final String[] WRONG_TIME_ORDER_ARGUMENTS
             = new String[]{"Go back in time", "2021-04-06", "2000", "1600"};
+    private static final String[] ZERO_DURATION_EVENT_ARGUMENTS
+            = new String[]{"Zero minute", "2022-10-20", "1000", "1000"};
+    private static final String[] EMPTY_DESCRIPTION_EVENT_ARGUMENTS
+            = new String[]{"", "2021-10-31", "2100", "2330"};
     private static final String[][] CONFLICTED_TIME_ARGUMENTS
             = new String[][]{{"Do something", "2021-10-26", "1505", "1700"},
                 {"Do something", "2021-10-26", "1430", "1505"},
                 {"Do something", "2021-10-26", "1400", "1600"},
                 {"Do something", "2021-10-26", "1505", "1510"},
                 {"Conflict with lecture", "2021-10-22", "1500", "1700"}};
+    private static final String EVENT_FROM_DATA = "12:00 - 15:00 Some data";
     private static final String VALID_LIST_1
             = "\n15:00 - 15:15 Pop Quiz 3";
     private static final String VALID_LIST_2
@@ -48,7 +57,7 @@ public class PlannerTest {
             = "\n15:00 - 17:00 Conflict with lecture\n"
                     + "16:00 - 18:00 CS2113T LEC";
     private static final String VALID_LIST_5
-            = "\n15:00 - 17:00 Conflict with lecture (id: 3)";
+            = "\n15:00 - 17:00 Conflict with lecture";
     private static final String DATETIME_ERROR
             = "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
@@ -57,8 +66,20 @@ public class PlannerTest {
             "Please check the format of your input! Format: planner add DESCRIPTION/DATE/START_TIME/END_TIME";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
+    private static final String TIME_SAME_ERROR =
+            "Your event cannot start and end at the same time!";
     private static final String TIME_CONFLICT_ERROR =
             "You already have an event ongoing for that time period, do you still want to add? (y/n)";
+    private static final String EMPTY_DESCRIPTION_ERROR =
+            "Please provide a description for your event!";
+
+    @Test
+    public void constructEvent_eventDataString_eventConstructed() throws KolinuxException {
+        planner.clearEvents();
+        Event event = new Event(EVENT_DATA_STRING);
+        assertEquals(EVENT_FROM_DATA, event.toString());
+        assertEquals("2021-10-25", event.getDate());
+    }
 
     @Test
     public void addEvent_validEventInput_eventAdded() throws KolinuxException {
@@ -96,6 +117,26 @@ public class PlannerTest {
             planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(TIME_ORDER_ERROR, exception.getMessage());
+        }
+    }
+
+    @Test
+    public void addEvent_startAndEndSameTime_eventNotAdded() {
+        try {
+            Event invalidEvent = new Event(ZERO_DURATION_EVENT_ARGUMENTS);
+            planner.addEvent(invalidEvent, false);
+        } catch (KolinuxException exception) {
+            assertEquals(TIME_SAME_ERROR, exception.getMessage());
+        }
+    }
+
+    @Test
+    public void addEvent_emptyDescriptionEvent_eventNotAdded() {
+        try {
+            Event invalidEvent = new Event(EMPTY_DESCRIPTION_EVENT_ARGUMENTS);
+            planner.addEvent(invalidEvent, false);
+        } catch (KolinuxException exception) {
+            assertEquals(EMPTY_DESCRIPTION_ERROR, exception.getMessage());
         }
     }
 
@@ -170,8 +211,8 @@ public class PlannerTest {
     public void addEvent_eventConflictWithTimetableAllowConflict_eventAdded() throws KolinuxException {
         planner.clearEvents();
         timetable.clearTimetable();
-        Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
-        timetable.addSubcommand.addLessonToTimetable(lesson);
+        Lesson lesson = new Lecture(VALID_LESSON_ARGUMENTS[0]);
+        addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
         assertEquals(VALID_LIST_4, planner.listEvents("2021-10-22", false));
@@ -183,11 +224,12 @@ public class PlannerTest {
     public void listEvent_attemptToDeleteLessonFromPlanner_lessonHiddenFromUser() throws KolinuxException {
         planner.clearEvents();
         timetable.clearTimetable();
-        Lesson lesson = new Lesson(VALID_LESSON_ARGUMENTS[0]);
-        timetable.addSubcommand.addLessonToTimetable(lesson);
+        Lesson lesson = new Lecture(VALID_LESSON_ARGUMENTS[0]);
+        addSubCommand.addToTimetable(lesson);
         Event event = new Event(CONFLICTED_TIME_ARGUMENTS[4]);
         planner.addEvent(event, true);
-        assertEquals(VALID_LIST_5, planner.listEvents("2021-10-22", true));
+        assertEquals(VALID_LIST_5 + " (id: " + event.getId() + ")",
+                planner.listEvents("2021-10-22", true));
     }
 
     @Test

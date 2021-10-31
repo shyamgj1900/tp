@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Represents the operations to parse information needed for the execution of a command.
@@ -29,7 +30,11 @@ public class Parser {
     private static final String COMMAND_PLANNER = "planner";
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_TIMETABLE = "timetable";
+
     private static final String EMPTY_STRING = "";
+    private static final String ILLEGAL_CHAR = "|";
+
+    private static final String ILLEGAL_CHAR_MESSAGE = "Please avoid using '|' in your input, please try again.";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -53,27 +58,33 @@ public class Parser {
      * @return Command
      */
     public static Command parseCommand(String input) throws KolinuxException, IOException {
+        if (input.contains(ILLEGAL_CHAR)) {
+            throw new KolinuxException(ILLEGAL_CHAR_MESSAGE);
+        }
+        try {
+            String trimmedInput = input.trim();
+            String commandWord = trimmedInput.split(" ", 2)[0];
+            String argument = trimmedInput.replaceFirst(commandWord, "").trim();
 
-        String trimmedInput = input.trim();
-        String commandWord = trimmedInput.split(" ", 2)[0];
-        String argument = trimmedInput.replaceFirst(commandWord, "").trim();
-
-        switch (commandWord.toLowerCase()) {
-        case COMMAND_HELP:
-            return new HelpCommand();
-        case COMMAND_CAP:
-            return new CalculateCapCommand(input);
-        case COMMAND_BUS:
-            return new BusRouteCommand(input);
-        case COMMAND_MODULE:
-            return parseSubCommand(argument, COMMAND_MODULE);
-        case COMMAND_PLANNER:
-            return parseSubCommand(argument, COMMAND_PLANNER);
-        case COMMAND_EXIT:
-            return new ExitCommand();
-        case COMMAND_TIMETABLE:
-            return parseSubCommand(argument, COMMAND_TIMETABLE);
-        default:
+            switch (commandWord.toLowerCase()) {
+            case COMMAND_HELP:
+                return new HelpCommand();
+            case COMMAND_CAP:
+                return parseCapCommand(argument);
+            case COMMAND_BUS:
+                return new BusRouteCommand(input);
+            case COMMAND_MODULE:
+                return parseSubCommand(argument, COMMAND_MODULE);
+            case COMMAND_PLANNER:
+                return parseSubCommand(argument, COMMAND_PLANNER);
+            case COMMAND_EXIT:
+                return new ExitCommand();
+            case COMMAND_TIMETABLE:
+                return parseSubCommand(argument, COMMAND_TIMETABLE);
+            default:
+                return new InvalidCommand();
+            }
+        } catch (PatternSyntaxException exception) {
             return new InvalidCommand();
         }
     }
@@ -98,11 +109,25 @@ public class Parser {
             return new TimetableCommand(subCommand, parsedArguments);
         case COMMAND_MODULE:
             return new ModuleCommand(subCommand, parsedArguments);
-        /*case COMMAND_CAP:
-            return new CalculateCapCommand(subCommand, parsedArguments);*/
         default:
             throw new KolinuxException("Internal error occurred, please try again.");
         }
+    }
+
+    /**
+     * Processes the arguments by separating the first word (sub-command) from the input.
+     * The rest of the input is separated into a String array using the " " delimiter.
+     * This method is called only when the "calculate cap" command is called.
+     * 
+     * @param subInput User input without the command word.
+     * @return The "calculate cap" command.
+     * @throws KolinuxException If the user's input contains invalid module descriptions.
+     */
+    public static Command parseCapCommand(String subInput) throws KolinuxException {
+        String subCommand = subInput.split(" ", 2)[0];
+        String argument = subInput.replaceFirst(subCommand, "").trim();
+        String[] parsedArguments = argument.split(" ");
+        return new CalculateCapCommand(subCommand, parsedArguments);
     }
 
     /**

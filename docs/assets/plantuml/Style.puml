@@ -1,0 +1,18 @@
+!define CAPCALCULATOR_COLOR #3333C4
+!define COMMANDS_COLOR #99D2FF
+!define EXCEPTIONS_COLOR #FFFFFF
+!define MODULE_COLOR #C90076
+!define PLANNER_COLOR #C5C900
+!define ROUTES_COLOR #00C9A6
+!define TIMETABLE_COLOR #C95A00
+!define CAPCALCULATOR_COLOR #FF7B00
+!define UTIL_COLOR #B7B1AC
+!define KOLINUX_COLOR #FF00E0
+!define MAIN_COLOR #FF0000
+
+!define ABSTRACT &#123;abstract&#125;
+
+skinparam defaultFontSize 15
+skinparam classAttributeIconSize 0
+skinparam nodesep 60
+skinparam componentStyle rectangle

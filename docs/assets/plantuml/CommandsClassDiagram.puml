@@ -1,0 +1,101 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include Style.puml
+
+hide circle
+
+package commands <<Rectangle>> {
+    class "ABSTRACT\nCommand"
+    class CommandResult
+    class BusRouteCommand
+    class CalculateCapCommand
+    class XYZCommand
+    class ModuleCommand
+    class ModuleListCapCommand
+    class PlannerCommand
+    class TimetableCommand
+}
+
+package util <<Rectangle>> {
+    class KolinuxLogger
+    class Prompt
+}
+
+package timetable <<Rectangle>> TIMETABLE_COLOR {
+}
+
+package routes <<Rectangle>> ROUTES_COLOR {
+}
+
+package capcalculator <<Rectangle>> CAPCALCULATOR_COLOR {
+}
+
+package planner <<Rectangle>> PLANNER_COLOR {
+}
+
+package module <<Rectangle>> MODULE_COLOR {
+}
+
+class "ABSTRACT\nCommand" COMMANDS_COLOR {
+    # argument: String
+    # getReplyFromPrompt(question: String): String
+    + executeCommand(): CommandResult ABSTRACT
+}
+
+class CommandResult COMMANDS_COLOR {
+    - feedbackToUser: String
+}
+
+class BusRouteCommand COMMANDS_COLOR {
+    + executeCommand(): CommandResult
+}
+
+class CalculateCapCommand COMMANDS_COLOR {
+    + executeCommand(): CommandResult
+}
+
+class XYZCommand COMMANDS_COLOR {
+    + executeCommand(): CommandResult
+}
+
+class ModuleCommand COMMANDS_COLOR {
+    + executeCommand(): CommandResult
+}
+
+class ModuleListCapCommand COMMANDS_COLOR {
+    + executeCommand(): CommandResult
+}
+
+class PlannerCommand COMMANDS_COLOR {
+    + executeCommand(): CommandResult
+}
+
+class TimetableCommand COMMANDS_COLOR {
+    + executeCommand(): CommandResult
+}
+
+class KolinuxLogger UTIL_COLOR {
+}
+
+class Prompt UTIL_COLOR {
+}
+
+BusRouteCommand --|> "ABSTRACT\nCommand"
+CalculateCapCommand -right-|> "ABSTRACT\nCommand"
+XYZCommand --|> "ABSTRACT\nCommand"
+"ABSTRACT\nCommand" <|-up- ModuleCommand
+"ABSTRACT\nCommand" <|-- ModuleListCapCommand
+"ABSTRACT\nCommand" <|-- PlannerCommand
+"ABSTRACT\nCommand" <|-- TimetableCommand
+"ABSTRACT\nCommand" .> "0..1" CommandResult : "result "
+"ABSTRACT\nCommand" --> "1" KolinuxLogger : logger
+"ABSTRACT\nCommand" ..> Prompt
+"ABSTRACT\nCommand" -right-> module
+BusRouteCommand -up-> routes
+PlannerCommand -down-> planner
+TimetableCommand -down-> timetable
+ModuleListCapCommand -left-> capcalculator
+CalculateCapCommand -left-> capcalculator
+
+@enduml

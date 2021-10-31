@@ -8,7 +8,7 @@ import static seedu.kolinux.commands.TimetableCommand.timetable;
  * ModuleList class contains and facilitate operations on the myModules list.
  */
 public class ModuleList {
-    public static final String HORIZONTAL_LINE = "....................................................................";
+    public final String horizontalLine = "....................................................................";
     public ArrayList<ModuleDetails> myModules = new ArrayList<>();
 
     public ArrayList<ModuleDetails> getMyModules() {
@@ -90,12 +90,52 @@ public class ModuleList {
     public String deleteModuleByCode(String code) {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
+                myModules.get(i).setGrade("0");
                 myModules.remove(i);
                 timetable.deleteByModuleList(code);
                 return "Successfully deleted module: " + code;
             }
         }
         return code + " not found in the module list";
+    }
+
+    public void getExamDateTime(ModuleDetails module) {
+        String examDate = module.getDate();
+        String examStartTime = module.getStartTime();
+        String examEndTime = module.getEndTime();
+        if (examDate != null && examStartTime != null && examEndTime != null) {
+            System.out.println("Exam date: " + examDate);
+            System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
+        } else {
+            System.out.println("No exam");
+        }
+    }
+
+    public void getWorkload(ModuleDetails module, String code, String title) {
+        double lectureHours = module.getLectureHours();
+        System.out.println(code + " " + title + "\n\nWorkload:");
+        if (lectureHours > 0) {
+            System.out.println("Lecture: " + lectureHours + " hours");
+        }
+        double tutorialHours = module.getTutorialHours();
+        if (tutorialHours > 0) {
+            System.out.println("Tutorial: " + tutorialHours + " hours");
+        }
+        double labHours = module.getLabHours();
+        if (labHours > 0) {
+            System.out.println("Lab: " + labHours + " hours");
+        }
+        double projectHours = module.getProjectHours();
+        if (projectHours > 0) {
+            System.out.println("Project Work: " + projectHours + " hours");
+        }
+        double preparationHours = module.getPreparationHours();
+        if (preparationHours > 0) {
+            System.out.println("Preparation: " + preparationHours + " hours");
+        }
+        if (preparationHours < 0 && projectHours < 0 && labHours < 0 && tutorialHours < 0 && lectureHours < 0) {
+            System.out.println("No workload information available for " + code);
+        }
     }
 
     /**
@@ -105,43 +145,15 @@ public class ModuleList {
         for (ModuleDetails module : myModules) {
             String code = module.getModuleCode();
             String title = module.getTitle();
-            double lectureHours = module.getLectureHours();
-            System.out.println(code + " " + title + "\n\nWorkload:");
-            if (lectureHours != 0) {
-                System.out.println("Lecture: " + lectureHours + " hours");
-            }
-            double tutorialHours = module.getTutorialHours();
-            if (tutorialHours != 0) {
-                System.out.println("Tutorial: " + tutorialHours + " hours");
-            }
-            double labHours = module.getLabHours();
-            if (labHours != 0) {
-                System.out.println("Lab: " + labHours + " hours");
-            }
-            double projectHours = module.getProjectHours();
-            if (projectHours != 0) {
-                System.out.println("Project Work: " + projectHours + " hours");
-            }
-            double preparationHours = module.getPreparationHours();
-            if (preparationHours != 0) {
-                System.out.println("Preparation: " + preparationHours + " hours");
-            }
-            String examDate = module.getDate();
-            String examStartTime = module.getStartTime();
-            String examEndTime = module.getEndTime();
-            if (examDate != null && examStartTime != null && examEndTime != null) {
-                System.out.println("Exam date: " + examDate);
-                System.out.println("Exam time: " + examStartTime + " - " + examEndTime);
-            } else {
-                System.out.println("No exam");
-            }
+            getWorkload(module, code, title);
+            getExamDateTime(module);
             String grade = module.getGrade();
             if (grade.equals("0")) {
                 System.out.println("Final grade: N/A");
             } else {
                 System.out.println("Final grade: " + grade);
             }
-            System.out.println(HORIZONTAL_LINE);
+            System.out.println(horizontalLine);
         }
         System.out.print("Remember to add the module's lessons to the timetable based on the workload");
     }

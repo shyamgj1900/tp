@@ -1,12 +1,8 @@
 package seedu.kolinux.routes;
 
-import seedu.kolinux.Main;
 import seedu.kolinux.exceptions.KolinuxException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Location {
@@ -22,20 +18,8 @@ public class Location {
      */
     public String getBusStopList() throws KolinuxException, IOException {
         ArrayList<String> lines = new ArrayList<>();
-        try {
-            InputStream inputStream = Main.class.getResourceAsStream(FILEPATH_STOP_NAMES);
-            if (inputStream == null) {
-                throw new KolinuxException("File not found.");
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-            return String.join("\n", lines);
-        } catch (IOException e) {
-            throw new IOException();
-        }
+        Route.readFromFile(lines, FILEPATH_STOP_NAMES);
+        return String.join("\n", lines);
     }
 
     /**

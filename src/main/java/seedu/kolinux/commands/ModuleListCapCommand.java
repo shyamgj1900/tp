@@ -4,7 +4,6 @@ import seedu.kolinux.capcalculator.CapCalculatorByCode;
 import seedu.kolinux.capcalculator.GradeSuggestionCalculator;
 import seedu.kolinux.capcalculator.ModuleListCapCalculator;
 import seedu.kolinux.exceptions.KolinuxException;
-import seedu.kolinux.module.ModuleDetails;
 
 import java.util.logging.Level;
 
@@ -37,8 +36,8 @@ public class ModuleListCapCommand extends Command {
             if (result.equals("UNACHIEVABLE")) {
                 message = "It is impossible to achieve your desired CAP with the current modules";
             } else {
-                message = "Based on your modules, you have to get an average grade of " + result 
-                        + "\nor higher in order to achieve your desired CAP";
+                message = "Based on your modules, you have to get an average grade of " + result + "\n"
+                        + "or higher in order to achieve your desired CAP";
             }
             logger.log(Level.INFO, "Suggested grade is calculated from module list");
         } else {

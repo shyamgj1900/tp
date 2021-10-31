@@ -17,10 +17,11 @@ public class Planner {
     private PlannerStorage plannerStorage = new PlannerStorage();
     private ModuleList moduleList;
 
-    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
+    
+    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     private static final String PLANNER_CORRUPTED_ERROR =
-            "Some of the data is corrupted, your planner will be reset...";
+            "Some of your planner events are corrupted, they will be removed from your planner!";
     private static final String TIME_CONFLICT_PROMPT =
             "You already have an event ongoing for that time period, do you still want to add? (y/n)";
     private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
@@ -83,26 +84,38 @@ public class Planner {
     }
 
     /**
-     * Initializes the planner by loading the previously saved schedule in planner.txt.
+     * Initializes the planner by loading the previously saved schedule in planner.txt. File lines
+     * that are not able to construct an Event will be removed, and the new file lines will be
+     * rewritten back to the storage. Hence, only corrupted lines will be removed while the rest of
+     * the file data can still be added as Events to the planner.
      *
      * @throws KolinuxException If the file cannot be read properly due to corruption
      */
     public void initPlanner() throws KolinuxException {
+
+        boolean isCorrupted = false;
         ArrayList<String> fileLines;
+
         if ((fileLines = plannerStorage.readFile()) == null) {
             assert scheduleOfAllDates.isEmpty();
             return;
         }
 
-        try {
-            Event event;
-            for (String fileLine : fileLines) {
-                event = new Event(fileLine);
+        Event event;
+        int i = 0;
+        while (i < fileLines.size()) {
+            try {
+                event = new Event(fileLines.get(i));
                 scheduleOfAllDates.add(event);
+                i++;
+            } catch (KolinuxException exception) {
+                isCorrupted = true;
+                fileLines.remove(i);
+                plannerStorage.rewriteFile(fileLines);
             }
-        } catch (KolinuxException exception) {
-            clearEvents();
-            assert scheduleOfAllDates.isEmpty();
+        }
+
+        if (isCorrupted) {
             throw new KolinuxException(PLANNER_CORRUPTED_ERROR);
         }
     }
@@ -144,30 +157,28 @@ public class Planner {
         } catch (DateTimeParseException exception) {
             throw new KolinuxException(INVALID_DATE_MESSAGE);
         }
-
         assert Pattern.matches(DATE_PATTERN, date);
-        ArrayList<String> filteredEventStrings =
-                (ArrayList<String>) filterPlanner(date)
-                        .stream()
-                        .filter((event) -> {
-                            if (withId) {
-                                return !event.getIsLesson();
-                            }
-                            return true;
-                        })
-                        .map((event) -> {
-                            if (withId) {
-                                return event.toStringWithId();
-                            }
-                            return event.toString();
-                        })
-                        .collect(Collectors.toList());
+
+        ArrayList<String> filteredEventStrings;
+        if (withId) {
+            filteredEventStrings =
+                    (ArrayList<String>) filterPlanner(date)
+                            .stream()
+                            .filter(event -> !event.getIsLesson())
+                            .map(event -> event.toStringWithId())
+                            .collect(Collectors.toList());
+        } else {
+            filteredEventStrings =
+                    (ArrayList<String>) filterPlanner(date)
+                            .stream()
+                            .map(event -> event.toString())
+                            .collect(Collectors.toList());
+        }
 
         String eventsInOneString = Parser.concatenateStrings(filteredEventStrings);
         if (eventsInOneString.isEmpty()) {
             throw new KolinuxException(EMPTY_LIST_MESSAGE);
         }
-
         return eventsInOneString;
     }
 

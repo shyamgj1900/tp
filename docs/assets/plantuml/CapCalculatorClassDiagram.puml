@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include Style.puml
+
+hide circle
+
+class "ABSTRACT \n CapCalculator" CAPCALCULATOR_COLOR {
+# invalidModules : ArrayList<String>
+
++ CapCalculator()
+# checkModulesNotEmpty() : void
+# calculateCurrentCap(totalMc : double, cap : double, mc : int, gradePoint : double) : double
+# getCap() : String ABSTRACT
+# checkInvalidModules() : void
++ executeCapCalculator() : String
+}
+
+class "ModuleList" MODULE_COLOR {
++ myModules : ArrayList<ModuleDetails>
+}
+
+class "CapCalculatorByMc" CAPCALCULATOR_COLOR {
++ CapCalculatorByMc(input : String)
+# getCap() : String
+}
+
+class "CapCalculatorByCode" CAPCALCULATOR_COLOR {
+- moduleDb : ModuleDb
+
++ CapCalculatorByCode(input : String)
++ CapCalculatorByCode(modules : ModuleList)
+# getCap() : String
+}
+
+class "ModuleListCapCalculator" CAPCALCULATOR_COLOR {
++ ModuleListCapCalculator(modules : ModuleList)
++ executeCapCalculator() : String
+}
+
+class "GradeSuggestionCalculator" CAPCALCULATOR_COLOR {
+- userDesiredCap : String
+
++ GradeSuggestionCalculator(modules : ModuleList, userDesiredCap : String)
++ executeCapCalculator() : String
+}
+
+class "CalculatorModuleList" MODULE_COLOR {
++ CalculatorModuleList()
++ CalculatorModuleList(moduleList : ModuleList)
++ storeModuleMcGrade(mc : int, grade : String) : void
++ storeModuleCodeGrade(code : String, grade : String) : void
+}
+
+"ABSTRACT \n CapCalculator" ^-- "CapCalculatorByMc"
+"ABSTRACT \n CapCalculator" ^-- "CapCalculatorByCode"
+"CapCalculatorByCode" ^-- "ModuleListCapCalculator"
+"CapCalculatorByCode" ^-- "GradeSuggestionCalculator"
+"ModuleList" ^-- CalculatorModuleList
+
+"ABSTRACT \n CapCalculator" --> "1" "CalculatorModuleList"
+
+
+@enduml

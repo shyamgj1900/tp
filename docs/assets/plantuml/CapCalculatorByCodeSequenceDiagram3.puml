@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+
+participant ":CapCalculatorByCode" as calculator CAPCALCULATOR_COLOR
+participant "module:ModuleDetails" as module MODULE_COLOR
+participant ":ModuleDb" as moduleDb MODULE_COLOR
+participant "moduleInfo:ModuleDetails" as moduleInfo MODULE_COLOR
+
+group sd capCalculation
+
+loop until all modules
+
+calculator -> module : getGradePoint()
+activate module
+
+module --> calculator : gradePoint
+deactivate module
+
+calculator -> module : getModuleCode()
+activate module
+
+module --> calculator : moduleCode
+deactivate module
+
+calculator -> moduleDb : getModuleInfo(moduleCode)
+activate moduleDb
+
+moduleDb --> calculator : moduleInfo
+deactivate moduleDb
+
+calculator -> moduleInfo : getModuleCredit()
+activate moduleInfo
+
+moduleInfo --> calculator : moduleCredit
+deactivate moduleInfo
+
+calculator -> calculator : calculateCurrentCap(totalMc, cap, mc, gradePoint)
+activate calculator
+
+calculator --> calculator : cap
+deactivate calculator
+
+end
+
+end
+
+@enduml

@@ -1,0 +1,105 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include Style.puml
+
+hide circle
+class UpdateSubCommand
+class ViewSubCommand
+class AddSubCommand
+class SubCommand
+class DeleteSubCommand
+
+
+class "ABSTRACT \n Lesson"
+class Tutorial
+class Lecture
+class TimetableStorage
+class Timetable
+
+
+SubCommand ^-- DeleteSubCommand
+ViewSubCommand --^ SubCommand
+AddSubCommand --^ SubCommand
+UpdateSubCommand --^ SubCommand
+
+"ABSTRACT \n Lesson" ^-- Lecture
+"ABSTRACT \n Lesson" ^-- Tutorial
+"ABSTRACT \n Lesson" ^-- Lab
+
+AddSubCommand ..> "1..*" "ABSTRACT \n Lesson" : lesson
+DeleteSubCommand ..> "1..*" "ABSTRACT \n Lesson" : lesson
+UpdateSubCommand ..> "1..*" "ABSTRACT \n Lesson" : lesson
+Timetable --> "1" TimetableStorage : timetableStorage
+Timetable --> "*" "ABSTRACT \n Lesson" : lessonStorage
+
+
+TimetableStorage --> "*" "ABSTRACT \n Lesson" : lessonStorage
+
+class Timetable TIMETABLE_COLOR {
+    + {static} timetableData: String[][]
+    + {static} moduleList: ModuleList
+    - addSubCommand: AddSubCommand
+    - deleteSubCommand: DeleteSubCommand
+    - updateSubCommand: UpdateSubCommand
+    - viewSubCommand: ViewSubCommand
+    + initTimetable(): void
+    + public clearTimetable(): void
+}
+
+class TimetableStorage TIMETABLE_COLOR {
+'    - lessonStorage: Lesson
+    + writeToFile(): void
+    + createFilePath(filePath:String): void
+    + clearFile(): void
+}
+
+class ViewSubCommand TIMETABLE_COLOR {
++ viewTimetable(): void
+}
+
+class AddSubCommand TIMETABLE_COLOR {
++ inputLesson(lessonDetails: String[]): void
+- addToTimetable(lesson: Lesson): void
+}
+
+class DeleteSubCommand TIMETABLE_COLOR {
++ deleteLesson(lessonDetails : String[]): void
+- deleteFromTimetable(moduleCode: String,
+lessonType: String,dayIndex: int): void
+}
+
+
+
+class UpdateSubCommand TIMETABLE_COLOR {
++ updateTimetable(lessonDetails: String[]): void
++ isLessonInTimetable(moduleCode: String,
+lessonType: String,day: String): boolean
+}
+
+class "ABSTRACT \n Lesson" TIMETABLE_COLOR {
+    # lessonType: String
+    # moduleCode: String
+    # day: String
+    # startTime: String
+    # endTime: String
+}
+
+class Tutorial TIMETABLE_COLOR {
+
+}
+
+class Lecture TIMETABLE_COLOR {
+
+}
+
+class Lab TIMETABLE_COLOR {
+
+}
+
+class SubCommand TIMETABLE_COLOR {
+
+}
+
+
+@enduml

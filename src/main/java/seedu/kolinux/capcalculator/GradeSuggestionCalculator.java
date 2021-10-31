@@ -22,7 +22,7 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      * 
      * @throws KolinuxException if desired CAP is invalid.
      */
-    public void checkInvalidDesiredCap() throws KolinuxException {
+    private void checkInvalidDesiredCap() throws KolinuxException {
         double cap;
         try {
             cap = Double.parseDouble(userDesiredCap);
@@ -32,6 +32,10 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
         }
         if (cap > 5.0) {
             String errorMessage = "CAP cannot exceed 5.0";
+            throw new KolinuxException(errorMessage);
+        }
+        if (cap < 0.0) {
+            String errorMessage = "CAP cannot be a negative number";
             throw new KolinuxException(errorMessage);
         }
     }
@@ -57,12 +61,18 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      * 
      * @return Total MC.
      */
-    private double getMcModulesWithoutGrade() {
+    private double getMcModulesWithoutGrade() throws KolinuxException {
         double totalMc = 0.0;
         for (String module : invalidModules) {
             String moduleCode = module.split(DIVIDER)[0];
-            double mc = Double.parseDouble(moduleDb.getModuleInfo(moduleCode).getModuleCredit());
+            String moduleCredit = moduleDb.getModuleInfo(moduleCode).getModuleCredit();
+            double mc = Double.parseDouble(moduleCredit);
             totalMc += mc;
+        }
+        if (totalMc == 0) {
+            String errorMessage = "Grade suggestion is not available as "
+                    + "every modules already have their grade available";
+            throw new KolinuxException(errorMessage);
         }
         return totalMc;
     }
@@ -119,7 +129,7 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      * 
      * @return The average minimum grade that the user needs.
      */
-    private String getExpectedGrades() {
+    private String getExpectedGrades() throws KolinuxException {
         double currentCap = Double.parseDouble(getCap());
         double mcModuleWithGrade = getMcModulesWithGrade();
         double mcModuleWithoutGrade = getMcModulesWithoutGrade();

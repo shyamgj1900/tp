@@ -6,6 +6,15 @@ package seedu.kolinux.module;
 public class CalculatorModuleList extends ModuleList {
 
     /**
+     * Store a module in myModules.
+     * 
+     * @param module The module to be stored.
+     */
+    public void storeModule(ModuleDetails module) {
+        myModules.add(module);
+    }
+
+    /**
      * Store a module in myModules when only the modular credit and its grade are given.
      * This method is only used CapCalculator object.
      *
@@ -18,14 +27,20 @@ public class CalculatorModuleList extends ModuleList {
     }
 
     /**
-     * Store a module in myModules when only the module code and its grade are needed from the module.
-     * This method is only used CapCalculator object.
-     *
-     * @param code Module code which will be stored
-     * @param grade The corresponding grade to be stored
+     * Store a module with grade into myModules.
+     * 
+     * @param code Module code which will be stored.
+     * @param grade The corresponding grade to be stored.
+     * @param moduleDb Module database.
+     * @return true if the module is successfully stored, false otherwise.
      */
-    public void storeModuleCodeGrade(String code, String grade) {
-        ModuleDetails mod = new ModuleDetails(code, grade);
+    public boolean storeModuleCodeGrade(String code, String grade, ModuleDb moduleDb) {
+        ModuleDetails mod = moduleDb.getModuleInfo(code);
+        if (myModules.contains(mod)) {
+            return false;
+        }
         myModules.add(mod);
+        mod.setGrade(grade);
+        return true;
     }
 }

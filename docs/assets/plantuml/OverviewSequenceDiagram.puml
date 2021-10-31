@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Style.puml
+
+hide footbox
+
+actor User as user
+participant ":Ui" as ui UTIL_COLOR
+participant ":Kolinux" as kolinux KOLINUX_COLOR
+participant ":Parser" as parser UTIL_COLOR
+participant ":XYZCommand" as com COMMANDS_COLOR
+participant ":CommandResult" as res COMMANDS_COLOR
+
+loop Command not instance of ExitCommand
+
+kolinux -> ui : readUserInput()
+activate ui
+
+ui -> user : read input
+user --> ui : userInput
+
+ui --> kolinux : userInput
+deactivate ui
+
+kolinux -> parser : parseCommand(userInput)
+activate parser
+
+create com
+parser -> com : new XYZCommand()
+activate com
+
+com --> parser : command
+deactivate com
+
+parser --> kolinux : command
+deactivate parser
+
+kolinux -> com : executeCommand()
+activate com
+
+create res
+com -> res : new CommandResult(feedbackToUser)
+activate res
+
+res --> com : result
+deactivate res
+
+com --> kolinux : result
+deactivate com
+
+kolinux -> ui : showResultToUser(result)
+activate ui
+
+ui -> user : print result
+
+ui --> kolinux
+deactivate ui
+
+end
+
+@enduml

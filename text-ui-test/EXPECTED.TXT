@@ -25,9 +25,9 @@ Here are the list of commands:
 13. planner list DATE - Lists events on a certain date
 14. planner delete DATE - Delete an event on a certain date
 15. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
-16. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME
-    - shift a lesson to another timing
-17. timetable delete MODULE_CODE/LESSON_TYPE/DAY - delete a specific lesson
+16. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME
+    - shift a lesson to another timing with the same duration
+17. timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME - delete a specific lesson
 18. timetable view - Print the timetable on CLI
 19. help - View this menu again
 20. bye - Exit Kolinux
@@ -36,7 +36,7 @@ Your CAP for this semester will be 4.19 if you get your desired grades!
 ....................................................................
 Your CAP for this semester will be 3.00 if you get your desired grades!
 ....................................................................
-Invalid module info found: invalid_info_1 invalid_info_2 
+Invalid module info format found: invalid_info_1 invalid_info_2 
 ....................................................................
 This command is not recognised, please enter "help" for the list of commands...
 ....................................................................

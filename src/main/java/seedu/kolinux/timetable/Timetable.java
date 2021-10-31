@@ -6,33 +6,31 @@ import seedu.kolinux.timetable.lesson.Lab;
 import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.lesson.Tutorial;
-import seedu.kolinux.timetable.subcommand.AddSubcommand;
-import seedu.kolinux.timetable.subcommand.DeleteSubcommand;
-import seedu.kolinux.timetable.subcommand.UpdateSubcommand;
-import seedu.kolinux.timetable.subcommand.ViewSubcommand;
+import seedu.kolinux.timetable.subcommand.AddSubCommand;
+import seedu.kolinux.timetable.subcommand.ViewSubCommand;
+import seedu.kolinux.timetable.subcommand.DeleteSubCommand;
+import seedu.kolinux.timetable.subcommand.UpdateSubCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
-import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
-
 /**
  * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
  */
 public class Timetable {
 
-    public static TimetableStorage timetableStorage = new TimetableStorage();
     public static ModuleList moduleList;
-    public AddSubcommand addSubcommand = new AddSubcommand();
-    public DeleteSubcommand deleteSubCommand = new DeleteSubcommand();
-    public UpdateSubcommand updateSubcommand = new UpdateSubcommand();
     private static final int ROW_SIZE = 16;
     private static final int COLUMN_SIZE = 6;
     public static String [][] timetableData = new String[ROW_SIZE][COLUMN_SIZE];
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
+    public static TimetableStorage timetableStorage = new TimetableStorage(lessonStorage);
+    private ViewSubCommand viewSubCommand = new ViewSubCommand();
+    private AddSubCommand addSubCommand = new AddSubCommand();
+    private DeleteSubCommand deleteSubCommand = new DeleteSubCommand();
+    private UpdateSubCommand updateSubCommand = new UpdateSubCommand();
     public static String filePath = "./data/timetable.txt";
     public static File file = new File(filePath);
     public static final String CORRUPT_STORAGE = "Your timetable storage file is corrupted, "
@@ -58,7 +56,7 @@ public class Timetable {
             loadContent(fileContents);
         } catch (FileNotFoundException exception) {
             timetableStorage.createFilePath(filePath);
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (ArrayIndexOutOfBoundsException | KolinuxException exception) {
             clearTimetable();
             timetableStorage.clearFile();
             throw new KolinuxException(CORRUPT_STORAGE);
@@ -72,65 +70,27 @@ public class Timetable {
      * @param fileContents Array list of the contents of the timetable text file
      * @throws KolinuxException If the format of the file content for timetable inputting is incorrect
      */
-    private void loadContent(ArrayList<String> fileContents)
-            throws KolinuxException {
+    private void loadContent(ArrayList<String> fileContents) throws KolinuxException {
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
-            switch (content[1]) {
-            case "TUT":
-                addSubcommand.addLessonToTimetable(new Tutorial(content));
-                break;
-            case "LEC":
-                addSubcommand.addLessonToTimetable(new Lecture(content));
-                break;
-            case "LAB":
-                addSubcommand.addLessonToTimetable(new Lab(content));
-                break;
-            default:
-                timetableStorage.clearFile();
-                throw new KolinuxException(CORRUPT_STORAGE);
-            }
+            executeAdd(content);
         }
     }
 
-    public void executeViewTimetable() {
-        new ViewSubcommand().viewTimetable();
+    public void executeView() {
+        viewSubCommand.viewTimetable();
     }
 
-    public void executeAddSubCommand(String[] parsedArguments) throws KolinuxException {
-
-        try {
-            String lessonType = parsedArguments[1].toUpperCase();
-            String moduleCode = parsedArguments[0].toUpperCase();
-            if (!addSubcommand.isLessonInModuleList(moduleList, moduleCode)) {
-                throw new KolinuxException(moduleCode + " not found in module list");
-            }
-            int requiredHours = addSubcommand.getHours(moduleList, moduleCode, lessonType);
-            addSubcommand.checkZeroWorkload(requiredHours, moduleCode, lessonType);
-            int inputHours = getIndex(parsedArguments[4], schoolHours) - getIndex(parsedArguments[3], schoolHours);
-            int storageHours = addSubcommand.getStorageHours(moduleCode, lessonType) + inputHours;
-            addSubcommand.checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
-
-            if (lessonType.startsWith("TUT")) {
-                addSubcommand.addLessonToTimetable(new Tutorial(parsedArguments));
-            } else if (lessonType.startsWith("LEC")) {
-                addSubcommand.addLessonToTimetable(new Lecture(parsedArguments));
-            } else if (lessonType.startsWith("LAB")) {
-                addSubcommand.addLessonToTimetable(new Lab(parsedArguments));
-            } else {
-                throw new KolinuxException(addSubcommand.INVALID_ADD_FORMAT);
-            }
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(addSubcommand.INVALID_ADD_FORMAT);
-        }
+    public void executeAdd(String[] lessonDetails) throws KolinuxException {
+        addSubCommand.inputLesson(lessonDetails);
     }
 
-    public void executeDeleteSubCommand(String[] parsedArguments) throws KolinuxException {
-        deleteSubCommand.deleteLesson(parsedArguments);
+    public void executeDelete(String[] lessonDetails) throws KolinuxException {
+        deleteSubCommand.deleteLesson(lessonDetails);
     }
 
-    public void executeUpdateSubCommand(String[] parsedArguments) throws KolinuxException {
-        updateSubcommand.updateTimetable(parsedArguments);
+    public void executeUpdate(String[] lessonDetails) throws KolinuxException {
+        updateSubCommand.updateTimetable(lessonDetails);
     }
 
     public void deleteByModuleList(String moduleCode) {
@@ -155,7 +115,7 @@ public class Timetable {
             }
         }
         lessonStorage.clear();
-        timetableStorage.writeToFile();
+        timetableStorage.clearFile();
     }
 
 }

@@ -13,7 +13,6 @@ public abstract class CapCalculator {
     private static final int CLASSNAME_POSITION = 3;
     
     protected static final int INVALID_GRADE = -1;
-    protected static final int INVALID_MC = -1;
     
     protected static final double MAX_CAP = 5.0;
 
@@ -38,26 +37,27 @@ public abstract class CapCalculator {
      * @throws KolinuxException If the modules attribute is empty in order to show an error message to the user.
      */
     protected void checkModulesNotEmpty() throws KolinuxException {
-        if (modules.getMyModulesSize() == 0 && invalidModules.isEmpty()) {
-            String errorMessage;
-            String className = this.getClass().getName().split("\\.")[CLASSNAME_POSITION];
-            switch (className) {
-            case "CapCalculatorByCode":
-                errorMessage = "Please enter valid module description. Example: CG2027/A+";
-                throw new KolinuxException(errorMessage);
-            case "CapCalculatorByMc":
-                errorMessage = "Please enter valid module description. Example: 4/A+";
-                throw new KolinuxException(errorMessage);
-            case "ModuleListCapCalculator":
-            case "GradeSuggestionCalculator":
-                errorMessage = "Please store modules using module store command";
-                throw new KolinuxException(errorMessage);
-            default:
-                // Should not reach this case
-                assert false;
-                errorMessage = "Unexpected class name found";
-                throw new KolinuxException(errorMessage);
-            }
+        if (modules.getMyModulesSize() > 0 || !invalidModules.isEmpty()) {
+            return;
+        }
+        String errorMessage;
+        String className = this.getClass().getName().split("\\.")[CLASSNAME_POSITION];
+        switch (className) {
+        case "CapCalculatorByCode":
+            errorMessage = "Please enter valid module description. Example: CG2027/A+";
+            throw new KolinuxException(errorMessage);
+        case "CapCalculatorByMc":
+            errorMessage = "Please enter valid module description. Example: 4/A+";
+            throw new KolinuxException(errorMessage);
+        case "ModuleListCapCalculator":
+        case "GradeSuggestionCalculator":
+            errorMessage = "Please store modules using module store command";
+            throw new KolinuxException(errorMessage);
+        default:
+            // Should not reach this case
+            assert false;
+            errorMessage = "Unexpected class name found";
+            throw new KolinuxException(errorMessage);
         }
     }
     
@@ -89,7 +89,7 @@ public abstract class CapCalculator {
      */
     protected void checkInvalidModules() throws KolinuxException {
         if (!(invalidModules.isEmpty())) {
-            StringBuilder errorMessage = new StringBuilder("Invalid module info found: ");
+            StringBuilder errorMessage = new StringBuilder("Invalid module info format found: ");
             for (String module : invalidModules) {
                 errorMessage.append(module).append(" ");
             }
