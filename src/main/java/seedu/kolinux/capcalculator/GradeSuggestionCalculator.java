@@ -34,6 +34,10 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
             String errorMessage = "CAP cannot exceed 5.0";
             throw new KolinuxException(errorMessage);
         }
+        if (cap < 0.0) {
+            String errorMessage = "CAP cannot be a negative number";
+            throw new KolinuxException(errorMessage);
+        }
     }
 
     /**

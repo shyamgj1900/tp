@@ -1,5 +1,7 @@
 package seedu.kolinux.capcalculator;
 
+import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.CalculatorModuleList;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
@@ -10,44 +12,46 @@ import seedu.kolinux.module.ModuleList;
 public class CapCalculatorByCode extends CapCalculator {
 
     protected ModuleDb moduleDb;
+    
+    private CalculatorModuleList repeatedModules;
 
     private boolean isValidGrade(String moduleGrade) {
         return moduleGrade.equals("A+") || moduleGrade.equals("A") || moduleGrade.equals("A-")
                 || moduleGrade.equals("B+") || moduleGrade.equals("B") || moduleGrade.equals("B-")
                 || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
                 || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
-                || moduleGrade.equals("U");
+                || moduleGrade.equals("CS") || moduleGrade.equals("U") || moduleGrade.equals("CU");
     }
 
     /**
      * Read and store the modules from user's input into this calculator.
      * 
-     * @param input String of module descriptions from user.
+     * @param parsedArguments Array of module descriptions from user.
      */
-    private void getInputModules(String input) {
-        String[] commandDescriptions = input.split(" ");
-        if (commandDescriptions.length <= 2) {
+    private void getInputModules(String[] parsedArguments) {
+        if (parsedArguments.length == 1 && parsedArguments[0].equals("")) {
             return;
         }
-        int moduleCount = commandDescriptions.length - 2;
-        for (int i = 0; i < moduleCount; i++) {
-            String inputModule = commandDescriptions[i + 2].toUpperCase();
+        for (String moduleDescription : parsedArguments) {
+            String inputModule = moduleDescription.toUpperCase();
             String[] moduleDescriptions = inputModule.split(DIVIDER);
             if (moduleDescriptions.length != 2) {
-                invalidModules.add(commandDescriptions[i + 2]);
+                invalidModules.add(moduleDescription);
                 continue;
             }
             String moduleCode = moduleDescriptions[0];
             if (moduleDb.getModuleInfo(moduleCode) == null) {
-                invalidModules.add(commandDescriptions[i + 2]);
+                invalidModules.add(moduleDescription);
                 continue;
             }
             String grade = moduleDescriptions[1];
             if (!isValidGrade(grade)) {
-                invalidModules.add(commandDescriptions[i + 2]);
+                invalidModules.add(moduleDescription);
                 continue;
             }
-            modules.storeModuleCodeGrade(moduleCode, grade);
+            if (!modules.storeModuleCodeGrade(moduleCode, grade, moduleDb)) {
+                repeatedModules.storeModuleCodeGrade(moduleCode, grade, moduleDb);
+            }
         }
     }
 
@@ -65,17 +69,18 @@ public class CapCalculatorByCode extends CapCalculator {
             modules.storeModule(module);
         }
     }
-    
+
     /**
      * Construct the superclass of this object and initialize moduleDb in order to retrieve 
      * module information from the database. Module details are then retrieved from input string.
      * 
-     * @param input Command input from user which contains the module codes and their grade.
+     * @param parsedArguments Array of module descriptions from user which contains the module codes and their grade.
      */
-    public CapCalculatorByCode(String input) {
+    public CapCalculatorByCode(String[] parsedArguments) {
         super();
+        repeatedModules = new CalculatorModuleList();
         moduleDb = new ModuleDb().getPreInitModuleDb();
-        getInputModules(input);
+        getInputModules(parsedArguments);
     }
 
     /**
@@ -110,5 +115,39 @@ public class CapCalculatorByCode extends CapCalculator {
             assert cap <= MAX_CAP;
         }
         return String.format(TWO_DECIMAL_FORMAT, cap);
+    }
+
+    @Override
+    protected void checkInvalidModules() throws KolinuxException {
+        StringBuilder invalidModulesMessage = new StringBuilder("Invalid module info format found: ");
+        StringBuilder repeatedModulesMessage = new StringBuilder("These modules are entered multiple times: ");
+        boolean hasInvalidModules = false;
+        boolean hasRepeatedModules = false;
+        
+        if (!invalidModules.isEmpty()) {
+            hasInvalidModules = true;
+            for (String module : invalidModules) {
+                invalidModulesMessage.append(module).append(" ");
+            }
+        }
+        if (!(repeatedModules.getMyModulesSize() == 0)) {
+            hasRepeatedModules = true;
+            for (ModuleDetails module : repeatedModules.getMyModules()) {
+                repeatedModulesMessage.append(module.getModuleCode()).append(" ");
+            }
+        }
+        
+        if (hasInvalidModules && hasRepeatedModules) {
+            String errorMessage = repeatedModulesMessage.toString() + "\n" + invalidModulesMessage.toString();
+            throw new KolinuxException(errorMessage);
+        }
+        if (hasInvalidModules) {
+            String errorMessage = invalidModulesMessage.toString();
+            throw new KolinuxException(errorMessage);
+        }
+        if (hasRepeatedModules) {
+            String errorMessage = repeatedModulesMessage.toString();
+            throw new KolinuxException(errorMessage);
+        }
     }
 }
