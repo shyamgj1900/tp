@@ -610,7 +610,7 @@ be used with the module manager.
 Demo:
 
 ```
-cap 4A 6B+ 4B 4B- 4A+
+cap mc 4/A 6/B+ 4/B 4/B- 4/A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
 ```
