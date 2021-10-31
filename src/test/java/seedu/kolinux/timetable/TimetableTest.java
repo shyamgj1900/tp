@@ -8,6 +8,7 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lesson;
+import seedu.kolinux.timetable.lesson.Tutorial;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
 import seedu.kolinux.timetable.subcommand.SubCommand;
 
@@ -54,7 +55,7 @@ public class TimetableTest {
     @Test
     public void addTutorialToTimetable_validInput_tutorialAdded() throws KolinuxException {
         timetable.clearTimetable();
-        Lesson lesson = new Lesson(VALID_ADD_TUTORIAL_ARGUMENTS);
+        Lesson lesson = new Tutorial(VALID_ADD_TUTORIAL_ARGUMENTS);
         addSubCommand.addToTimetable(lesson);
         assertEquals(timetable.timetableData[getIndex("0600", schoolHours)][getIndex("monday", days)],
                 "CS1231 TUT");
@@ -65,7 +66,7 @@ public class TimetableTest {
     public void addTutorialToTimetable_invalidTiming_tutorialNotAdded() {
         try {
             timetable.clearTimetable();
-            Lesson lesson = new Lesson(INVALID_ADD_TUTORIAL_TIMING);
+            Lesson lesson = new Tutorial(INVALID_ADD_TUTORIAL_TIMING);
             addSubCommand.addToTimetable(lesson);
             timetable.clearTimetable();
         } catch (KolinuxException exception) {
@@ -77,8 +78,8 @@ public class TimetableTest {
     public void addTutorialToTimetable_inaccessiblePeriod_tutorialNotAdded() {
         try {
             timetable.clearTimetable();
-            Lesson firstLesson = new Lesson(VALID_ADD_TUTORIAL_ARGUMENTS);
-            Lesson secondLesson = new Lesson(INACCESSIBLE_ADD_PERIOD);
+            Lesson firstLesson = new Tutorial(VALID_ADD_TUTORIAL_ARGUMENTS);
+            Lesson secondLesson = new Tutorial(INACCESSIBLE_ADD_PERIOD);
             addSubCommand.addToTimetable(firstLesson);
             addSubCommand.addToTimetable(secondLesson);
             timetable.clearTimetable();
@@ -108,7 +109,7 @@ public class TimetableTest {
     }
 
     @Test
-    public void inputLesson_exceedsWorkload_lessonNotAdded() throws KolinuxException {
+    public void inputLesson_exceedsWorkload_lessonNotAdded() {
         try {
             timetable.clearTimetable();
             moduleList.storeModuleByCode("CS1231", moduleDb);
@@ -140,7 +141,7 @@ public class TimetableTest {
     @Test
     public void deleteLesson_validLesson_lessonDeleted() throws KolinuxException {
         timetable.clearTimetable();
-        Lesson lesson = new Lesson(VALID_ADD_TUTORIAL_ARGUMENTS);
+        Lesson lesson = new Tutorial(VALID_ADD_TUTORIAL_ARGUMENTS);
         addSubCommand.addToTimetable(lesson);
         timetable.executeDelete(VALID_ADD_TUTORIAL_ARGUMENTS);
         assertFalse(addSubCommand.isLessonInTimetable("CS1010", "TUT", "monday"));

@@ -279,7 +279,6 @@ public class TimetableViewTest {
     private static final ModuleDb moduleDb = new ModuleDb();
     private ModuleList moduleList = new ModuleList();
     private Timetable timetable = new Timetable(moduleList);
-    private AddSubCommand addSubCommand = new AddSubCommand();
     private final ByteArrayOutputStream output = new ByteArrayOutputStream();
     private final PrintStream standardOut = System.out;
 
