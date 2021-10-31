@@ -7,32 +7,42 @@ import seedu.kolinux.module.ModuleDetails;
  */
 public class CapCalculatorByMc extends CapCalculator {
 
-    private void getInputModules(String input) {
-        String[] commandDescriptions = input.split(" ");
-        if (commandDescriptions.length <= 2) {
+    /**
+     * Read and store the modules from user's input into this calculator.
+     *
+     * @param parsedArguments Array of module descriptions from user.
+     */
+    private void getInputModules(String[] parsedArguments) {
+        if (parsedArguments.length == 1 && parsedArguments[0].equals("")) {
             return;
         }
-        int moduleCount = commandDescriptions.length - 2;
-        for (int i = 0; i < moduleCount; i++) {
+        for (String moduleDescription : parsedArguments) {
             try {
-                String[] moduleDescriptions = commandDescriptions[i + 2].split(DIVIDER);
-                int moduleCredit = Integer.parseInt(moduleDescriptions[0]);
+                String inputModule = moduleDescription.toUpperCase();
+                String[] moduleDescriptions = inputModule.split(DIVIDER);
+                double moduleCredit = Double.parseDouble(moduleDescriptions[0]);
+                if (moduleCredit != (int) moduleCredit) {
+                    invalidModules.add(moduleDescription);
+                    continue;
+                }
+                int mc = (int) moduleCredit;
                 String grade = moduleDescriptions[1];
-                modules.storeModuleMcGrade(moduleCredit, grade);
+                modules.storeModuleMcGrade(mc, grade);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception) {
-                invalidModules.add(commandDescriptions[i + 2]);
+                invalidModules.add(moduleDescription);
             }
         }
     }
-    
+
     /**
      * Construct the superclass of this object, then store the module details from user input.
      * 
-     * @param input Command input from user which contains the modular credits and their respective grade.
+     * @param parsedArguments Array of module descriptions from user which contains the module credits 
+     *                        and their respective grade.
      */
-    public CapCalculatorByMc(String input) {
+    public CapCalculatorByMc(String[] parsedArguments) {
         super();
-        getInputModules(input);
+        getInputModules(parsedArguments);
     }
 
     @Override

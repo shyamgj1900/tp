@@ -238,6 +238,8 @@ module grade CS2113T/A
 CS2113T grade set to A
 ....................................................................
 ```
+>⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between 
+the grade letter and the suffix. E.g. `A+` instead of `A +`
 
 >⚠️ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
@@ -610,7 +612,7 @@ be used with the module manager.
 Demo:
 
 ```
-cap 4A 6B+ 4B 4B- 4A+
+cap mc 4/A 6/B+ 4/B 4/B- 4/A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
 ```
