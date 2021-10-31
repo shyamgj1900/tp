@@ -1,5 +1,9 @@
 package seedu.kolinux.timetable.subcommand;
 
+import seedu.kolinux.timetable.lesson.Lesson;
+
+import static seedu.kolinux.timetable.Timetable.lessonStorage;
+
 public class SubCommand {
 
     public static final int ROW_SIZE = 16;
@@ -52,7 +56,7 @@ public class SubCommand {
             "----------+--------------------+--------------------+--------------------+";
     public static final String INVALID_LESSON_FORMAT = "Please ensure the LESSON_TYPE entered is in one of "
             +
-            "the following format:\n 1. LEC\n2. TUT\n3. LAB";
+            "the following format:\n1. LEC\n2. TUT\n3. LAB";
     public static final String INVALID_DAY_TIME = "1. Please ensure the days are within Monday to Friday "
             +
             "and spelt fully.\n2. Please ensure the timings are within the school hours: 0600 - 2100\n"
@@ -69,6 +73,20 @@ public class SubCommand {
 
     public SubCommand() {
 
+    }
+
+    public boolean isLessonInTimetable(String lessonCode, String lessonType, String day, String startTime) {
+        for (Lesson storedLesson : lessonStorage) {
+            String storedCode = storedLesson.getModuleCode();
+            String storedType = storedLesson.getLessonType();
+            String storedDay = storedLesson.getDay();
+            String storedStartTime = storedLesson.getStartTime();
+            if (storedCode.equals(lessonCode) && storedType.equals(lessonType) && storedDay.equals(day)
+                    && storedStartTime.equals(startTime)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

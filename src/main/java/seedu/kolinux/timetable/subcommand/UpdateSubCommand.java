@@ -35,7 +35,7 @@ public class UpdateSubCommand extends SubCommand {
                 throw new KolinuxException(UPDATING_TO_SAME_TIMING);
             }
             String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
-            if (isLessonInTimetable(moduleCode, lessonType, oldDay)) {
+            if (isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
                 deleteSubcommand.deleteLesson(lessonDetails);
                 addSubcommand.inputLesson(parameters);
             } else {
@@ -65,18 +65,6 @@ public class UpdateSubCommand extends SubCommand {
             }
         }
         return oldEndTime;
-    }
-
-    public boolean isLessonInTimetable(String lessonCode, String lessonType, String day) {
-        for (Lesson storedLesson : lessonStorage) {
-            String storedCode = storedLesson.getModuleCode();
-            String storedType = storedLesson.getLessonType();
-            String storedDay = storedLesson.getDay();
-            if (storedCode.equals(lessonCode) && storedType.equals(lessonType) && storedDay.equals(day)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }
