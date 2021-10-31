@@ -20,6 +20,7 @@ public class Route {
     public static final String STOP_IT = "IT";
     public static final String STOP_UTOWN = "UTOWN";
     public static final String STOP_KENT_VALE = "KENT VALE";
+    public static final String STOP_PGPR = "PGPR";
     public static final String FILE_NOT_FOUND_MESSAGE = "File not found.";
     public static final String FILEPATH_A1 = "/routeA1.txt";
     public static final String FILEPATH_A2 = "/routeA2.txt";
@@ -33,7 +34,9 @@ public class Route {
     public static final int TOTAL_VERTICES_D2 = 12;
     public static final int TOTAL_VERTICES_E = 7;
     public static final int TOTAL_VERTICES_K = 16;
-    public static final int STOP_NUMBER_RAFFLES_HALL = 6;
+    public static final int STOP_NUMBER_RAFFLES_HALL_E = 6;
+    public static final int STOP_NUMBER_UTOWN_D2 = 6;
+    public static final int STOP_NUMBER_KENT_VALE_K = 9;
 
     protected String[] busStops;
     protected String startLocation;
