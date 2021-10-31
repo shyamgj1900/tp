@@ -87,14 +87,14 @@ public class AddSubCommand extends SubCommand {
         return hourCount;
     }
 
-    private int getHours(ModuleList moduleList, String moduleCode, String lessonType) {
+    private double getHours(ModuleList moduleList, String moduleCode, String lessonType) {
         for (ModuleDetails module : moduleList.myModules) {
             if (lessonType.equals("TUT") && module.moduleCode.equals(moduleCode)) {
-                return (int) Math.round(module.getTutorialHours());
+                return module.getTutorialHours() * 2;
             } else if (lessonType.equals("LEC") && module.moduleCode.equals(moduleCode)) {
-                return (int) Math.round(module.getLectureHours());
+                return module.getLectureHours() * 2;
             } else if (lessonType.equals("LAB") && module.moduleCode.equals(moduleCode)) {
-                return (int) Math.round(module.getLabHours());
+                return module.getLabHours() * 2;
             }
         }
         return 0;
@@ -112,7 +112,7 @@ public class AddSubCommand extends SubCommand {
 
     private void checkZeroWorkload(String moduleCode, String lessonType)
             throws KolinuxException {
-        int requiredHours = getHours(moduleList, moduleCode, lessonType);
+        double requiredHours = getHours(moduleList, moduleCode, lessonType);
         if (requiredHours == 0) {
             throw new KolinuxException(moduleCode + " has no " + lessonType
                     +
@@ -122,13 +122,13 @@ public class AddSubCommand extends SubCommand {
 
     private void checkExceedingWorkload(String moduleCode,
             String lessonType, String[] lessonDetails) throws KolinuxException {
-        int requiredHours = getHours(moduleList, moduleCode, lessonType);
-        int inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
-        int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
+        double requiredHours = getHours(moduleList, moduleCode, lessonType);
+        double inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
+        double storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
         if (storageHours > requiredHours) {
             throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
                     +
-                    " exceeds the total workload\nIt exceeds " + requiredHours + " hours\n"
+                    " exceeds the total workload\nIt exceeds " + requiredHours/2 + " hours\n"
                     +
                     "Please readjust the input timings or modify timetable to continue\n"
                     +

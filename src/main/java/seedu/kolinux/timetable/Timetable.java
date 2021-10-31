@@ -22,7 +22,7 @@ import java.util.Scanner;
 public class Timetable {
 
     public static ModuleList moduleList;
-    private static final int ROW_SIZE = 16;
+    private static final int ROW_SIZE = 31;
     private static final int COLUMN_SIZE = 6;
     public static String [][] timetableData = new String[ROW_SIZE][COLUMN_SIZE];
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
