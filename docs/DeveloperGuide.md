@@ -7,8 +7,9 @@ This Developer Guide is designed for developers interested in working with _Koli
 2. Extend the functionality of _Kolinux_
 
 This guide will bring you through the [overall design](#design) of _Kolinux_, the various 
-[implementations](#implementation) and their mechanisms. We have also provided insights into our target users
-to allow you to better understand the reasons behind the various methods of implementations.
+[implementations](#implementation) and their mechanisms. We have also provided insights into our 
+[target users](#target-user-profile) to allow you to better understand the reasons behind the various methods 
+of implementations.
 
 ## Table of Contents
 * [Acknowledgements](#acknowledgements)
@@ -41,7 +42,7 @@ to allow you to better understand the reasons behind the various methods of impl
 2. Configure JDK: Ensure your IDE is configured to JDK 11
 3. Import the project as a Gradle Project 
 4. Verify the setup by running `seedu.Kolinux.Main`
-   1. Try out a few commands and ensure they're working properly
+   1. [Try out a few commands](#instructions-for-manual-testing) and ensure they're working properly
    2. Run the tests and ensure all of them past the test cases
 
 ### Before writing code
@@ -467,7 +468,6 @@ and CAP calculator) in a single integrated platform.
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
 <ol>
 <li> Should work on any mainstream OS as long as it has Java 11 or above installed. </li>
 <li> A user with above average typing speed for regular English text (i.e. not code, not system admin commands) 
@@ -503,10 +503,7 @@ should be able to accomplish most of the tasks faster using commands than using 
    - Test case: `module store CS2113T`
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
-
-     
-
-4. 
+   
 
    
 
@@ -552,4 +549,4 @@ should be able to accomplish most of the tasks faster using commands than using 
    
        Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
        operation. Entering `y` will lead to a success message, while anything else will lead to the operation cancelled.
-
+  

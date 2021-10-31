@@ -18,7 +18,7 @@ may also navigate to the [List of Commands](#2-list-of-commands) to view a summa
 their usages.
 
 The following explains the use of different icons in this user guide:
-* ❕ - Notes about the feature.
+* ⚠️ - Notes about the feature.
 * ❗ - Important rules that you should follow when using the program.
 * 🔗 - Links to related sections in this user guide.
 
@@ -239,7 +239,7 @@ CS2113T grade set to A
 ....................................................................
 ```
 
->❕ Note: The grades set using this command will be used to calculate CAP based on your module list. 
+>⚠️ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 
 ### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
@@ -315,9 +315,14 @@ timetable add CS1010/TUT/Monday/1200/1400
 Lesson has been added to timetable
 ....................................................................
 ```
->❕ Note: Ensure `MODULE_CODE` is stored in the module list using
+>⚠️ Note: Ensure `MODULE_CODE` is stored in the module list using
 [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
 the modules added to module list can be added to the timetable
+
+>⚠️ ️Note: Please also note that the timetable has been built to only take lesson of durations in multiples of 1 hour.
+> This has been done so to ensure readability of the timetable on CLI when you input 
+> [`timetable view`](#323-view-timetable-on-cli--timetable-view). So if you will not be allowed to enter e.g. 30 min 
+> slots of lessons onto the timetable.
 
 >🔗 Visit [`module`](#31-module-manager-module) for more information on the command formats.
 
@@ -398,6 +403,8 @@ timetable view
 Timetable has been printed above
 ....................................................................
 ```
+>⚠️ Note: Please expand your CLI to view the timetable clearly if the timetable appears skewed.
+
 #### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
 
 **Format:** `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`
@@ -458,7 +465,7 @@ An event has been added to your schedule successfully!
 ....................................................................
 ```
 
->❕ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
+>⚠️ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
 give additional confirmation if you wish to proceed.
 
 #### 3.3.2 List events on a specific date: `planner list`
@@ -481,7 +488,7 @@ planner list 2021-10-10
 ....................................................................
 ```
 
->❕ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
+>⚠️ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
 
 >🔗 Visit the section on [`timetable`](#32-timetable-timetable) for commands to add lessons.
 
@@ -515,7 +522,7 @@ planner list 2021-11-05
 ....................................................................
 ```
 
->❕ Note: Only events added via the `planner` will be displayed on the list in step 2.
+>⚠️ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, you are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
 
 >🔗 Visit the section on [`timetable`](#32-timetable-timetable) for commands to delete lessons.
@@ -579,7 +586,7 @@ Demo:
 ....................................................................
 ```
 
->❕ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
+>⚠️ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
 where the user needs to change and board another bus (only single change routes are recommended).
 
 ### 3.5 CAP Calculator: `cap`

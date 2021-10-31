@@ -34,6 +34,10 @@ public class PlannerTest {
             = new String[]{"Something worse", "2021-10-26", "0700"};
     private static final String[] WRONG_TIME_ORDER_ARGUMENTS
             = new String[]{"Go back in time", "2021-04-06", "2000", "1600"};
+    private static final String[] ZERO_DURATION_EVENT_ARGUMENTS
+            = new String[]{"Zero minute", "2022-10-20", "1000", "1000"};
+    private static final String[] EMPTY_DESCRIPTION_EVENT_ARGUMENTS
+            = new String[]{"", "2021-10-31", "2100", "2330"};
     private static final String[][] CONFLICTED_TIME_ARGUMENTS
             = new String[][]{{"Do something", "2021-10-26", "1505", "1700"},
                 {"Do something", "2021-10-26", "1430", "1505"},
@@ -62,8 +66,12 @@ public class PlannerTest {
             "Please check the format of your input! Format: planner add DESCRIPTION/DATE/START_TIME/END_TIME";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
+    private static final String TIME_SAME_ERROR =
+            "Your event cannot start and end at the same time!";
     private static final String TIME_CONFLICT_ERROR =
             "You already have an event ongoing for that time period, do you still want to add? (y/n)";
+    private static final String EMPTY_DESCRIPTION_ERROR =
+            "Please provide a description for your event!";
 
     @Test
     public void constructEvent_eventDataString_eventConstructed() throws KolinuxException {
@@ -109,6 +117,26 @@ public class PlannerTest {
             planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
             assertEquals(TIME_ORDER_ERROR, exception.getMessage());
+        }
+    }
+
+    @Test
+    public void addEvent_startAndEndSameTime_eventNotAdded() {
+        try {
+            Event invalidEvent = new Event(ZERO_DURATION_EVENT_ARGUMENTS);
+            planner.addEvent(invalidEvent, false);
+        } catch (KolinuxException exception) {
+            assertEquals(TIME_SAME_ERROR, exception.getMessage());
+        }
+    }
+
+    @Test
+    public void addEvent_emptyDescriptionEvent_eventNotAdded() {
+        try {
+            Event invalidEvent = new Event(EMPTY_DESCRIPTION_EVENT_ARGUMENTS);
+            planner.addEvent(invalidEvent, false);
+        } catch (KolinuxException exception) {
+            assertEquals(EMPTY_DESCRIPTION_ERROR, exception.getMessage());
         }
     }
 
