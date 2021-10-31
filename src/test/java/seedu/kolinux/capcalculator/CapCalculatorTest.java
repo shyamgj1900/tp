@@ -12,8 +12,8 @@ public class CapCalculatorTest {
     private static final String[] VALID_INPUTS_BY_MC = {"4/A+", "6/A-", "2/C", "4/U", "3/D+"};
     private static final  String[] VALID_INPUTS_BY_CODE = {"CG2027/A+", "CS2102/S", "ST2334/C", "CS1231/F"};
     private static final String[] INVALID_INPUT_NO_DESCRIPTIONS = {""};
-    private static final String[] INVALID_INPUT_MODULE_DESCRIPTIONS = 
-            {"CS1231/A", "ABCDE", "CG2027/Z", "CS0000/B", "12345"};
+    private static final String[] INVALID_INPUT_MODULE_DESCRIPTIONS = {
+            "CS1231/A", "ABCDE", "CG2027/Z", "CS0000/B", "12345"};
     
     private static final String MODULE_1 = "CS2113T";
     private static final String MODULE_2 = "CS2101";
