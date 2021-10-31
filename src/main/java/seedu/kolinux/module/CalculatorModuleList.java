@@ -26,15 +26,25 @@ public class CalculatorModuleList extends ModuleList {
         myModules.add(mod);
     }
 
-    /**
-     * Store a module in myModules when only the module code and its grade are needed from the module.
-     * This method is only used CapCalculator object.
-     *
-     * @param code Module code which will be stored
-     * @param grade The corresponding grade to be stored
-     */
-    public void storeModuleCodeGrade(String code, String grade) {
-        ModuleDetails mod = new ModuleDetails(code, grade);
+//    /**
+//     * Store a module in myModules when only the module code and its grade are needed from the module.
+//     * This method is only used CapCalculator object.
+//     *
+//     * @param code Module code which will be stored
+//     * @param grade The corresponding grade to be stored
+//     */
+//    public void storeModuleCodeGrade(String code, String grade) {
+//        ModuleDetails mod = new ModuleDetails(code, grade);
+//        myModules.add(mod);
+//    }
+
+    public boolean storeModuleCodeGrade(String code, String grade, ModuleDb moduleDb) {
+        ModuleDetails mod = moduleDb.getModuleInfo(code);
+        if (myModules.contains(mod)) {
+            return false;
+        }
         myModules.add(mod);
+        mod.setGrade(grade);
+        return true;
     }
 }

@@ -67,7 +67,7 @@ deactivate calculator
 calculator -> calculator : checkInvalidModules()
 activate calculator
 
-opt invalidModules is empty
+opt invalidModules or repeatedModules is not empty 
 
 calculator -->[ : exception
 

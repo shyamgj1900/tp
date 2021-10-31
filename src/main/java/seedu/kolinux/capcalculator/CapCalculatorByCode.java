@@ -1,5 +1,7 @@
 package seedu.kolinux.capcalculator;
 
+import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.CalculatorModuleList;
 import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
@@ -10,6 +12,8 @@ import seedu.kolinux.module.ModuleList;
 public class CapCalculatorByCode extends CapCalculator {
 
     protected ModuleDb moduleDb;
+    
+    private CalculatorModuleList repeatedModules;
 
     private boolean isValidGrade(String moduleGrade) {
         return moduleGrade.equals("A+") || moduleGrade.equals("A") || moduleGrade.equals("A-")
@@ -45,7 +49,9 @@ public class CapCalculatorByCode extends CapCalculator {
                 invalidModules.add(moduleDescription);
                 continue;
             }
-            modules.storeModuleCodeGrade(moduleCode, grade);
+            if (!modules.storeModuleCodeGrade(moduleCode, grade, moduleDb)) {
+                repeatedModules.storeModuleCodeGrade(moduleCode, grade, moduleDb);
+            }
         }
     }
 
@@ -72,6 +78,7 @@ public class CapCalculatorByCode extends CapCalculator {
      */
     public CapCalculatorByCode(String[] parsedArguments) {
         super();
+        repeatedModules = new CalculatorModuleList();
         moduleDb = new ModuleDb().getPreInitModuleDb();
         getInputModules(parsedArguments);
     }
@@ -108,5 +115,39 @@ public class CapCalculatorByCode extends CapCalculator {
             assert cap <= MAX_CAP;
         }
         return String.format(TWO_DECIMAL_FORMAT, cap);
+    }
+
+    @Override
+    protected void checkInvalidModules() throws KolinuxException {
+        StringBuilder invalidModulesMessage = new StringBuilder("Invalid module info format found: ");
+        StringBuilder repeatedModulesMessage = new StringBuilder("These modules are entered multiple times: ");
+        boolean hasInvalidModules = false;
+        boolean hasRepeatedModules = false;
+        
+        if (!invalidModules.isEmpty()) {
+            hasInvalidModules = true;
+            for (String module : invalidModules) {
+                invalidModulesMessage.append(module).append(" ");
+            }
+        }
+        if (!(repeatedModules.getMyModulesSize() == 0)) {
+            hasRepeatedModules = true;
+            for (ModuleDetails module : repeatedModules.getMyModules()) {
+                repeatedModulesMessage.append(module.getModuleCode()).append(" ");
+            }
+        }
+        
+        if (hasInvalidModules && hasRepeatedModules) {
+            String errorMessage = repeatedModulesMessage.toString() + "\n" + invalidModulesMessage.toString();
+            throw new KolinuxException(errorMessage);
+        }
+        if (hasInvalidModules) {
+            String errorMessage = invalidModulesMessage.toString();
+            throw new KolinuxException(errorMessage);
+        }
+        if (hasRepeatedModules) {
+            String errorMessage = repeatedModulesMessage.toString();
+            throw new KolinuxException(errorMessage);
+        }
     }
 }
