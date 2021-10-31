@@ -23,7 +23,7 @@ public class SubCommand {
             +
             "timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME\n"
             +
-            "e.g. timetable delete CS1010/TUT/Monday\n"
+            "e.g. timetable delete CS1010/TUT/Monday/1800\n"
             +
             "Please ensure the timing for the "
             +
