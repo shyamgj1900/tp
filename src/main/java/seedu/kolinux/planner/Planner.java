@@ -157,30 +157,28 @@ public class Planner {
         } catch (DateTimeParseException exception) {
             throw new KolinuxException(INVALID_DATE_MESSAGE);
         }
-
         assert Pattern.matches(DATE_PATTERN, date);
-        ArrayList<String> filteredEventStrings =
-                (ArrayList<String>) filterPlanner(date)
-                        .stream()
-                        .filter((event) -> {
-                            if (withId) {
-                                return !event.getIsLesson();
-                            }
-                            return true;
-                        })
-                        .map((event) -> {
-                            if (withId) {
-                                return event.toStringWithId();
-                            }
-                            return event.toString();
-                        })
-                        .collect(Collectors.toList());
+
+        ArrayList<String> filteredEventStrings;
+        if (withId) {
+            filteredEventStrings =
+                    (ArrayList<String>) filterPlanner(date)
+                            .stream()
+                            .filter(event -> !event.getIsLesson())
+                            .map(event -> event.toStringWithId())
+                            .collect(Collectors.toList());
+        } else {
+            filteredEventStrings =
+                    (ArrayList<String>) filterPlanner(date)
+                            .stream()
+                            .map(event -> event.toString())
+                            .collect(Collectors.toList());
+        }
 
         String eventsInOneString = Parser.concatenateStrings(filteredEventStrings);
         if (eventsInOneString.isEmpty()) {
             throw new KolinuxException(EMPTY_LIST_MESSAGE);
         }
-
         return eventsInOneString;
     }
 

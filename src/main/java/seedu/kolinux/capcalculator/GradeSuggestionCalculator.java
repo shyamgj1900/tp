@@ -61,7 +61,8 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
         double totalMc = 0.0;
         for (String module : invalidModules) {
             String moduleCode = module.split(DIVIDER)[0];
-            double mc = Double.parseDouble(moduleDb.getModuleInfo(moduleCode).getModuleCredit());
+            String moduleCredit = moduleDb.getModuleInfo(moduleCode).getModuleCredit();
+            double mc = Double.parseDouble(moduleCredit);
             totalMc += mc;
         }
         if (totalMc == 0) {

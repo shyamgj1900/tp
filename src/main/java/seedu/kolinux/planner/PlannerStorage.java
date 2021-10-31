@@ -11,9 +11,22 @@ import java.util.Scanner;
 public class PlannerStorage {
 
     private static final String PLANNER_FILE_PATH = "./data/planner.txt";
+    private static final String EMPTY_STRING = "";
     private static File file = new File(PLANNER_FILE_PATH);
 
-    private static final String EMPTY_STRING = "";
+    private ArrayList<String> fileLines = new ArrayList<>();
+
+    /**
+     * Adds the content of planner.txt into an array list of strings, if the string is not empty. Empty strings
+     * are ignored.
+     *
+     * @param fileLine String in planner.txt to be added
+     */
+    private void addToFileLines(String fileLine) {
+        if (!fileLine.isEmpty()) {
+            fileLines.add(fileLine);
+        }
+    }
 
     /**
      * Creates a file with the name planner.txt
@@ -65,15 +78,12 @@ public class PlannerStorage {
      * @return Array list where each entry is a line from the file, null if the file does not exist.
      */
     public ArrayList<String> readFile() {
-        ArrayList<String> fileLines = new ArrayList<>();
         String fileLine;
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 fileLine = scanner.nextLine();
-                if (!fileLine.isEmpty()) {
-                    fileLines.add(fileLine);
-                }
+                addToFileLines(fileLine);
             }
             return fileLines;
         } catch (FileNotFoundException exception) {
