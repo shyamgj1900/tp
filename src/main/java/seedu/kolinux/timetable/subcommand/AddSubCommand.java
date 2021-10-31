@@ -128,7 +128,7 @@ public class AddSubCommand extends SubCommand {
         if (storageHours > requiredHours) {
             throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
                     +
-                    " exceeds the total workload\nIt exceeds " + requiredHours/2 + " hours\n"
+                    " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n"
                     +
                     "Please readjust the input timings or modify timetable to continue\n"
                     +
