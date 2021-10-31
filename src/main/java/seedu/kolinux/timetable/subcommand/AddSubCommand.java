@@ -3,10 +3,7 @@ package seedu.kolinux.timetable.subcommand;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
-import seedu.kolinux.timetable.lesson.Lesson;
-import seedu.kolinux.timetable.lesson.Tutorial;
-import seedu.kolinux.timetable.lesson.Lecture;
-import seedu.kolinux.timetable.lesson.Lab;
+import seedu.kolinux.timetable.lesson.*;
 
 import java.util.Objects;
 
@@ -68,6 +65,8 @@ public class AddSubCommand extends SubCommand {
                 addToTimetable(new Lecture(lessonDetails));
             } else if (lessonType.equals("LAB")) {
                 addToTimetable(new Lab(lessonDetails));
+            } else if (lessonType.equals("SEC")) {
+                addToTimetable(new Sectional(lessonDetails));
             } else {
                 throw new KolinuxException(INVALID_LESSON_FORMAT);
             }
@@ -91,7 +90,8 @@ public class AddSubCommand extends SubCommand {
         for (ModuleDetails module : moduleList.myModules) {
             if (lessonType.equals("TUT") && module.moduleCode.equals(moduleCode)) {
                 return module.getTutorialHours() * 2;
-            } else if (lessonType.equals("LEC") && module.moduleCode.equals(moduleCode)) {
+            } else if ((lessonType.equals("LEC") || lessonType.equals("SEC")) &&
+                    module.moduleCode.equals(moduleCode)) {
                 return module.getLectureHours() * 2;
             } else if (lessonType.equals("LAB") && module.moduleCode.equals(moduleCode)) {
                 return module.getLabHours() * 2;
@@ -149,8 +149,6 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-
-
     private void checkTimeAndDay(String day, String startTime, String endTime) throws KolinuxException {
         int dayIndex = getIndex(day, days);
         int startTimeIndex = getIndex(startTime, schoolHours);
@@ -161,7 +159,8 @@ public class AddSubCommand extends SubCommand {
     }
 
     private void checkLessonType(String lessonType) throws KolinuxException {
-        if (!(lessonType.equals("TUT") || lessonType.equals("LEC") || lessonType.equals("LAB"))) {
+        if (!(lessonType.equals("TUT") || lessonType.equals("LEC") || lessonType.equals("LAB") ||
+                lessonType.equals("SEC"))) {
             throw new KolinuxException(INVALID_ADD_FORMAT + "\n\n" + INVALID_LESSON_FORMAT);
         }
     }

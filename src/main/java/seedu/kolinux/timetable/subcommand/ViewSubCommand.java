@@ -14,7 +14,7 @@ public class ViewSubCommand extends SubCommand {
      */
     public void viewTimetable() {
         System.out.println(TIMETABLE_HEADER);
-        for (int i = 1; i < 31; i++) {
+        for (int i = 1; i < ROW_SIZE; i++) {
             String time = schoolHours[i - 1] + " - " + schoolHours[i];
             System.out.print("|" + time + getSpaces((TABLE_FIRST_COLUMN_WIDTH - time.length())) + "|");
             for (int j = 1; j < COLUMN_LAST_INDEX; j++) {
