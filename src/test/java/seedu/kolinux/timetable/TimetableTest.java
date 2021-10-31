@@ -120,7 +120,7 @@ public class TimetableTest {
                     timetable.timetableData[getIndex("0600", schoolHours)][getIndex("monday", days)]);
             timetable.clearTimetable();
         } catch (KolinuxException e) {
-            assertEquals("Input hours for CS1231 TUT exceeds the total workload\nIt exceeds 1 hours\n"
+            assertEquals("Input hours for CS1231 TUT exceeds the total workload\nIt exceeds 1.0 hours\n"
                             +
                             "Please readjust the input timings or modify timetable to continue\nwith adding "
                             +

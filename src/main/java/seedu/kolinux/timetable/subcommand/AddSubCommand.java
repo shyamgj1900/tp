@@ -59,7 +59,7 @@ public class AddSubCommand extends SubCommand {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
             checkLessonType(lessonType);
-            checkTimeAndDay(lessonDetails[2], lessonDetails[3], lessonDetails[4]);
+            checkTimeAndDay(lessonDetails[2].toLowerCase(), lessonDetails[3], lessonDetails[4]);
             checkZeroWorkload(moduleCode, lessonType);
             checkExceedingWorkload(moduleCode, lessonType, lessonDetails);
             if (lessonType.equals("TUT")) {
@@ -162,7 +162,8 @@ public class AddSubCommand extends SubCommand {
 
     private void checkLessonType(String lessonType) throws KolinuxException {
         if (!(lessonType.equals("TUT") || lessonType.equals("LEC") || lessonType.equals("LAB"))) {
-            throw new KolinuxException(INVALID_LESSON_FORMAT);
+            throw new KolinuxException(INVALID_ADD_FORMAT + "\n\n" + INVALID_LESSON_FORMAT);
         }
     }
+
 }
