@@ -15,10 +15,16 @@ public class CapCalculatorByMc extends CapCalculator {
         int moduleCount = commandDescriptions.length - 2;
         for (int i = 0; i < moduleCount; i++) {
             try {
-                String[] moduleDescriptions = commandDescriptions[i + 2].split(DIVIDER);
-                int moduleCredit = Integer.parseInt(moduleDescriptions[0]);
+                String inputModule = commandDescriptions[i + 2].toUpperCase();
+                String[] moduleDescriptions = inputModule.split(DIVIDER);
+                double moduleCredit = Double.parseDouble(moduleDescriptions[0]);
+                if (moduleCredit != (int) moduleCredit) {
+                    invalidModules.add(commandDescriptions[i + 2]);
+                    continue;
+                }
+                int mc = (int) moduleCredit;
                 String grade = moduleDescriptions[1];
-                modules.storeModuleMcGrade(moduleCredit, grade);
+                modules.storeModuleMcGrade(mc, grade);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception) {
                 invalidModules.add(commandDescriptions[i + 2]);
             }
