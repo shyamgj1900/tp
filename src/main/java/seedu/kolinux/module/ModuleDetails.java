@@ -244,7 +244,7 @@ public class ModuleDetails {
     }
     
     public boolean containsSuGrade() {
-        return grade.equals("S") || grade.equals("U");
+        return grade.equals("S") || grade.equals("CS") || grade.equals("U") || grade.equals("CU");
     }
     
     public boolean containsNullGrade() {

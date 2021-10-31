@@ -90,6 +90,7 @@ public class ModuleList {
     public String deleteModuleByCode(String code) {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
+                myModules.get(i).setGrade("0");
                 myModules.remove(i);
                 timetable.deleteByModuleList(code);
                 return "Successfully deleted module: " + code;

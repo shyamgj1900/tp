@@ -9,10 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CapCalculatorTest {
 
-    private static final String VALID_INPUT_BY_MC = "cap mc 4/A+ 6/A- 2/C 4/U 3/D+";
-    private static final  String VALID_INPUT_BY_CODE = "cap code CG2027/A+ CS2102/S ST2334/C CS1231/F";
-    private static final String INVALID_INPUT_NO_DESCRIPTIONS = "cap";
-    private static final String INVALID_INPUT_MODULE_DESCRIPTIONS = "cap code CS1231/A ABCDE CG2027/Z CS0000/B 12345";
+    private static final String[] VALID_INPUTS_BY_MC = {"4/A+", "6/A-", "2/C", "4/U", "3/D+"};
+    private static final  String[] VALID_INPUTS_BY_CODE = {"CG2027/A+", "CS2102/S", "ST2334/C", "CS1231/F"};
+    private static final String[] INVALID_INPUT_NO_DESCRIPTIONS = {""};
+    private static final String[] INVALID_INPUT_MODULE_DESCRIPTIONS = {
+            "CS1231/A", "ABCDE", "CG2027/Z", "CS0000/B", "12345"};
     
     private static final String MODULE_1 = "CS2113T";
     private static final String MODULE_2 = "CS2101";
@@ -31,13 +32,13 @@ public class CapCalculatorTest {
 
     @Test
     public void executeCapCalculator_validInputByMc_capCalculated() throws KolinuxException {
-        CapCalculator calculator = new CapCalculatorByMc(VALID_INPUT_BY_MC);
+        CapCalculator calculator = new CapCalculatorByMc(VALID_INPUTS_BY_MC);
         assertEquals(VALID_OUTPUT_FROM_MC, calculator.executeCapCalculator());
     }
     
     @Test
     public void executeCapCalculator_validInputByCode_capCalculated() throws KolinuxException {
-        CapCalculator calculator = new CapCalculatorByCode(VALID_INPUT_BY_CODE);
+        CapCalculator calculator = new CapCalculatorByCode(VALID_INPUTS_BY_CODE);
         assertEquals(VALID_OUTPUT_FROM_CODE, calculator.executeCapCalculator());
     }
 
@@ -76,7 +77,7 @@ public class CapCalculatorTest {
             assertEquals(BLANK_DESCRIPTION_EXCEPTION_MESSAGE, exception.getMessage());
         }
     }
-    
+
     @Test
     public void executeCapCalculator_invalidModuleDescriptionsFound_showInvalidModules() {
         try {
