@@ -13,12 +13,15 @@ participant ":CommandResult" as result COMMANDS_COLOR
 [->parser : parseCommand(userInput)
 activate parser
 
+parser -> parser : parseCapCommand(argument)
+activate parser
+
 create command
-parser -> command : new CalculateCapCommand(input)
+parser -> command : new CalculateCapCommand(subCommand, parsedArguments)
 activate command
 
 create calculator
-command -> calculator : new CapCalculatorByCode(input)
+command -> calculator : new CapCalculatorByCode(parsedArguments)
 activate calculator
 
 ref over calculator : createCalculator
@@ -28,6 +31,9 @@ deactivate calculator
 
 command --> parser : command
 deactivate command
+
+parser --> parser : command
+deactivate parser
 
 parser -->[ : command
 deactivate parser

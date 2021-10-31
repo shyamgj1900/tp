@@ -70,7 +70,7 @@ public class Parser {
             case COMMAND_HELP:
                 return new HelpCommand();
             case COMMAND_CAP:
-                return new CalculateCapCommand(input);
+                return parseCapCommand(argument);
             case COMMAND_BUS:
                 return new BusRouteCommand(input);
             case COMMAND_MODULE:
@@ -112,6 +112,22 @@ public class Parser {
         default:
             throw new KolinuxException("Internal error occurred, please try again.");
         }
+    }
+
+    /**
+     * Processes the arguments by separating the first word (sub-command) from the input.
+     * The rest of the input is separated into a String array using the " " delimiter.
+     * This method is called only when the "calculate cap" command is called.
+     * 
+     * @param subInput User input without the command word.
+     * @return The "calculate cap" command.
+     * @throws KolinuxException If the user's input contains invalid module descriptions.
+     */
+    public static Command parseCapCommand(String subInput) throws KolinuxException {
+        String subCommand = subInput.split(" ", 2)[0];
+        String argument = subInput.replaceFirst(subCommand, "").trim();
+        String[] parsedArguments = argument.split(" ");
+        return new CalculateCapCommand(subCommand, parsedArguments);
     }
 
     /**

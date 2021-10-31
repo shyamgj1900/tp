@@ -22,29 +22,27 @@ public class CapCalculatorByCode extends CapCalculator {
     /**
      * Read and store the modules from user's input into this calculator.
      * 
-     * @param input String of module descriptions from user.
+     * @param parsedArguments Array of module descriptions from user.
      */
-    private void getInputModules(String input) {
-        String[] commandDescriptions = input.split(" ");
-        if (commandDescriptions.length <= 2) {
+    private void getInputModules(String[] parsedArguments) {
+        if (parsedArguments.length == 1 && parsedArguments[0].equals("")) {
             return;
         }
-        int moduleCount = commandDescriptions.length - 2;
-        for (int i = 0; i < moduleCount; i++) {
-            String inputModule = commandDescriptions[i + 2].toUpperCase();
+        for (String moduleDescription : parsedArguments) {
+            String inputModule = moduleDescription.toUpperCase();
             String[] moduleDescriptions = inputModule.split(DIVIDER);
             if (moduleDescriptions.length != 2) {
-                invalidModules.add(commandDescriptions[i + 2]);
+                invalidModules.add(moduleDescription);
                 continue;
             }
             String moduleCode = moduleDescriptions[0];
             if (moduleDb.getModuleInfo(moduleCode) == null) {
-                invalidModules.add(commandDescriptions[i + 2]);
+                invalidModules.add(moduleDescription);
                 continue;
             }
             String grade = moduleDescriptions[1];
             if (!isValidGrade(grade)) {
-                invalidModules.add(commandDescriptions[i + 2]);
+                invalidModules.add(moduleDescription);
                 continue;
             }
             modules.storeModuleCodeGrade(moduleCode, grade);
@@ -65,17 +63,17 @@ public class CapCalculatorByCode extends CapCalculator {
             modules.storeModule(module);
         }
     }
-    
+
     /**
      * Construct the superclass of this object and initialize moduleDb in order to retrieve 
      * module information from the database. Module details are then retrieved from input string.
      * 
-     * @param input Command input from user which contains the module codes and their grade.
+     * @param parsedArguments Array of module descriptions from user which contains the module codes and their grade.
      */
-    public CapCalculatorByCode(String input) {
+    public CapCalculatorByCode(String[] parsedArguments) {
         super();
         moduleDb = new ModuleDb().getPreInitModuleDb();
-        getInputModules(input);
+        getInputModules(parsedArguments);
     }
 
     /**
