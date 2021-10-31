@@ -279,13 +279,13 @@ in order to achieve your desired CAP
 
 ### 3.2 Timetable: `timetable`
 
-This feature allows users to [`add`](#321-add-lessons-to-timetable--timetable-add) and 
-[`delete`](#322-delete-lessons-from-timetable--timetable-delete) lessons from their timetable based on the modules 
+This feature allows you to [`add`](#321-add-lessons-to-timetable--timetable-add) and 
+[`delete`](#322-delete-lessons-from-timetable--timetable-delete) lessons from your timetable based on the modules 
 added in the module manager. 
-Users are also able to [`update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
-their existing lessons to another time slot.
-It also provides users an aesthetic visual representation of their timetable for users to 
-[`view`](#323-view-timetable-on-cli--timetable-view) on CLI.
+You are also able to [`update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
+your existing lessons to another time slot.
+It also provides you an aesthetic visual representation of your timetable for you to 
+[`view`](#323-view-timetable-on-cli--timetable-view) on the CLI.
 
 #### 3.2.1 Add lessons to timetable : `timetable add`
 
@@ -311,7 +311,7 @@ It also provides users an aesthetic visual representation of their timetable for
 * `timetable add CS1010/TUT/Monday/1200/1300`
 * `timetable add CS2113T/LEC/friday/1600/1800`
 
-Demo:
+This is what you should observe on your terminal when adding a lesson to the timetable:
 ```
 timetable add CS1010/TUT/Monday/1200/1300
 Lesson has been added to timetable
@@ -349,7 +349,7 @@ the modules added to module list can be added to the timetable
 * `timetable delete cs1010/lec/tuesday/1200`
 * `timetable delete CS2113T/LEC/Friday/1800`
 
-Demo:
+This is what you should observe on your terminal when deleting a lesson from the timetable:
 ```
 timetable delete cs1010/lec/tuesday/1800
 CS1010 LEC 1800 tuesday has been deleted from timetable
@@ -363,7 +363,7 @@ CS1010 LEC 1800 tuesday has been deleted from timetable
 
 * `timetable add CS1010/LEC/monday/1900/2000` followed by `timetable view`
 
-Demo:
+This is what you should observe on your terminal when you want to view the timetable:
 ```
 timetable add CS1010/LEC/monday/1900/2000
 CS1010 LEC has been added to timetable
@@ -409,7 +409,7 @@ Timetable has been printed above
 
 #### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
 
-**Format:** `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`
+**Format:** `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME`
 
 * `LESSON_TYPE` needs to be one of the following:
   * `TUT` refers to tutorial
@@ -425,10 +425,10 @@ Timetable has been printed above
 
 **Example of usage:**
 
-* `timetable update cs1010/lec/tuesday/monday/1200`
-* `timetable update CS2113T/LEC/Friday/Monday/1300`
+* `timetable update cs1010/lec/tuesday/1100/monday/1200`
+* `timetable update CS2113T/LEC/Friday/1300/Monday/1300`
 
-Demo:
+This is what you should observe on your terminal when you update a lesson on the timetable:
 ```
 timetable update cs1010/lec/tuesday/1300/monday/1200
 CS1010 LEC has been updated
