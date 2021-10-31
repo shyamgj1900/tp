@@ -44,6 +44,12 @@ public class IndirectRoute extends Route {
                 && checkIndirectK(busOne, busTwo, midLoc)) { //extra condition because K is not a loop service
             return true;
         }
+        if (vertexCodeD2[0] == STOP_NUMBER_UTOWN_D2 && checkIndirectDTwo(busOne, busTwo, midLoc)) {
+            return true;
+        }
+        if (vertexCodeK[0] == STOP_NUMBER_KENT_VALE_K && checkIndirectK(busOne, busTwo, midLoc)) {
+            return true;
+        }
         return false;
     }
 
@@ -136,6 +142,14 @@ public class IndirectRoute extends Route {
      */
     private boolean checkIndirectDTwo(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
+        if (vertexCodeD2[0] == STOP_NUMBER_UTOWN_D2) {
+            if (graph[1].isConnected(location.getStopNumberATwo(STOP_PGPR), vertexCodeA2[1])) {
+                busOne.add(BUS_D2);
+                busTwo.add(BUS_A2);
+                midLoc.add(STOP_PGPR);
+                return true;
+            }
+        }
         if (graph[2].isConnected(location.getStopNumberDOne(STOP_UTOWN), vertexCodeD1[1])) {
             busTwo.add(BUS_D1);
             flag = true;
@@ -162,7 +176,7 @@ public class IndirectRoute extends Route {
      */
     private boolean checkIndirectE(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
-        if (vertexCodeE[0] == STOP_NUMBER_RAFFLES_HALL) {
+        if (vertexCodeE[0] == STOP_NUMBER_RAFFLES_HALL_E) {
             if (graph[5].isConnected(location.getStopNumberK(STOP_KENT_VALE), vertexCodeK[1])) {
                 busTwo.add(BUS_K);
                 flag = true;
@@ -199,11 +213,26 @@ public class IndirectRoute extends Route {
      */
     private boolean checkIndirectK(ArrayList<String> busOne, ArrayList<String> busTwo, ArrayList<String> midLoc) {
         boolean flag = false;
-        busOne.add(BUS_K);
-        midLoc.add(STOP_KENT_VALE);
+        if (vertexCodeK[0] == STOP_NUMBER_KENT_VALE_K) {
+            if (graph[1].isConnected(location.getStopNumberATwo(STOP_PGPR), vertexCodeA2[1])) {
+                busOne.add(BUS_K);
+                busTwo.add(BUS_A2);
+                midLoc.add(STOP_PGPR);
+                return true;
+            }
+        }
         if (graph[4].isConnected(location.getStopNumberE(STOP_KENT_VALE), vertexCodeE[1])) {
             busTwo.add(BUS_E);
+            midLoc.add(STOP_KENT_VALE);
             flag = true;
+        }
+        if (graph[1].isConnected(location.getStopNumberATwo(STOP_PGPR), vertexCodeA2[1])) {
+            busTwo.add(BUS_A2);
+            midLoc.add(STOP_PGPR);
+            flag = true;
+        }
+        if (flag) {
+            busOne.add(BUS_K);
         }
         return flag;
     }

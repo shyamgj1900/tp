@@ -15,6 +15,7 @@ public class BusRouteCommand extends Command {
     public static final String USER_COMMAND_DELIMITER = " /";
     public static final String INCORRECT_FORMAT_MESSAGE = "Enter starting point and final destination.\n"
             + "In the format \"bus /start_location /end_location\"";
+    public static final String SAME_LOCATION_ERROR_MESSAGE = "Start and end location cannot be same.";
 
     private String input;
     private Location location;
@@ -56,6 +57,9 @@ public class BusRouteCommand extends Command {
         if (splitInput.length != 3) {
             logger.log(Level.WARNING, "User entered wrong input format");
             throw new KolinuxException(INCORRECT_FORMAT_MESSAGE);
+        }
+        if (splitInput[1].equalsIgnoreCase(splitInput[2])) {
+            throw new KolinuxException(SAME_LOCATION_ERROR_MESSAGE);
         }
         logger.log(Level.INFO, "Finding bus route");
         startLocation = splitInput[1].trim().toUpperCase();
