@@ -16,7 +16,7 @@ import static seedu.kolinux.timetable.Timetable.timetableStorage;
 import static seedu.kolinux.timetable.Timetable.moduleList;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
-
+import static seedu.kolinux.timetable.lesson.Lesson.days;
 
 public class AddSubCommand extends SubCommand {
 
@@ -39,9 +39,6 @@ public class AddSubCommand extends SubCommand {
         int dayIndex = lesson.getDayIndex();
         int startTimeIndex = lesson.getStartTimeIndex();
         int endTimeIndex = lesson.getEndTimeIndex();
-        if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
-            throw new KolinuxException(INVALID_ADD_FORMAT);
-        }
         if (!isPeriodFree(startTimeIndex, endTimeIndex, dayIndex)) {
             throw new KolinuxException(INACCESSIBLE_PERIOD);
         }
@@ -61,20 +58,18 @@ public class AddSubCommand extends SubCommand {
             if (!isLessonInModuleList(moduleList, moduleCode)) {
                 throw new KolinuxException(moduleCode + " not found in module list");
             }
-            int requiredHours = getHours(moduleList, moduleCode, lessonType);
-            checkZeroWorkload(requiredHours, moduleCode, lessonType);
-            int inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
-            int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
-            checkExceedingWorkload(requiredHours, storageHours, moduleCode, lessonType);
-
-            if (lessonType.startsWith("TUT")) {
+            checkLessonType(lessonType);
+            checkTimeAndDay(lessonDetails[2], lessonDetails[3], lessonDetails[4]);
+            checkZeroWorkload(moduleCode, lessonType);
+            checkExceedingWorkload(moduleCode, lessonType, lessonDetails);
+            if (lessonType.equals("TUT")) {
                 addToTimetable(new Tutorial(lessonDetails));
-            } else if (lessonType.startsWith("LEC")) {
+            } else if (lessonType.equals("LEC")) {
                 addToTimetable(new Lecture(lessonDetails));
-            } else if (lessonType.startsWith("LAB")) {
+            } else if (lessonType.equals("LAB")) {
                 addToTimetable(new Lab(lessonDetails));
             } else {
-                throw new KolinuxException(INVALID_ADD_FORMAT);
+                throw new KolinuxException(INVALID_LESSON_FORMAT);
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_ADD_FORMAT);
@@ -115,8 +110,9 @@ public class AddSubCommand extends SubCommand {
         return false;
     }
 
-    private void checkZeroWorkload(int requiredHours, String moduleCode, String lessonType)
+    private void checkZeroWorkload(String moduleCode, String lessonType)
             throws KolinuxException {
+        int requiredHours = getHours(moduleList, moduleCode, lessonType);
         if (requiredHours == 0) {
             throw new KolinuxException(moduleCode + " has no " + lessonType
                     +
@@ -124,8 +120,11 @@ public class AddSubCommand extends SubCommand {
         }
     }
 
-    private void checkExceedingWorkload(int requiredHours, int storageHours, String moduleCode,
-            String lessonType) throws KolinuxException {
+    private void checkExceedingWorkload(String moduleCode,
+            String lessonType, String[] lessonDetails) throws KolinuxException {
+        int requiredHours = getHours(moduleList, moduleCode, lessonType);
+        int inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
+        int storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
         if (storageHours > requiredHours) {
             throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
                     +
@@ -146,20 +145,24 @@ public class AddSubCommand extends SubCommand {
             }
             return true;
         } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_HOURS_INPUT);
+            throw new KolinuxException(INVALID_DAY_TIME);
         }
     }
 
-    public boolean isLessonInTimetable(String lessonCode, String lessonType, String day) {
-        for (Lesson storedLesson : lessonStorage) {
-            String storedCode = storedLesson.getModuleCode();
-            String storedType = storedLesson.getLessonType();
-            String storedDay = storedLesson.getDay();
-            if (storedCode.equals(lessonCode) && storedType.equals(lessonType) && storedDay.equals(day)) {
-                return true;
-            }
+
+
+    private void checkTimeAndDay(String day, String startTime, String endTime) throws KolinuxException {
+        int dayIndex = getIndex(day, days);
+        int startTimeIndex = getIndex(startTime, schoolHours);
+        int endTimeIndex = getIndex(endTime, schoolHours);
+        if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
+            throw new KolinuxException(INVALID_ADD_FORMAT + "\n\n" + INVALID_DAY_TIME);
         }
-        return false;
     }
 
+    private void checkLessonType(String lessonType) throws KolinuxException {
+        if (!(lessonType.equals("TUT") || lessonType.equals("LEC") || lessonType.equals("LAB"))) {
+            throw new KolinuxException(INVALID_LESSON_FORMAT);
+        }
+    }
 }

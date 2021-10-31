@@ -2,13 +2,12 @@ package seedu.kolinux.timetable.subcommand;
 
 import seedu.kolinux.exceptions.KolinuxException;
 
-import java.util.Objects;
-
-import static seedu.kolinux.timetable.lesson.Lesson.days;
-import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.Timetable.timetableData;
 import static seedu.kolinux.timetable.Timetable.timetableStorage;
+import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
+import static seedu.kolinux.timetable.lesson.Lesson.days;
+import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 public class DeleteSubCommand extends SubCommand {
 
@@ -16,13 +15,38 @@ public class DeleteSubCommand extends SubCommand {
 
     }
 
-    private void deleteFromTimetable(String moduleCode, String lessonType, int dayIndex) {
-        String description = moduleCode + " " + lessonType;
-        for (int i = 0; i < ROW_SIZE; i++) {
+    private void deleteFromTimetable(String day, int startIndex, int endIndex) {
+        int dayIndex = getIndex(day, days);
+        for (int i = startIndex; i < endIndex; i++) {
             assert dayIndex < COLUMN_SIZE;
-            if (Objects.equals(timetableData[i][dayIndex], description)) {
-                timetableData[i][dayIndex] = null;
+            timetableData[i][dayIndex] = null;
+        }
+    }
+
+    private void deleteFromStorage(String moduleCode, String lessonType, String day, String startTime)
+            throws KolinuxException {
+        int removeIndex = -1;
+        int endIndex = -1;
+        for (int j = 0; j < lessonStorage.size(); j++) {
+            String typeInStorage = lessonStorage.get(j).getLessonType();
+            String codeInStorage = lessonStorage.get(j).getModuleCode();
+            String dayInStorage = lessonStorage.get(j).getDay();
+            String startTimeInStorage = lessonStorage.get(j).getStartTime();
+            if (typeInStorage.equals(lessonType) && codeInStorage.equals(moduleCode)
+                    && dayInStorage.equals(day) && startTimeInStorage.equals(startTime)) {
+                removeIndex = j;
+                endIndex = lessonStorage.get(j).getEndTimeIndex();
             }
+        }
+        String description = moduleCode + " " + lessonType;
+        if (removeIndex != -1) {
+            assert endIndex != -1;
+            int startIndex = getIndex(startTime, schoolHours);
+            deleteFromTimetable(day, startIndex, endIndex);
+            lessonStorage.remove(removeIndex);
+            timetableStorage.writeToFile();
+        } else {
+            throw new KolinuxException(description + MISSING_LESSON_TO_DELETE);
         }
     }
 
@@ -31,25 +55,8 @@ public class DeleteSubCommand extends SubCommand {
             String moduleCode = lessonDetails[0].toUpperCase();
             String lessonType = lessonDetails[1].toUpperCase();
             String day = lessonDetails[2].toLowerCase();
-            int dayIndex = getIndex(day, days);
-            deleteFromTimetable(moduleCode, lessonType, dayIndex);
-            int removeIndex = -1;
-            for (int j = 0; j < lessonStorage.size(); j++) {
-                String typeInStorage = lessonStorage.get(j).getLessonType();
-                String codeInStorage = lessonStorage.get(j).getModuleCode();
-                String dayInStorage = lessonStorage.get(j).getDay();
-                if (typeInStorage.equals(lessonType) && codeInStorage.equals(moduleCode)
-                        && dayInStorage.equals(day)) {
-                    removeIndex = j;
-                }
-            }
-            String description = moduleCode + " " + lessonType;
-            if (removeIndex != -1) {
-                lessonStorage.remove(removeIndex);
-                timetableStorage.writeToFile();
-            } else {
-                throw new KolinuxException(description + MISSING_LESSON_TO_DELETE);
-            }
+            String startTime = lessonDetails[3];
+            deleteFromStorage(moduleCode, lessonType, day, startTime);
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_DELETE_FORMAT);
         }

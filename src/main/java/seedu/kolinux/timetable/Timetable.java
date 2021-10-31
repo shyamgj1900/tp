@@ -56,7 +56,7 @@ public class Timetable {
             loadContent(fileContents);
         } catch (FileNotFoundException exception) {
             timetableStorage.createFilePath(filePath);
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (ArrayIndexOutOfBoundsException | KolinuxException exception) {
             clearTimetable();
             timetableStorage.clearFile();
             throw new KolinuxException(CORRUPT_STORAGE);
@@ -73,20 +73,7 @@ public class Timetable {
     private void loadContent(ArrayList<String> fileContents) throws KolinuxException {
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
-            switch (content[1]) {
-            case "TUT":
-                addSubCommand.addToTimetable(new Tutorial(content));
-                break;
-            case "LEC":
-                addSubCommand.addToTimetable(new Lecture(content));
-                break;
-            case "LAB":
-                addSubCommand.addToTimetable(new Lab(content));
-                break;
-            default:
-                timetableStorage.clearFile();
-                throw new KolinuxException(CORRUPT_STORAGE);
-            }
+            executeAdd(content);
         }
     }
 
