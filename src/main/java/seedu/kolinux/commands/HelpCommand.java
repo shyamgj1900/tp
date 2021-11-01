@@ -6,8 +6,8 @@ import java.util.logging.Level;
 public class HelpCommand extends Command {
 
     private static final String HELP_MESSAGE = "Here are the list of commands:\n"
-            + "1. cap mc MC/GRADE - Calculates the total cap for the semester from MC\n"
-            + "2. cap code MODULE_CODE/GRADE - Calculates the total cap for the semester from MODULE_CODE\n"
+            + "1. cap mc MC/GRADE - Calculates the overall cap from MC\n"
+            + "2. cap code MODULE_CODE/GRADE - Calculates the overall cap from MODULE_CODE\n"
             + "3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another\n"
             + "4. bus stop list - List all the bus stop names\n"
             + "5. module view MODULE_CODE - View the module details\n"

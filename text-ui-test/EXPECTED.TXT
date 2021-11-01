@@ -9,8 +9,8 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 All the events in your schedule has been cleared.
 ....................................................................
 Here are the list of commands:
-1. cap mc MC/GRADE - Calculates the total cap for the semester from MC
-2. cap code MODULE_CODE/GRADE - Calculates the total cap for the semester from MODULE_CODE
+1. cap mc MC/GRADE - Calculates the overall cap from MC
+2. cap code MODULE_CODE/GRADE - Calculates the overall cap from MODULE_CODE
 3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
 4. bus stop list - List all the bus stop names
 5. module view MODULE_CODE - View the module details
@@ -32,9 +32,9 @@ Here are the list of commands:
 19. help - View this menu again
 20. bye - Exit Kolinux
 ....................................................................
-Your CAP for this semester will be 4.19 if you get your desired grades!
+Your overall CAP will be 4.19 if you get your desired grades!
 ....................................................................
-Your CAP for this semester will be 3.00 if you get your desired grades!
+Your overall CAP will be 3.00 if you get your desired grades!
 ....................................................................
 Invalid module info format found: invalid_info_1 invalid_info_2 
 ....................................................................
