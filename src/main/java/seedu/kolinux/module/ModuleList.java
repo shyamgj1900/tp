@@ -3,6 +3,8 @@ package seedu.kolinux.module;
 import java.util.ArrayList;
 
 import static seedu.kolinux.commands.TimetableCommand.timetable;
+import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
+import static seedu.kolinux.module.ModuleDetails.RESET_GRADE_ARGUMENT;
 
 /**
  * ModuleList class contains and facilitate operations on the myModules list.
@@ -24,7 +26,7 @@ public class ModuleList {
     }
 
 
-    ModuleList() {
+    public ModuleList() {
         horizontalLine = "....................................................................";
     }
 
@@ -57,7 +59,7 @@ public class ModuleList {
     public String setModuleGrade(String moduleCode, String grade) {
         for (ModuleDetails module : myModules) {
             if (module.getModuleCode().equals(moduleCode)) {
-                if (grade.equals("RESET") || grade.equals("0")) {
+                if (grade.equals(RESET_GRADE_ARGUMENT) || grade.equals(RESET_GRADE)) {
                     return module.resetGrade();
                 }
                 module.setGrade(grade);
@@ -99,7 +101,7 @@ public class ModuleList {
     public String deleteModuleByCode(String code) {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
-                myModules.get(i).setGrade("0");
+                myModules.get(i).setGrade(RESET_GRADE);
                 myModules.remove(i);
                 timetable.deleteByModuleList(code);
                 return "Successfully deleted module: " + code;
@@ -157,7 +159,7 @@ public class ModuleList {
             getWorkload(module, code, title);
             getExamDateTime(module);
             String grade = module.getGrade();
-            if (grade.equals("0")) {
+            if (grade.equals(RESET_GRADE)) {
                 System.out.println("Final grade: N/A");
             } else {
                 System.out.println("Final grade: " + grade);
