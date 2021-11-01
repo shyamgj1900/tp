@@ -650,6 +650,8 @@ be used with the module manager.
 
 **Format:** `cap mc MC/GRADE`
 
+- `GRADE` is not case-sensitive, hence `a+` and `A+` will be treated as the same grade. 
+
 **Example of usage:**
 
 * `cap mc 4/A 6/B+ 4/B 4/B- 4/A+`
@@ -662,9 +664,15 @@ Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
 ```
 
+>⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between
+the grade letter and the suffix. E.g. `A+` instead of `A +`
+
 #### 3.5.2 Calculate CAP using module code: `cap code`
 
 **Format:** `cap code CODE/GRADE`
+
+- `CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
+- `GRADE` is not case-sensitive, hence `a+` and `A+` will be treated as the same grade.
 
 **Example of usage:**
 
@@ -677,6 +685,9 @@ cap code CS2113T/A CS2101/C CG2027/B-
 Your CAP for this semester will be 3.40 if you get your desired grades!
 ....................................................................
 ```
+
+>⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between
+the grade letter and the suffix. E.g. `A+` instead of `A +`
 
 >🔗 Click [here](#2-list-of-commands) to return to the list of commands!
 
