@@ -280,6 +280,8 @@ in order to achieve your desired CAP
 ....................................................................
 ```
 
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+
 ### 3.2 Timetable: `timetable`
 
 This feature allows you to [`add`](#321-add-lessons-to-timetable--timetable-add) and 
@@ -468,6 +470,8 @@ CS1010 LEC has been updated
 ....................................................................
 ```
 
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+
 ### 3.3 Event Planner: `planner`
 
 The event planner works by allowing you to [`add`](#331-add-an-event-to-planner-planner-add), 
@@ -564,6 +568,8 @@ Hence, you are not allowed to delete lessons added via the `timetable` and exams
 
 >🔗 Exams will be automatically deleted as modules are deleted from the [`module`](#31-module-manager-module) manager.
 
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+
 ### 3.4 NUS Bus Route Finder: `bus`
 
 The route finder helps you find if there are [`bus`](#341-bus-route-search-bus) routes between any two NUS shuttle 
@@ -626,6 +632,8 @@ This is what you should observe on the terminal when you list all the bus stop n
 >⚠️ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
 where the user needs to change and board another bus (only single change routes are recommended).
 
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+
 ### 3.5 CAP Calculator: `cap`
 
 The CAP calculator helps you to keep track on your CAP and set desired grades for the
@@ -668,6 +676,8 @@ Your CAP for this semester will be 3.40 if you get your desired grades!
 ....................................................................
 ```
 
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+
 ### 3.6 View menu: `help`
 
 Views the different commands available.
@@ -702,6 +712,8 @@ Here are the list of commands:
 ....................................................................
 ```
 
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+
 ### 3.7 Exit: `bye`
 
 Terminates _Kolinux_.
@@ -713,6 +725,8 @@ bye
 Bye! Thank you for using Kolinux
 ....................................................................
 ```
+
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
 
 ## 4 FAQ
 
@@ -741,3 +755,5 @@ Our team welcomes you to contact us when faced with issues that this user guide 
 also open to any suggestions that you may have to improve _Kolinux_. 😃
 
 You may find our contact information [here](AboutUs.md).
+
+>🔗 Click [here](#2-list-of-commands) to return to the list of commands!
