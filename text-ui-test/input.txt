@@ -6,13 +6,13 @@ cap code invalid_info_1 CS2113T/A+ invalid_info_2
 invalid command
 module view CS2101
 module view invalid_module
-module store CS2113T
-module store CS2113T
-module store invalid_module
+module add CS2113T
+module add CS2113T
+module add invalid_module
 module delete CS2113T
 module delete CS2113T
 module grade invalid_module
-module store CS2113T
+module add CS2113T
 module grade CS2113T/A
 module delete CS2113T
 planner add CG2028 lab/2021-10-05/1500/1800
@@ -22,7 +22,7 @@ planner add some random stuff
 planner add CS2101 OP2 Rehearsal/29 Oct 21/7pm/9pm
 planner add Family dinner/2021-02-05/2000/1800
 planner list 2021-10-05
-module store CS1010
+module add CS1010
 timetable add CS1010/TUT/tuesday/1000/1100
 planner list 2021-10-19
 timetable clear

@@ -86,7 +86,7 @@ public class ModuleList {
             return mod.getModuleCode() + " is already in the module list";
         } else {
             myModules.add(mod);
-            return "Successfully stored module: " + mod.getModuleCode();
+            return "Successfully added module: " + mod.getModuleCode();
         }
 
     }

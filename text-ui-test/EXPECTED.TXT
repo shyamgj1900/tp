@@ -14,7 +14,7 @@ Here are the list of commands:
 3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
 4. bus stop list - List all the bus stop names
 5. module view MODULE_CODE - View the module details
-6. module store MODULE_CODE - Add a module to your module list
+6. module add MODULE_CODE - Add a module to your module list
 7. module delete MODULE_CODE - Delete a module from your module list
 8. module list - List all modules stored in your module list
 9. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
