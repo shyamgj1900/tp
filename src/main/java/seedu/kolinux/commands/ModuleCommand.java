@@ -25,17 +25,11 @@ public class ModuleCommand extends Command {
     public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
-            +
-            "1. module store CODE\n"
-            +
-            "2. module delete CODE\n"
-            +
-            "3. module view CODE\n"
-            +
-            "4. module list\n"
-            +
-            "5. module grade CODE/GRADE\n";
-
+            + "1. module store CODE\n"
+            + "2. module delete CODE\n"
+            + "3. module view CODE\n"
+            + "4. module list\n"
+            + "5. module grade CODE/GRADE\n";
 
     public ModuleCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;

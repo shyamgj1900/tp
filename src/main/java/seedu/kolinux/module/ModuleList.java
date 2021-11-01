@@ -8,7 +8,7 @@ import static seedu.kolinux.commands.TimetableCommand.timetable;
  * ModuleList class contains and facilitate operations on the myModules list.
  */
 public class ModuleList {
-    public final String horizontalLine = "....................................................................";
+    public final String horizontalLine;
     public ArrayList<ModuleDetails> myModules = new ArrayList<>();
 
     public ArrayList<ModuleDetails> getMyModules() {
@@ -24,8 +24,13 @@ public class ModuleList {
     }
 
 
+    ModuleList() {
+        horizontalLine = "....................................................................";
+    }
+
     /**
      * Searches the myModules list for a module corresponding to the give moduleCode and returns its grade.
+     *
      * @param moduleCode Module whose grade is to be returned
      * @return Returns the grade of the module whose code is moduleCode if it exists in myModules. Returns null if the
      *      module is not stored.
@@ -43,8 +48,9 @@ public class ModuleList {
     /**
      * Searches the myModules list for a module corresponding to the give moduleCode and updates its grade to the given
      * grade.
+     *
      * @param moduleCode Module whose grade is to be updated
-     * @param grade New grade for the module whose code is moduleCode
+     * @param grade      New grade for the module whose code is moduleCode
      * @return Returns an acknowledgement message if the grade is updated. Returns an error message if the moduleCode is
      *      invalid
      */
