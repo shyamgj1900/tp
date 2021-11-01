@@ -204,11 +204,12 @@ Remember to add the module's lessons to the timetable based on the workload
 This is what you should observe on the terminal when you view the information of a module:
 
 ```
-view CS1010
+module view CS1010
 CS1010: Programming Methodology
 Department: Computer Science
 Faculty: Computing
 Credits: 4
+Grade: N/A
 This module introduces the fundamental concepts of
 problem solving by computing and programming using
 an imperative programming language. It is the first
