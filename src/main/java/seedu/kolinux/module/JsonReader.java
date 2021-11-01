@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import seedu.kolinux.Main;
 
 import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
+
 /**
  * JsonReader class facilitates reading module data from stored JSON files.
  */
