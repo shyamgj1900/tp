@@ -23,7 +23,11 @@ public class CalculateCapCommand extends Command {
      */
     public CalculateCapCommand(String subCommand, String[] parsedArguments) throws KolinuxException {
         if (subCommand.equals("")) {
-            String errorMessage = "Please indicate your module description type";
+            String errorMessage = "Please indicate your module description type\n"
+                    + 
+                    "1. cap mc\n" 
+                    +
+                    "2. cap code";
             throw new KolinuxException(errorMessage);
         }
         switch (subCommand) {
