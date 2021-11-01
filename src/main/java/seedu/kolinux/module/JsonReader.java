@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import seedu.kolinux.Main;
 
+import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
 /**
  * JsonReader class facilitates reading module data from stored JSON files.
  */
@@ -32,7 +30,7 @@ public class JsonReader {
         }.getType());
 
         for (ModuleDetails module : modules) {
-            module.setGrade("0");
+            module.setGrade(RESET_GRADE);
         }
 
         return modules;
