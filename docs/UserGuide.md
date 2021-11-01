@@ -277,7 +277,7 @@ This is what you should observe on the terminal when you calculate the CAP based
 
 ```
 module cap
-Based on your available grade, your cap for this semester is 5.00
+Based on your available grade, your overall CAP is 5.00
 ....................................................................
 ```
 
@@ -656,8 +656,8 @@ where the user needs to change and board another bus (only single change routes 
 
 ### 3.5 CAP Calculator: `cap`
 
-The CAP calculator helps you to keep track on your CAP and set desired grades for the
-current semester. You can choose between different formats of module 
+The CAP calculator helps you to keep track on your CAP and set desired grades for your modules. 
+You can choose between different formats of module 
 ([`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#352-calculate-cap-using-module-code-cap-code)) 
 and the respective grade to allow more command flexibility.
 
@@ -678,7 +678,7 @@ This is what you should observe on the terminal when you calculate CAP using MCs
 
 ```
 cap mc 4/A 6/B+ 4/B 4/B- 4/A+
-Your CAP for this semester will be 4.09 if you get your desired grades!
+Your overall CAP will be 4.09 if you get your desired grades!
 ....................................................................
 ```
 
@@ -700,7 +700,7 @@ This is what you should observe on the terminal when you calculate CAP using mod
 
 ```
 cap code CS2113T/A CS2101/C CG2027/B-
-Your CAP for this semester will be 3.40 if you get your desired grades!
+Your overall CAP will be 3.40 if you get your desired grades!
 ....................................................................
 ```
 
@@ -718,8 +718,8 @@ This is what you should observe on the terminal when you send a help command:
 ```
 help
 Here are the list of commands:
-1. cap mc MC/GRADE - Calculates the total cap for the semester from MC
-2. cap code MODULE_CODE/GRADE - Calculates the total cap for the semester from MODULE_CODE
+1. cap mc MC/GRADE - Calculates the overall cap from MC
+2. cap code MODULE_CODE/GRADE - Calculates the overall cap from MODULE_CODE
 3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
 4. bus stop list - List all the bus stop names
 5. module view MODULE_CODE - View the module details
