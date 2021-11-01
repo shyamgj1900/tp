@@ -103,7 +103,7 @@ also shown in the diagram above. These structures will be further elaborated in 
 
 #### Module Component
 
-The class diagram below model the structure within the `module` component
+The class diagram below models the structure of the `module` component
 
 ![Module Class Diagram](assets/images/ModuleClassDiagram.png)
 
@@ -504,7 +504,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
    
-
+   
    
 
 ### Adding an event to Planner
@@ -549,4 +549,4 @@ should be able to accomplish most of the tasks faster using commands than using 
    
        Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
        operation. Entering `y` will lead to a success message, while anything else will lead to the operation cancelled.
-  
+
