@@ -61,4 +61,5 @@ public class DeleteSubCommand extends SubCommand {
             throw new KolinuxException(INVALID_DELETE_FORMAT);
         }
     }
+
 }
