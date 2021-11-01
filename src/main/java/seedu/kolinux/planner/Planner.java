@@ -23,7 +23,10 @@ public class Planner {
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of your planner events are corrupted, they will be removed from your planner!";
     private static final String TIME_CONFLICT_PROMPT =
-            "You already have an event ongoing for that time period, do you still want to add? (y/n)";
+            "You already have an event ongoing for that time period, do you still want to add?\n"
+                    + "You may enter 'n' to cancel and proceed to list the events on the date to see what you already "
+                    + "planned on that day\n"
+                    + "Or you may enter 'y' to add the event";
     private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
     private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
@@ -44,11 +47,19 @@ public class Planner {
      */
     private ArrayList<Event> filterPlanner(String date) {
         assert (moduleList != null);
-        ArrayList<Event> filteredPlanner = new ModuleSyncer(moduleList, date).getLessonsAndExamsAsEventsOnDate();
-        scheduleOfAllDates.stream()
-                .filter((event) -> date.equals(event.getDate()))
-                .forEach((event) -> filteredPlanner.add(event));
-        return (ArrayList<Event>) filteredPlanner
+        // Get lessons and exams from Timetable and ModuleList respectively on date
+        ArrayList<Event> lessonsAndExamsAsEventsOnDate
+                = new ModuleSyncer(moduleList, date).getLessonsAndExamsAsEventsOnDate();
+        // Get all events stored in planner on date
+        ArrayList<Event> eventsOnDate
+                = (ArrayList<Event>) scheduleOfAllDates
+                .stream()
+                .filter(event -> date.equals(event.getDate()))
+                .collect(Collectors.toList());
+        // Merge both lists
+        eventsOnDate.addAll(lessonsAndExamsAsEventsOnDate);
+        // Return a list that is sorted by their start time
+        return (ArrayList<Event>) eventsOnDate
                 .stream()
                 .sorted(Comparator.comparing(Event::getStartTime))
                 .collect(Collectors.toList());
@@ -186,14 +197,22 @@ public class Planner {
      * Deletes an event given its corresponding unique ID.
      *
      * @param id Unique identifier of the event
+     * @return Deleted event
      * @throws KolinuxException If the id does not match any events
      */
-    public void deleteEvent(String id) throws KolinuxException {
-        if (scheduleOfAllDates.removeIf(event -> id.equals(event.getId()))) {
-            plannerStorage.rewriteFile(returnDataStrings());
-        } else {
+    public Event deleteEvent(String id) throws KolinuxException {
+        Event eventToBeRemoved = null;
+        for (Event event : scheduleOfAllDates) {
+            if (id.equals(event.getId())) {
+                eventToBeRemoved = event;
+            }
+        }
+        if (eventToBeRemoved == null) {
             throw new KolinuxException(INVALID_ID_ERROR);
         }
+        scheduleOfAllDates.remove(eventToBeRemoved);
+        plannerStorage.rewriteFile(returnDataStrings());
+        return eventToBeRemoved;
     }
 
     /**
