@@ -250,6 +250,14 @@ public class ModuleDetails {
     public boolean containsNullGrade() {
         return grade.equals("0");
     }
+    
+    public String resetGrade() {
+        if (grade.equals("0")) {
+            return moduleCode + " does not have final grade stored";
+        }
+        grade = "0";
+        return moduleCode + " grade reset";
+    }
 
     /**
      * Returns a String object that is formatted for printing in CLI.
@@ -271,7 +279,8 @@ public class ModuleDetails {
         }
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
-                + "Credits: " + moduleCredit + "\n" + "Grade: " + grade + "\n" + formattedDescription;
+                + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals("0") ? "N/A" : grade) + "\n" 
+                + formattedDescription;
     }
 
 }
