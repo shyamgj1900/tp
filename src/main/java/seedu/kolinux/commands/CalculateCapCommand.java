@@ -49,7 +49,7 @@ public class CalculateCapCommand extends Command {
     @Override
     public CommandResult executeCommand() throws KolinuxException {
         String cap = calculator.executeCapCalculator();
-        String capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
+        String capMessage = "Your overall CAP will be " + cap + " if you get your desired grades!";
         logger.log(Level.INFO, "CAP is calculated from user's input");
         return new CommandResult(capMessage);
     }
