@@ -112,6 +112,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | [`help`](#36-view-menu-help)       	| View the different commands available          	              | `help`                                     	       |
 | [`bye`](#37-exit-bye)      	| Exit _Kolinux_                                   	              | `bye`                                      	       |
 
+>⚠️Note: Words in uppercase are parameters that you should supply to the program.
 
 ## 3 Features 
 
@@ -244,8 +245,9 @@ CS2113T grade set to A
 >⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between 
 the grade letter and the suffix. E.g. `A+` instead of `A +`
 
->⚠️ Note: The grades set using this command will be used to calculate CAP based on your module list. 
+>🔗 The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
+Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to find out more!
 
 ### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
 
