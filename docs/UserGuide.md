@@ -34,7 +34,7 @@ The following explains the use of different icons in this user guide:
 * 2 [List of Commands](#2-list-of-commands)
 * 3 [Features](#3-features)
   * 3.1 [`module`](#31-module-manager-module)
-    * 3.1.1 [`module store`](#311-add-modules-to-module-list-by-code-module-store)
+    * 3.1.1 [`module add`](#311-add-modules-to-module-list-by-code-module-add)
     * 3.1.2 [`module delete`](#312-delete-modules-from-module-list-by-code-module-delete)
     * 3.1.3 [`module list`](#313-list-modules-from-module-list-module-list)
     * 3.1.4 [`module view`](#314-view-module-details-module-view)
@@ -91,7 +91,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 |    Command    	|                     Action                     	              |               Command Format               	       |
 |:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
-| [`module store`](#311-add-modules-to-module-list-by-code-module-store)	| Store a module in the module list			                      | `module store MODULE_CODE`			               |
+| [`module add`](#311-add-modules-to-module-list-by-code-module-add)	| Store a module in the module list			                      | `module add MODULE_CODE`			               |
 | [`module delete`](#312-delete-modules-from-module-list-by-code-module-delete)	| Delete a module from the module list			                  | `module delete MODULE_CODE`			               |
 | [`module list`](#313-list-modules-from-module-list-module-list)     | List all stored modules from the module list                    | `module list`                                      |
 | [`module view`](#314-view-module-details-module-view)     | View module information                                         | `module view MODULE_CODE`                          |
@@ -126,7 +126,7 @@ _Kolinux_ provides a **single integrated platform** consisting of **5 core featu
 
 ### 3.1 Module Manager: `module`
 
-The module manager allows you to [`store`](#311-add-modules-to-module-list-by-code-module-store), 
+The module manager allows you to [`add`](#311-add-modules-to-module-list-by-code-module-add), 
 [`delete`](#312-delete-modules-from-module-list-by-code-module-delete), and 
 [`list`](#313-list-modules-from-module-list-module-list) the modules you are taking for the semester. You 
 are also able to [`view`](#314-view-module-details-module-view) important information regarding a module, such as the 
@@ -134,20 +134,20 @@ description and workload requirements. In addition, you are able to set a
 [`grade`](#315-set-a-modules-grade-in-module-list-module-grade) on the modules in your list for the purpose of 
 [`cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) calculation and grades suggestion.
 
-#### 3.1.1 Add modules to module list by code: `module store`
+#### 3.1.1 Add modules to module list by code: `module add`
 
-**Format:** `module store MODULE_CODE `
+**Format:** `module add MODULE_CODE `
 
 - `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
 
 **Example of usage:**
 
-- `module store CS2113T`
+- `module add CS2113T`
 
 This is what you should observe on the terminal after successfully storing a module:
 
 ```
-Successfully stored module: CS2113T
+Successfully added module: CS2113T
 ....................................................................
 ```
 
@@ -315,7 +315,7 @@ It also provides you an aesthetic visual representation of your timetable for yo
 **Format:** `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`
 
 * Ensure `MODULE_CODE` is stored in the module list using 
-[`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
+[`module add`](#311-add-modules-to-module-list-by-code-module-add) first before adding to timetable
 * `LESSON_TYPE` needs to be one of the following: 
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
@@ -341,7 +341,7 @@ Lesson has been added to timetable
 ....................................................................
 ```
 >⚠️ Note: Ensure `MODULE_CODE` is stored in the module list using
-[`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
+[`module add`](#311-add-modules-to-module-list-by-code-module-add) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
 >⚠️ ️Note: Please also note that the timetable has been built to take lesson of durations in multiples of 30 min.
@@ -356,7 +356,7 @@ the modules added to module list can be added to the timetable
 **Format:** `timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME`
 
 * Ensure `MODULE_CODE` is stored in the module list using
-  [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
+  [`module add`](#311-add-modules-to-module-list-by-code-module-add) first before adding to timetable
 * `LESSON_TYPE` needs to be one of the following:
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
@@ -723,7 +723,7 @@ Here are the list of commands:
 3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
 4. bus stop list - List all the bus stop names
 5. module view MODULE_CODE - View the module details
-6. module store MODULE_CODE - Add a module to your module list
+6. module add MODULE_CODE - Add a module to your module list
 7. module delete MODULE_CODE - Delete a module from your module list
 8. module list - List all modules stored in your module list
 9. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE

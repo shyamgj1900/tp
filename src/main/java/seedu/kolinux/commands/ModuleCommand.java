@@ -5,6 +5,8 @@ import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleListStorage;
 
 import java.util.logging.Level;
+import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
+import static seedu.kolinux.module.ModuleDetails.RESET_GRADE_ARGUMENT;
 
 /**
  * Represents the command that interacts with the module list.
@@ -14,7 +16,7 @@ public class ModuleCommand extends Command {
     private String[] parsedArguments;
     private String moduleCode;
 
-    public static final String STORE_SUBCOMMAND = "store";
+    public static final String STORE_SUBCOMMAND = "add";
     public static final String DELETE_SUBCOMMAND = "delete";
     public static final String VIEW_SUBCOMMAND = "view";
     public static final String LIST_SUBCOMMAND = "list";
@@ -25,17 +27,12 @@ public class ModuleCommand extends Command {
     public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
-            +
-            "1. module store CODE\n"
-            +
-            "2. module delete CODE\n"
-            +
-            "3. module view CODE\n"
-            +
-            "4. module list\n"
-            +
-            "5. module grade CODE/GRADE\n";
-
+            + "1. module add CODE\n"
+            + "2. module delete CODE\n"
+            + "3. module view CODE\n"
+            + "4. module list\n"
+            + "5. module grade CODE/GRADE\n"
+            + "6. module cap OR module cap DESIRED_CAP\n";
 
     public ModuleCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -48,7 +45,7 @@ public class ModuleCommand extends Command {
                 || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
                 || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
                 || moduleGrade.equals("U") || moduleGrade.equals("CS") || moduleGrade.equals("CU") 
-                || moduleGrade.equals("0") || moduleGrade.equals("RESET");
+                || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT);
     }
 
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {
@@ -73,7 +70,7 @@ public class ModuleCommand extends Command {
     }
 
     private CommandResult storeModule() {
-        String message = moduleList.storeModuleByCode(moduleCode, moduleDb);
+        String message = moduleList.addModuleByCode(moduleCode, moduleDb);
         logger.log(Level.INFO, message);
 
         ModuleListStorage.writeModulesToFile(moduleList);

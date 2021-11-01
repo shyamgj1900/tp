@@ -11,7 +11,7 @@ public class HelpCommand extends Command {
             + "3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another\n"
             + "4. bus stop list - List all the bus stop names\n"
             + "5. module view MODULE_CODE - View the module details\n"
-            + "6. module store MODULE_CODE - Add a module to your module list\n"
+            + "6. module add MODULE_CODE - Add a module to your module list\n"
             + "7. module delete MODULE_CODE - Delete a module from your module list\n"
             + "8. module list - List all modules stored in your module list\n"
             + "9. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE\n"

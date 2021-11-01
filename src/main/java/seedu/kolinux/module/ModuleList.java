@@ -3,12 +3,14 @@ package seedu.kolinux.module;
 import java.util.ArrayList;
 
 import static seedu.kolinux.commands.TimetableCommand.timetable;
+import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
+import static seedu.kolinux.module.ModuleDetails.RESET_GRADE_ARGUMENT;
 
 /**
  * ModuleList class contains and facilitate operations on the myModules list.
  */
 public class ModuleList {
-    public final String horizontalLine = "....................................................................";
+    public final String horizontalLine;
     public ArrayList<ModuleDetails> myModules = new ArrayList<>();
 
     public ArrayList<ModuleDetails> getMyModules() {
@@ -24,8 +26,13 @@ public class ModuleList {
     }
 
 
+    public ModuleList() {
+        horizontalLine = "....................................................................";
+    }
+
     /**
      * Searches the myModules list for a module corresponding to the give moduleCode and returns its grade.
+     *
      * @param moduleCode Module whose grade is to be returned
      * @return Returns the grade of the module whose code is moduleCode if it exists in myModules. Returns null if the
      *      module is not stored.
@@ -43,15 +50,16 @@ public class ModuleList {
     /**
      * Searches the myModules list for a module corresponding to the give moduleCode and updates its grade to the given
      * grade.
+     *
      * @param moduleCode Module whose grade is to be updated
-     * @param grade New grade for the module whose code is moduleCode
+     * @param grade      New grade for the module whose code is moduleCode
      * @return Returns an acknowledgement message if the grade is updated. Returns an error message if the moduleCode is
      *      invalid
      */
     public String setModuleGrade(String moduleCode, String grade) {
         for (ModuleDetails module : myModules) {
             if (module.getModuleCode().equals(moduleCode)) {
-                if (grade.equals("RESET") || grade.equals("0")) {
+                if (grade.equals(RESET_GRADE_ARGUMENT) || grade.equals(RESET_GRADE)) {
                     return module.resetGrade();
                 }
                 module.setGrade(grade);
@@ -69,7 +77,7 @@ public class ModuleList {
      * @return Returns an acknowledgement message if store is successful. Returns an error message if the code is
      *      invalid, or if it already exists in the list
      */
-    public String storeModuleByCode(String code, ModuleDb moduleDb) {
+    public String addModuleByCode(String code, ModuleDb moduleDb) {
         ModuleDetails mod = moduleDb.getModuleInfo(code);
 
         if (mod == null) {
@@ -78,7 +86,7 @@ public class ModuleList {
             return mod.getModuleCode() + " is already in the module list";
         } else {
             myModules.add(mod);
-            return "Successfully stored module: " + mod.getModuleCode();
+            return "Successfully added module: " + mod.getModuleCode();
         }
 
     }
@@ -93,7 +101,7 @@ public class ModuleList {
     public String deleteModuleByCode(String code) {
         for (int i = 0; i < myModules.size(); i++) {
             if (myModules.get(i).getModuleCode().equals(code)) {
-                myModules.get(i).setGrade("0");
+                myModules.get(i).setGrade(RESET_GRADE);
                 myModules.remove(i);
                 timetable.deleteByModuleList(code);
                 return "Successfully deleted module: " + code;
@@ -151,7 +159,7 @@ public class ModuleList {
             getWorkload(module, code, title);
             getExamDateTime(module);
             String grade = module.getGrade();
-            if (grade.equals("0")) {
+            if (grade.equals(RESET_GRADE)) {
                 System.out.println("Final grade: N/A");
             } else {
                 System.out.println("Final grade: " + grade);
