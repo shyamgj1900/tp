@@ -17,14 +17,14 @@ package module <<Rectangle>> {
 }
 
 package commands <<Rectangle>> {
-    class Command COMMANDS_COLOR
+    class "ABSTRACT\nCommand" COMMANDS_COLOR
     class ModuleCommand COMMANDS_COLOR
 }
 
 
-Command ^-- ModuleCommand
-Command --> "1" ModuleDb
+"ABSTRACT\nCommand" ^-- ModuleCommand
+"ABSTRACT\nCommand" --> "1" ModuleDb
 ModuleCommand ..> "1" ModuleListStorage
-Command -> "1" ModuleList
+"ABSTRACT\nCommand" -> "1" ModuleList
 ModuleList -> "*" ModuleDetails
 @enduml
