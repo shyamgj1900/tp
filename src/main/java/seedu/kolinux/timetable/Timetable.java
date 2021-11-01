@@ -16,6 +16,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static seedu.kolinux.timetable.lesson.Lesson.days;
+import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
+
 /**
  * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
  */
