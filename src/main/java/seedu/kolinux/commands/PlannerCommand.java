@@ -22,7 +22,7 @@ public class PlannerCommand extends Command {
     private static final String DELETE_SUBCOMMAND = "delete";
     private static final String CLEAR_SUBCOMMAND = "clear";
 
-    private static final String ADD_EVENT_MESSAGE = "An event has been added to your schedule successfully!";
+    private static final String ADD_EVENT_MESSAGE = "An event has been added to your schedule successfully: ";
     private static final String DELETE_EVENT_MESSAGE = "An event has been deleted from your schedule successfully!";
     private static final String CLEAR_EVENT_MESSAGE = "All the events in your schedule has been cleared.";
 
@@ -72,7 +72,7 @@ public class PlannerCommand extends Command {
             }
         }
         logger.log(Level.INFO, "User added an event to planner: " + event);
-        return new CommandResult(ADD_EVENT_MESSAGE);
+        return new CommandResult(ADD_EVENT_MESSAGE + event.getDate() + " " + event);
     }
 
     /**
