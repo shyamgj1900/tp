@@ -32,7 +32,7 @@ public class Parser {
     private static final String COMMAND_TIMETABLE = "timetable";
 
     private static final String EMPTY_STRING = "";
-    private static final String ILLEGAL_CHAR = "|";
+    private static final String ILLEGAL_CHAR = "|"; // Use of pipe may corrupt the storage files
 
     private static final String ILLEGAL_CHAR_MESSAGE = "Please avoid using '|' in your input, please try again.";
 
