@@ -17,14 +17,14 @@ package "routes" <<rectangle>> {
   class IndirectRoute
 }
 
-class BusRouteCommand {
+class BusRouteCommand COMMANDS_COLOR {
    -input: String
    -splitinput: String[]
    +getBusRoute(): String
    +executeCommand(): CommandResult
 }
 
-class Location {
+class Location ROUTES_COLOR {
    +getBusStopList(): String
    +getStopNumberAOne(command: String): int
    +getStopNumberATwo(command: String): int
@@ -34,7 +34,7 @@ class Location {
    +getStopNumberK(command: String): int
 }
 
-class Route {
+class Route ROUTES_COLOR {
    -busStops: String[]
    -startLocation: String
    -endLocation: String
@@ -51,16 +51,16 @@ class Route {
    {static} readFromFile(): void
 }
 
-class DirectRoute {
+class DirectRoute ROUTES_COLOR {
    +checkDirectRoutes(busNumbers: Arraylist<String>): boolean
    +checkDirectAlternateRoutes(busNumbers: Arraylist<String>): String
 }
 
-class IndirectRoute {
+class IndirectRoute ROUTES_COLOR {
    +checkIndirectRoutes(busOne: Arraylist<String>, busTwo: Arraylist<String>, midLoc: Arraylist<String>)
 }
 
-class Graph {
+class Graph ROUTES_COLOR {
    -vertex: int
    -adj: Arraylist<Integer>[]
    +addEdge(u: int, v: int): void

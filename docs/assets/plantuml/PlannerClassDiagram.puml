@@ -34,7 +34,7 @@ class Planner PLANNER_COLOR {
     + initPlanner(): void
     + addEvent(event: Event, allowConflict: boolean): void
     + listEvents(date: String, withId: boolean): String
-    + deleteEvent(date: String): void
+    + deleteEvent(date: String): Event
 }
 
 class Event PLANNER_COLOR {
