@@ -204,11 +204,12 @@ Remember to add the module's lessons to the timetable based on the workload
 This is what you should observe on the terminal when you view the information of a module:
 
 ```
-view CS1010
+module view CS1010
 CS1010: Programming Methodology
 Department: Computer Science
 Faculty: Computing
 Credits: 4
+Grade: N/A
 This module introduces the fundamental concepts of
 problem solving by computing and programming using
 an imperative programming language. It is the first
@@ -242,6 +243,21 @@ module grade CS2113T/A
 CS2113T grade set to A
 ....................................................................
 ```
+
+You can also enter `reset` or simply `0` in place of your grade to reset the module's grade.
+
+**Example of usage:**
+
+- `module grade CS2113T/reset` when CS2113T has its grade stored in the list
+
+This is what you should observe on the terminal when you reset the grade of a module in your module list:
+
+```
+module grade CS2113T/reset
+CS2113T grade reset
+....................................................................
+```
+
 >⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between 
 the grade letter and the suffix. E.g. `A+` instead of `A +`
 
@@ -265,8 +281,8 @@ Based on your available grade, your cap for this semester is 5.00
 ....................................................................
 ```
 
-This feature also provides user with the minimum grade to get for the other modules in order to achieve desired CAP 
-by including the CAP at the end of the command.
+This feature can also be used to show you the minimum grade to get for the other modules in order to achieve your 
+desired CAP by including the CAP at the end of the command.
 
 **Format:** `module cap DESIRED_CAP`
 
