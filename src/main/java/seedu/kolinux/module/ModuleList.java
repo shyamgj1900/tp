@@ -77,7 +77,7 @@ public class ModuleList {
      * @return Returns an acknowledgement message if store is successful. Returns an error message if the code is
      *      invalid, or if it already exists in the list
      */
-    public String storeModuleByCode(String code, ModuleDb moduleDb) {
+    public String addModuleByCode(String code, ModuleDb moduleDb) {
         ModuleDetails mod = moduleDb.getModuleInfo(code);
 
         if (mod == null) {

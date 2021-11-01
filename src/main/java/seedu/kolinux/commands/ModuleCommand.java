@@ -70,7 +70,7 @@ public class ModuleCommand extends Command {
     }
 
     private CommandResult storeModule() {
-        String message = moduleList.storeModuleByCode(moduleCode, moduleDb);
+        String message = moduleList.addModuleByCode(moduleCode, moduleDb);
         logger.log(Level.INFO, message);
 
         ModuleListStorage.writeModulesToFile(moduleList);
