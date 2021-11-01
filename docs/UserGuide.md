@@ -497,12 +497,14 @@ This is what you should observe on your terminal when adding an event to your pl
 
 ```
 planner add MA1508E quiz/2021-10-10/1700/1800
-An event has been added to your schedule successfully!
+An event has been added to your schedule successfully: 2021-10-10 17:00 - 18:00 MA1508E quiz
 ....................................................................
 planner add Watch movie/2021-10-10/1530/1730
-You already have an event ongoing for that time period, do you still want to add? (y/n)
+You already have an event ongoing for that time period, do you still want to add?
+You may enter 'n' to cancel and proceed to list the events on the date to see what you already planned on that day
+Or you may enter 'y' to add the event
 y
-An event has been added to your schedule successfully!
+An event has been added to your schedule successfully: 2021-10-10 15:30 - 17:30 Watch movie
 ....................................................................
 ```
 
@@ -554,7 +556,7 @@ Please enter the ID of the event you wish to delete (Enter 'n' to terminate this
 10:00 - 12:00 Attend career talk (id: 9)
 15:00 - 17:00 Watch movie (id: 1)
 9
-An event has been deleted from your schedule successfully!
+An event has been deleted from your schedule successfully: 2021-11-05 10:00 - 12:00 Attend career talk
 ....................................................................
 planner list 2021-11-05
 2021-11-05
