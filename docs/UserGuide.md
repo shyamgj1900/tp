@@ -105,7 +105,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | [`planner add`](#331-add-an-event-to-planner-planner-add) 	| Add a new event to your planner on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | [`planner list`](#332-list-events-on-a-specific-date-planner-list)	| List the events in your planner on a particular date                            | `planner list DATE`                                |
 | [`planner delete`](#333-delete-an-event-from-planner-planner-delete) 	| Delete an event from your planner on a particular date                            | `planner delete DATE`                              |
-| [`bus`](#341-bus-route-search-bus)        	| Check for an NUS bus route from one stop to another 	          | `bus /start_location /end_location`                |
+| [`bus`](#341-bus-route-search-bus)        	| Check for an NUS bus route from one stop to another 	          | `bus /START_LOCATION /END_LOCATION`                |
 | [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list)   | Lists all the bus stops in the NUS shuttle bus routes           | `bus stop list`                                    |
 | [`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc)         	| Calculate CAP using a set of modular credits and grades         | `cap mc MC/GRADE`                            	   |
 | [`cap code`](#352-calculate-cap-using-module-code-cap-code)        | Calculate CAP using a set of module codes and grades            | `cap code MODULE_CODE/GRADE`                              |
@@ -125,12 +125,12 @@ _Kolinux_ provides a **single integrated platform** consisting of **5 core featu
 
 ### 3.1 Module Manager: `module`
 
-The module manager allows users to [`store`](#311-add-modules-to-module-list-by-code-module-store), 
+The module manager allows you to [`store`](#311-add-modules-to-module-list-by-code-module-store), 
 [`delete`](#312-delete-modules-from-module-list-by-code-module-delete), and 
-[`list`](#313-list-modules-from-module-list-module-list) the modules they are taking for the semester. Users 
+[`list`](#313-list-modules-from-module-list-module-list) the modules you are taking for the semester. You 
 are also able to [`view`](#314-view-module-details-module-view) important information regarding a module, such as the 
-description and workload requirements. In addition, users are able to set a 
-[`grade`](#315-set-a-modules-grade-in-module-list-module-grade) on the modules in their list for the purpose of 
+description and workload requirements. In addition, you are able to set a 
+[`grade`](#315-set-a-modules-grade-in-module-list-module-grade) on the modules in your list for the purpose of 
 [`cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) calculation and grades suggestion.
 
 #### 3.1.1 Add modules to module list by code: `module store`
@@ -143,7 +143,7 @@ description and workload requirements. In addition, users are able to set a
 
 - `module store CS2113T`
 
-Demo:
+This is what you should observe on the terminal after successfully storing a module:
 
 ```
 Successfully stored module: CS2113T
@@ -160,7 +160,7 @@ Successfully stored module: CS2113T
 
 - `module delete CS2113T`
 
-Demo:
+This is what you should observe on the terminal after successfully deleting a module:
 
 ```
 Successfully deleted module: CS2113T
@@ -175,7 +175,7 @@ Successfully deleted module: CS2113T
 
 - `module list` when CS2113T is already stored in the list
 
-Demo:
+This is what you should observe on the terminal when you list your modules:
 
 ```
 CS2113T Software Engineering & Object-Oriented Programming
@@ -200,7 +200,7 @@ Remember to add the module's lessons to the timetable based on the workload
 
 * `module view CS1010`
 
-Demo:
+This is what you should observe on the terminal when you view the information of a module:
 
 ```
 view CS1010
@@ -227,11 +227,14 @@ composite data types), basic sorting, and recursion.
 
 **Format:** `module grade CODE/GRADE `
 
+- `MODULE_CODE` is not case-sensitive, hence `cs2113t` and `CS2113T` will give the same output.
+- `GRADE` is not case-sensitive, hence `a+` and `A+` will be treated as the same grade.
+
 **Example of usage:**
 
 - `module grade CS2113T/A` when CS2113T is already stored in the list
 
-Demo:
+This is what you should observe on the terminal when you set the grade of a module in your module list:
 
 ```
 module grade CS2113T/A
@@ -252,7 +255,7 @@ You may choose to enter real grades to calculate your current CAP and/or enter t
 
 - `module cap` when at least one module is already stored in the list with the module's grade
 
-Demo:
+This is what you should observe on the terminal when you calculate the CAP based on your module list:
 
 ```
 module cap
@@ -266,9 +269,9 @@ by including the CAP at the end of the command.
 **Format:** `module cap DESIRED_CAP`
 
 **Example of usage:**
-- `module cap 4.0` when at least one module doesn't have the grade stored
+- `module cap 4.0` when at least one module does not have the grade stored
 
-Demo:
+This is what you should observe on the terminal when you try to get grade suggestion based on a desired CAP:
 
 ```
 module cap 4.0
@@ -563,15 +566,15 @@ Hence, you are not allowed to delete lessons added via the `timetable` and exams
 
 ### 3.4 NUS Bus Route Finder: `bus`
 
-The route finder helps users to find if there are [`bus`](#341-bus-route-search-bus) routes between any two NUS shuttle 
-service bus stops. Users are recommended buses they can take to reach their destination. 
-Users also have the ability to view the [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list) which contains 
+The route finder helps you find if there are [`bus`](#341-bus-route-search-bus) routes between any two NUS shuttle 
+service bus stops. You will be recommended buses you can take to reach your destination. 
+You also have the ability to view the [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list) which contains 
 all the bus stop names which are covered by the NUS shuttle bus service. 
-This feature allows users to get familiarised with the NUS internal shuttle bus route.
+This feature allows you to get familiarised with the NUS internal shuttle bus route.
 
 #### 3.4.1 Bus route search: `bus`
 
-**Format:** `bus /start_location /end_location`
+**Format:** `bus /START_LOCATION /END_LOCATION`
 
 * Bus stop names are not case-sensitive
 
@@ -579,12 +582,14 @@ This feature allows users to get familiarised with the NUS internal shuttle bus 
 
 * `bus /pgp /museum`
 
-Demo:
+This is what you should observe on the terminal when finding a bus route between 2 bus stops:
 
 ```
 Bus [D2] goes from PGP to MUSEUM
 ....................................................................
 ```
+
+>🔗 The naming convention of `START_LOCATION` and `END_LOCATION` should follow [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list).
 
 #### 3.4.2 List of all bus stop names: `bus stop list`
 
@@ -594,7 +599,7 @@ Bus [D2] goes from PGP to MUSEUM
 
 * `bus stop list`
 
-Demo:
+This is what you should observe on the terminal when you list all the bus stop names in NUS:
 
 ```
 ._______________________________________________________________________________________________________.
@@ -623,8 +628,8 @@ where the user needs to change and board another bus (only single change routes 
 
 ### 3.5 CAP Calculator: `cap`
 
-The CAP calculator helps users to keep track on their CAP and set desired grades for the
-current semester. Users can choose between different formats of module 
+The CAP calculator helps you to keep track on your CAP and set desired grades for the
+current semester. You can choose between different formats of module 
 ([`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc) or [`cap code`](#352-calculate-cap-using-module-code-cap-code)) 
 and the respective grade to allow more command flexibility.
 
@@ -639,7 +644,7 @@ be used with the module manager.
 
 * `cap mc 4/A 6/B+ 4/B 4/B- 4/A+`
 
-Demo:
+This is what you should observe on the terminal when you calculate CAP using MCs and grades:
 
 ```
 cap mc 4/A 6/B+ 4/B 4/B- 4/A+
@@ -655,7 +660,7 @@ Your CAP for this semester will be 4.09 if you get your desired grades!
 
 * `cap code CS2113T/A CS2101/C CG2027/B-`
 
-Demo:
+This is what you should observe on the terminal when you calculate CAP using module code and grades:
 
 ```
 cap code CS2113T/A CS2101/C CG2027/B-
