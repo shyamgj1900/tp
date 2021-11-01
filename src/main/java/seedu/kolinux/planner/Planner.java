@@ -197,14 +197,22 @@ public class Planner {
      * Deletes an event given its corresponding unique ID.
      *
      * @param id Unique identifier of the event
+     * @return Deleted event
      * @throws KolinuxException If the id does not match any events
      */
-    public void deleteEvent(String id) throws KolinuxException {
-        if (scheduleOfAllDates.removeIf(event -> id.equals(event.getId()))) {
-            plannerStorage.rewriteFile(returnDataStrings());
-        } else {
+    public Event deleteEvent(String id) throws KolinuxException {
+        Event eventToBeRemoved = null;
+        for (Event event : scheduleOfAllDates) {
+            if (id.equals(event.getId())) {
+                eventToBeRemoved = event;
+            }
+        }
+        if (eventToBeRemoved == null) {
             throw new KolinuxException(INVALID_ID_ERROR);
         }
+        scheduleOfAllDates.remove(eventToBeRemoved);
+        plannerStorage.rewriteFile(returnDataStrings());
+        return eventToBeRemoved;
     }
 
     /**

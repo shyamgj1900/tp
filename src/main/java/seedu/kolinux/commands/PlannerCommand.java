@@ -23,7 +23,7 @@ public class PlannerCommand extends Command {
     private static final String CLEAR_SUBCOMMAND = "clear";
 
     private static final String ADD_EVENT_MESSAGE = "An event has been added to your schedule successfully: ";
-    private static final String DELETE_EVENT_MESSAGE = "An event has been deleted from your schedule successfully!";
+    private static final String DELETE_EVENT_MESSAGE = "An event has been deleted from your schedule successfully: ";
     private static final String CLEAR_EVENT_MESSAGE = "All the events in your schedule has been cleared.";
 
     private static final String TIME_CONFLICT_PROMPT =
@@ -105,9 +105,9 @@ public class PlannerCommand extends Command {
             logger.log(Level.INFO, "User cancelled the planner delete operation.");
             throw new KolinuxException(CANCEL_DELETE_ERROR);
         }
-        planner.deleteEvent(id);
+        Event deletedEvent = planner.deleteEvent(id);
         logger.log(Level.INFO, "User deleted an event on " + parsedArguments[0]);
-        return new CommandResult(DELETE_EVENT_MESSAGE);
+        return new CommandResult(DELETE_EVENT_MESSAGE + deletedEvent.getDate() + " " + deletedEvent);
     }
     
     private CommandResult handleClearCommand() {
