@@ -43,38 +43,6 @@ public class TimetableCommandTest {
     }
 
     @Test
-    public void executeCommand_validLesson_lessonAdded() throws KolinuxException {
-        ModuleCommand moduleCommand = new ModuleCommand("store", CODE);
-        moduleCommand.executeCommand();
-        TimetableCommand addCommand = new TimetableCommand("add", VALID_ADD_TUTORIAL_ARGUMENTS);
-        assertEquals("CS1231 LEC has been added to timetable",
-                addCommand.executeCommand().getFeedbackToUser());
-    }
-
-    @Test
-    public void executeDeleteCommand_validLesson_lessonDeleted() throws KolinuxException {
-        ModuleCommand moduleCommand = new ModuleCommand("store", CODE);
-        moduleCommand.executeCommand();
-        TimetableCommand addCommand = new TimetableCommand("add", VALID_ADD_TUTORIAL_ARGUMENTS);
-        addCommand.executeCommand();
-        TimetableCommand deleteCommand = new TimetableCommand("delete", VALID_DELETE_TUTORIAL_ARGUMENTS);
-        assertEquals("CS1231 LEC 1700 friday has been deleted from timetable",
-                deleteCommand.executeCommand().getFeedbackToUser());
-    }
-
-    @Test
-    public void executeUpdateCommand_validLesson_lessonUpdated() throws KolinuxException {
-        ModuleCommand moduleCommand = new ModuleCommand("store", CODE);
-        moduleCommand.executeCommand();
-        TimetableCommand addCommand = new TimetableCommand("add", VALID_ADD_TUTORIAL_ARGUMENTS);
-        addCommand.executeCommand();
-        TimetableCommand updateCommand = new TimetableCommand("update", VALID_UPDATE_TUTORIAL_ARGUMENTS);
-        assertEquals("CS1231 LEC has been updated",
-                updateCommand.executeCommand().getFeedbackToUser());
-
-    }
-
-    @Test
     public void executeViewCommand_validCommand_timetableViewed() throws KolinuxException {
         TimetableCommand viewCommand = new TimetableCommand("view", null);
         assertEquals("Timetable has been printed above",

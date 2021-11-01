@@ -6,7 +6,7 @@ import static seedu.kolinux.timetable.Timetable.lessonStorage;
 
 public class SubCommand {
 
-    public static final int ROW_SIZE = 16;
+    public static final int ROW_SIZE = 31;
     public static final int COLUMN_SIZE = 6;
     public static final int COLUMN_LAST_INDEX = 5;
     public static final String UPDATING_TO_SAME_TIMING = "You are updating the lesson to the same "

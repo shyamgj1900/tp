@@ -14,8 +14,9 @@ public abstract class Lesson {
     protected int startTimeIndex;
     protected int endTimeIndex;
     protected int dayIndex;
-    public static String [] schoolHours = new String [] {"0600", "0700", "0800", "0900", "1000", "1100",
-            "1200", "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100"};
+    public static String [] schoolHours = new String [] {"0600", "0630", "0700", "0730","0800", "0830", "0900",
+            "0930","1000", "1030","1100", "1130", "1200", "1230", "1300", "1330", "1400", "1430", "1500",
+            "1530","1600", "1630","1700", "1730", "1800", "1830","1900", "1930","2000","2030","2100"};
     public static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
 
     public Lesson(String[] parsedArguments) throws KolinuxException {
