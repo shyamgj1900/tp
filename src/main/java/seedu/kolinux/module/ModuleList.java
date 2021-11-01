@@ -51,6 +51,9 @@ public class ModuleList {
     public String setModuleGrade(String moduleCode, String grade) {
         for (ModuleDetails module : myModules) {
             if (module.getModuleCode().equals(moduleCode)) {
+                if (grade.equals("RESET") || grade.equals("0")) {
+                    return module.resetGrade();
+                }
                 module.setGrade(grade);
                 return moduleCode + " grade set to " + grade;
             }

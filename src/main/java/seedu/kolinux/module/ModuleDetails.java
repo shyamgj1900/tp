@@ -250,6 +250,14 @@ public class ModuleDetails {
     public boolean containsNullGrade() {
         return grade.equals("0");
     }
+    
+    public String resetGrade() {
+        if (grade.equals("0")) {
+            return moduleCode + " does not have final grade stored";
+        }
+        grade = "0";
+        return moduleCode + " grade reset";
+    }
 
     /**
      * Returns a String object that is formatted for printing in CLI.
