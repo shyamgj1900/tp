@@ -238,6 +238,8 @@ module grade CS2113T/A
 CS2113T grade set to A
 ....................................................................
 ```
+>⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between 
+the grade letter and the suffix. E.g. `A+` instead of `A +`
 
 >⚠️ Note: The grades set using this command will be used to calculate CAP based on your module list. 
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
@@ -277,13 +279,13 @@ in order to achieve your desired CAP
 
 ### 3.2 Timetable: `timetable`
 
-This feature allows users to [`add`](#321-add-lessons-to-timetable--timetable-add) and 
-[`delete`](#322-delete-lessons-from-timetable--timetable-delete) lessons from their timetable based on the modules 
+This feature allows you to [`add`](#321-add-lessons-to-timetable--timetable-add) and 
+[`delete`](#322-delete-lessons-from-timetable--timetable-delete) lessons from your timetable based on the modules 
 added in the module manager. 
-Users are also able to [`update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
-their existing lessons to another time slot.
-It also provides users an aesthetic visual representation of their timetable for users to 
-[`view`](#323-view-timetable-on-cli--timetable-view) on CLI.
+You are also able to [`update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
+your existing lessons to another time slot.
+It also provides you an aesthetic visual representation of your timetable for you to 
+[`view`](#323-view-timetable-on-cli--timetable-view) on the CLI.
 
 #### 3.2.1 Add lessons to timetable : `timetable add`
 
@@ -306,12 +308,12 @@ It also provides users an aesthetic visual representation of their timetable for
 
 **Example of usage:**
 
-* `timetable add CS1010/TUT/Monday/1200/1400`
+* `timetable add CS1010/TUT/Monday/1200/1300`
 * `timetable add CS2113T/LEC/friday/1600/1800`
 
-Demo:
+This is what you should observe on your terminal when adding a lesson to the timetable:
 ```
-timetable add CS1010/TUT/Monday/1200/1400
+timetable add CS1010/TUT/Monday/1200/1300
 Lesson has been added to timetable
 ....................................................................
 ```
@@ -319,16 +321,16 @@ Lesson has been added to timetable
 [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
->⚠️ ️Note: Please also note that the timetable has been built to only take lesson of durations in multiples of 1 hour.
-> This has been done so to ensure readability of the timetable on CLI when you input 
-> [`timetable view`](#323-view-timetable-on-cli--timetable-view). So if you will not be allowed to enter e.g. 30 min 
-> slots of lessons onto the timetable.
+>⚠️ ️Note: Please also note that the timetable has been built to take lesson of durations in multiples of 30 min.
+> This has been done to ensure readability of the timetable on CLI when you input 
+> [`timetable view`](#323-view-timetable-on-cli--timetable-view). So you will not be allowed to enter 15 min 
+> slots of lessons onto the timetable like e.g. 1315 or 1245.
 
 >🔗 Visit [`module`](#31-module-manager-module) for more information on the command formats.
 
 #### 3.2.2 Delete lessons from timetable : `timetable delete`
 
-**Format:** `timetable delete MODULE_CODE/LESSON_TYPE/DAY`
+**Format:** `timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME`
 
 * Ensure `MODULE_CODE` is stored in the module list using
   [`module store`](#311-add-modules-to-module-list-by-code-module-store) first before adding to timetable
@@ -344,13 +346,13 @@ the modules added to module list can be added to the timetable
 
 **Example of usage:**
 
-* `timetable delete cs1010/lec/tuesday`
-* `timetable delete CS2113T/LEC/Friday`
+* `timetable delete cs1010/lec/tuesday/1200`
+* `timetable delete CS2113T/LEC/Friday/1800`
 
-Demo:
+This is what you should observe on your terminal when deleting a lesson from the timetable:
 ```
-timetable delete cs1010/lec/tuesday
-CS1010 LEC tuesday has been deleted from timetable
+timetable delete cs1010/lec/tuesday/1800
+CS1010 LEC 1800 tuesday has been deleted from timetable
 ....................................................................
 ```
 #### 3.2.3 View timetable on CLI : `timetable view`
@@ -361,44 +363,74 @@ CS1010 LEC tuesday has been deleted from timetable
 
 * `timetable add CS1010/LEC/monday/1900/2000` followed by `timetable view`
 
-Demo:
+This is what you should observe on your terminal when you want to view the timetable:
 ```
-timetable add CS1010/LEC/monday/1900/2000
+timetable add CS1010/lec/monday/1900/2000
 CS1010 LEC has been added to timetable
 ....................................................................
 timetable view
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
 |             |       MONDAY       |       TUESDAY      |      WEDNESDAY     |      THURSDAY      |       FRIDAY       |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0600 - 0700  |                    |                    |                    |                    |                    |
+|0600 - 0630  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0700 - 0800  |                    |                    |                    |                    |                    |
+|0630 - 0700  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0800 - 0900  |                    |                    |                    |                    |                    |
+|0700 - 0730  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0900 - 1000  |                    |                    |                    |                    |                    |
+|0730 - 0800  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1000 - 1100  |                    |                    |                    |                    |                    |
+|0800 - 0830  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1100 - 1200  |                    |                    |                    |                    |                    |
+|0830 - 0900  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1200 - 1300  |                    |                    |                    |                    |                    |
+|0900 - 0930  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1300 - 1400  |                    |                    |                    |                    |                    |
+|0930 - 1000  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1400 - 1500  |                    |                    |                    |                    |                    |
+|1000 - 1030  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1500 - 1600  |                    |                    |                    |                    |                    |
+|1030 - 1100  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1600 - 1700  |                    |                    |                    |                    |                    |
+|1100 - 1130  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1700 - 1800  |                    |                    |                    |                    |                    |
+|1130 - 1200  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1800 - 1900  |                    |                    |                    |                    |                    |
+|1200 - 1230  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1900 - 2000  |     CS1010 LEC     |                    |                    |                    |                    |
+|1230 - 1300  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|2000 - 2100  |                    |                    |                    |                    |                    |
+|1300 - 1330  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1330 - 1400  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1400 - 1430  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1430 - 1500  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1500 - 1530  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1530 - 1600  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1600 - 1630  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1630 - 1700  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1700 - 1730  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1730 - 1800  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1800 - 1830  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1830 - 1900  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1900 - 1930  |     CS1010 LEC     |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|1930 - 2000  |     CS1010 LEC     |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|2000 - 2030  |                    |                    |                    |                    |                    |
++-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|2030 - 2100  |                    |                    |                    |                    |                    |
 +-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
 Timetable has been printed above
 ....................................................................
@@ -407,7 +439,7 @@ Timetable has been printed above
 
 #### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
 
-**Format:** `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`
+**Format:** `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME`
 
 * `LESSON_TYPE` needs to be one of the following:
   * `TUT` refers to tutorial
@@ -423,12 +455,12 @@ Timetable has been printed above
 
 **Example of usage:**
 
-* `timetable update cs1010/lec/tuesday/monday/1200`
-* `timetable update CS2113T/LEC/Friday/Monday/1300`
+* `timetable update cs1010/lec/tuesday/1100/monday/1200`
+* `timetable update CS2113T/LEC/Friday/1300/Monday/1300`
 
-Demo:
+This is what you should observe on your terminal when you update a lesson on the timetable:
 ```
-timetable update cs1010/lec/tuesday/monday/1200
+timetable update cs1010/lec/tuesday/1300/monday/1200
 CS1010 LEC has been updated
 ....................................................................
 ```
@@ -610,7 +642,7 @@ be used with the module manager.
 Demo:
 
 ```
-cap 4A 6B+ 4B 4B- 4A+
+cap mc 4/A 6/B+ 4/B 4/B- 4/A+
 Your CAP for this semester will be 4.09 if you get your desired grades!
 ....................................................................
 ```

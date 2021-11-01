@@ -22,7 +22,7 @@ import java.util.Scanner;
 public class Timetable {
 
     public static ModuleList moduleList;
-    private static final int ROW_SIZE = 16;
+    private static final int ROW_SIZE = 31;
     private static final int COLUMN_SIZE = 6;
     public static String [][] timetableData = new String[ROW_SIZE][COLUMN_SIZE];
     public static ArrayList<Lesson> lessonStorage = new ArrayList<>();
@@ -56,7 +56,7 @@ public class Timetable {
             loadContent(fileContents);
         } catch (FileNotFoundException exception) {
             timetableStorage.createFilePath(filePath);
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (ArrayIndexOutOfBoundsException | KolinuxException exception) {
             clearTimetable();
             timetableStorage.clearFile();
             throw new KolinuxException(CORRUPT_STORAGE);
@@ -73,20 +73,7 @@ public class Timetable {
     private void loadContent(ArrayList<String> fileContents) throws KolinuxException {
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
-            switch (content[1]) {
-            case "TUT":
-                addSubCommand.addToTimetable(new Tutorial(content));
-                break;
-            case "LEC":
-                addSubCommand.addToTimetable(new Lecture(content));
-                break;
-            case "LAB":
-                addSubCommand.addToTimetable(new Lab(content));
-                break;
-            default:
-                timetableStorage.clearFile();
-                throw new KolinuxException(CORRUPT_STORAGE);
-            }
+            executeAdd(content);
         }
     }
 

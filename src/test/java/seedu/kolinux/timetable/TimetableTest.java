@@ -33,8 +33,8 @@ public class TimetableTest {
             "2100"};
     private static final String[] VALID_ADD_LAB_ARGUMENTS = new String[] {"CS2040", "LAB", "monday", "0600",
             "0700"};
-    private static final String[] INVALID_DELETE_ARGUMENT = new String[] {"CS1010", "LESSON", "monday"};
-    private static final String[] UPDATE_LESSON_ARGUMENTS = new String[] {"CS1231", "TUT", "monday", "tuesday",
+    private static final String[] INVALID_DELETE_ARGUMENT = new String[] {"CS1010", "LESSON", "monday","0600"};
+    private static final String[] UPDATE_LESSON_ARGUMENTS = new String[] {"CS1231", "TUT", "monday","0600","tuesday",
             "1500"};
     private static final ModuleDb moduleDb = new ModuleDb();
     private ModuleList moduleList = new ModuleList();
@@ -70,7 +70,8 @@ public class TimetableTest {
             addSubCommand.addToTimetable(lesson);
             timetable.clearTimetable();
         } catch (KolinuxException exception) {
-            assertEquals(SubCommand.INVALID_ADD_FORMAT, exception.getMessage());
+            assertEquals(SubCommand.INVALID_ADD_FORMAT + "\n\n" + SubCommand.INVALID_DAY_TIME,
+                    exception.getMessage());
         }
     }
 
@@ -119,7 +120,7 @@ public class TimetableTest {
                     timetable.timetableData[getIndex("0600", schoolHours)][getIndex("monday", days)]);
             timetable.clearTimetable();
         } catch (KolinuxException e) {
-            assertEquals("Input hours for CS1231 TUT exceeds the total workload\nIt exceeds 1 hours\n"
+            assertEquals("Input hours for CS1231 TUT exceeds the total workload\nIt exceeds 1.0 hours\n"
                             +
                             "Please readjust the input timings or modify timetable to continue\nwith adding "
                             +
@@ -144,7 +145,8 @@ public class TimetableTest {
         Lesson lesson = new Tutorial(VALID_ADD_TUTORIAL_ARGUMENTS);
         addSubCommand.addToTimetable(lesson);
         timetable.executeDelete(VALID_ADD_TUTORIAL_ARGUMENTS);
-        assertFalse(addSubCommand.isLessonInTimetable("CS1010", "TUT", "monday"));
+        assertFalse(addSubCommand.isLessonInTimetable("CS1010", "TUT", "monday",
+                "0600"));
         timetable.clearTimetable();
     }
 
@@ -177,9 +179,9 @@ public class TimetableTest {
         timetable.executeAdd(VALID_ADD_TUTORIAL_ARGUMENTS);
         timetable.executeUpdate(UPDATE_LESSON_ARGUMENTS);
         assertFalse(addSubCommand.isLessonInTimetable("CS1231",
-                "TUT", "monday"));
+                "TUT", "monday", "0600"));
         assertTrue(addSubCommand.isLessonInTimetable("CS1231",
-                "TUT", "tuesday"));
+                "TUT", "tuesday", "1500"));
         timetable.clearTimetable();
     }
 

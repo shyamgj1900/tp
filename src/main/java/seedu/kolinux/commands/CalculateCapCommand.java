@@ -12,30 +12,27 @@ import java.util.logging.Level;
  */
 public class CalculateCapCommand extends Command {
     
-    private static final int MODULE_INFO_TYPE_POSITION = 1;
-    
     private CapCalculator calculator;
-    
+
     /**
      * Constructs this object and initializes a calculator based on the input keyword.
      * 
-     * @param input Command input from user which contains module description type and module descriptions.
+     * @param subCommand The type of this calculator object.
+     * @param parsedArguments Array of module descriptions from user.
      * @throws KolinuxException when an invalid input format is provided.
      */
-    public CalculateCapCommand(String input) throws KolinuxException {
-        String[] commandDescriptions = input.split(" ");
-        if (commandDescriptions.length == 1) {
+    public CalculateCapCommand(String subCommand, String[] parsedArguments) throws KolinuxException {
+        if (subCommand.equals("")) {
             String errorMessage = "Please indicate your module description type";
             throw new KolinuxException(errorMessage);
         }
-        String moduleInfoType = commandDescriptions[MODULE_INFO_TYPE_POSITION];
-        switch (moduleInfoType) {
+        switch (subCommand) {
         case "mc":
-            calculator = new CapCalculatorByMc(input);
+            calculator = new CapCalculatorByMc(parsedArguments);
             logger.log(Level.INFO, "User calculate CAP using modular credit");
             break;
         case "code":
-            calculator = new CapCalculatorByCode(input);
+            calculator = new CapCalculatorByCode(parsedArguments);
             logger.log(Level.INFO, "User calculate CAP using module code");
             break;
         default:
