@@ -44,11 +44,19 @@ public class Planner {
      */
     private ArrayList<Event> filterPlanner(String date) {
         assert (moduleList != null);
-        ArrayList<Event> filteredPlanner = new ModuleSyncer(moduleList, date).getLessonsAndExamsAsEventsOnDate();
-        scheduleOfAllDates.stream()
-                .filter((event) -> date.equals(event.getDate()))
-                .forEach((event) -> filteredPlanner.add(event));
-        return (ArrayList<Event>) filteredPlanner
+        // Get lessons and exams from Timetable and ModuleList respectively on date
+        ArrayList<Event> lessonsAndExamsAsEventsOnDate
+                = new ModuleSyncer(moduleList, date).getLessonsAndExamsAsEventsOnDate();
+        // Get all events stored in planner on date
+        ArrayList<Event> eventsOnDate
+                = (ArrayList<Event>) scheduleOfAllDates
+                .stream()
+                .filter(event -> date.equals(event.getDate()))
+                .collect(Collectors.toList());
+        // Merge both lists
+        eventsOnDate.addAll(lessonsAndExamsAsEventsOnDate);
+        // Return a list that is sorted by their start time
+        return (ArrayList<Event>) eventsOnDate
                 .stream()
                 .sorted(Comparator.comparing(Event::getStartTime))
                 .collect(Collectors.toList());
