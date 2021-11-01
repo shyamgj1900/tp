@@ -27,7 +27,10 @@ public class PlannerCommand extends Command {
     private static final String CLEAR_EVENT_MESSAGE = "All the events in your schedule has been cleared.";
 
     private static final String TIME_CONFLICT_PROMPT =
-            "You already have an event ongoing for that time period, do you still want to add? (y/n)";
+            "You already have an event ongoing for that time period, do you still want to add?\n"
+                    + "You may enter 'n' to cancel and proceed to list the events on the date to see what you already "
+                    + "planned on that day\n"
+                    + "Or you may enter 'y' to add the event";
     private static final String ENTER_ID_PROMPT =
             "Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):";
 

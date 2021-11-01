@@ -23,7 +23,10 @@ public class Planner {
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of your planner events are corrupted, they will be removed from your planner!";
     private static final String TIME_CONFLICT_PROMPT =
-            "You already have an event ongoing for that time period, do you still want to add? (y/n)";
+            "You already have an event ongoing for that time period, do you still want to add?\n"
+                    + "You may enter 'n' to cancel and proceed to list the events on the date to see what you already "
+                    + "planned on that day\n"
+                    + "Or you may enter 'y' to add the event";
     private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
     private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
