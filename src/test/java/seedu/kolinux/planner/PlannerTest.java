@@ -69,7 +69,10 @@ public class PlannerTest {
     private static final String TIME_SAME_ERROR =
             "Your event cannot start and end at the same time!";
     private static final String TIME_CONFLICT_ERROR =
-            "You already have an event ongoing for that time period, do you still want to add? (y/n)";
+            "You already have an event ongoing for that time period, do you still want to add?\n"
+                    + "You may enter 'n' to cancel and proceed to list the events on the date to see what you already "
+                    + "planned on that day\n"
+                    + "Or you may enter 'y' to add the event";
     private static final String EMPTY_DESCRIPTION_ERROR =
             "Please provide a description for your event!";
 
