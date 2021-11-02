@@ -1,6 +1,7 @@
 package seedu.kolinux.module;
 
 import com.google.gson.JsonArray;
+import net.gcardone.junidecode.Junidecode;
 
 /**
  * ModuleDetails class that stores all attributes of each module.
@@ -31,12 +32,15 @@ public class ModuleDetails {
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
             String title, String department, double[] workload, JsonArray semesterData) {
-        this.moduleCode = moduleCode;
-        this.moduleCredit = moduleCredit;
-        this.faculty = faculty;
-        this.description = description;
-        this.title = title;
-        this.department = department;
+
+        /*Attributes read from the NUSmods JSON may contain unicode characters. For proper printing in standard output,
+        these characters are converted to their ASCII equivalent.*/
+        this.moduleCode = Junidecode.unidecode(moduleCode);
+        this.moduleCredit = Junidecode.unidecode(moduleCredit);
+        this.faculty = Junidecode.unidecode(faculty);
+        this.description = Junidecode.unidecode(description);
+        this.title = Junidecode.unidecode(title);
+        this.department = Junidecode.unidecode(department);
         this.workload = workload;
         this.semesterData = semesterData;
         this.grade = RESET_GRADE;
@@ -72,6 +76,7 @@ public class ModuleDetails {
     public void setGrade(String newGrade) {
         grade = newGrade;
     }
+
 
     public String getGrade() {
         return grade;
