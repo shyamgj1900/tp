@@ -48,8 +48,8 @@ public class CapCalculatorTest {
         ModuleDb moduleDb = new ModuleDb();
         moduleDb.initModuleDb();
 
-        moduleList.storeModuleByCode(MODULE_1, moduleDb);
-        moduleList.storeModuleByCode(MODULE_2, moduleDb);
+        moduleList.addModuleByCode(MODULE_1, moduleDb);
+        moduleList.addModuleByCode(MODULE_2, moduleDb);
         moduleList.setModuleGrade(MODULE_1, "A");
         CapCalculator calculator = new ModuleListCapCalculator(moduleList);
         assertEquals(VALID_OUTPUT_FROM_STORED_MODULES, calculator.executeCapCalculator());
@@ -61,8 +61,8 @@ public class CapCalculatorTest {
         ModuleDb moduleDb = new ModuleDb();
         moduleDb.initModuleDb();
 
-        moduleList.storeModuleByCode(MODULE_1, moduleDb);
-        moduleList.storeModuleByCode(MODULE_2, moduleDb);
+        moduleList.addModuleByCode(MODULE_1, moduleDb);
+        moduleList.addModuleByCode(MODULE_2, moduleDb);
         moduleList.setModuleGrade(MODULE_1, "A");
         CapCalculator calculator = new GradeSuggestionCalculator(moduleList, "4.0");
         assertEquals(VALID_OUTPUT_SUGGEST_GRADE, calculator.executeCapCalculator());
@@ -95,7 +95,7 @@ public class CapCalculatorTest {
             ModuleDb moduleDb = new ModuleDb();
             moduleDb.initModuleDb();
 
-            moduleList.storeModuleByCode(MODULE_1, moduleDb);
+            moduleList.addModuleByCode(MODULE_1, moduleDb);
             CapCalculator calculator = new ModuleListCapCalculator(moduleList);
             calculator.executeCapCalculator();
         } catch (KolinuxException exception) {
@@ -109,8 +109,8 @@ public class CapCalculatorTest {
         ModuleDb moduleDb = new ModuleDb();
         moduleDb.initModuleDb();
 
-        moduleList.storeModuleByCode(MODULE_1, moduleDb);
-        moduleList.storeModuleByCode(MODULE_2, moduleDb);
+        moduleList.addModuleByCode(MODULE_1, moduleDb);
+        moduleList.addModuleByCode(MODULE_2, moduleDb);
         moduleList.setModuleGrade(MODULE_1, "C");
         CapCalculator calculator = new GradeSuggestionCalculator(moduleList, "5.0");
         assertEquals(CAP_UNACHIEVABLE_MESSAGE, calculator.executeCapCalculator());
@@ -123,8 +123,8 @@ public class CapCalculatorTest {
             ModuleDb moduleDb = new ModuleDb();
             moduleDb.initModuleDb();
 
-            moduleList.storeModuleByCode(MODULE_1, moduleDb);
-            moduleList.storeModuleByCode(MODULE_2, moduleDb);
+            moduleList.addModuleByCode(MODULE_1, moduleDb);
+            moduleList.addModuleByCode(MODULE_2, moduleDb);
             moduleList.setModuleGrade(MODULE_1, "C");
             CapCalculator calculator = new GradeSuggestionCalculator(moduleList, "20.0");
             calculator.executeCapCalculator();

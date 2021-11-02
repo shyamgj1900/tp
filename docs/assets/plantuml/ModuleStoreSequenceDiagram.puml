@@ -36,7 +36,7 @@ activate mlc
 mlc -> mlc : storeModule()
 activate mlc
 
-mlc -> mll : storeModuleByCode(moduleCode, moduleDb)
+mlc -> mll : addModuleByCode(moduleCode, moduleDb)
 activate mll
 
 mll --> mlc : message

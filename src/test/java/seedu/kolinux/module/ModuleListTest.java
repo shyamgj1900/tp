@@ -43,7 +43,7 @@ public class ModuleListTest {
 
     @Test
     public void storeModuleByCode_newValidModuleCode_validStoredModule() {
-        moduleList.storeModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
+        moduleList.addModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
 
         int listLength = moduleList.getMyModulesSize();
         ArrayList<ModuleDetails> list = moduleList.getMyModules();
@@ -54,7 +54,7 @@ public class ModuleListTest {
 
     @Test
     public void storeModuleByCode_invalidModuleCode_emptyMyModulesList() {
-        moduleList.storeModuleByCode(INVALID_MODULE_CODE, moduleDb);
+        moduleList.addModuleByCode(INVALID_MODULE_CODE, moduleDb);
 
         ArrayList<ModuleDetails> list = moduleList.getMyModules();
 
@@ -64,8 +64,8 @@ public class ModuleListTest {
 
     @Test
     public void storeModuleByCode_existingValidModuleCode_uniqueModulesInMyModulesList() {
-        moduleList.storeModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
-        moduleList.storeModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
+        moduleList.addModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
+        moduleList.addModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
 
         int length = moduleList.getMyModulesSize();
 
@@ -75,7 +75,7 @@ public class ModuleListTest {
 
     @Test
     public void deleteModuleByCode_existingModuleCode_emptyMyModulesList() {
-        moduleList.storeModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
+        moduleList.addModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
 
         moduleList.deleteModuleByCode(TEST_MODULE_DETAILS.getModuleCode());
         ArrayList<ModuleDetails> list = moduleList.getMyModules();
@@ -86,7 +86,7 @@ public class ModuleListTest {
 
     @Test
     public void deleteModuleByCode_nonExistentModuleCode_unchangedMyModulesList() {
-        moduleList.storeModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
+        moduleList.addModuleByCode(TEST_MODULE_DETAILS.getModuleCode(), moduleDb);
         ArrayList<ModuleDetails> listBeforeDelete = moduleList.getMyModules();
 
         moduleList.deleteModuleByCode(INVALID_MODULE_CODE);

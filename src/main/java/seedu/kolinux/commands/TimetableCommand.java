@@ -28,6 +28,7 @@ public class TimetableCommand extends Command {
     private static final String UPDATE_SUBCOMMAND = "update";
     private static final String DELETE_SUBCOMMAND = "delete";
     private static final String VIEW_SUBCOMMAND = "view";
+    private static final String LIST_SUBCOMMAND = "list";
 
     public TimetableCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -75,6 +76,7 @@ public class TimetableCommand extends Command {
                 +
                 parsedArguments[1].toUpperCase() + " has been updated");
     }
+
 
     @Override
     public CommandResult executeCommand() throws KolinuxException {

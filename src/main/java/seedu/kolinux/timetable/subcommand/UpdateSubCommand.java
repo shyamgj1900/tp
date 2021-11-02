@@ -28,13 +28,10 @@ public class UpdateSubCommand extends SubCommand {
             String newStartTiming = lessonDetails[5];
             int startIndex = getIndex(newStartTiming, schoolHours);
             int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay, oldStartTiming);
-            String oldEndTiming = getOldEndTiming(moduleCode, lessonType, oldDay, oldStartTiming);
             String newEndTiming = schoolHours[endIndex - 1];
-            if (Objects.equals(oldDay, newDay) && Objects.equals(oldStartTiming, newStartTiming)
-                    && Objects.equals(oldEndTiming, newEndTiming)) {
-                throw new KolinuxException(UPDATING_TO_SAME_TIMING);
-            }
+            checkUpdateTiming(moduleCode, lessonType, oldDay, newDay, oldStartTiming, newStartTiming, newEndTiming);
             String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
+
             if (isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
                 deleteSubcommand.deleteLesson(lessonDetails);
                 addSubcommand.inputLesson(parameters);
@@ -65,6 +62,15 @@ public class UpdateSubCommand extends SubCommand {
             }
         }
         return oldEndTime;
+    }
+
+    private void checkUpdateTiming(String moduleCode, String lessonType, String oldDay, String newDay,
+            String oldStartTiming, String newStartTiming, String newEndTiming) throws KolinuxException {
+        String oldEndTiming = getOldEndTiming(moduleCode, lessonType, oldDay, oldStartTiming);
+        if (Objects.equals(oldDay, newDay) && Objects.equals(oldStartTiming, newStartTiming)
+                && Objects.equals(oldEndTiming, newEndTiming)) {
+            throw new KolinuxException(UPDATING_TO_SAME_TIMING);
+        }
     }
 
 }
