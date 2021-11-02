@@ -23,7 +23,7 @@ public class TimetableCommand extends Command {
             "4. timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME\n"
             +
             "5. timetable list DAY";
-    
+
     private static final String ADD_SUBCOMMAND = "add";
     private static final String CLEAR_SUBCOMMAND = "clear";
     private static final String UPDATE_SUBCOMMAND = "update";
@@ -82,14 +82,13 @@ public class TimetableCommand extends Command {
         try {
             timetable.listTimetable(parsedArguments[0]);
             logger.log(Level.INFO, "User has listed the timetable.");
-            return new CommandResult("Lessons for " +
-                    parsedArguments[0].toLowerCase() + " has been listed");
+            return new CommandResult("\nYour lessons for " + parsedArguments[0].toLowerCase()
+                    + " has been listed above");
         } catch (IndexOutOfBoundsException exception) {
             throw new KolinuxException("Please ensure the format of timetable list:\n" +
                     "timetable list DAY");
         }
     }
-
 
     @Override
     public CommandResult executeCommand() throws KolinuxException {

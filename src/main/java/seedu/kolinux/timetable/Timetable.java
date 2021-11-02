@@ -109,24 +109,26 @@ public class Timetable {
 
     public void listTimetable(String day) throws KolinuxException {
         boolean doesLessonExist = false;
-        boolean isStartTimeUpdated = false;
-        String startTime = null;
         int dayIndex = getIndex(day, days);
+        String[] lessonList = new String[30];
         if (dayIndex == -1) {
             throw new KolinuxException("Please enter valid weekday from monday to friday spelt fully");
         }
-        for (int i = 1; i < ROW_SIZE; i++) {
-            if (timetableData[i][dayIndex] != null) {
+        for (Lesson lesson: lessonStorage) {
+            if (lesson.getDay().equals(day)) {
+                String moduleCode = lesson.getModuleCode();
+                String lessonType = lesson.getLessonType();
+                String startingTime = lesson.getStartTime();
+                String endingTime = lesson.getEndTime();
+                int startTimeIndex = lesson.getStartTimeIndex();
                 doesLessonExist = true;
-                if (!isStartTimeUpdated) {
-                   startTime = schoolHours[i - 1];
-                    isStartTimeUpdated = true;
-                }
-                if (!Objects.equals(timetableData[i][dayIndex], timetableData[i + 1][dayIndex])) {
-                    String endTime = schoolHours[i];
-                    System.out.println(timetableData[i][dayIndex] + " " + startTime + " - " + endTime);
-                    isStartTimeUpdated = false;
-                }
+                lessonList[startTimeIndex - 1] = moduleCode + " " + lessonType + " " + startingTime
+                        + " - " + endingTime;
+            }
+        }
+        for (int i = 0; i < 29; i ++) {
+            if (lessonList[i] != null) {
+                System.out.println(lessonList[i]);
             }
         }
         if (!doesLessonExist) {

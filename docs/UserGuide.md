@@ -45,6 +45,7 @@ The following explains the use of different icons in this user guide:
     * 3.2.2 [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)
     * 3.2.3 [`timetable view`](#323-view-timetable-on-cli--timetable-view)
     * 3.2.4 [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
+    * 3.2.5 [`timetable list`](#325-list-the-lessons-and-their-timings-on-a-specific-day-timetable-list)
   * 3.3 [`planner`](#33-event-planner-planner)
     * 3.3.1 [`planner add`](#331-add-an-event-to-planner-planner-add)
     * 3.3.2 [`planner list`](#332-list-events-on-a-specific-date-planner-list)
@@ -310,6 +311,9 @@ You are also able to [`update`](#324-update-a-lesson-to-another-timing-your-time
 your existing lessons to another time slot.
 It also provides you an aesthetic visual representation of your timetable for you to 
 [`view`](#323-view-timetable-on-cli--timetable-view) on the CLI.
+If you prefer only to see the lessons that are taking place for the day without the empty slots, you can make use of 
+[`list`](#325-list-the-lessons-and-their-timings-on-a-specific-day-timetable-list) to view the lesson details for 
+that day.
 
 #### 3.2.1 Add lessons to timetable : `timetable add`
 
@@ -486,6 +490,35 @@ This is what you should observe on your terminal when you update a lesson on the
 ```
 timetable update cs1010/lec/tuesday/1300/monday/1200
 CS1010 LEC has been updated
+....................................................................
+```
+
+#### 3.2.5 List the lessons and their timings on a specific day: `timetable list`
+
+**Format:** `timetable list DAY`
+
+* `DAY` must be from between `Monday` and `Friday`
+
+**Example of usage:**
+
+* `timetable list monday`
+* `timetable list friday`
+
+This is what you should observe on your terminal when you list out the lessons for a specific day based on your 
+timetable
+
+```
+timetable list monday
+You have no lessons on monday
+
+Your lessons for monday has been listed above
+....................................................................
+timetable list friday
+CS1010 TUT 0700 - 0800
+CS1101S TUT 1600 - 1700
+CS1010 LEC 1900 - 2000
+
+Your lessons for friday has been listed above
 ....................................................................
 ```
 
