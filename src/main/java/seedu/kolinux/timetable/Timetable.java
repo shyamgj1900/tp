@@ -112,7 +112,7 @@ public class Timetable {
         int dayIndex = getIndex(day, days);
         String[] lessonList = new String[30];
         if (dayIndex == -1) {
-            throw new KolinuxException("Please enter valid weekday from monday to friday spelt fully");
+            throw new KolinuxException("Please enter a valid weekday from monday to friday spelt fully");
         }
         for (Lesson lesson: lessonStorage) {
             if (lesson.getDay().equals(day)) {
@@ -126,7 +126,7 @@ public class Timetable {
                         + " - " + endingTime;
             }
         }
-        for (int i = 0; i < 29; i ++) {
+        for (int i = 0; i < 29; i++) {
             if (lessonList[i] != null) {
                 System.out.println(lessonList[i]);
             }

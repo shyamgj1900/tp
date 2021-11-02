@@ -85,8 +85,7 @@ public class TimetableCommand extends Command {
             return new CommandResult("\nYour lessons for " + parsedArguments[0].toLowerCase()
                     + " has been listed above");
         } catch (IndexOutOfBoundsException exception) {
-            throw new KolinuxException("Please ensure the format of timetable list:\n" +
-                    "timetable list DAY");
+            throw new KolinuxException("Please ensure the format of timetable list:\ntimetable list DAY");
         }
     }
 
