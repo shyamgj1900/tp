@@ -3,8 +3,9 @@ package seedu.kolinux.module;
 import java.util.ArrayList;
 
 import static seedu.kolinux.commands.TimetableCommand.timetable;
-import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
-import static seedu.kolinux.module.ModuleDetails.RESET_GRADE_ARGUMENT;
+
+import static seedu.kolinux.module.Grade.RESET_GRADE;
+import static seedu.kolinux.module.Grade.RESET_GRADE_ARGUMENT;
 
 /**
  * ModuleList class contains and facilitate operations on the myModules list.
