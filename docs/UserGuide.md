@@ -57,11 +57,12 @@ The following explains the use of different icons in this user guide:
     * 3.5.2 [`cap code`](#352-calculate-cap-using-module-code-cap-code)
   * 3.6 [`help`](#36-view-menu-help)
   * 3.7 [`bye`](#37-exit-bye)
-* 4 [FAQ](#4-faq)
-* 5 [Data Storage](#5-data-storage)
-* 6 [Contact Us](#6-contact-us)
+* 4 [Limitations](#4-current-limitations)
+* 5 [FAQ](#4-faq)
+* 6 [Data Storage](#5-data-storage)
+* 7 [Contact Us](#6-contact-us)
 
-## 1 Quick Start
+## 1. Quick Start
 
 ### Installation and start-up
 
@@ -87,7 +88,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 ....................................................................
 ```
 
-## 2 List of Commands
+## 2. List of Commands
 
 |    Command    	|                     Action                     	              |               Command Format               	       |
 |:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
@@ -99,9 +100,9 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap)      | Calculate CAP given modules and grades in the module list       | `module cap`                                       |
 | [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap)      | Get average grade needed to get desired CAP from module list    | `module cap DESIRED_CAP`                           |
 | [`timetable add`](#321-add-lessons-to-timetable--timetable-add)   | Add a lesson to your timetable                                  | `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`|
-| [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY`     |
+| [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME`     |
 | [`timetable view`](#323-view-timetable-on-cli--timetable-view)  | View timetable                                                  | `timetable view`                                   |
-| [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME`|
+| [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME`|
 | [`planner add`](#331-add-an-event-to-planner-planner-add) 	| Add a new event to your planner on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | [`planner list`](#332-list-events-on-a-specific-date-planner-list)	| List the events in your planner on a particular date                            | `planner list DATE`                                |
 | [`planner delete`](#333-delete-an-event-from-planner-planner-delete) 	| Delete an event from your planner on a particular date                            | `planner delete DATE`                              |
@@ -114,7 +115,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 
 >⚠️Note: Words in uppercase are parameters that you should supply to the program.
 
-## 3 Features 
+## 3. Features 
 
 _Kolinux_ provides a **single integrated platform** consisting of **5 core features**:
 
@@ -759,14 +760,39 @@ Bye! Thank you for using Kolinux
 
 >🔗 Click [here](#2-list-of-commands) to return to the list of commands!
 
-## 4 FAQ
+
+## 4. Current limitations 
+
+### NUSMods API
+
+1. Due to the limitations in the project where our application is expected to perform without the use of internet, we 
+are not able to get live updates from the api, and we have to work off the latest json file with relevant module details.
+2. We are also not able to extract the different timings for each lesson in modules as they are separated into each 
+module's json file, as we wanted to be space efficient and within the memory space limits set by the teaching team, 
+we did not proceed with extracting this information. Which is why the timings of lessons are not yet available as 
+it's out of the current project's scope.
+
+
+## 5. FAQ
 
 **Q**: How do I transfer my data to another computer? 
 
 **A**: Locate the `/data` directory stored in the same folder as `Kolinux.jar`. Copy the directory to the other 
 computer, in the same folder as `Kolinux.jar`. The data will be automatically read upon starting up `Kolinux`.
 
-## 5 Data Storage
+**Q**: Can I add recurring events to the `planner`?
+
+**A**: Our current version doesn't support this functionality as we wanted to expand push forward the wide 
+range of features before expanding each feature more in depth. For now, you would have to add the events to the 
+specified dates individually
+
+**Q**: Can I add 2 lessons to the same time slot in the `timetable`?
+
+**A**: Our current version doesn't support this as we want to keep our timetable as concise as possible ensuring the 
+readability of it on the CLI, thus what you might want to consider doing is to add the lessons directly to the `planner`
+as the `planner` allows for conflicting events
+
+## 6. Data Storage
 
 _Kolinux_ automatically creates a directory `/data` upon the first start up. The directory consists of the files:
 
@@ -780,7 +806,7 @@ _Kolinux_ automatically creates a directory `/data` upon the first start up. The
 
 >❗ You are strongly advised not to modify these files as it can corrupt important user data and cause data loss.
 
-## 6 Contact Us
+## 7. Contact Us
 
 Our team welcomes you to contact us when faced with issues that this user guide fails to cover. We are
 also open to any suggestions that you may have to improve _Kolinux_. 😃
