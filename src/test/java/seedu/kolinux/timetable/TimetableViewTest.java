@@ -560,7 +560,7 @@ public class TimetableViewTest {
     @Test
     void viewTimetable_oneLessonInTimetable_TimetablePrinted() throws KolinuxException {
         timetable.clearTimetable();
-        moduleList.storeModuleByCode("CS1231", moduleDb);
+        moduleList.addModuleByCode("CS1231", moduleDb);
         timetable.executeAdd(VALID_ADD_TUTORIAL_ARGUMENTS);
         timetable.executeView();
         String expectedString = ONE_LESSON_IN_TIMETABLE.replaceAll("\\n|\\r\\n",

@@ -18,7 +18,7 @@ of implementations.
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module store/delete`](#store/delete-a-module-by-module-code-feature)
+  * [`module add/delete`](#add/delete-a-module-by-module-code-feature)
   * [`cap code`](#cap-calculator-by-module-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
@@ -103,9 +103,9 @@ also shown in the diagram above. These structures will be further elaborated in 
 
 #### Module Component
 
-The class diagram below model the structure within the `module` component
+The class diagram below models the structure of the `module` component
 
-![Module Class Diagram](assets/images/ModuleClassDiagram.png)
+<img src="assets/images/ModuleClassDiagram.png" align="left">
 
 
 
@@ -330,11 +330,11 @@ and one exam occurring on the same `date`, and there is one `Event` initially st
 
 ![Planner After Object Diagram](assets/images/PlannerObjectDiagramAfter.png)
 
-### Store/delete a module by module code feature
+### Add/delete a module by module code feature
 
 The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
 
-- `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)`
+- `ModuleList#addModuleByCode(String code, ModuleDb moduleDb)`
 - `ModuleList#deleteModuleByCode(String code)`
 
 ❕ Notes about the methods:
@@ -343,13 +343,13 @@ The `ModuleCommand` class extends the `Command` class and handles all module rel
 
 The input format for storage and deletion of modules is as follows:
 
-- Storage: `module store MODULE_CODE`
+- Storage: `module add MODULE_CODE`
 
 - Deletion: `module delete MODULE_CODE`
 
   
 
-Given below are examples of the usage of `module store/delete` and how the store/delete system behaves at each step.
+Given below are examples of the usage of `module add/delete` and how the add/delete system behaves at each step.
 
 Step 1: The user launches the application. `myModules` , the list of `ModuleDetails` instances, is initialized with the latest saved modules from local storage. If no modules are stored, the resulting list will be empty.
 
@@ -357,7 +357,7 @@ Example: `myModules` is initialized with single `ModuleDetails` instance corresp
 
 <img src="assets/images/moduleListInit.png" width="550">
 
-Step 2: The user executes `module store CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module store` prefix ensures `ModuleList#storeModuleByCode(String code, ModuleDb moduleDb)` is called. 
+Step 2: The user executes `module add CS2101` command to store information regarding `CS2101` in a new instance of `ModuleDetails` and append it to `myModules`. The `module add` prefix ensures `ModuleList#addModuleByCode(String code, ModuleDb moduleDb)` is called. 
 
 <img src="assets/images/moduleStore.png" width="550">
 
@@ -367,9 +367,9 @@ Step 3: The user executes `module delete CS2101` command to delete the instance 
 
 
 
-The following sequence diagram models how the `module store` operation works:
+The following sequence diagram models how the `module add` operation works:
 
-![Module Store Sequence Diagram](assets/images/ModuleStoreSequenceDiagram.png)
+![Module Add Sequence Diagram](assets/images/ModuleAddSequenceDiagram.png)
 
 The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
 
@@ -488,23 +488,23 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 1. Storing a new module with a valid code
 
-   - Test case: `module store CS2113T`
+   - Test case: `module add CS2113T`
 
      Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
 
 2. Storing a module with an invalid code (non-existent module)
 
-   - Test case: `module store invalid_module`
+   - Test case: `module add invalid_module`
 
      Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
 
 3. Storing a pre-existing module in the list
 
-   - Test case: `module store CS2113T`
+   - Test case: `module add CS2113T`
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
    
-
+   
    
 
 ### Adding an event to Planner
@@ -535,7 +535,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 
   * Prerequisites: Add the event by `planner add conflict test/2022-05-05/0800/1100`. Add the module
-    `module store cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
+    `module add cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
     _Do note 2021-05-05 is a Thursday._
 
 
@@ -549,4 +549,4 @@ should be able to accomplish most of the tasks faster using commands than using 
    
        Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
        operation. Entering `y` will lead to a success message, while anything else will lead to the operation cancelled.
-  
+

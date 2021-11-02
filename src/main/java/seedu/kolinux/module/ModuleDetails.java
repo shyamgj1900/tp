@@ -26,6 +26,9 @@ public class ModuleDetails {
     private static final int SEMESTER_2 = 1;
     private static final int WORD_LIMIT = 50;
 
+    public static final String RESET_GRADE = "0";
+    public static final String RESET_GRADE_ARGUMENT = "RESET";
+
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
             String title, String department, double[] workload, JsonArray semesterData) {
         this.moduleCode = moduleCode;
@@ -36,7 +39,7 @@ public class ModuleDetails {
         this.department = department;
         this.workload = workload;
         this.semesterData = semesterData;
-        this.grade = "0";
+        this.grade = RESET_GRADE;
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
@@ -248,7 +251,15 @@ public class ModuleDetails {
     }
     
     public boolean containsNullGrade() {
-        return grade.equals("0");
+        return grade.equals(RESET_GRADE);
+    }
+    
+    public String resetGrade() {
+        if (grade.equals(RESET_GRADE)) {
+            return moduleCode + " does not have final grade stored";
+        }
+        grade = RESET_GRADE;
+        return moduleCode + " grade reset";
     }
 
     /**
@@ -271,7 +282,8 @@ public class ModuleDetails {
         }
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
-                + "Credits: " + moduleCredit + "\n" + "Grade: " + grade + "\n" + formattedDescription;
+                + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals(RESET_GRADE) ? "N/A" : grade) + "\n"
+                + formattedDescription;
     }
 
 }
