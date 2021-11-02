@@ -32,7 +32,8 @@ public class ModuleCommand extends Command {
             + "3. module view CODE\n"
             + "4. module list\n"
             + "5. module grade CODE/GRADE\n"
-            + "6. module cap OR module cap DESIRED_CAP\n";
+            + "6. module cap\n"
+            + "7. module cap DESIRED_CAP\n";
 
     public ModuleCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
