@@ -263,7 +263,7 @@ likewise it will throw an exception.
 ### Add to Planner feature
 
 The Add to Planner mechanism is mainly facilitated by `PlannerCommand` and `Planner`. After entering the appropriate
-input to add an `Event` to the `Planner`, `PlannerCommand` is constructed with `subCommand` `"add"` and the
+input to add an `Event` to the `Planner`, `PlannerCommand` is constructed with `subCommand` `add` and the
 relevant `parsedArguments`. The constructor of `PlannerCommand` involves creation of `Planner` and `PlannerStorage`
 to initialize the adding and writing to file operations.
 
@@ -316,9 +316,9 @@ The main working mechanism of `Planner#filterPlanner(String date)` is as follows
 constructed using the information of the lessons and exams occurring on `date` using the data fetched from `Timetable` 
 and `ModuleList`. Note that an `ExamsGetter` is used by `ModuleSyncer` to interact with `ModuleList` to get the exam 
 dates and times of the modules stored by `ModuleList`.
-2. Get the list from `ModuleSyncer`, and add the events in `scheduleOfAllDates` that are occurring on `date` via 
-a `Stream`.
-3. Return the list.
+2. Get a list of all `Event`s stored in `scheduleOfAllDates` that occur on `date`.
+3. Merge both lists.
+4. Sort the list by their start times, and return the list.
 
 The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
