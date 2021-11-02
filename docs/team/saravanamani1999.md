@@ -8,7 +8,7 @@ Kolinux is written in Java and makes use of NusMods API. User can make use of Ko
 
 ## Summary of Contributions
 
-* **Code contributed**: [ReposSense Link](#https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=saravanamani1999&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
+* **Code contributed**: [ReposSense Link](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=saravanamani1999&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
 * **Main feature implemented**: Timetable
   * Ability to add lessons to timetable of lesson types lecture, tutorial and lab for specified weekday, start time and end time.
   * Ability to view the lessons on an aesthetic timetable on CLI

@@ -8,7 +8,7 @@ It is written in Java, and uses the NUSMods API. The user interacts with it usin
 
 ## Summary of Contributions
 
-* **Code contributed**: [RepoSense link](#https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=powzx&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
+* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=powzx&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
 * **Main feature implemented**: Event Planner
   * Ability to add events to the planner on a specified date from a specified start time to end time.
   * Ability to list events from the planner on a specified date in a sorted order by time.

@@ -10,14 +10,14 @@ participant ":CalculateCapCommand" as command COMMANDS_COLOR
 participant ":CapCalculatorByCode" as calculator CAPCALCULATOR_COLOR
 participant ":CommandResult" as result COMMANDS_COLOR
 
-[->parser : parseCommand(userInput)
+[->parser : parse input
 activate parser
 
-parser -> parser : parseCapCommand(argument)
+parser -> parser : get subCommand
 activate parser
 
 create command
-parser -> command : new CalculateCapCommand(subCommand, parsedArguments)
+parser -> command : create with parsedArguments
 activate command
 
 create calculator
