@@ -9,12 +9,12 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 All the events in your schedule has been cleared.
 ....................................................................
 Here are the list of commands:
-1. cap mc MC/GRADE - Calculates the total cap for the semester from MC
-2. cap code MODULE_CODE/GRADE - Calculates the total cap for the semester from MODULE_CODE
+1. cap mc MC/GRADE - Calculates the overall cap from MC
+2. cap code MODULE_CODE/GRADE - Calculates the overall cap from MODULE_CODE
 3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
 4. bus stop list - List all the bus stop names
 5. module view MODULE_CODE - View the module details
-6. module store MODULE_CODE - Add a module to your module list
+6. module add MODULE_CODE - Add a module to your module list
 7. module delete MODULE_CODE - Delete a module from your module list
 8. module list - List all modules stored in your module list
 9. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
@@ -32,9 +32,9 @@ Here are the list of commands:
 19. help - View this menu again
 20. bye - Exit Kolinux
 ....................................................................
-Your CAP for this semester will be 4.19 if you get your desired grades!
+Your overall CAP will be 4.19 if you get your desired grades!
 ....................................................................
-Your CAP for this semester will be 3.00 if you get your desired grades!
+Your overall CAP will be 3.00 if you get your desired grades!
 ....................................................................
 Invalid module info format found: invalid_info_1 invalid_info_2 
 ....................................................................
@@ -60,7 +60,7 @@ software demonstrations and project blogs.
 ....................................................................
 Please enter a valid module code
 ....................................................................
-Successfully stored module: CS2113T
+Successfully added module: CS2113T
 ....................................................................
 CS2113T is already in the module list
 ....................................................................
@@ -72,7 +72,7 @@ CS2113T not found in the module list
 ....................................................................
 Please use the format: module grade CODE/GRADE
 ....................................................................
-Successfully stored module: CS2113T
+Successfully added module: CS2113T
 ....................................................................
 CS2113T grade set to A
 ....................................................................
@@ -96,7 +96,7 @@ Please check the format of the time! The end time is earlier than the start time
 15:00 - 18:00 CG2028 lab
 19:00 - 23:00 Project Meeting
 ....................................................................
-Successfully stored module: CS1010
+Successfully added module: CS1010
 ....................................................................
 CS1010 TUT has been added to timetable
 ....................................................................

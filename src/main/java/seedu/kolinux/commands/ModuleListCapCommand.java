@@ -41,7 +41,7 @@ public class ModuleListCapCommand extends Command {
             }
             logger.log(Level.INFO, "Suggested grade is calculated from module list");
         } else {
-            message = "Based on your available grade, your cap for this semester is " + result;
+            message = "Based on your available grade, your overall CAP is " + result;
             logger.log(Level.INFO, "CAP is calculated from module list");
         }
         return new CommandResult(message);

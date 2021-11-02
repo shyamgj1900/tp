@@ -1,6 +1,28 @@
 package seedu.kolinux.module;
 
 import com.google.gson.JsonArray;
+import net.gcardone.junidecode.Junidecode;
+
+import static seedu.kolinux.module.Grade.A_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.A_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.A_GRADE;
+import static seedu.kolinux.module.Grade.B_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.B_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.B_GRADE;
+import static seedu.kolinux.module.Grade.C_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.C_GRADE;
+import static seedu.kolinux.module.Grade.D_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.D_GRADE;
+import static seedu.kolinux.module.Grade.F_GRADE;
+import static seedu.kolinux.module.Grade.S_GRADE;
+import static seedu.kolinux.module.Grade.U_GRADE;
+import static seedu.kolinux.module.Grade.CS_GRADE;
+import static seedu.kolinux.module.Grade.CU_GRADE;
+import static seedu.kolinux.module.Grade.EXE_GRADE;
+import static seedu.kolinux.module.Grade.IC_GRADE;
+import static seedu.kolinux.module.Grade.IP_GRADE;
+import static seedu.kolinux.module.Grade.W_GRADE;
+import static seedu.kolinux.module.Grade.RESET_GRADE;
 
 /**
  * ModuleDetails class that stores all attributes of each module.
@@ -28,15 +50,18 @@ public class ModuleDetails {
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
             String title, String department, double[] workload, JsonArray semesterData) {
-        this.moduleCode = moduleCode;
-        this.moduleCredit = moduleCredit;
-        this.faculty = faculty;
-        this.description = description;
-        this.title = title;
-        this.department = department;
+
+        /*Attributes read from the NUSmods JSON may contain unicode characters. For proper printing in standard output,
+        these characters are converted to their ASCII equivalent.*/
+        this.moduleCode = Junidecode.unidecode(moduleCode);
+        this.moduleCredit = Junidecode.unidecode(moduleCredit);
+        this.faculty = Junidecode.unidecode(faculty);
+        this.description = Junidecode.unidecode(description);
+        this.title = Junidecode.unidecode(title);
+        this.department = Junidecode.unidecode(department);
         this.workload = workload;
         this.semesterData = semesterData;
-        this.grade = "0";
+        this.grade = RESET_GRADE;
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
@@ -69,6 +94,7 @@ public class ModuleDetails {
     public void setGrade(String newGrade) {
         grade = newGrade;
     }
+
 
     public String getGrade() {
         return grade;
@@ -217,45 +243,46 @@ public class ModuleDetails {
      */
     public double getGradePoint() {
         switch (grade) {
-        case "A+": // Fallthrough, is equivalent grade point to "A"
-        case "A":
+        case A_PLUS_GRADE: // Fallthrough, is equivalent grade point to "A"
+        case A_GRADE:
             return 5.0;
-        case "A-":
+        case A_MINUS_GRADE:
             return 4.5;
-        case "B+":
+        case B_PLUS_GRADE:
             return 4.0;
-        case "B":
+        case B_GRADE:
             return 3.5;
-        case "B-":
+        case B_MINUS_GRADE:
             return 3.0;
-        case "C+":
+        case C_PLUS_GRADE:
             return 2.5;
-        case "C":
+        case C_GRADE:
             return 2.0;
-        case "D+":
+        case D_PLUS_GRADE:
             return 1.5;
-        case "D":
+        case D_GRADE:
             return 1.0;
-        case "F":
+        case F_GRADE:
             return 0.0;
         default:
             return -1; // Invalid grade
         }
     }
     
-    public boolean containsSuGrade() {
-        return grade.equals("S") || grade.equals("CS") || grade.equals("U") || grade.equals("CU");
+    public boolean containsNonCalculatingGrade() {
+        return grade.equals(S_GRADE) || grade.equals(CS_GRADE) || grade.equals(U_GRADE) || grade.equals(CU_GRADE)
+                || grade.equals(EXE_GRADE) || grade.equals(IC_GRADE) || grade.equals(IP_GRADE) || grade.equals(W_GRADE);
     }
     
     public boolean containsNullGrade() {
-        return grade.equals("0");
+        return grade.equals(RESET_GRADE);
     }
     
     public String resetGrade() {
-        if (grade.equals("0")) {
+        if (grade.equals(RESET_GRADE)) {
             return moduleCode + " does not have final grade stored";
         }
-        grade = "0";
+        grade = RESET_GRADE;
         return moduleCode + " grade reset";
     }
 
@@ -279,7 +306,7 @@ public class ModuleDetails {
         }
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
-                + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals("0") ? "N/A" : grade) + "\n" 
+                + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals(RESET_GRADE) ? "N/A" : grade) + "\n"
                 + formattedDescription;
     }
 

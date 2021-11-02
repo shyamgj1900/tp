@@ -23,7 +23,11 @@ public class CalculateCapCommand extends Command {
      */
     public CalculateCapCommand(String subCommand, String[] parsedArguments) throws KolinuxException {
         if (subCommand.equals("")) {
-            String errorMessage = "Please indicate your module description type";
+            String errorMessage = "Please indicate your module description type\n"
+                    + 
+                    "1. cap mc\n" 
+                    +
+                    "2. cap code";
             throw new KolinuxException(errorMessage);
         }
         switch (subCommand) {
@@ -36,8 +40,10 @@ public class CalculateCapCommand extends Command {
             logger.log(Level.INFO, "User calculate CAP using module code");
             break;
         default:
-            String errorMessage = "Invalid module description type found, "
-                    + "please use either \"mc\" or \"code\" as module descriptions keyword";
+            String errorMessage = "Invalid cap calculation command, "
+                    + "please ensure the command follow one of the following formats\n"
+                    + "1. cap mc\n"
+                    + "2. cap code";
             throw new KolinuxException(errorMessage);
         }
     }
@@ -45,7 +51,7 @@ public class CalculateCapCommand extends Command {
     @Override
     public CommandResult executeCommand() throws KolinuxException {
         String cap = calculator.executeCapCalculator();
-        String capMessage = "Your CAP for this semester will be " + cap + " if you get your desired grades!";
+        String capMessage = "Your overall CAP will be " + cap + " if you get your desired grades!";
         logger.log(Level.INFO, "CAP is calculated from user's input");
         return new CommandResult(capMessage);
     }

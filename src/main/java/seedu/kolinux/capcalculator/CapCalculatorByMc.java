@@ -50,7 +50,7 @@ public class CapCalculatorByMc extends CapCalculator {
         int totalMc = 0;
         double cap = 0;
         for (ModuleDetails module : modules.getMyModules()) {
-            if (module.containsSuGrade()) {
+            if (module.containsNonCalculatingGrade()) {
                 continue;
             }
             int mc = Integer.parseInt(module.getModuleCredit());

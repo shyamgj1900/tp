@@ -11,14 +11,14 @@ participant "moduleList:ModuleList" as mll MODULE_COLOR
 participant "ModuleStorage" as mls <<class>> MODULE_COLOR
 participant ":CommandResult" as res COMMANDS_COLOR
 
-[->parser : parseCommand(userInput)
+[->parser : parse input
 activate parser
 
-parser -> parser : parseSubCommand(argument, "module")
+parser -> parser : get subCommand
 activate parser
 
 create mlc
-parser -> mlc : new ModuleCommand(subcommand, parsedArguments)
+parser -> mlc : create with parsedArguments
 activate mlc
 
 mlc --> parser : command
@@ -36,7 +36,7 @@ activate mlc
 mlc -> mlc : storeModule()
 activate mlc
 
-mlc -> mll : storeModuleByCode(moduleCode, moduleDb)
+mlc -> mll : addModuleByCode(moduleCode, moduleDb)
 activate mll
 
 mll --> mlc : message

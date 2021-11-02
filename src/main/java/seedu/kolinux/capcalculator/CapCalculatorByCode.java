@@ -6,6 +6,27 @@ import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
 
+import static seedu.kolinux.module.Grade.A_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.A_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.A_GRADE;
+import static seedu.kolinux.module.Grade.B_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.B_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.B_GRADE;
+import static seedu.kolinux.module.Grade.C_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.C_GRADE;
+import static seedu.kolinux.module.Grade.D_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.D_GRADE;
+import static seedu.kolinux.module.Grade.F_GRADE;
+import static seedu.kolinux.module.Grade.S_GRADE;
+import static seedu.kolinux.module.Grade.U_GRADE;
+import static seedu.kolinux.module.Grade.CS_GRADE;
+import static seedu.kolinux.module.Grade.CU_GRADE;
+import static seedu.kolinux.module.Grade.EXE_GRADE;
+import static seedu.kolinux.module.Grade.IC_GRADE;
+import static seedu.kolinux.module.Grade.IP_GRADE;
+import static seedu.kolinux.module.Grade.W_GRADE;
+
+
 /**
  * Represents CAP calculator used when the user's input module descriptions are based on module code.
  */
@@ -16,11 +37,13 @@ public class CapCalculatorByCode extends CapCalculator {
     private CalculatorModuleList repeatedModules;
 
     private boolean isValidGrade(String moduleGrade) {
-        return moduleGrade.equals("A+") || moduleGrade.equals("A") || moduleGrade.equals("A-")
-                || moduleGrade.equals("B+") || moduleGrade.equals("B") || moduleGrade.equals("B-")
-                || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
-                || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
-                || moduleGrade.equals("CS") || moduleGrade.equals("U") || moduleGrade.equals("CU");
+        return moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
+                || moduleGrade.equals(B_PLUS_GRADE) || moduleGrade.equals(B_GRADE) || moduleGrade.equals(B_MINUS_GRADE)
+                || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
+                || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(S_GRADE)
+                || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) || moduleGrade.equals(CU_GRADE)
+                || moduleGrade.equals(EXE_GRADE) || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE)
+                || moduleGrade.equals(W_GRADE);
     }
 
     /**
@@ -99,7 +122,7 @@ public class CapCalculatorByCode extends CapCalculator {
         int totalMc = 0;
         double cap = 0;
         for (ModuleDetails module : modules.getMyModules()) {
-            if (module.containsSuGrade()) {
+            if (module.containsNonCalculatingGrade()) {
                 continue;
             }
 

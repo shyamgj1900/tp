@@ -12,14 +12,14 @@ participant ":Planner" as planner PLANNER_COLOR
 participant ":PlannerStorage" as pls PLANNER_COLOR
 participant ":CommandResult" as res COMMANDS_COLOR
 
-[->parser : parseCommand(userInput)
+[->parser : parse input
 activate parser
 
-parser -> parser : parseSubCommand(argument, COMMAND_PLANNER)
+parser -> parser : get subCommand
 activate parser
 
 create plc
-parser -> plc : new PlannerCommand(subCommand, parsedArguments)
+parser -> plc : create with parsedArguments
 activate plc
 
 create planner
