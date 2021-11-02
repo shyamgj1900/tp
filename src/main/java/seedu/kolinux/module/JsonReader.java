@@ -10,7 +10,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import seedu.kolinux.Main;
 
-import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
+import static seedu.kolinux.module.Grade.RESET_GRADE;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * JsonReader class facilitates reading module data from stored JSON files.
@@ -25,8 +27,9 @@ public class JsonReader {
      * @return Returns an ArrayList of ModuleDetails objects
      */
     public ArrayList<ModuleDetails> readJsonData() {
+
         Gson gson = new Gson();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ArrayList<ModuleDetails> modules = gson.fromJson(reader, new TypeToken<ArrayList<ModuleDetails>>() {
         }.getType());
 
