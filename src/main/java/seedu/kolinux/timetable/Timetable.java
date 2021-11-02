@@ -2,10 +2,7 @@ package seedu.kolinux.timetable;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
-import seedu.kolinux.timetable.lesson.Lab;
-import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
-import seedu.kolinux.timetable.lesson.Tutorial;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
 import seedu.kolinux.timetable.subcommand.ViewSubCommand;
 import seedu.kolinux.timetable.subcommand.DeleteSubCommand;
@@ -14,10 +11,12 @@ import seedu.kolinux.timetable.subcommand.UpdateSubCommand;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static seedu.kolinux.timetable.lesson.Lesson.days;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
+import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 /**
  * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
@@ -107,6 +106,34 @@ public class Timetable {
         lessonStorage.removeIf(lesson -> lesson.getModuleCode().equals(moduleCode));
         timetableStorage.writeToFile();
     }
+
+    public void listTimetable(String day) throws KolinuxException {
+        boolean doesLessonExist = false;
+        boolean isStartTimeUpdated = false;
+        String startTime = null;
+        int dayIndex = getIndex(day, days);
+        if (dayIndex == -1) {
+            throw new KolinuxException("Please enter valid weekday from monday to friday spelt fully");
+        }
+        for (int i = 1; i < ROW_SIZE; i++) {
+            if (timetableData[i][dayIndex] != null) {
+                doesLessonExist = true;
+                if (!isStartTimeUpdated) {
+                   startTime = schoolHours[i - 1];
+                    isStartTimeUpdated = true;
+                }
+                if (!Objects.equals(timetableData[i][dayIndex], timetableData[i + 1][dayIndex])) {
+                    String endTime = schoolHours[i];
+                    System.out.println(timetableData[i][dayIndex] + " " + startTime + " - " + endTime);
+                    isStartTimeUpdated = false;
+                }
+            }
+        }
+        if (!doesLessonExist) {
+            System.out.println("You have no lessons on " + day);
+        }
+    }
+
 
     /**
      * Clears all the entries of the timetable, ending up with an empty timetable.

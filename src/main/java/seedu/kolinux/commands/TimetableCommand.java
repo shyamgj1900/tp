@@ -18,11 +18,12 @@ public class TimetableCommand extends Command {
             +
             "2. timetable view\n"
             +
-            "3. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
+            "3. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME\n"
             +
-            "4. timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
+            "4. timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME\n"
             +
-            "5. timetable clear";
+            "5. timetable list DAY";
+    
     private static final String ADD_SUBCOMMAND = "add";
     private static final String CLEAR_SUBCOMMAND = "clear";
     private static final String UPDATE_SUBCOMMAND = "update";
@@ -77,6 +78,18 @@ public class TimetableCommand extends Command {
                 parsedArguments[1].toUpperCase() + " has been updated");
     }
 
+    private CommandResult listLesson() throws KolinuxException {
+        try {
+            timetable.listTimetable(parsedArguments[0]);
+            logger.log(Level.INFO, "User has listed the timetable.");
+            return new CommandResult("Lessons for " +
+                    parsedArguments[0].toLowerCase() + " has been listed");
+        } catch (IndexOutOfBoundsException exception) {
+            throw new KolinuxException("Please ensure the format of timetable list:\n" +
+                    "timetable list DAY");
+        }
+    }
+
 
     @Override
     public CommandResult executeCommand() throws KolinuxException {
@@ -91,6 +104,8 @@ public class TimetableCommand extends Command {
             return deleteLesson();
         case UPDATE_SUBCOMMAND:
             return updateLesson();
+        case LIST_SUBCOMMAND:
+            return listLesson();
         default:
             logger.log(Level.INFO, "User used invalid subCommand for timetable");
             return new CommandResult(INVALID_TIMETABLE_ARGUMENT_MESSAGE);

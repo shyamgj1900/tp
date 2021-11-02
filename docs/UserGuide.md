@@ -766,11 +766,14 @@ Bye! Thank you for using Kolinux
 ### NUSMods API
 
 1. Due to the limitations in the project where our application is expected to perform without the use of internet, we 
-are not able to get live updates from the api, and we have to work off the latest json file with relevant module details.
-2. We are also not able to extract the different timings for each lesson in modules as they are separated into each 
-module's json file, as we wanted to be space efficient and within the memory space limits set by the teaching team, 
-we did not proceed with extracting this information. Which is why the timings of lessons are not yet available as 
-it's out of the current project's scope.
+are not able to get live updates from the api, and we have to work off the latest json file with relevant module 
+details.
+2. We did not extract the data for different timings for each lesson in a specific module as they are separated into 
+individual json files for each module in the NUSMods api, as we wanted to be space efficient and stay within the 
+memory space limits set we did not proceed with extracting this information. Also given that our product is expected 
+to function without internet connection, we couldn't implement making a http request to NUSMods api based on user input 
+to retrieve these timings. Which is why the timings of lessons are not yet available as it's out of the current 
+project's scope.
 
 
 ## 5. FAQ
