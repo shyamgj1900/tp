@@ -246,8 +246,9 @@ public class ModuleDetails {
         }
     }
     
-    public boolean containsSuGrade() {
-        return grade.equals("S") || grade.equals("CS") || grade.equals("U") || grade.equals("CU");
+    public boolean containsNonCalculatingGrade() {
+        return grade.equals("S") || grade.equals("CS") || grade.equals("U") || grade.equals("CU")
+                || grade.equals("EXE") || grade.equals("IC") || grade.equals("IP") || grade.equals("W");
     }
     
     public boolean containsNullGrade() {

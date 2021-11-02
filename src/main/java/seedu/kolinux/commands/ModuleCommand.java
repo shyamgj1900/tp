@@ -33,7 +33,7 @@ public class ModuleCommand extends Command {
             + "4. module list\n"
             + "5. module grade CODE/GRADE\n"
             + "6. module cap\n"
-            + "7. module cap DESIRED_CAP\n";
+            + "7. module cap DESIRED_CAP";
 
     public ModuleCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -46,7 +46,8 @@ public class ModuleCommand extends Command {
                 || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
                 || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
                 || moduleGrade.equals("U") || moduleGrade.equals("CS") || moduleGrade.equals("CU") 
-                || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT);
+                || moduleGrade.equals("EXE") || moduleGrade.equals("IC") || moduleGrade.equals("IP")
+                || moduleGrade.equals("W") || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT);
     }
 
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {

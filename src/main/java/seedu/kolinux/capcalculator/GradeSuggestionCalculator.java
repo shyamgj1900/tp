@@ -48,7 +48,7 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
     private double getMcModulesWithGrade() {
         double totalMc = 0.0;
         for (ModuleDetails module : modules.getMyModules()) {
-            if (module.containsSuGrade() || module.containsNullGrade()) {
+            if (module.containsNonCalculatingGrade() || module.containsNullGrade()) {
                 continue;
             }
             totalMc += totalMc += Integer.parseInt(module.getModuleCredit());

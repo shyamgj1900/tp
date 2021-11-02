@@ -20,7 +20,9 @@ public class CapCalculatorByCode extends CapCalculator {
                 || moduleGrade.equals("B+") || moduleGrade.equals("B") || moduleGrade.equals("B-")
                 || moduleGrade.equals("C+") || moduleGrade.equals("C") || moduleGrade.equals("D+")
                 || moduleGrade.equals("D") || moduleGrade.equals("F") || moduleGrade.equals("S")
-                || moduleGrade.equals("CS") || moduleGrade.equals("U") || moduleGrade.equals("CU");
+                || moduleGrade.equals("CS") || moduleGrade.equals("U") || moduleGrade.equals("CU")
+                || moduleGrade.equals("EXE") || moduleGrade.equals("IC") || moduleGrade.equals("IP")
+                || moduleGrade.equals("W");
     }
 
     /**
@@ -99,7 +101,7 @@ public class CapCalculatorByCode extends CapCalculator {
         int totalMc = 0;
         double cap = 0;
         for (ModuleDetails module : modules.getMyModules()) {
-            if (module.containsSuGrade()) {
+            if (module.containsNonCalculatingGrade()) {
                 continue;
             }
 
