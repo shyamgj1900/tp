@@ -21,6 +21,10 @@ import static seedu.kolinux.module.Grade.S_GRADE;
 import static seedu.kolinux.module.Grade.U_GRADE;
 import static seedu.kolinux.module.Grade.CS_GRADE;
 import static seedu.kolinux.module.Grade.CU_GRADE;
+import static seedu.kolinux.module.Grade.EXE_GRADE;
+import static seedu.kolinux.module.Grade.IC_GRADE;
+import static seedu.kolinux.module.Grade.IP_GRADE;
+import static seedu.kolinux.module.Grade.W_GRADE;
 
 
 /**
@@ -37,7 +41,9 @@ public class CapCalculatorByCode extends CapCalculator {
                 || moduleGrade.equals(B_PLUS_GRADE) || moduleGrade.equals(B_GRADE) || moduleGrade.equals(B_MINUS_GRADE)
                 || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
                 || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(S_GRADE)
-                || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) || moduleGrade.equals(CU_GRADE);
+                || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) || moduleGrade.equals(CU_GRADE)
+                || moduleGrade.equals(EXE_GRADE) || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE)
+                || moduleGrade.equals(W_GRADE);
     }
 
     /**
@@ -116,7 +122,7 @@ public class CapCalculatorByCode extends CapCalculator {
         int totalMc = 0;
         double cap = 0;
         for (ModuleDetails module : modules.getMyModules()) {
-            if (module.containsSuGrade()) {
+            if (module.containsNonCalculatingGrade()) {
                 continue;
             }
 

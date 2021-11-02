@@ -18,6 +18,10 @@ import static seedu.kolinux.module.Grade.S_GRADE;
 import static seedu.kolinux.module.Grade.U_GRADE;
 import static seedu.kolinux.module.Grade.CS_GRADE;
 import static seedu.kolinux.module.Grade.CU_GRADE;
+import static seedu.kolinux.module.Grade.EXE_GRADE;
+import static seedu.kolinux.module.Grade.IC_GRADE;
+import static seedu.kolinux.module.Grade.IP_GRADE;
+import static seedu.kolinux.module.Grade.W_GRADE;
 import static seedu.kolinux.module.Grade.RESET_GRADE;
 
 /**
@@ -265,8 +269,9 @@ public class ModuleDetails {
         }
     }
     
-    public boolean containsSuGrade() {
-        return grade.equals(S_GRADE) || grade.equals(CS_GRADE) || grade.equals(U_GRADE) || grade.equals(CU_GRADE);
+    public boolean containsNonCalculatingGrade() {
+        return grade.equals(S_GRADE) || grade.equals(CS_GRADE) || grade.equals(U_GRADE) || grade.equals(CU_GRADE)
+                || grade.equals(EXE_GRADE) || grade.equals(IC_GRADE) || grade.equals(IP_GRADE) || grade.equals(W_GRADE);
     }
     
     public boolean containsNullGrade() {

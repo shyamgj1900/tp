@@ -22,6 +22,11 @@ public class Grade {
 
     public static final String S_GRADE = "S";
     public static final String U_GRADE = "U";
+    
+    public static final String EXE_GRADE = "EXE";
+    public static final String IC_GRADE = "IC";
+    public static final String IP_GRADE = "IP";
+    public static final String W_GRADE = "W";
 
     public static final String RESET_GRADE = "0";
     public static final String RESET_GRADE_ARGUMENT = "RESET";

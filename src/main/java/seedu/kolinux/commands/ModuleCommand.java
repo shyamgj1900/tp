@@ -21,6 +21,10 @@ import static seedu.kolinux.module.Grade.S_GRADE;
 import static seedu.kolinux.module.Grade.U_GRADE;
 import static seedu.kolinux.module.Grade.CS_GRADE;
 import static seedu.kolinux.module.Grade.CU_GRADE;
+import static seedu.kolinux.module.Grade.EXE_GRADE;
+import static seedu.kolinux.module.Grade.IC_GRADE;
+import static seedu.kolinux.module.Grade.IP_GRADE;
+import static seedu.kolinux.module.Grade.W_GRADE;
 import static seedu.kolinux.module.Grade.RESET_GRADE;
 import static seedu.kolinux.module.Grade.RESET_GRADE_ARGUMENT;
 
@@ -48,7 +52,8 @@ public class ModuleCommand extends Command {
             + "3. module view CODE\n"
             + "4. module list\n"
             + "5. module grade CODE/GRADE\n"
-            + "6. module cap OR module cap DESIRED_CAP\n";
+            + "6. module cap\n"
+            + "7. module cap DESIRED_CAP";
 
     public ModuleCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -61,7 +66,9 @@ public class ModuleCommand extends Command {
                 || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
                 || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(S_GRADE)
                 || moduleGrade.equals(U_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(CU_GRADE)
-                || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT);
+                || moduleGrade.equals(EXE_GRADE) || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE)
+                || moduleGrade.equals(W_GRADE) || moduleGrade.equals(RESET_GRADE) 
+                || moduleGrade.equals(RESET_GRADE_ARGUMENT);
     }
 
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {
