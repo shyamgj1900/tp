@@ -105,7 +105,7 @@ also shown in the diagram above. These structures will be further elaborated in 
 
 The class diagram below models the structure of the `module` component
 
-<img src="assets/images/ModuleClassDiagram.png" align="left">
+<img src="assets/images/ModuleClassDiagram.png">
 
 
 
