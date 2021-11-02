@@ -12,7 +12,7 @@ participant ":IndirectRoute" ROUTES_COLOR
 -> ":Parser": parse input
 activate ":Parser"
 create ":BusRouteCommand"
-":Parser" -> ":BusRouteCommand" : new BusRouteCommand(input)
+":Parser" -> ":BusRouteCommand" : create with input
 activate ":BusRouteCommand"
 return command
 deactivate ":BusRouteCommand"
