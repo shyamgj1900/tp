@@ -349,7 +349,7 @@ Lesson has been added to timetable
 [`module add`](#311-add-modules-to-module-list-by-code-module-add) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
->⚠️ ️Note: Please also note that the timetable has been built to take lesson of durations in multiples of 30 min.
+>⚠️ ️Note: Please also note that the timetable has been built to take lesson of durations in multiples of 30 mins.
 > This has been done to ensure readability of the timetable on CLI when you input 
 > [`timetable view`](#323-view-timetable-on-cli--timetable-view). So you will not be allowed to enter 15 min 
 > slots of lessons onto the timetable like e.g. 1315 or 1245.
