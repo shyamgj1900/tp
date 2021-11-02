@@ -4,6 +4,18 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
 
+import static seedu.kolinux.module.Grade.A_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.A_GRADE;
+import static seedu.kolinux.module.Grade.B_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.B_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.B_GRADE;
+import static seedu.kolinux.module.Grade.C_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.C_GRADE;
+import static seedu.kolinux.module.Grade.D_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.D_GRADE;
+import static seedu.kolinux.module.Grade.F_GRADE;
+
+
 /**
  * Represents CAP calculator used for suggesting grade based on stored modules in module list and desired CAP
  * from user input.
@@ -85,25 +97,25 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
      */
     private String getGradeLetter(double gradePoint) {
         if (gradePoint <= 0.0) {
-            return "F";
+            return F_GRADE;
         } else if (gradePoint <= 1.0) {
-            return "D";
+            return D_GRADE;
         } else if (gradePoint <= 1.5) {
-            return "D+";
+            return D_PLUS_GRADE;
         } else if (gradePoint <= 2.0) {
-            return "C";
+            return C_GRADE;
         } else if (gradePoint <= 2.5) {
-            return "C+";
+            return C_PLUS_GRADE;
         } else if (gradePoint <= 3.0) {
-            return "B-";
+            return B_MINUS_GRADE;
         } else if (gradePoint <= 3.5) {
-            return "B";
+            return B_GRADE;
         } else if (gradePoint <= 4.0) {
-            return "B+";
+            return B_PLUS_GRADE;
         } else if (gradePoint <= 4.5) {
-            return "A-";
+            return A_MINUS_GRADE;
         } else if (gradePoint <= 5.0) {
-            return "A";
+            return A_GRADE;
         } else {
             return "UNACHIEVABLE";
         }
