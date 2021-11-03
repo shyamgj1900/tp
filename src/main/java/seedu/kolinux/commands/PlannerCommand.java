@@ -3,6 +3,7 @@ package seedu.kolinux.commands;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.planner.Event;
 import seedu.kolinux.planner.Planner;
+import seedu.kolinux.planner.PlannerPromptHandler;
 
 import java.util.logging.Level;
 
@@ -13,9 +14,6 @@ public class PlannerCommand extends Command {
 
     private String subCommand;
     private String[] parsedArguments;
-
-    private static final String YES = "y";
-    private static final String NO = "n";
 
     private static final String ADD_SUBCOMMAND = "add";
     private static final String LIST_SUBCOMMAND = "list";
@@ -39,9 +37,6 @@ public class PlannerCommand extends Command {
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
                     + "planner list DATE\n"
                     + "planner delete DATE";
-    private static final String CANCEL_ADD_ERROR = "Operation cancelled, no events were added.";
-    private static final String INVALID_REPLY_ERROR = "Invalid key entered, operation cancelled.";
-    private static final String CANCEL_DELETE_ERROR = "Operation cancelled, no events were deleted.";
 
     public PlannerCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
@@ -51,7 +46,8 @@ public class PlannerCommand extends Command {
     /**
      * Invoked if the subcommand is "add". This method tries to add the event, and if a time conflict
      * occurs, it will ask the user if the addition should still proceed. If approval is given by the
-     * user, the event will be added. Else, an exception is thrown.
+     * user, the event will be added. If the user cancels, an exception is thrown. Else, the prompt will
+     * continue seeking for a valid answer.
      *
      * @return Result containing message
      * @throws KolinuxException If the event cannot be created due to incorrect arguments, or the user
@@ -61,20 +57,11 @@ public class PlannerCommand extends Command {
         Event event = new Event(parsedArguments);
         try {
             planner.addEvent(event, false);
+            logger.log(Level.INFO, "User added an event to planner: " + event);
         } catch (KolinuxException exception) {
             assert exception.getMessage().equals(TIME_CONFLICT_PROMPT);
-            String reply = getReplyFromPrompt(exception.getMessage());
-
-            if (reply.equalsIgnoreCase(YES)) {
-                planner.addEvent(event, true);
-            } else if (reply.equalsIgnoreCase(NO)) {
-                logger.log(Level.INFO, "User cancelled the planner add operation.");
-                throw new KolinuxException(CANCEL_ADD_ERROR);
-            } else {
-                throw new KolinuxException(INVALID_REPLY_ERROR);
-            }
+            new PlannerPromptHandler(planner, TIME_CONFLICT_PROMPT).handleEventConflict(event);
         }
-        logger.log(Level.INFO, "User added an event to planner: " + event);
         return new CommandResult(ADD_EVENT_MESSAGE + event.getDate() + " " + event);
     }
 
@@ -100,16 +87,18 @@ public class PlannerCommand extends Command {
      */
     private CommandResult handleDeleteCommand() throws KolinuxException {
         String idList = planner.listEvents(parsedArguments[0], true);
-        String id = getReplyFromPrompt(ENTER_ID_PROMPT + idList);
-        if (id.equalsIgnoreCase(NO)) {
-            logger.log(Level.INFO, "User cancelled the planner delete operation.");
-            throw new KolinuxException(CANCEL_DELETE_ERROR);
-        }
+        String id = new PlannerPromptHandler(planner, ENTER_ID_PROMPT + idList).promptForEventId();
         Event deletedEvent = planner.deleteEvent(id);
-        logger.log(Level.INFO, "User deleted an event on " + parsedArguments[0]);
+        logger.log(Level.INFO, "User deleted an event: " + deletedEvent);
         return new CommandResult(DELETE_EVENT_MESSAGE + deletedEvent.getDate() + " " + deletedEvent);
     }
-    
+
+    /**
+     * Clears all events stored in scheduleOfAllDates in Planner. This is only used when the subcommand is "clear",
+     * which is not known to the user. This is only used for convenience while developing this feature.
+     *
+     * @return Result stating all events have been cleared.
+     */
     private CommandResult handleClearCommand() {
         planner.clearEvents();
         return new CommandResult(CLEAR_EVENT_MESSAGE);

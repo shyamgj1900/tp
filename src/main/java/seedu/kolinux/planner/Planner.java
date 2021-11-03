@@ -172,18 +172,16 @@ public class Planner {
 
         ArrayList<String> filteredEventStrings;
         if (withId) {
-            filteredEventStrings =
-                    (ArrayList<String>) filterPlanner(date)
-                            .stream()
-                            .filter(event -> !event.getIsLesson())
-                            .map(event -> event.toStringWithId())
-                            .collect(Collectors.toList());
+            filteredEventStrings = (ArrayList<String>) filterPlanner(date)
+                    .stream()
+                    .filter(event -> !event.getIsLesson())
+                    .map(event -> event.toStringWithId())
+                    .collect(Collectors.toList());
         } else {
-            filteredEventStrings =
-                    (ArrayList<String>) filterPlanner(date)
-                            .stream()
-                            .map(event -> event.toString())
-                            .collect(Collectors.toList());
+            filteredEventStrings = (ArrayList<String>) filterPlanner(date)
+                    .stream()
+                    .map(event -> event.toString())
+                    .collect(Collectors.toList());
         }
 
         String eventsInOneString = Parser.concatenateStrings(filteredEventStrings);
