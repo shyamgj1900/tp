@@ -1,7 +1,10 @@
 package seedu.kolinux.commands;
 
+import seedu.kolinux.exceptions.ExceedWorkloadException;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.timetable.Timetable;
+import seedu.kolinux.timetable.TimetablePromptHandler;
+import seedu.kolinux.util.PromptHandler;
 
 
 import java.util.logging.Level;
@@ -37,7 +40,11 @@ public class TimetableCommand extends Command {
     }
 
     private CommandResult addLesson() throws KolinuxException {
-        timetable.executeAdd(parsedArguments);
+        try {
+            timetable.executeAdd(parsedArguments, false);
+        } catch (ExceedWorkloadException exception) {
+            new TimetablePromptHandler(exception.getMessage(), timetable).handleExceedWorkload(parsedArguments);
+        }
         logger.log(Level.INFO, "User added a module to timetable");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +

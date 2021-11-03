@@ -34,7 +34,7 @@ public class UpdateSubCommand extends SubCommand {
 
             if (isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
                 deleteSubcommand.deleteLesson(lessonDetails);
-                addSubcommand.inputLesson(parameters);
+                addSubcommand.inputLesson(parameters, true, false);
             } else {
                 throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
             }

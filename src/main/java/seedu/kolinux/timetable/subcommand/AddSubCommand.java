@@ -1,5 +1,6 @@
 package seedu.kolinux.timetable.subcommand;
 
+import seedu.kolinux.exceptions.ExceedWorkloadException;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleList;
@@ -52,7 +53,8 @@ public class AddSubCommand extends SubCommand {
         timetableStorage.writeToFile();
     }
 
-    public void inputLesson(String[] lessonDetails) throws KolinuxException {
+    public void inputLesson(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
+            throws KolinuxException {
         try {
             String lessonType = lessonDetails[1].toUpperCase();
             String moduleCode = lessonDetails[0].toUpperCase();
@@ -61,17 +63,21 @@ public class AddSubCommand extends SubCommand {
             }
             checkLessonType(lessonType);
             checkTimeAndDay(lessonDetails[2].toLowerCase(), lessonDetails[3], lessonDetails[4]);
-            checkZeroWorkload(moduleCode, lessonType);
-            checkExceedingWorkload(moduleCode, lessonType, lessonDetails);
-            if (lessonType.equals("TUT")) {
+            checkExceedingWorkload(lessonDetails, isAllowingAdd, isStorageAdd);
+            switch (lessonType) {
+            case "TUT":
                 addToTimetable(new Tutorial(lessonDetails));
-            } else if (lessonType.equals("LEC")) {
+                break;
+            case "LEC":
                 addToTimetable(new Lecture(lessonDetails));
-            } else if (lessonType.equals("LAB")) {
+                break;
+            case "LAB":
                 addToTimetable(new Lab(lessonDetails));
-            } else if (lessonType.equals("SEC")) {
+                break;
+            case "SEC":
                 addToTimetable(new Sectional(lessonDetails));
-            } else {
+                break;
+            default:
                 throw new KolinuxException(INVALID_LESSON_FORMAT);
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
@@ -90,7 +96,7 @@ public class AddSubCommand extends SubCommand {
         return hourCount;
     }
 
-    private double getHours(ModuleList moduleList, String moduleCode, String lessonType) {
+    private double getRequiredHours(ModuleList moduleList, String moduleCode, String lessonType) {
         for (ModuleDetails module : moduleList.myModules) {
             if (lessonType.equals("TUT") && module.moduleCode.equals(moduleCode)) {
                 return module.getTutorialHours() * 2;
@@ -114,29 +120,21 @@ public class AddSubCommand extends SubCommand {
         return false;
     }
 
-    private void checkZeroWorkload(String moduleCode, String lessonType)
+    private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
             throws KolinuxException {
-        double requiredHours = getHours(moduleList, moduleCode, lessonType);
-        if (requiredHours == 0) {
-            throw new KolinuxException(moduleCode + " has no " + lessonType
-                    +
-                    ".\nPlease add a different type of lesson.");
-        }
-    }
-
-    private void checkExceedingWorkload(String moduleCode,
-            String lessonType, String[] lessonDetails) throws KolinuxException {
-        double requiredHours = getHours(moduleList, moduleCode, lessonType);
+        String lessonType = lessonDetails[1].toUpperCase();
+        String moduleCode = lessonDetails[0].toUpperCase();
+        double requiredHours = getRequiredHours(moduleList, moduleCode, lessonType);
         double inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
         double storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
-        if (storageHours > requiredHours) {
-            throw new KolinuxException("Input hours for " + moduleCode + " " + lessonType
+        if (storageHours > requiredHours && !isAllowingAdd && !isStorageAdd) {
+            throw new ExceedWorkloadException("Input hours for " + moduleCode + " " + lessonType
                     +
                     " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n"
                     +
-                    "Please readjust the input timings or modify timetable to continue\n"
+                    "Do you want to continue adding the lesson despite\n"
                     +
-                    "with adding this lesson to the timetable.");
+                    "exceeding the workload? Please enter y or n");
         }
     }
 

@@ -75,7 +75,7 @@ public class Timetable {
     private void loadContent(ArrayList<String> fileContents) throws KolinuxException {
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
-            executeAdd(content);
+            addSubCommand.inputLesson(content, false, true);
         }
     }
 
@@ -83,8 +83,8 @@ public class Timetable {
         viewSubCommand.viewTimetable();
     }
 
-    public void executeAdd(String[] lessonDetails) throws KolinuxException {
-        addSubCommand.inputLesson(lessonDetails);
+    public void executeAdd(String[] lessonDetails, boolean isAllowingAdd) throws KolinuxException {
+        addSubCommand.inputLesson(lessonDetails, isAllowingAdd, false);
     }
 
     public void executeDelete(String[] lessonDetails) throws KolinuxException {
