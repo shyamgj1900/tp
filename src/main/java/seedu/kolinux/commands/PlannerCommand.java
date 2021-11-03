@@ -40,7 +40,7 @@ public class PlannerCommand extends Command {
                     + "planner list DATE\n"
                     + "planner delete DATE";
     private static final String CANCEL_ADD_ERROR = "Operation cancelled, no events were added.";
-    private static final String INVALID_REPLY_ERROR = "Invalid key entered, operation cancelled.";
+    private static final String INVALID_REPLY_ERROR = "Invalid key entered! Please enter 'y' or 'n'.";
     private static final String CANCEL_DELETE_ERROR = "Operation cancelled, no events were deleted.";
 
     public PlannerCommand(String subCommand, String[] parsedArguments) {
@@ -65,13 +65,17 @@ public class PlannerCommand extends Command {
             assert exception.getMessage().equals(TIME_CONFLICT_PROMPT);
             String reply = getReplyFromPrompt(exception.getMessage());
 
-            if (reply.equalsIgnoreCase(YES)) {
-                planner.addEvent(event, true);
-            } else if (reply.equalsIgnoreCase(NO)) {
-                logger.log(Level.INFO, "User cancelled the planner add operation.");
-                throw new KolinuxException(CANCEL_ADD_ERROR);
-            } else {
-                throw new KolinuxException(INVALID_REPLY_ERROR);
+            // loop to handle prompt replies
+            while (true) {
+                if (reply.equalsIgnoreCase(YES)) {
+                    planner.addEvent(event, true);
+                    break;
+                } else if (reply.equalsIgnoreCase(NO)) {
+                    logger.log(Level.INFO, "User cancelled the planner add operation.");
+                    throw new KolinuxException(CANCEL_ADD_ERROR);
+                } else {
+                    reply = getReplyFromPrompt(INVALID_REPLY_ERROR);
+                }
             }
         }
         logger.log(Level.INFO, "User added an event to planner: " + event);
