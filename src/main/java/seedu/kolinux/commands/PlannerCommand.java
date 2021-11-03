@@ -48,6 +48,13 @@ public class PlannerCommand extends Command {
         this.parsedArguments = parsedArguments;
     }
 
+    /**
+     * Infinite loop of posting prompt to the user to handle time conflicts in events when adding.
+     * The loop only exits if the user provides a valid answer 'y' or 'n'.
+     *
+     * @param event Conflicted event
+     * @throws KolinuxException If the user cancels the add operation
+     */
     private void handleEventConflict(Event event) throws KolinuxException {
         String reply = getReplyFromPrompt(TIME_CONFLICT_PROMPT);
         while (true) {
