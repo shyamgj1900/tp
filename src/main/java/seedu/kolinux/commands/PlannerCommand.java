@@ -3,6 +3,7 @@ package seedu.kolinux.commands;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.planner.Event;
 import seedu.kolinux.planner.Planner;
+import seedu.kolinux.planner.PlannerPromptHandler;
 
 import java.util.logging.Level;
 
@@ -13,9 +14,6 @@ public class PlannerCommand extends Command {
 
     private String subCommand;
     private String[] parsedArguments;
-
-    private static final String YES = "y";
-    private static final String NO = "n";
 
     private static final String ADD_SUBCOMMAND = "add";
     private static final String LIST_SUBCOMMAND = "list";
@@ -39,35 +37,10 @@ public class PlannerCommand extends Command {
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
                     + "planner list DATE\n"
                     + "planner delete DATE";
-    private static final String CANCEL_ADD_ERROR = "Operation cancelled, no events were added.";
-    private static final String INVALID_REPLY_ERROR = "Invalid key entered! Please enter 'y' or 'n'.";
-    private static final String CANCEL_DELETE_ERROR = "Operation cancelled, no events were deleted.";
 
     public PlannerCommand(String subCommand, String[] parsedArguments) {
         this.subCommand = subCommand;
         this.parsedArguments = parsedArguments;
-    }
-
-    /**
-     * Infinite loop of posting prompt to the user to handle time conflicts in events when adding.
-     * The loop only exits if the user provides a valid answer 'y' or 'n'.
-     *
-     * @param event Conflicted event
-     * @throws KolinuxException If the user cancels the add operation
-     */
-    private void handleEventConflict(Event event) throws KolinuxException {
-        String reply = getReplyFromPrompt(TIME_CONFLICT_PROMPT);
-        while (true) {
-            if (reply.equalsIgnoreCase(YES)) {
-                planner.addEvent(event, true);
-                break;
-            } else if (reply.equalsIgnoreCase(NO)) {
-                logger.log(Level.INFO, "User cancelled the planner add operation.");
-                throw new KolinuxException(CANCEL_ADD_ERROR);
-            } else {
-                reply = getReplyFromPrompt(INVALID_REPLY_ERROR);
-            }
-        }
     }
 
     /**
@@ -84,11 +57,11 @@ public class PlannerCommand extends Command {
         Event event = new Event(parsedArguments);
         try {
             planner.addEvent(event, false);
+            logger.log(Level.INFO, "User added an event to planner: " + event);
         } catch (KolinuxException exception) {
             assert exception.getMessage().equals(TIME_CONFLICT_PROMPT);
-            handleEventConflict(event);
+            new PlannerPromptHandler(planner, TIME_CONFLICT_PROMPT).handleEventConflict(event);
         }
-        logger.log(Level.INFO, "User added an event to planner: " + event);
         return new CommandResult(ADD_EVENT_MESSAGE + event.getDate() + " " + event);
     }
 
@@ -114,13 +87,9 @@ public class PlannerCommand extends Command {
      */
     private CommandResult handleDeleteCommand() throws KolinuxException {
         String idList = planner.listEvents(parsedArguments[0], true);
-        String id = getReplyFromPrompt(ENTER_ID_PROMPT + idList);
-        if (id.equalsIgnoreCase(NO)) {
-            logger.log(Level.INFO, "User cancelled the planner delete operation.");
-            throw new KolinuxException(CANCEL_DELETE_ERROR);
-        }
+        String id = new PlannerPromptHandler(planner, ENTER_ID_PROMPT + idList).promptForEventId();
         Event deletedEvent = planner.deleteEvent(id);
-        logger.log(Level.INFO, "User deleted an event on " + parsedArguments[0]);
+        logger.log(Level.INFO, "User deleted an event: " + deletedEvent);
         return new CommandResult(DELETE_EVENT_MESSAGE + deletedEvent.getDate() + " " + deletedEvent);
     }
 
