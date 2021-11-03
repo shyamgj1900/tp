@@ -63,6 +63,9 @@ public class ModuleList {
                 if (grade.equals(RESET_GRADE_ARGUMENT) || grade.equals(RESET_GRADE)) {
                     return module.resetGrade();
                 }
+                if (module.getGrade().equals(grade)) {
+                    return moduleCode + " grade is already set to " + grade;
+                }
                 module.setGrade(grade);
                 return moduleCode + " grade set to " + grade;
             }
