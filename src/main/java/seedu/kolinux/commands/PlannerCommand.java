@@ -48,6 +48,21 @@ public class PlannerCommand extends Command {
         this.parsedArguments = parsedArguments;
     }
 
+    private void handleEventConflict(Event event) throws KolinuxException {
+        String reply = getReplyFromPrompt(TIME_CONFLICT_PROMPT);
+        while (true) {
+            if (reply.equalsIgnoreCase(YES)) {
+                planner.addEvent(event, true);
+                break;
+            } else if (reply.equalsIgnoreCase(NO)) {
+                logger.log(Level.INFO, "User cancelled the planner add operation.");
+                throw new KolinuxException(CANCEL_ADD_ERROR);
+            } else {
+                reply = getReplyFromPrompt(INVALID_REPLY_ERROR);
+            }
+        }
+    }
+
     /**
      * Invoked if the subcommand is "add". This method tries to add the event, and if a time conflict
      * occurs, it will ask the user if the addition should still proceed. If approval is given by the
@@ -63,20 +78,7 @@ public class PlannerCommand extends Command {
             planner.addEvent(event, false);
         } catch (KolinuxException exception) {
             assert exception.getMessage().equals(TIME_CONFLICT_PROMPT);
-            String reply = getReplyFromPrompt(exception.getMessage());
-
-            // loop to handle prompt replies
-            while (true) {
-                if (reply.equalsIgnoreCase(YES)) {
-                    planner.addEvent(event, true);
-                    break;
-                } else if (reply.equalsIgnoreCase(NO)) {
-                    logger.log(Level.INFO, "User cancelled the planner add operation.");
-                    throw new KolinuxException(CANCEL_ADD_ERROR);
-                } else {
-                    reply = getReplyFromPrompt(INVALID_REPLY_ERROR);
-                }
-            }
+            handleEventConflict(event);
         }
         logger.log(Level.INFO, "User added an event to planner: " + event);
         return new CommandResult(ADD_EVENT_MESSAGE + event.getDate() + " " + event);
