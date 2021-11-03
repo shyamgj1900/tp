@@ -109,7 +109,13 @@ public class PlannerCommand extends Command {
         logger.log(Level.INFO, "User deleted an event on " + parsedArguments[0]);
         return new CommandResult(DELETE_EVENT_MESSAGE + deletedEvent.getDate() + " " + deletedEvent);
     }
-    
+
+    /**
+     * Clears all events stored in scheduleOfAllDates in Planner. This is only used when the subcommand is "clear",
+     * which is not known to the user. This is only used for convenience while developing this feature.
+     *
+     * @return Result stating all events have been cleared.
+     */
     private CommandResult handleClearCommand() {
         planner.clearEvents();
         return new CommandResult(CLEAR_EVENT_MESSAGE);
