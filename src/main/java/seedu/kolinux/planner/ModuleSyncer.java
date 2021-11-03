@@ -10,13 +10,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static seedu.kolinux.commands.TimetableCommand.timetable;
-
 /** Represents the methods needed to sync with the module list to fetch lessons and exams data. */
 public class ModuleSyncer {
 
     private String date;
 
+    private static final int EVENT_ARGUMENTS = 4;
     private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
 
@@ -86,7 +85,7 @@ public class ModuleSyncer {
      * @return Event corresponding to the lesson
      */
     private Event convertLessonToEvent(Lesson lesson) {
-        String[] arguments = new String[4];
+        String[] arguments = new String[EVENT_ARGUMENTS];
         arguments[0] = lesson.getModuleCode() + " " + lesson.getLessonType();
         arguments[1] = date;
         arguments[2] = lesson.getStartTime();

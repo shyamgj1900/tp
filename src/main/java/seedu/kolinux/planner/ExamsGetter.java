@@ -12,6 +12,7 @@ public class ExamsGetter {
     private ArrayList<Event> exams = new ArrayList<>();
     private ModuleList moduleList;
 
+    private static final int EVENT_ARGUMENTS = 4;
     private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
     private static final String COLON = ":";
     private static final String EMPTY_STRING = "";
@@ -32,7 +33,7 @@ public class ExamsGetter {
      * if there are any.
      */
     private void retrieveModuleExams() {
-        String[] arguments = new String[4];
+        String[] arguments = new String[EVENT_ARGUMENTS];
         for (ModuleDetails module : moduleList.getMyModules()) {
             if (module.getExamDateTime() == null) {
                 continue;
