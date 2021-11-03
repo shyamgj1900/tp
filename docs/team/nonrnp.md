@@ -8,7 +8,7 @@ These features are powered by the NUSMods API. Written in Java, Kolinux and prov
 
 ## Summary of Contributions
 
-* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=nonrnp&tabRepo=AY2122S1-CS2113T-W11-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false)
+* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=nonrnp&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
 * **Main feature implemented**: CAP Calculator
   * Ability to calculate overall CAP from module credit and grade letter.
   * Ability to calculate overall CAP from module code and grade letter.
