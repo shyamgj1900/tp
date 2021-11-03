@@ -73,7 +73,8 @@ public class PlannerCommand extends Command {
     /**
      * Invoked if the subcommand is "add". This method tries to add the event, and if a time conflict
      * occurs, it will ask the user if the addition should still proceed. If approval is given by the
-     * user, the event will be added. Else, an exception is thrown.
+     * user, the event will be added. If the user cancels, an exception is thrown. Else, the prompt will
+     * continue seeking for a valid answer.
      *
      * @return Result containing message
      * @throws KolinuxException If the event cannot be created due to incorrect arguments, or the user
