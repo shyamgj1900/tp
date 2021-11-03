@@ -56,14 +56,14 @@ public class SubCommand {
             "----------+--------------------+--------------------+--------------------+";
     public static final String INVALID_LESSON_FORMAT = "Please ensure the LESSON_TYPE entered is in one of "
             +
-            "the following format:\n1. LEC\n2. TUT\n3. LAB";
+            "the following format:\n1. LEC\n2. TUT\n3. LAB\n4. SEC";
     public static final String INVALID_DAY_TIME = "1. Please ensure the days are within Monday to Friday "
             +
             "and spelt fully.\n2. Please ensure the timings are within the school hours: 0600 - 2100\n"
             +
-            "3. Please ensure the timings are by the hour.\n"
+            "3. Please ensure the timings are in multiples of 30 mins.\n"
             +
-            "   Timings like 1230 or 1110 are not accepted in order to maintain\n"
+            "   Timings like 1245 or 1110 are not accepted in order to maintain\n"
             +
             "   readability of timetable view on CLI.\n"
             +

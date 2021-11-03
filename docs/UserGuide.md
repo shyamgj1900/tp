@@ -45,6 +45,7 @@ The following explains the use of different icons in this user guide:
     * 3.2.2 [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)
     * 3.2.3 [`timetable view`](#323-view-timetable-on-cli--timetable-view)
     * 3.2.4 [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)
+    * 3.2.5 [`timetable list`](#325-list-the-lessons-and-their-timings-on-a-specific-day-timetable-list)
   * 3.3 [`planner`](#33-event-planner-planner)
     * 3.3.1 [`planner add`](#331-add-an-event-to-planner-planner-add)
     * 3.3.2 [`planner list`](#332-list-events-on-a-specific-date-planner-list)
@@ -310,6 +311,9 @@ You are also able to [`update`](#324-update-a-lesson-to-another-timing-your-time
 your existing lessons to another time slot.
 It also provides you an aesthetic visual representation of your timetable for you to 
 [`view`](#323-view-timetable-on-cli--timetable-view) on the CLI.
+If you prefer only to see the lessons that are taking place for the day without the empty slots, you can make use of 
+[`list`](#325-list-the-lessons-and-their-timings-on-a-specific-day-timetable-list) to view the lesson details for 
+that day.
 
 #### 3.2.1 Add lessons to timetable : `timetable add`
 
@@ -345,7 +349,7 @@ Lesson has been added to timetable
 [`module add`](#311-add-modules-to-module-list-by-code-module-add) first before adding to timetable as only
 the modules added to module list can be added to the timetable
 
->⚠️ ️Note: Please also note that the timetable has been built to take lesson of durations in multiples of 30 min.
+>⚠️ ️Note: Please also note that the timetable has been built to take lesson of durations in multiples of 30 mins.
 > This has been done to ensure readability of the timetable on CLI when you input 
 > [`timetable view`](#323-view-timetable-on-cli--timetable-view). So you will not be allowed to enter 15 min 
 > slots of lessons onto the timetable like e.g. 1315 or 1245.
@@ -486,6 +490,35 @@ This is what you should observe on your terminal when you update a lesson on the
 ```
 timetable update cs1010/lec/tuesday/1300/monday/1200
 CS1010 LEC has been updated
+....................................................................
+```
+
+#### 3.2.5 List the lessons and their timings on a specific day: `timetable list`
+
+**Format:** `timetable list DAY`
+
+* `DAY` must be from between `Monday` and `Friday`
+
+**Example of usage:**
+
+* `timetable list monday`
+* `timetable list friday`
+
+This is what you should observe on your terminal when you list out the lessons for a specific day based on your 
+timetable
+
+```
+timetable list monday
+You have no lessons on monday
+
+Your lessons for monday has been listed above
+....................................................................
+timetable list friday
+CS1010 TUT 0700 - 0800
+CS1101S TUT 1600 - 1700
+CS1010 LEC 1900 - 2000
+
+Your lessons for friday has been listed above
 ....................................................................
 ```
 
@@ -766,11 +799,14 @@ Bye! Thank you for using Kolinux
 ### NUSMods API
 
 1. Due to the limitations in the project where our application is expected to perform without the use of internet, we 
-are not able to get live updates from the api, and we have to work off the latest json file with relevant module details.
-2. We are also not able to extract the different timings for each lesson in modules as they are separated into each 
-module's json file, as we wanted to be space efficient and within the memory space limits set by the teaching team, 
-we did not proceed with extracting this information. Which is why the timings of lessons are not yet available as 
-it's out of the current project's scope.
+are not able to get live updates from the api, and we have to work off the latest json file with relevant module 
+details.
+2. We did not extract the data for different timings for each lesson in a specific module as they are separated into 
+individual json files for each module in the NUSMods api, as we wanted to be space efficient and stay within the 
+memory space limits set we did not proceed with extracting this information. Also given that our product is expected 
+to function without internet connection, we couldn't implement making a http request to NUSMods api based on user input 
+to retrieve these timings. Which is why the timings of lessons are not yet available as it's out of the current 
+project's scope.
 
 
 ## 5. FAQ

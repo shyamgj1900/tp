@@ -2,10 +2,7 @@ package seedu.kolinux.timetable;
 
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
-import seedu.kolinux.timetable.lesson.Lab;
-import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
-import seedu.kolinux.timetable.lesson.Tutorial;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
 import seedu.kolinux.timetable.subcommand.ViewSubCommand;
 import seedu.kolinux.timetable.subcommand.DeleteSubCommand;
@@ -14,10 +11,12 @@ import seedu.kolinux.timetable.subcommand.UpdateSubCommand;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static seedu.kolinux.timetable.lesson.Lesson.days;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
+import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 /**
  * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
@@ -107,6 +106,36 @@ public class Timetable {
         lessonStorage.removeIf(lesson -> lesson.getModuleCode().equals(moduleCode));
         timetableStorage.writeToFile();
     }
+
+    public void listTimetable(String day) throws KolinuxException {
+        boolean doesLessonExist = false;
+        int dayIndex = getIndex(day, days);
+        String[] lessonList = new String[30];
+        if (dayIndex == -1) {
+            throw new KolinuxException("Please enter a valid weekday from monday to friday spelt fully");
+        }
+        for (Lesson lesson: lessonStorage) {
+            if (lesson.getDay().equals(day)) {
+                String moduleCode = lesson.getModuleCode();
+                String lessonType = lesson.getLessonType();
+                String startingTime = lesson.getStartTime();
+                String endingTime = lesson.getEndTime();
+                int startTimeIndex = lesson.getStartTimeIndex();
+                doesLessonExist = true;
+                lessonList[startTimeIndex - 1] = moduleCode + " " + lessonType + " " + startingTime
+                        + " - " + endingTime;
+            }
+        }
+        for (int i = 0; i < 29; i++) {
+            if (lessonList[i] != null) {
+                System.out.println(lessonList[i]);
+            }
+        }
+        if (!doesLessonExist) {
+            System.out.println("You have no lessons on " + day);
+        }
+    }
+
 
     /**
      * Clears all the entries of the timetable, ending up with an empty timetable.
