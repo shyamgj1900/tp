@@ -12,7 +12,9 @@ import seedu.kolinux.timetable.lesson.Tutorial;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
 import seedu.kolinux.timetable.subcommand.SubCommand;
 
-import java.util.function.BooleanSupplier;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,6 +30,8 @@ public class TimetableTest {
             "0600", "0700"};
     private static final String[] ANOTHER_VALID_ADD_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "TUT", "monday",
             "0700", "0800"};
+    private static final String[] EXCEED_ADD_TUTORIAL_ARGUMENTS = new String[] {"CS1231", "TUT", "monday",
+            "0600", "1000"};
     private static final String[] INVALID_ADD_TUTORIAL_TIMING = new String[] {"CS1231", "TUT", "monday",
             "1300", "1200"};
     private static final String[] INACCESSIBLE_ADD_PERIOD = new String[] {"CS1010", "TUT", "monday", "0600", "0700"};
@@ -38,10 +42,18 @@ public class TimetableTest {
     private static final String[] INVALID_DELETE_ARGUMENT = new String[] {"CS1010", "LESSON", "monday","0600"};
     private static final String[] UPDATE_LESSON_ARGUMENTS = new String[] {"CS1231", "TUT", "monday","0600","tuesday",
             "1500"};
+    private static final String EXCEED_WORKLOAD = "Input hours for CS1231 TUT exceeds the total workload\n"
+            +
+            "It exceeds 1.0 hours\n"
+            +
+            "Do you want to continue adding the lesson despite\n"
+            +
+            "exceeding the workload? Please enter y or n";
     private static final ModuleDb moduleDb = new ModuleDb();
     private ModuleList moduleList = new ModuleList();
     private Timetable timetable = new Timetable(moduleList);
     private AddSubCommand addSubCommand = new AddSubCommand();
+    TimetablePromptHandler timetablePromptHandler;
 
 
     @BeforeAll
@@ -209,6 +221,20 @@ public class TimetableTest {
         timetable.deleteByModuleList("CS1231");
         assertEquals(timetable.timetableData[getIndex("0600", schoolHours)][getIndex("monday", days)],
                 null);
+        timetable.clearTimetable();
+    }
+
+    @Test
+    public void handleExceedWorkload_validLessonDetails_validReply() throws KolinuxException {
+        timetable.clearTimetable();
+        moduleList.addModuleByCode("CS1231",moduleDb);
+        String input = "y";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        timetablePromptHandler = new TimetablePromptHandler(EXCEED_WORKLOAD, timetable);
+        timetablePromptHandler.handleExceedWorkload(EXCEED_ADD_TUTORIAL_ARGUMENTS);
+
+        assertEquals(EXCEED_WORKLOAD, timetablePromptHandler.toString());
         timetable.clearTimetable();
     }
 

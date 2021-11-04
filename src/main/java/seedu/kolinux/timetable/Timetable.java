@@ -139,8 +139,8 @@ public class Timetable {
                 String endingTime = lesson.getEndTime();
                 int startTimeIndex = lesson.getStartTimeIndex();
                 doesLessonExist = true;
-                lessonList[startTimeIndex - 1] = moduleCode + " " + lessonType + " " + startingTime
-                        + " - " + endingTime;
+                lessonList[startTimeIndex - 1] = startingTime
+                        + " - " + endingTime + " " + moduleCode + " " + lessonType;
             }
         }
         for (int i = 0; i < 29; i++) {
