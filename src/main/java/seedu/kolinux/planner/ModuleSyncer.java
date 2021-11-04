@@ -24,8 +24,8 @@ public class ModuleSyncer {
 
     /**
      * The list of Lesson and the corresponding Event on a specified date will be populated upon the
-     * construction of this object. Events will then be created using the exam data, and added to the
-     * list.
+     * construction of this object. Events will also be created using the exam data, and added to the
+     * list if they occur on the date specified.
      *
      * @param date Date to get the list of lessons and exams
      */
@@ -42,8 +42,8 @@ public class ModuleSyncer {
 
     /**
      * Constructs an ExamsGetter to get the exam dates and times of the modules in the module list. The
-     * exams occurring on the date specified will be constructed as events and will be added to
-     * convertedLessonsOnDate. The module list will always be updated with the latest version.
+     * exams occurring on the date specified will be filtered out and will be added to
+     * lessonsAndExamsAdEventsOnDate. The module list will always be updated with the latest version.
      *
      * @param moduleList Module list stored by the user
      */

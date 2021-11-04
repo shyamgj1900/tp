@@ -49,7 +49,7 @@ public class PlannerCommand extends Command {
 
     /**
      * Invoked if the subcommand is "add". This method tries to add the event, and if a time conflict
-     * occurs, it will pass the operation to PlannerPromptHandler. If the user approves the conflict,
+     * occurs, it will hand over the control to PlannerPromptHandler. If the user approves the conflict,
      * the event will be added, else if the user denies, an exception is thrown. If the user does not
      * provide a valid reply, the prompt will continue asking for permission.
      *
