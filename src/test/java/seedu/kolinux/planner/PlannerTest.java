@@ -2,6 +2,7 @@ package seedu.kolinux.planner;
 
 import org.junit.jupiter.api.Test;
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.module.ModuleDb;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lesson;
@@ -56,6 +57,10 @@ public class PlannerTest {
                     + "16:00 - 18:00 CS2113T LEC";
     private static final String VALID_LIST_5
             = "\n15:00 - 17:00 Conflict with lecture";
+    private static final String VALID_LIST_6
+            = "\n16:00 - 18:00 CS2113T LEC";
+    private static final String VALID_LIST_7
+            = "\n09:00 - 11:00 CS2113T Exam";
     private static final String DATETIME_ERROR
             = "Please provide a valid date and time!\n"
                     + "Date: yyyy-mm-dd\n"
@@ -214,6 +219,27 @@ public class PlannerTest {
         assertEquals(VALID_LIST_4, planner.listEvents("2021-10-22", false));
         planner.clearEvents();
         timetable.clearTimetable();
+    }
+
+    @Test
+    public void listEvent_listLessonsAsEvents_lessonsListed() throws KolinuxException {
+        planner.clearEvents();
+        timetable.clearTimetable();
+        Lesson lesson = new Lecture(VALID_LESSON_ARGUMENTS[0]);
+        addSubCommand.addToTimetable(lesson);
+        assertEquals(VALID_LIST_6, planner.listEvents("2021-10-22", false));
+    }
+
+    @Test
+    public void listEvent_listExamsAsEvents_examsListed() throws KolinuxException {
+        planner.clearEvents();
+
+        ModuleDb moduleDb = new ModuleDb();
+        moduleDb.initModuleDb();
+        moduleList.addModuleByCode("CS2113T", moduleDb);
+        moduleList.addModuleByCode("CG2028", moduleDb);
+
+        assertEquals(VALID_LIST_7, planner.listEvents("2021-11-30", false));
     }
 
     @Test
