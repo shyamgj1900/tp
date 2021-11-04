@@ -11,9 +11,11 @@ object "<u>:Event" as exam PLANNER_COLOR
 
 note "Event constructed from lesson" as N1
 note "Event constructed from exam" as N2
+note "Event filtered from scheduleOfAllDates" as N3
 
 lesson - N1
 exam -- N2
+event2 - N3
 
 planner -left-> "scheduleOfAllDates" event1
 planner .up.> "filteredPlanner" event2

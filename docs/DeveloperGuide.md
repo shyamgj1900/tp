@@ -320,9 +320,9 @@ dates and times of the modules stored by `ModuleList`.
 
 The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
-The object diagrams below show the object structure in the memory before and after `Planner#filterPlanner(String date)` is invoked to 
-fetch `Lesson`s and exam information from `Timetable` and `ModuleList` respectively. Assume there is one `Lesson` 
-and one exam occurring on the same `date`, and there is one `Event` initially stored in `scheduleOfAllDates`.
+The object diagrams below show the object structure in the memory immediately before and after `Planner#filterPlanner(String date)` is invoked to 
+fetch `Lesson` and `ModuleDetails` from `Timetable` and `ModuleList` respectively. Assume there is only one `Lesson`, 
+one `ModuleDetails`, and one `Event` stored in `Timetable`, `ModuleList`, and `Planner` respectively, and they all occur on the same `date`.
 
 ![Planner Before Object Diagram](assets/images/PlannerObjectDiagramBefore.png)
 

@@ -32,7 +32,6 @@ public class PlannerPromptHandlerTest {
                 {"Pop Quiz 5", "2021-10-26", "2000", "2130"}};
 
     private static final String VALID_LIST_1 = "\n15:00 - 15:15 Pop Quiz 3";
-    private static final String VALID_LIST_2 = "\n15:00 - 15:15 Pop Quiz 3\n15:30 - 20:00 Pop Quiz 4";
 
     @Test
     public void handleEventConflict_validEventArguments_eventAddedWithConflictAllowed() throws KolinuxException {
