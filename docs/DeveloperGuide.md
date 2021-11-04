@@ -72,7 +72,7 @@ The application consists of the following main components responsible for the hi
    * `util.Parser`: Makes sense from the user input and decides which `Command` class to initialize.
    * `util.DirectoryCreator`: Ensures the `/data` directory is created and present for data storage.
    * `util.KolinuxLogger`: Logs the user activity into `data/logger.log`.
-   * `util.Prompt`: Created when user confirmation is required to perform certain operations.
+   * `util.PromptHandler`: Handles prompts when user confirmation is required to perform certain operations.
 3. `commands`: Collection of user commands that determines execution.
 4. `routes`: Collection of classes used by Bus Route Finder feature.
 5. `module`: Collection of classes used by Module Manager feature.
@@ -96,9 +96,7 @@ The class diagram below describes the structure of the `commands` component.
 ![Commands Class Diagram](assets/images/CommandsClassDiagram.png)
 
 All `Command` classes inherit from the abstract `Command` class, which has an association with `KolinuxLogger` so that
-every command execution has a corresponding log in `data/logger.log`. `Command` also has a dependency on `Prompt`,
-which functions to seek user confirmation below proceeding with the operation. Only `PlannerCommand` is using this
-inherited attributed in the current version. The structure between each individual command and other components are 
+every command execution has a corresponding log in `data/logger.log`. The structure between each individual command and other components are 
 also shown in the diagram above. These structures will be further elaborated in the sections below.
 
 #### Module Component
@@ -262,14 +260,14 @@ likewise it will throw an exception.
 
 ### Add to Planner feature
 
-The Add to Planner mechanism is mainly facilitated by `PlannerCommand` and `Planner`. After entering the appropriate
+The Add to Planner mechanism is mainly facilitated by `PlannerCommand`, `Planner`, and `PlannerPromptHandler`. After entering the appropriate
 input to add an `Event` to the `Planner`, `PlannerCommand` is constructed with `subCommand` `add` and the
 relevant `parsedArguments`. The constructor of `PlannerCommand` involves creation of `Planner` and `PlannerStorage`
 to initialize the adding and writing to file operations.
 
 Before the `Event` is added, it is first checked for any time conflicts with existing events/lessons/exams. `Event`s
 are only added if there are no time conflicts or the user allowed the addition of the conflicted `Event` through a
-`Prompt` to get a confirmation from the user. `Event`s added to the `Planner` are stored in a list
+prompt to get a confirmation from the user. `Event`s added to the `Planner` are stored in a list
 `scheduleOfAllDates` which contains all added `Event`s by the user. The data in this list is also written to the
 internal storage `data/planner.txt` through `PlannerStorage` which saves the user data locally.
 
@@ -281,7 +279,7 @@ the following methods:
     * `PlannerStorage#writeFile(String data)`: Appends the data of the newly added `Event` to `data/planner.txt` for 
       local storage.
 
-* `PlannerCommand#getReplyFromPrompt(String question)`: Gets user confirmation to allow or cancel the add operation
+* `PlannerPromptHandler#getReplyFromPrompt()`: Gets user confirmation to allow or cancel the add operation
 in case of a time conflict.
 
 The figures below represent the sequence diagrams of the Add to Planner mechanism:
@@ -322,9 +320,9 @@ dates and times of the modules stored by `ModuleList`.
 
 The list returned will then be used to check for any time conflicts with `eventToBeAdded`.
 
-The object diagrams below show the object structure in the memory before and after `Planner#filterPlanner(String date)` is invoked to 
-fetch `Lesson`s and exam information from `Timetable` and `ModuleList` respectively. Assume there is one `Lesson` 
-and one exam occurring on the same `date`, and there is one `Event` initially stored in `scheduleOfAllDates`.
+The object diagrams below show the object structure in the memory immediately before and after `Planner#filterPlanner(String date)` is invoked to 
+fetch `Lesson` and `ModuleDetails` from `Timetable` and `ModuleList` respectively. Assume there is only one `Lesson`, 
+one `ModuleDetails`, and one `Event` stored in `Timetable`, `ModuleList`, and `Planner` respectively, and they all occur on the same `date`.
 
 ![Planner Before Object Diagram](assets/images/PlannerObjectDiagramBefore.png)
 
@@ -548,5 +546,5 @@ should be able to accomplish most of the tasks faster using commands than using 
     times respectively which overlaps with any of the events listed.
    
        Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
-       operation. Entering `y` will lead to a success message, while anything else will lead to the operation cancelled.
+       operation. Entering `y` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will repeat the prompt.
 

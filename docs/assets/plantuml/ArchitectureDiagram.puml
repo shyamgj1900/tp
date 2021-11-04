@@ -11,7 +11,7 @@ package util UTIL_COLOR {
     component Parser UTIL_COLOR
     component DirectoryCreator UTIL_COLOR
     component KolinuxLogger UTIL_COLOR
-    component Prompt UTIL_COLOR
+    component PromptHandler UTIL_COLOR
 }
 
 package commands COMMANDS_COLOR {
@@ -46,9 +46,10 @@ Kolinux .down.> module
 Kolinux .down.> timetable
 Kolinux .up.> commands
 Parser .up.> commands
-Prompt <-right-> Ui
+PromptHandler <-right-> Ui
+PromptHandler -left-> KolinuxLogger
 Ui .up.> commands
-commands .down.> Prompt
+commands .down.> PromptHandler
 commands -down-> KolinuxLogger
 commands -down-> module
 commands -up-> routes

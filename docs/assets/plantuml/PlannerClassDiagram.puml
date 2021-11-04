@@ -11,10 +11,25 @@ package planner <<Rectangle>> {
     class PlannerStorage
     class ModuleSyncer
     class ExamsGetter
+    class PlannerPromptHandler
 }
 
 package commands <<Rectangle>> {
     class PlannerCommand
+}
+
+package util <<Rectangle>> {
+    class PromptHandler
+}
+
+class PromptHandler UTIL_COLOR {
+    # message : String
+    # getReplyFromPrompt() : String
+}
+
+class PlannerPromptHandler PLANNER_COLOR {
+    + handleEventConflict(event: Event): void
+    + promptForEventId(): String
 }
 
 class PlannerCommand COMMANDS_COLOR {
@@ -69,8 +84,11 @@ class ExamsGetter PLANNER_COLOR {
     - retrieveModuleExams(): void
 }
 
+PlannerPromptHandler -left-|> PromptHandler
+PlannerPromptHandler -down-> "1" Planner : planner
+PlannerCommand ..> PlannerPromptHandler
 PlannerCommand --> "1" Planner : planner
-Kolinux -> "1" Planner : planner
+Kolinux --> "1" Planner : planner
 Planner --> "1" PlannerStorage : plannerStorage
 Planner .> "0..1" ModuleSyncer
 ModuleSyncer ..> "0..1" ExamsGetter

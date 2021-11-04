@@ -27,7 +27,7 @@ public class PromptHandler {
     }
 
     /**
-     * Gets a reply from the user by posting a prompt on the terminal. This is only used if the program needs
+     * Gets a reply from the user by posting the message on the terminal. This is only used if the program needs
      * the users to confirm their choice or to authenticate themselves.
      *
      * @return Reply entered by the user
