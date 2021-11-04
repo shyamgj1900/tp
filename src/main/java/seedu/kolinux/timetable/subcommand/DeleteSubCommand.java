@@ -15,6 +15,13 @@ public class DeleteSubCommand extends SubCommand {
 
     }
 
+    /**
+     * Deletes a lesson from the timetable data.
+     *
+     * @param day Day of the lesson to be deleted
+     * @param startIndex Index of the starting time of the lesson to be deleted
+     * @param endIndex Index of the ending time of the lesson to be deleted
+     */
     private void deleteFromTimetable(String day, int startIndex, int endIndex) {
         int dayIndex = getIndex(day, days);
         for (int i = startIndex; i < endIndex; i++) {
@@ -23,6 +30,15 @@ public class DeleteSubCommand extends SubCommand {
         }
     }
 
+    /**
+     * Deletes the lesson from the storage and calls the deleteFromTimetable method as well.
+     *
+     * @param moduleCode Module code of the lesson to be deleted
+     * @param lessonType Lesson type of the lesson to be deleted
+     * @param day Day of the lesson to be deleted
+     * @param startTime Starting time of the lesson to be deleted
+     * @throws KolinuxException If the lesson specified to be deleted is not found in the timetable
+     */
     public void deleteLesson(String moduleCode, String lessonType, String day, String startTime)
             throws KolinuxException {
         int removeIndex = -1;

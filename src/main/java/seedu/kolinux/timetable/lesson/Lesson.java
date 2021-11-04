@@ -14,7 +14,7 @@ public abstract class Lesson {
     protected int startTimeIndex;
     protected int endTimeIndex;
     protected int dayIndex;
-    public static String [] schoolHours = new String [] {"0600", "0630", "0700", "0730","0800", "0830", "0900",
+    public static String []  schoolHours = new String [] {"0600", "0630", "0700", "0730","0800", "0830", "0900",
             "0930","1000", "1030","1100", "1130", "1200", "1230", "1300", "1330", "1400", "1430", "1500",
             "1530","1600", "1630","1700", "1730", "1800", "1830","1900", "1930","2000","2030","2100"};
     public static String[] days = new String[] {"monday", "tuesday", "wednesday", "thursday", "friday"};
@@ -34,6 +34,11 @@ public abstract class Lesson {
         }
     }
 
+    /**
+     * Gets the lesson type of the lesson.
+     *
+     * @return The lesson type of the lesson
+     */
     public String getLessonType() {
         return lessonType;
     }
@@ -57,26 +62,46 @@ public abstract class Lesson {
     }
 
     /**
-     * Gets the index of the starting time of the lesson in the schoolHours array.
+     * Gets the index of the starting time of the lesson in the {@code schoolHours} array.
      *
-     * @return The index of the starting time of the lesson in the schoolHours array
+     * @return The index of the starting time of the lesson in the {@code schoolHours} array
      */
     public int getStartTimeIndex() {
         return startTimeIndex;
     }
 
+    /**
+     * Gets the index of the ending time of the lesson in the {@code schoolHours} array.
+     *
+     * @return The index of the ending time of the lesson in the {@code schoolHours} array
+     */
     public int getEndTimeIndex() {
         return endTimeIndex;
     }
 
+    /**
+     * Gets the starting time of a lesson.
+     *
+     * @return The starting time of a lesson
+     */
     public String getStartTime() {
         return startTime;
     }
 
+    /**
+     * Gets the ending time of a lesson.
+     *
+     * @return The ending time of a lesson
+     */
     public String getEndTime() {
         return endTime;
     }
 
+    /**
+     * Gets the day of a lesson.
+     *
+     * @return The day of a lesson
+     */
     public String getDay() {
         return day;
     }
@@ -91,10 +116,10 @@ public abstract class Lesson {
     }
 
     /**
-     * Finds the index of a given string in one of the given arrays, days or schoolHours.
+     * Finds the index of a given string in one of the given arrays, days or {@code schoolHours}.
      *
      * @param input The input string by user for either the day or the timings of their lesson
-     * @param array The arrays, days or schoolHours, containing the days and school hours for a week
+     * @param array The arrays, days or {@code schoolHours}, containing the days and school hours for a week
      * @return The index of the string in the array
      */
     public static int getIndex(String input, String[] array) {
@@ -106,6 +131,11 @@ public abstract class Lesson {
         return -1;
     }
 
+    /**
+     * Gets the duration of a lesson.
+     *
+     * @return The duration of a lesson
+     */
     public int getHours() {
         return endTimeIndex - startTimeIndex;
     }

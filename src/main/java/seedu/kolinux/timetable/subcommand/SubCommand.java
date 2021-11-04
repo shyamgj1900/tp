@@ -75,6 +75,15 @@ public class SubCommand {
 
     }
 
+    /**
+     * Checks if a lesson is already in the timetable.
+     *
+     * @param lessonCode Module code of the lesson being checked
+     * @param lessonType Lesson type of the lesson being checked
+     * @param day Day to check for the lesson
+     * @param startTime Start time to check for the lesson
+     * @return True if the lesson is present in the timetable and flase otherwise
+     */
     public boolean isLessonInTimetable(String lessonCode, String lessonType, String day, String startTime) {
         for (Lesson storedLesson : lessonStorage) {
             String storedCode = storedLesson.getModuleCode();

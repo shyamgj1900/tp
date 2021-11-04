@@ -3,7 +3,7 @@ package seedu.kolinux.timetable;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.util.PromptHandler;
 
-
+/** Represents the operations related to prompting the user while adding to the timetable. */
 public class TimetablePromptHandler extends PromptHandler {
 
     private Timetable timetable;
@@ -15,6 +15,14 @@ public class TimetablePromptHandler extends PromptHandler {
         this.timetable = timetable;
     }
 
+    /**
+     * Sends a confirmation prompt to user to check if they want to continue adding the lesson despite exceeding the
+     * stipulated workload, where the lesson gets added if the user confirms with "y" but cancels the operation if
+     * user enters "n".
+     *
+     * @param lessonDetails Details of the lesson to be added
+     * @throws KolinuxException If it fails any of the checks in addSubCommand before performing add operation
+     */
     public void handleExceedWorkload(String[] lessonDetails) throws KolinuxException {
         while (true) {
             String reply = getReplyFromPrompt();

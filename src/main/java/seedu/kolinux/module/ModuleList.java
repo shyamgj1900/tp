@@ -114,6 +114,11 @@ public class ModuleList {
         return code + " not found in the module list";
     }
 
+    /**
+     * Gets the exam date and time for a module.
+     *
+     * @param module Module details containing all module information
+     */
     public void getExamDateTime(ModuleDetails module) {
         String examDate = module.getDate();
         String examStartTime = module.getStartTime();
@@ -126,6 +131,13 @@ public class ModuleList {
         }
     }
 
+    /**
+     * Gets the workload for each specific lesson type of module code.
+     *
+     * @param module Module details containing all module information
+     * @param code Module code of module
+     * @param title Title of module
+     */
     public void getWorkload(ModuleDetails module, String code, String title) {
         double lectureHours = module.getLectureHours();
         System.out.println(code + " " + title + "\n\nWorkload:");
