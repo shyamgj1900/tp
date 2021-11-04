@@ -104,6 +104,7 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME`     |
 | [`timetable view`](#323-view-timetable-on-cli--timetable-view)  | View timetable                                                  | `timetable view`                                   |
 | [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME`|
+| [`timetable list`](#325-list-the-lessons-and-their-timings-on-a-specific-day-timetable-list)| List all the lessons with their timings on a specified day of the week             | `timetable list DAY` |
 | [`planner add`](#331-add-an-event-to-planner-planner-add) 	| Add a new event to your planner on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
 | [`planner list`](#332-list-events-on-a-specific-date-planner-list)	| List the events in your planner on a particular date                            | `planner list DATE`                                |
 | [`planner delete`](#333-delete-an-event-from-planner-planner-delete) 	| Delete an event from your planner on a particular date                            | `planner delete DATE`                              |
@@ -169,6 +170,8 @@ This is what you should observe on the terminal after successfully deleting a mo
 Successfully deleted module: CS2113T
 ....................................................................
 ```
+>⚠️ Note: When you delete a module from module list, all the data relating to this module will be deleted from 
+> timetable as well
 
 #### 3.1.3 List modules from module list: `module list`
 
@@ -350,9 +353,13 @@ Lesson has been added to timetable
 the modules added to module list can be added to the timetable
 
 >⚠️ ️Note: Please also note that the timetable has been built to take lesson of durations in multiples of 30 mins.
-> This has been done to ensure readability of the timetable on CLI when you input 
+> This has been done to ensure readability of the timetable on CLI when you input
 > [`timetable view`](#323-view-timetable-on-cli--timetable-view). So you will not be allowed to enter 15 min 
 > slots of lessons onto the timetable like e.g. 1315 or 1245.
+
+>⚠️ Note: Due to a few inaccuracies in the prescribed workload hours in NUSMods, you can now add lessons which exceed 
+> the workload hours, but you will be given a warning and asked to confirm if you would like to carry out with adding 
+> the lesson.
 
 >🔗 Visit [`module`](#31-module-manager-module) for more information on the command formats.
 
