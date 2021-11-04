@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PromptHandlerTest {
 
-    private final String PROMPT_MESSAGE = "What do you want to be when you grow up?";
-    private final String PROMPT_REPLY = "I want to go Russia and start a farm.";
+    private static final String PROMPT_MESSAGE = "What do you want to be when you grow up?";
+    private static final String PROMPT_REPLY = "I want to go Russia and start a farm.";
 
     @Test
     public void getReplyFromPrompt_validUserInput_promptAnswered() {
