@@ -5,42 +5,30 @@ import seedu.kolinux.timetable.lesson.Lesson;
 
 import java.util.Objects;
 
+import static seedu.kolinux.commands.TimetableCommand.timetable;
 import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 public class UpdateSubCommand extends SubCommand {
 
-    private AddSubCommand addSubcommand = new AddSubCommand();
-    private DeleteSubCommand deleteSubcommand = new DeleteSubCommand();
-
     public UpdateSubCommand() {
 
     }
 
-    public void updateTimetable(String[] lessonDetails) throws KolinuxException {
-        try {
-            String moduleCode = lessonDetails[0].toUpperCase();
-            String lessonType = lessonDetails[1].toUpperCase();
-            String oldDay = lessonDetails[2].toLowerCase();
-            String oldStartTiming = lessonDetails[3];
-            String newDay = lessonDetails[4].toLowerCase();
-            String newStartTiming = lessonDetails[5];
-            int startIndex = getIndex(newStartTiming, schoolHours);
-            int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay, oldStartTiming);
-            String newEndTiming = schoolHours[endIndex - 1];
-            checkUpdateTiming(moduleCode, lessonType, oldDay, newDay, oldStartTiming, newStartTiming, newEndTiming);
-            String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
-
-            if (isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
-                deleteSubcommand.deleteLesson(lessonDetails);
-                addSubcommand.inputLesson(parameters, true, false);
-            } else {
-                throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
-            }
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_UPDATE_FORMAT);
+    public void updateTimetable(String moduleCode, String lessonType, String oldDay,
+            String oldStartTiming, String newDay, String newStartTiming) throws KolinuxException {
+        if (!isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
+            throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
         }
+        int startIndex = getIndex(newStartTiming, schoolHours);
+        int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay, oldStartTiming);
+        String newEndTiming = schoolHours[endIndex - 1];
+        checkUpdateTiming(moduleCode, lessonType, oldDay, newDay, oldStartTiming, newStartTiming, newEndTiming);
+        String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
+        String[] lessonDetails = new String[] {moduleCode, lessonType, oldDay, oldStartTiming};
+        timetable.executeDelete(lessonDetails);
+        timetable.executeAdd(parameters,true);
     }
 
     private int getOldLessonHours(String moduleCode, String lessonType, String day, String oldStartTiming) {

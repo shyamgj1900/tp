@@ -56,32 +56,32 @@ public class AddSubCommand extends SubCommand {
     public void inputLesson(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
             throws KolinuxException {
         try {
-            String lessonType = lessonDetails[1].toUpperCase();
-            String moduleCode = lessonDetails[0].toUpperCase();
-            if (!isLessonInModuleList(moduleList, moduleCode)) {
-                throw new KolinuxException(moduleCode + " not found in module list");
-            }
-            checkLessonType(lessonType);
+            checkLessonInModuleList(moduleList, lessonDetails[0].toUpperCase());
+            checkLessonType(lessonDetails[1].toUpperCase());
             checkTimeAndDay(lessonDetails[2].toLowerCase(), lessonDetails[3], lessonDetails[4]);
             checkExceedingWorkload(lessonDetails, isAllowingAdd, isStorageAdd);
-            switch (lessonType) {
-            case "TUT":
-                addToTimetable(new Tutorial(lessonDetails));
-                break;
-            case "LEC":
-                addToTimetable(new Lecture(lessonDetails));
-                break;
-            case "LAB":
-                addToTimetable(new Lab(lessonDetails));
-                break;
-            case "SEC":
-                addToTimetable(new Sectional(lessonDetails));
-                break;
-            default:
-                throw new KolinuxException(INVALID_LESSON_FORMAT);
-            }
+            sortLessonsToAdd(lessonDetails[1].toUpperCase(), lessonDetails);
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_ADD_FORMAT);
+        }
+    }
+
+    private void sortLessonsToAdd(String lessonType, String[] lessonDetails) throws KolinuxException {
+        switch (lessonType) {
+        case "TUT":
+            addToTimetable(new Tutorial(lessonDetails));
+            break;
+        case "LEC":
+            addToTimetable(new Lecture(lessonDetails));
+            break;
+        case "LAB":
+            addToTimetable(new Lab(lessonDetails));
+            break;
+        case "SEC":
+            addToTimetable(new Sectional(lessonDetails));
+            break;
+        default:
+            throw new KolinuxException(INVALID_LESSON_FORMAT);
         }
     }
 
@@ -110,14 +110,17 @@ public class AddSubCommand extends SubCommand {
         return 0;
     }
 
-
-    private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
+    private void checkLessonInModuleList(ModuleList moduleList, String moduleCode) throws KolinuxException {
+        boolean isFound = false;
         for (ModuleDetails module : moduleList.myModules) {
             if (Objects.equals(module.moduleCode, moduleCode)) {
-                return true;
+                isFound = true;
+                break;
             }
         }
-        return false;
+        if (!isFound) {
+            throw new KolinuxException(moduleCode + " not found in module list");
+        }
     }
 
     private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)

@@ -17,15 +17,15 @@ public class TimetablePromptHandler extends PromptHandler {
 
     public void handleExceedWorkload(String[] lessonDetails) throws KolinuxException {
         while (true) {
-           String reply = getReplyFromPrompt();
-           if (reply.equalsIgnoreCase("y")) {
-               timetable.executeAdd(lessonDetails, true);
-               break;
-           } else if (reply.equalsIgnoreCase("n")) {
-               throw new KolinuxException(CANCEL_MESSAGE);
-           } else {
-               this.changeMessage(INVALID_KEY);
-           }
+            String reply = getReplyFromPrompt();
+            if (reply.equalsIgnoreCase("y")) {
+                timetable.executeAdd(lessonDetails, true);
+                break;
+            } else if (reply.equalsIgnoreCase("n")) {
+                throw new KolinuxException(CANCEL_MESSAGE);
+            } else {
+                this.changeMessage(INVALID_KEY);
+            }
         }
     }
 

@@ -555,6 +555,7 @@ public class TimetableViewTest {
         String expectedString = EMPTY_TIMETABLE.replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
         assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
                 System.getProperty("line.separator")));
+        timetable.clearTimetable();
     }
 
     @Test
@@ -567,6 +568,7 @@ public class TimetableViewTest {
                 System.getProperty("line.separator"));
         assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
                 System.getProperty("line.separator")));
+        timetable.clearTimetable();
     }
 
 }

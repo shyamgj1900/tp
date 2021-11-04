@@ -23,7 +23,7 @@ public class DeleteSubCommand extends SubCommand {
         }
     }
 
-    private void deleteFromStorage(String moduleCode, String lessonType, String day, String startTime)
+    public void deleteLesson(String moduleCode, String lessonType, String day, String startTime)
             throws KolinuxException {
         int removeIndex = -1;
         int endIndex = -1;
@@ -47,18 +47,6 @@ public class DeleteSubCommand extends SubCommand {
             timetableStorage.writeToFile();
         } else {
             throw new KolinuxException(description + MISSING_LESSON_TO_DELETE);
-        }
-    }
-
-    public void deleteLesson(String[] lessonDetails) throws KolinuxException {
-        try {
-            String moduleCode = lessonDetails[0].toUpperCase();
-            String lessonType = lessonDetails[1].toUpperCase();
-            String day = lessonDetails[2].toLowerCase();
-            String startTime = lessonDetails[3];
-            deleteFromStorage(moduleCode, lessonType, day, startTime);
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_DELETE_FORMAT);
         }
     }
 

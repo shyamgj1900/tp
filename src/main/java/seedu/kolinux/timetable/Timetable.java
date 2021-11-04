@@ -4,19 +4,18 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
-import seedu.kolinux.timetable.subcommand.ViewSubCommand;
 import seedu.kolinux.timetable.subcommand.DeleteSubCommand;
 import seedu.kolinux.timetable.subcommand.UpdateSubCommand;
+import seedu.kolinux.timetable.subcommand.ViewSubCommand;
+import seedu.kolinux.timetable.subcommand.SubCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static seedu.kolinux.timetable.lesson.Lesson.days;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
-import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 /**
  * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
@@ -88,11 +87,29 @@ public class Timetable {
     }
 
     public void executeDelete(String[] lessonDetails) throws KolinuxException {
-        deleteSubCommand.deleteLesson(lessonDetails);
+        try {
+            String moduleCode = lessonDetails[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String day = lessonDetails[2].toLowerCase();
+            String startTime = lessonDetails[3];
+            deleteSubCommand.deleteLesson(moduleCode, lessonType, day, startTime);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(SubCommand.INVALID_DELETE_FORMAT);
+        }
     }
 
     public void executeUpdate(String[] lessonDetails) throws KolinuxException {
-        updateSubCommand.updateTimetable(lessonDetails);
+        try {
+            String moduleCode = lessonDetails[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String oldDay = lessonDetails[2].toLowerCase();
+            String oldStartTiming = lessonDetails[3];
+            String newDay = lessonDetails[4].toLowerCase();
+            String newStartTiming = lessonDetails[5];
+            updateSubCommand.updateTimetable(moduleCode, lessonType, oldDay, oldStartTiming, newDay, newStartTiming);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(SubCommand.INVALID_UPDATE_FORMAT);
+        }
     }
 
     public void deleteByModuleList(String moduleCode) {

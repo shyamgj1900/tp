@@ -12,6 +12,8 @@ import seedu.kolinux.timetable.lesson.Tutorial;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
 import seedu.kolinux.timetable.subcommand.SubCommand;
 
+import java.util.function.BooleanSupplier;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -122,9 +124,9 @@ public class TimetableTest {
         } catch (KolinuxException e) {
             assertEquals("Input hours for CS1231 TUT exceeds the total workload\nIt exceeds 1.0 hours\n"
                             +
-                            "Please readjust the input timings or modify timetable to continue\nwith adding "
+                            "Do you want to continue adding the lesson despite\n"
                             +
-                            "this lesson to the timetable.", e.getMessage());
+                            "exceeding the workload? Please enter y or n", e.getMessage());
         }
     }
 
