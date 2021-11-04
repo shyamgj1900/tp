@@ -39,8 +39,8 @@ It is written in Java, and uses the NUSMods API. The user interacts with it usin
   * Ensured consistent use of colors throughout the DG using `Style.puml`.
 * **Contributions to team-based tasks**:
   * Managed releases `v1.0` and `v2.0` on GitHub.
-  * Produced the skeletal code and overall design to start Kolinux development.
-  * Produced, maintained, and documented the code for `KolinuxLogger` for logging purposes when executing any command.
+  * Produced the skeletal code and high-level design to start Kolinux development.
+  * Produced and documented the code for `KolinuxLogger` for logging purposes when executing any command.
   * Produced, maintained, and documented the code for general classes such as `Kolinux`, `DirectoryCreator`, `PromptHandler`, `Parser`, and `Ui`.
   * Maintained the issue tracker.
 * **Review/mentoring contributions**: 
