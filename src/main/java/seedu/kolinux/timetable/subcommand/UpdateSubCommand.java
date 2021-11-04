@@ -12,6 +12,9 @@ import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 public class UpdateSubCommand extends SubCommand {
 
+    DeleteSubCommand deleteSubcommand = new DeleteSubCommand();
+    AddSubCommand addSubcommand = new AddSubCommand();
+
     public UpdateSubCommand() {
 
     }
@@ -37,10 +40,10 @@ public class UpdateSubCommand extends SubCommand {
         String newEndTiming = schoolHours[endIndex - 1];
         checkUpdateTiming(moduleCode, lessonType, oldDay, newDay, oldStartTiming, newStartTiming, newEndTiming);
         String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
-        String[] lessonDetails = new String[] {moduleCode, lessonType, oldDay, oldStartTiming};
-        timetable.executeDelete(lessonDetails);
-        timetable.executeAdd(parameters,true);
+        deleteSubcommand.deleteLesson(moduleCode, lessonType, oldDay, oldStartTiming);
+        addSubcommand.inputLesson(parameters, true, false);
     }
+
 
     /**
      * Gets the duration of the lesson which is to be updated.
