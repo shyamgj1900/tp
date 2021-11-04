@@ -13,7 +13,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TimetableViewTest {
+public class TimetableOutputTest {
 
 
     private static final String EMPTY_TIMETABLE = "+-------------+--------------------+--------------------"
@@ -555,18 +555,42 @@ public class TimetableViewTest {
         String expectedString = EMPTY_TIMETABLE.replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
         assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
                 System.getProperty("line.separator")));
+        timetable.clearTimetable();
     }
 
     @Test
     void viewTimetable_oneLessonInTimetable_TimetablePrinted() throws KolinuxException {
         timetable.clearTimetable();
         moduleList.addModuleByCode("CS1231", moduleDb);
-        timetable.executeAdd(VALID_ADD_TUTORIAL_ARGUMENTS);
+        timetable.executeAdd(VALID_ADD_TUTORIAL_ARGUMENTS, false);
         timetable.executeView();
         String expectedString = ONE_LESSON_IN_TIMETABLE.replaceAll("\\n|\\r\\n",
                 System.getProperty("line.separator"));
         assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
                 System.getProperty("line.separator")));
+        timetable.clearTimetable();
+    }
+
+    @Test
+    public void listTimetable_noLessonInList_timetableListed() throws KolinuxException {
+        timetable.clearTimetable();
+        timetable.listTimetable("friday");
+        String expectedString = "You have no lessons on friday";
+        assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
+                System.getProperty("line.separator")));
+        timetable.clearTimetable();
+    }
+
+    @Test
+    public void listTimetable_oneLessonInList_timetableListed() throws KolinuxException {
+        timetable.clearTimetable();
+        moduleList.addModuleByCode("CS1231", moduleDb);
+        timetable.executeAdd(VALID_ADD_TUTORIAL_ARGUMENTS, false);
+        timetable.listTimetable("monday");
+        String expectedString = "0600 - 0630 CS1231 TUT";
+        assertEquals(expectedString, output.toString().trim().replaceAll("\\n|\\r\\n",
+                System.getProperty("line.separator")));
+        timetable.clearTimetable();
     }
 
 }
