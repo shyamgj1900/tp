@@ -15,15 +15,18 @@ public class PlannerCommand extends Command {
     private String subCommand;
     private String[] parsedArguments;
 
+    // subcommands of planner
     private static final String ADD_SUBCOMMAND = "add";
     private static final String LIST_SUBCOMMAND = "list";
     private static final String DELETE_SUBCOMMAND = "delete";
     private static final String CLEAR_SUBCOMMAND = "clear";
 
+    // feedback messages upon successful execution of subcommands
     private static final String ADD_EVENT_MESSAGE = "An event has been added to your schedule successfully: ";
     private static final String DELETE_EVENT_MESSAGE = "An event has been deleted from your schedule successfully: ";
     private static final String CLEAR_EVENT_MESSAGE = "All the events in your schedule has been cleared.";
 
+    // prompts
     private static final String TIME_CONFLICT_PROMPT =
             "You already have an event ongoing for that time period, do you still want to add?\n"
                     + "You may enter 'n' to cancel and proceed to list the events on the date to see what you already "
@@ -32,6 +35,7 @@ public class PlannerCommand extends Command {
     private static final String ENTER_ID_PROMPT =
             "Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):";
 
+    // when invalid subcommand is recognised
     private static final String INVALID_ARGUMENT_MESSAGE =
             "This command is not recognised, you can try:\n"
                     + "planner add DESCRIPTION/DATE/START_TIME/END_TIME\n"
@@ -45,13 +49,13 @@ public class PlannerCommand extends Command {
 
     /**
      * Invoked if the subcommand is "add". This method tries to add the event, and if a time conflict
-     * occurs, it will ask the user if the addition should still proceed. If approval is given by the
-     * user, the event will be added. If the user cancels, an exception is thrown. Else, the prompt will
-     * continue seeking for a valid answer.
+     * occurs, it will pass the operation to PlannerPromptHandler. If the user approves the conflict,
+     * the event will be added, else if the user denies, an exception is thrown. If the user does not
+     * provide a valid reply, the prompt will continue asking for permission.
      *
-     * @return Result containing message
+     * @return Result containing success message
      * @throws KolinuxException If the event cannot be created due to incorrect arguments, or the user
-     *     cancels the operation.
+     *     cancels the operation due to conflict.
      */
     private CommandResult handleAddCommand() throws KolinuxException {
         Event event = new Event(parsedArguments);
@@ -59,6 +63,7 @@ public class PlannerCommand extends Command {
             planner.addEvent(event, false);
             logger.log(Level.INFO, "User added an event to planner: " + event);
         } catch (KolinuxException exception) {
+            // in case of time conflict
             assert exception.getMessage().equals(TIME_CONFLICT_PROMPT);
             new PlannerPromptHandler(planner, TIME_CONFLICT_PROMPT).handleEventConflict(event);
         }
