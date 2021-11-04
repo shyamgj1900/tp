@@ -19,7 +19,6 @@ public class PlannerTest {
     private Timetable timetable = new Timetable(moduleList);
     private AddSubCommand addSubCommand = new AddSubCommand();
 
-    private static final String EVENT_DATA_STRING = "Some data | 2021-10-25|1200| 1500";
     private static final String[][] VALID_LESSON_ARGUMENTS
             = new String[][]{{"CS2113T", "LEC", "Friday", "1600", "1800"},
                 {"CS2113T", "TUT", "Wednesday", "1100", "1200"},
@@ -44,7 +43,6 @@ public class PlannerTest {
                 {"Do something", "2021-10-26", "1400", "1600"},
                 {"Do something", "2021-10-26", "1505", "1510"},
                 {"Conflict with lecture", "2021-10-22", "1500", "1700"}};
-    private static final String EVENT_FROM_DATA = "12:00 - 15:00 Some data";
     private static final String VALID_LIST_1
             = "\n15:00 - 15:15 Pop Quiz 3";
     private static final String VALID_LIST_2
@@ -75,14 +73,9 @@ public class PlannerTest {
                     + "Or you may enter 'y' to add the event";
     private static final String EMPTY_DESCRIPTION_ERROR =
             "Please provide a description for your event!";
-
-    @Test
-    public void constructEvent_eventDataString_eventConstructed() throws KolinuxException {
-        planner.clearEvents();
-        Event event = new Event(EVENT_DATA_STRING);
-        assertEquals(EVENT_FROM_DATA, event.toString());
-        assertEquals("2021-10-25", event.getDate());
-    }
+    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
+    private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
+    private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
     @Test
     public void addEvent_validEventInput_eventAdded() throws KolinuxException {
@@ -236,6 +229,26 @@ public class PlannerTest {
     }
 
     @Test
+    public void listEvent_invalidDate_exceptionThrown() {
+        planner.clearEvents();
+        try {
+            planner.listEvents("2021-13-01", false);
+        } catch (KolinuxException exception) {
+            assertEquals(INVALID_DATE_MESSAGE, exception.getMessage());
+        }
+    }
+
+    @Test
+    public void listEvent_emptyListOnDate_exceptionThrown() {
+        planner.clearEvents();
+        try {
+            planner.listEvents("2021-10-10", false);
+        } catch (KolinuxException exception) {
+            assertEquals(EMPTY_LIST_MESSAGE, exception.getMessage());
+        }
+    }
+
+    @Test
     public void deleteEvent_validIdInput_eventDeleted() throws KolinuxException {
         planner.clearEvents();
         String idToBeDeleted = null;
@@ -248,6 +261,26 @@ public class PlannerTest {
         }
         planner.deleteEvent(idToBeDeleted);
         assertEquals(VALID_LIST_2, planner.listEvents("2021-10-26", false));
+        planner.clearEvents();
+    }
+
+    @Test
+    public void deleteEvent_invalidIdGiven_exceptionThrown() throws KolinuxException {
+        planner.clearEvents();
+        for (String[] validInput : VALID_EVENT_ARGUMENTS) {
+            Event validEvent = new Event(validInput);
+            planner.addEvent(validEvent, false);
+        }
+        try {
+            planner.deleteEvent("dinosaur");
+        } catch (KolinuxException exception) {
+            assertEquals(INVALID_ID_ERROR, exception.getMessage());
+        }
+        try {
+            planner.deleteEvent("102");
+        } catch (KolinuxException exception) {
+            assertEquals(INVALID_ID_ERROR, exception.getMessage());
+        }
         planner.clearEvents();
     }
 }
