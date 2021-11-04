@@ -1,7 +1,10 @@
 package seedu.kolinux.commands;
 
+import seedu.kolinux.exceptions.ExceedWorkloadException;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.timetable.Timetable;
+import seedu.kolinux.timetable.TimetablePromptHandler;
+import seedu.kolinux.util.PromptHandler;
 
 
 import java.util.logging.Level;
@@ -36,14 +39,30 @@ public class TimetableCommand extends Command {
         this.parsedArguments = parsedArguments;
     }
 
+    /**
+     * Carries out the operation of adding to the timetable.
+     *
+     * @return The acknowledgment message after adding to timetable
+     * @throws KolinuxException If the lesson details are invalid
+     */
     private CommandResult addLesson() throws KolinuxException {
-        timetable.executeAdd(parsedArguments);
+        try {
+            timetable.executeAdd(parsedArguments, false);
+        } catch (ExceedWorkloadException exception) {
+            new TimetablePromptHandler(exception.getMessage(), timetable).handleExceedWorkload(parsedArguments);
+        }
         logger.log(Level.INFO, "User added a module to timetable");
         return new CommandResult(parsedArguments[0].toUpperCase() + " "
                 +
                 parsedArguments[1].toUpperCase() + " has been added to timetable");
     }
 
+    /**
+     * Carries out the operation of deleting from the timetable.
+     *
+     * @return The acknowledgment message after deleting from timetable
+     * @throws KolinuxException If the lesson details are invalid
+     */
     private CommandResult deleteLesson() throws KolinuxException {
         timetable.executeDelete(parsedArguments);
         logger.log(Level.INFO, "User has deleted" + parsedArguments[0].toUpperCase()
@@ -58,18 +77,34 @@ public class TimetableCommand extends Command {
                 " has been deleted from timetable");
     }
 
+    /**
+     * Carries out the operation of viewing the timetable on CLI.
+     *
+     * @return The acknowledgment message after printing the timetable to CLI
+     */
     private CommandResult viewTimetable() {
         timetable.executeView();
         logger.log(Level.INFO, "User has printed timetable");
         return new CommandResult("Timetable has been printed above");
     }
 
+    /**
+     * Carries out the operation of clearing all lessons from the timetable.
+     *
+     * @return The acknowledgment message after clearing all lessons from the timetable
+     */
     private CommandResult clearAllLessons() {
         timetable.clearTimetable();
         logger.log(Level.INFO, "User has cleared timetable");
         return new CommandResult("Timetable has been cleared completely");
     }
 
+    /**
+     * Carries out the operation of updating a lesson's timing on the timetable.
+     *
+     * @return The acknowledgment message after updating the timetable
+     * @throws KolinuxException If the lesson details to update are invalid
+     */
     private CommandResult updateLesson() throws KolinuxException {
         timetable.executeUpdate(parsedArguments);
         logger.log(Level.INFO, "User has updated the timetable.");
@@ -78,6 +113,12 @@ public class TimetableCommand extends Command {
                 parsedArguments[1].toUpperCase() + " has been updated");
     }
 
+    /**
+     * Carries out the operation of listing the lessons on a specific weekday.
+     *
+     * @return The acknowledgment message after listing the lessons on a specific day
+     * @throws KolinuxException If the specified day is invalid
+     */
     private CommandResult listLesson() throws KolinuxException {
         try {
             timetable.listTimetable(parsedArguments[0]);
