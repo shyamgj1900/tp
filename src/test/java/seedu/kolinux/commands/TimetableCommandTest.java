@@ -22,11 +22,11 @@ public class TimetableCommandTest {
             +
             "2. timetable view\n"
             +
-            "3. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/NEW_DAY/NEW_START_TIME\n"
+            "3. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME\n"
             +
-            "4. timetable delete MODULE_CODE/LESSON_TYPE/DAY\n"
+            "4. timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME\n"
             +
-            "5. timetable clear";
+            "5. timetable list DAY";
 
     private static final String[] CODE = {"CS1231"};
 

@@ -40,8 +40,10 @@ public class CalculateCapCommand extends Command {
             logger.log(Level.INFO, "User calculate CAP using module code");
             break;
         default:
-            String errorMessage = "Invalid module description type found, "
-                    + "please use either \"mc\" or \"code\" as module descriptions keyword";
+            String errorMessage = "Invalid cap calculation command, "
+                    + "please ensure the command follow one of the following formats\n"
+                    + "1. cap mc\n"
+                    + "2. cap code";
             throw new KolinuxException(errorMessage);
         }
     }

@@ -1,6 +1,7 @@
 package seedu.kolinux.module;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,6 +11,7 @@ public class ModuleDetailsTest {
     private static final JsonReader jsonReader = new JsonReader();
     private static final double[] workload = new double[] {2,1,1,3,3};
     private static JsonArray semesterData = new JsonArray();
+    private static JsonObject attributes = new JsonObject();
     private static final ModuleDetails TEST_MODULE_DETAILS = new ModuleDetails("AC5001",
             "4", "Design and Environment", "This module introduces "
             +
@@ -22,7 +24,7 @@ public class ModuleDetailsTest {
             "offers critical views on the role of architecture in constructing the national identity "
             +
             "of Singapore.", "Architectural History of Singapore", "Architecture", workload,
-            semesterData);
+            semesterData, attributes);
 
     private static final String TEST_MODULE_DETAILS_CODE = "AC5001";
     private static final String TEST_MODULE_DETAILS_CREDIT = "4";

@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CapCalculatorTest {
 
     private static final String[] VALID_INPUTS_BY_MC = {"4/A+", "6/A-", "2/C", "4/U", "3/D+"};
-    private static final  String[] VALID_INPUTS_BY_CODE = {"CG2027/A+", "CS2102/S", "ST2334/C", "CS1231/F"};
+    private static final  String[] VALID_INPUTS_BY_CODE = {"CG2027/A+", "CS2101/S", "ST2334/C", "CS1231/F"};
     private static final String[] INVALID_INPUT_NO_DESCRIPTIONS = {""};
     private static final String[] INVALID_INPUT_MODULE_DESCRIPTIONS = {
-            "CS1231/A", "ABCDE", "CG2027/Z", "CS0000/B", "12345"};
+            "CS1231/A", "ABCDE", "CG2027/Z", "CS0000/B", "12345", "CG2027/S"};
     
     private static final String MODULE_1 = "CS2113T";
     private static final String MODULE_2 = "CS2101";
@@ -25,7 +25,9 @@ public class CapCalculatorTest {
     private static final String BLANK_DESCRIPTION_EXCEPTION_MESSAGE = 
             "Please enter valid module description. Example: CG2027/A+";
     private static final String INVALID_MODULES_EXCEPTION_MESSAGE = 
-            "Invalid module info format found: ABCDE CG2027/Z CS0000/B 12345 ";
+            "Invalid module info format found: ABCDE CG2027/Z CS0000/B 12345 \n"
+            + "The following module(s) are entered multiple times: CG2027 \n"
+            + "The following module(s) contain invalid grading basis: CG2027";
     private static final String GRADES_NOT_AVAILABLE_MESSAGE = "There is no module with available grade at the moment";
     private static final String CAP_UNACHIEVABLE_MESSAGE = "UNACHIEVABLE";
     private static final String INVALID_CAP_MESSAGE = "CAP cannot exceed 5.0";

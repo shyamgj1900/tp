@@ -29,14 +29,15 @@ Here are the list of commands:
     - shift a lesson to another timing with the same duration
 17. timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME - delete a specific lesson
 18. timetable view - Print the timetable on CLI
-19. help - View this menu again
-20. bye - Exit Kolinux
+19. timetable list DAY - List the lessons taking place on a specific day with their timings
+20. help - View this menu again
+21. bye - Exit Kolinux
 ....................................................................
 Your overall CAP will be 4.19 if you get your desired grades!
 ....................................................................
 Your overall CAP will be 3.00 if you get your desired grades!
 ....................................................................
-Invalid module info format found: invalid_info_1 invalid_info_2 
+Invalid module info format found: invalid_info_1 invalid_info_2
 ....................................................................
 This command is not recognised, please enter "help" for the list of commands...
 ....................................................................
@@ -45,6 +46,7 @@ Department: Center for Engl Lang Comms
 Faculty: Computing
 Credits: 4
 Grade: N/A
+Has S/U option: Yes
 This module aims to equip students with the skills
 needed to communicate technical information to technical
 and nontechnical audiences, and to create comprehensible

@@ -25,14 +25,21 @@ public class Kolinux {
 
     /**
      * Initializes Kolinux by starting the module information internal database, logger, timetable, and planner.
+     * It also initializes the "/data" directory in which user data files are stored.
      */
     private void initKolinux() {
+        directoryCreator.initDirectory();
+        kolinuxLogger.initLogger();
+        ModuleListStorage.setupStorage();
+
         try {
-            directoryCreator.initDirectory();
-            kolinuxLogger.initLogger();
-            planner.initPlanner();
-            ModuleListStorage.setupStorage();
             timetable.initTimetable();
+        } catch (KolinuxException exception) {
+            ui.showErrorMessage(exception);
+        }
+
+        try {
+            planner.initPlanner();
         } catch (KolinuxException exception) {
             ui.showErrorMessage(exception);
         }
@@ -60,7 +67,7 @@ public class Kolinux {
     }
 
     /**
-     * Greets the user, initializes databases, and runs user inputs in a loop.
+     * Greets the user, initializes databases and features, and runs user inputs in a loop.
      */
     public void run() {
         ui.greetUser();

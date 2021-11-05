@@ -8,7 +8,7 @@ It is written in Java, and uses the NUSMods API. The user interacts with it usin
 
 ## Summary of Contributions
 
-* **Code contributed**: [RepoSense link](#https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=powzx&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
+* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=powzx&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
 * **Main feature implemented**: Event Planner
   * Ability to add events to the planner on a specified date from a specified start time to end time.
   * Ability to list events from the planner on a specified date in a sorted order by time.
@@ -22,17 +22,26 @@ It is written in Java, and uses the NUSMods API. The user interacts with it usin
   * What it does: Conflicts will be detected when users try to add events to a timeslot already occupied by another event, lesson, or exam. Subsequently, a confirmation prompt will be displayed to give users the choice to continue adding the conflicted event or cancel the operation.
   * Justification: This enhancement improves the Event Planner significantly since users might forget what they have already planned for the day. This enhancement alerts users of an attempt to add conflicted events so that they can have a chance to rectify the mistake.
   * Highlights: This enhancement changes the way events are added to the Event Planner as additional checks have to be implemented. Different design alternatives have been considered as the adding process needs to be interrupted by a confirmation prompt on the user interface, wait for the user reply, and go back to where it was interrupted to continue the process.
+* **Enhancement added**: Redesigned the structure of `PlannerCommand` and `PlannerPromptHandler`
+  * What it does: Initially, the handling of prompts (getting user replies) is a method in `Command`. However, this causes multiple levels of self invocation in `PlannerCommand` when a prompt is needed to resolve conflicts in event adding. Hence, the method to get user replies need to be separated out into `PlannerPromptHandler`, and it will be invoked only when a prompt is needed to resolve any process.
+  * Justification: This enhancement improves the overall design of the planner and prompt features by the Single Responsibility Principle, which reduces the need for multiple self invocations. It also helped to make unit testing easier since `Planner` and `PlannerPromptHandler` may be tested independently of each other.
+  * Highlights: This enhancement requires major revamp of the code design in `PlannerCommand` and `PlannerPromptHandler`.
 * **Contributions to UG**:
   * Added documentation for the feature `planner` which includes `planner add`, `planner delete`, and `planner list`.
   * Added documentation for other sections such as the Introduction, Quick Start, FAQ, and Data Storage.
-  * Ensured consistent use of words and icons throughout the UG.
+  * Ensured consistent use of words and icons and consistent formatting throughout the UG.
+  * Designed the Kolinux logo.
 * **Contributions to DG**:
   * Added documentation for the overall design architecture, commands component, and planner component.
   * Added documentation for implementation of add to planner feature.
   * Added instructions for manual testing for planner.
   * Added UML diagrams: `ArchitectureDiagram.puml`, `CommandsClassDiagram.puml`, `OverviewSequenceDiagram.puml`, `PlannerAddSequenceDiagram1.puml`, `PlannerAddSequenceDiagram2.puml`, `PlannerClassDiagram.puml`, `PlannerObjectDiagramAfter.puml`, `PlannerObjectDiagramBefore.puml`
-  * Ensured consistent use of colors throughout the DG through `Style.puml`.
+  * Ensured consistent use of colors throughout the DG using `Style.puml`.
 * **Contributions to team-based tasks**:
   * Managed releases `v1.0` and `v2.0` on GitHub.
-* **Review/mentoring contributions**:
-* **Contributions beyond the project team**:
+  * Produced the skeletal code and high-level design to start Kolinux development.
+  * Produced and documented the code for `KolinuxLogger` for logging purposes when executing any command.
+  * Produced, maintained, and documented the code for general classes such as `Kolinux`, `DirectoryCreator`, `PromptHandler`, `Parser`, and `Ui`.
+  * Maintained the issue tracker.
+* **Review/mentoring contributions**: 
+  * Reviewed PRs and merged them to master branch.

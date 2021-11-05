@@ -1,7 +1,29 @@
 package seedu.kolinux.module;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.gcardone.junidecode.Junidecode;
+
+import static seedu.kolinux.module.Grade.A_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.A_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.A_GRADE;
+import static seedu.kolinux.module.Grade.B_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.B_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.B_GRADE;
+import static seedu.kolinux.module.Grade.C_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.C_GRADE;
+import static seedu.kolinux.module.Grade.D_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.D_GRADE;
+import static seedu.kolinux.module.Grade.F_GRADE;
+import static seedu.kolinux.module.Grade.S_GRADE;
+import static seedu.kolinux.module.Grade.U_GRADE;
+import static seedu.kolinux.module.Grade.CS_GRADE;
+import static seedu.kolinux.module.Grade.CU_GRADE;
+import static seedu.kolinux.module.Grade.EXE_GRADE;
+import static seedu.kolinux.module.Grade.IC_GRADE;
+import static seedu.kolinux.module.Grade.IP_GRADE;
+import static seedu.kolinux.module.Grade.W_GRADE;
+import static seedu.kolinux.module.Grade.RESET_GRADE;
 
 /**
  * ModuleDetails class that stores all attributes of each module.
@@ -22,16 +44,14 @@ public class ModuleDetails {
     private double projectHours;
     private double preparationHours;
     private JsonArray semesterData;
+    private JsonObject attributes;
     private static final int OFFSET = 8;
     private static final int SEMESTER_1 = 0;
     private static final int SEMESTER_2 = 1;
     private static final int WORD_LIMIT = 50;
 
-    public static final String RESET_GRADE = "0";
-    public static final String RESET_GRADE_ARGUMENT = "RESET";
-
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
-            String title, String department, double[] workload, JsonArray semesterData) {
+            String title, String department, double[] workload, JsonArray semesterData, JsonObject attributes) {
 
         /*Attributes read from the NUSmods JSON may contain unicode characters. For proper printing in standard output,
         these characters are converted to their ASCII equivalent.*/
@@ -44,6 +64,7 @@ public class ModuleDetails {
         this.workload = workload;
         this.semesterData = semesterData;
         this.grade = RESET_GRADE;
+        this.attributes = attributes;
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
@@ -59,6 +80,7 @@ public class ModuleDetails {
         this.workload = null;
         this.semesterData = null;
         this.grade = grade;
+        this.attributes = null;
     }
     
     public ModuleDetails(String moduleCode, String grade) {
@@ -71,6 +93,7 @@ public class ModuleDetails {
         this.workload = null;
         this.semesterData = null;
         this.grade = grade;
+        this.attributes = null;
     }
 
     public void setGrade(String newGrade) {
@@ -225,34 +248,35 @@ public class ModuleDetails {
      */
     public double getGradePoint() {
         switch (grade) {
-        case "A+": // Fallthrough, is equivalent grade point to "A"
-        case "A":
+        case A_PLUS_GRADE: // Fallthrough, is equivalent grade point to "A"
+        case A_GRADE:
             return 5.0;
-        case "A-":
+        case A_MINUS_GRADE:
             return 4.5;
-        case "B+":
+        case B_PLUS_GRADE:
             return 4.0;
-        case "B":
+        case B_GRADE:
             return 3.5;
-        case "B-":
+        case B_MINUS_GRADE:
             return 3.0;
-        case "C+":
+        case C_PLUS_GRADE:
             return 2.5;
-        case "C":
+        case C_GRADE:
             return 2.0;
-        case "D+":
+        case D_PLUS_GRADE:
             return 1.5;
-        case "D":
+        case D_GRADE:
             return 1.0;
-        case "F":
+        case F_GRADE:
             return 0.0;
         default:
             return -1; // Invalid grade
         }
     }
     
-    public boolean containsSuGrade() {
-        return grade.equals("S") || grade.equals("CS") || grade.equals("U") || grade.equals("CU");
+    public boolean containsNonCalculatingGrade() {
+        return grade.equals(S_GRADE) || grade.equals(CS_GRADE) || grade.equals(U_GRADE) || grade.equals(CU_GRADE)
+                || grade.equals(EXE_GRADE) || grade.equals(IC_GRADE) || grade.equals(IP_GRADE) || grade.equals(W_GRADE);
     }
     
     public boolean containsNullGrade() {
@@ -265,6 +289,19 @@ public class ModuleDetails {
         }
         grade = RESET_GRADE;
         return moduleCode + " grade reset";
+    }
+    
+    public boolean isSuAble() {
+        try {
+            return attributes.get("su").getAsBoolean();
+        } catch (NullPointerException exception) {
+            return false;
+        }
+    }
+    
+    public boolean isCsCuModule() {
+        return description.contains("CS/CU") || moduleCode.contains("GEQ1000") || moduleCode.contains("DMX")
+                || moduleCode.equals("CP2106") || moduleCode.equals("CFG1002");
     }
 
     /**
@@ -288,7 +325,7 @@ public class ModuleDetails {
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
                 + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals(RESET_GRADE) ? "N/A" : grade) + "\n"
-                + formattedDescription;
+                + "Has S/U option: " + (isSuAble() ? "Yes" : "No") + "\n" + formattedDescription;
     }
 
 }

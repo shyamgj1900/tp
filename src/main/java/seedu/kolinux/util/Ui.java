@@ -44,10 +44,10 @@ public class Ui {
     /**
      * Posts a prompt to the user to seek for a reply.
      *
-     * @param prompt Prompt
+     * @param promptHandler Prompt
      */
-    public void promptUser(Prompt prompt) {
-        System.out.println(prompt.getMessage());
+    public void promptUser(PromptHandler promptHandler) {
+        System.out.println(promptHandler);
     }
 
     /**

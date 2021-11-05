@@ -10,13 +10,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static seedu.kolinux.commands.TimetableCommand.timetable;
-
 /** Represents the methods needed to sync with the module list to fetch lessons and exams data. */
 public class ModuleSyncer {
 
     private String date;
 
+    private static final int EVENT_ARGUMENTS = 4;
     private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
 
@@ -25,8 +24,8 @@ public class ModuleSyncer {
 
     /**
      * The list of Lesson and the corresponding Event on a specified date will be populated upon the
-     * construction of this object. Events will then be created using the exam data, and added to the
-     * list.
+     * construction of this object. Events will also be created using the exam data, and added to the
+     * list if they occur on the date specified.
      *
      * @param date Date to get the list of lessons and exams
      */
@@ -43,8 +42,8 @@ public class ModuleSyncer {
 
     /**
      * Constructs an ExamsGetter to get the exam dates and times of the modules in the module list. The
-     * exams occurring on the date specified will be constructed as events and will be added to
-     * convertedLessonsOnDate. The module list will always be updated with the latest version.
+     * exams occurring on the date specified will be filtered out and will be added to
+     * lessonsAndExamsAdEventsOnDate. The module list will always be updated with the latest version.
      *
      * @param moduleList Module list stored by the user
      */
@@ -86,7 +85,7 @@ public class ModuleSyncer {
      * @return Event corresponding to the lesson
      */
     private Event convertLessonToEvent(Lesson lesson) {
-        String[] arguments = new String[4];
+        String[] arguments = new String[EVENT_ARGUMENTS];
         arguments[0] = lesson.getModuleCode() + " " + lesson.getLessonType();
         arguments[1] = date;
         arguments[2] = lesson.getStartTime();

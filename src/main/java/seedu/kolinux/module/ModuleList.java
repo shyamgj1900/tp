@@ -3,8 +3,9 @@ package seedu.kolinux.module;
 import java.util.ArrayList;
 
 import static seedu.kolinux.commands.TimetableCommand.timetable;
-import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
-import static seedu.kolinux.module.ModuleDetails.RESET_GRADE_ARGUMENT;
+
+import static seedu.kolinux.module.Grade.RESET_GRADE;
+import static seedu.kolinux.module.Grade.RESET_GRADE_ARGUMENT;
 
 /**
  * ModuleList class contains and facilitate operations on the myModules list.
@@ -62,6 +63,9 @@ public class ModuleList {
                 if (grade.equals(RESET_GRADE_ARGUMENT) || grade.equals(RESET_GRADE)) {
                     return module.resetGrade();
                 }
+                if (module.getGrade().equals(grade)) {
+                    return moduleCode + " grade is already set to " + grade;
+                }
                 module.setGrade(grade);
                 return moduleCode + " grade set to " + grade;
             }
@@ -110,6 +114,11 @@ public class ModuleList {
         return code + " not found in the module list";
     }
 
+    /**
+     * Gets the exam date and time for a module.
+     *
+     * @param module Module details containing all module information
+     */
     public void getExamDateTime(ModuleDetails module) {
         String examDate = module.getDate();
         String examStartTime = module.getStartTime();
@@ -122,6 +131,13 @@ public class ModuleList {
         }
     }
 
+    /**
+     * Gets the workload for each specific lesson type of module code.
+     *
+     * @param module Module details containing all module information
+     * @param code Module code of module
+     * @param title Title of module
+     */
     public void getWorkload(ModuleDetails module, String code, String title) {
         double lectureHours = module.getLectureHours();
         System.out.println(code + " " + title + "\n\nWorkload:");

@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import seedu.kolinux.Main;
 
-import static seedu.kolinux.module.ModuleDetails.RESET_GRADE;
+import static seedu.kolinux.module.Grade.RESET_GRADE;
 
 import java.nio.charset.StandardCharsets;
 

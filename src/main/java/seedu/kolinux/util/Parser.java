@@ -92,7 +92,7 @@ public class Parser {
     /**
      * Processes the arguments by separating the first word (sub-command) from the input.
      * The rest of the input is separated into a String array using the "/" delimiter.
-     * This method should only be called if the commandWord is "timetable" or "planner".
+     * This method should only be called if the commandWord is "timetable", "planner", or "module".
      *
      * @param subInput    User input without the command word
      * @param commandWord User commandWord

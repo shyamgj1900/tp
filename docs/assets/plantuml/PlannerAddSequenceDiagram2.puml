@@ -6,7 +6,7 @@
 hide footbox
 
 participant ":PlannerCommand" as plc COMMANDS_COLOR
-participant ":Prompt" as prompt UTIL_COLOR
+participant ":PlannerPromptHandler" as prompt PLANNER_COLOR
 participant ":Planner" as planner PLANNER_COLOR
 participant ":PlannerStorage" as pls PLANNER_COLOR
 
@@ -22,32 +22,27 @@ opt hasTimeConflict && !allowConflict
 
 planner --> plc : exception
 
-plc -> plc : getReplyFromPrompt(exception.getMessage())
-activate plc
-
 create prompt
-plc -> prompt : new Prompt(exception.getMessage())
+plc -> prompt : create with planner and message
 activate prompt
 
-prompt --> plc : prompt
+prompt --> plc
 deactivate prompt
 
-plc -> prompt : postPrompt()
-
-plc -> prompt : getReply()
+plc -> prompt : handleEventConflict(event)
 activate prompt
 
-prompt --> plc : reply
+loop reply is not "yes" or "no"
+
+prompt -> prompt : getReplyFromPrompt()
+activate prompt
+
+prompt --> prompt : reply
 deactivate prompt
 
-destroy prompt
+alt reply is "yes"
 
-plc --> plc : reply
-deactivate plc
-
-alt reply.equalsIgnoreCase("yes")
-
-plc -> planner : addEvent(event, true)
+prompt -> planner : addEvent(event, true)
 activate planner
 
 planner -> pls : writeFile(event.toData())
@@ -56,15 +51,30 @@ activate pls
 pls --> planner
 deactivate pls
 
-planner --> plc
+planner --> prompt
 deactivate planner
+
+prompt --> plc
+
+else reply is "no"
+
+prompt --> plc : exception
 
 else else
 
-plc-->[ : exception
+prompt -> prompt : changeMessage(INVALID_REPLY_ERROR)
+activate prompt
+
+prompt --> prompt
+deactivate prompt
 
 end
+
 end
+
+deactivate prompt
+destroy prompt
+
 end
 
 @enduml

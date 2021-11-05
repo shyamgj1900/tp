@@ -50,12 +50,12 @@ public class CapCalculatorByMc extends CapCalculator {
         int totalMc = 0;
         double cap = 0;
         for (ModuleDetails module : modules.getMyModules()) {
-            if (module.containsSuGrade()) {
+            if (module.containsNonCalculatingGrade()) {
                 continue;
             }
             int mc = Integer.parseInt(module.getModuleCredit());
             double gradePoint = module.getGradePoint();
-            if (gradePoint == INVALID_GRADE || mc < 1) {
+            if (gradePoint == INVALID_STORED_GRADE || mc < 1) {
                 invalidModules.add(module.getModuleCredit() + DIVIDER + module.getGrade());
                 continue;
             }

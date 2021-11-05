@@ -18,8 +18,7 @@ public class Planner {
     private ModuleList moduleList;
 
     private static ArrayList<Event> scheduleOfAllDates = new ArrayList<>();
-    
-    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
+
     private static final String PLANNER_CORRUPTED_ERROR =
             "Some of your planner events are corrupted, they will be removed from your planner!";
     private static final String TIME_CONFLICT_PROMPT =
@@ -30,6 +29,8 @@ public class Planner {
     private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
     private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
+
+    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
 
     public Planner() {
 
@@ -172,18 +173,16 @@ public class Planner {
 
         ArrayList<String> filteredEventStrings;
         if (withId) {
-            filteredEventStrings =
-                    (ArrayList<String>) filterPlanner(date)
-                            .stream()
-                            .filter(event -> !event.getIsLesson())
-                            .map(event -> event.toStringWithId())
-                            .collect(Collectors.toList());
+            filteredEventStrings = (ArrayList<String>) filterPlanner(date)
+                    .stream()
+                    .filter(event -> !event.getIsLesson())
+                    .map(event -> event.toStringWithId())
+                    .collect(Collectors.toList());
         } else {
-            filteredEventStrings =
-                    (ArrayList<String>) filterPlanner(date)
-                            .stream()
-                            .map(event -> event.toString())
-                            .collect(Collectors.toList());
+            filteredEventStrings = (ArrayList<String>) filterPlanner(date)
+                    .stream()
+                    .map(event -> event.toString())
+                    .collect(Collectors.toList());
         }
 
         String eventsInOneString = Parser.concatenateStrings(filteredEventStrings);

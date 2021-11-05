@@ -10,15 +10,15 @@ participant ":TimetableCommand" as command COMMANDS_COLOR
 participant ":Timetable" as table TIMETABLE_COLOR
 participant ":CommandResult" as result COMMANDS_COLOR
 
-[-> parser : parseCommand(input)
+[-> parser : parse input
 
 activate parser
 
-parser -> parser : parseSubCommand(subInput, commandWord)
+parser -> parser : get subCommand
 activate parser
 
 create command
-parser -> command : new TimetableCommand(subCommand, lessonDetails)
+parser -> command : create with lessonDetails
 
 activate command
 

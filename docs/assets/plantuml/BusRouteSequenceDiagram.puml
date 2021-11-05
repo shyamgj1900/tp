@@ -9,10 +9,10 @@ participant ":BusRouteCommand" COMMANDS_COLOR
 participant ":Location" ROUTES_COLOR
 participant ":DirectRoute" ROUTES_COLOR
 participant ":IndirectRoute" ROUTES_COLOR
--> ":Parser": parseCommand(input: String)
+-> ":Parser": parse input
 activate ":Parser"
 create ":BusRouteCommand"
-":Parser" -> ":BusRouteCommand"
+":Parser" -> ":BusRouteCommand" : create with input
 activate ":BusRouteCommand"
 return command
 deactivate ":BusRouteCommand"

@@ -11,6 +11,7 @@ public class Event {
 
     private static final String COLON = ":";
     private static final String EMPTY_STRING = "";
+    // Pipe character padded with any number of white spaces
     private static final String DATA_DELIMITER_REGEX = "\\s*\\|\\s*";
     private static final String PIPE = "|";
     private static final int EVENT_ARGUMENTS_LENGTH = 4;
@@ -120,7 +121,7 @@ public class Event {
     }
 
     public String toString() {
-        assert startTime.compareTo(endTime) <= 0;
+        assert startTime.compareTo(endTime) < 0;
         return startTime + " - " + endTime + " " + description;
     }
 

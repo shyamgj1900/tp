@@ -12,6 +12,7 @@ public class ExamsGetter {
     private ArrayList<Event> exams = new ArrayList<>();
     private ModuleList moduleList;
 
+    private static final int EVENT_ARGUMENTS = 4;
     private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
     private static final String COLON = ":";
     private static final String EMPTY_STRING = "";
@@ -28,12 +29,14 @@ public class ExamsGetter {
     }
 
     /**
-     * Iterates through the module list stored by the user to find the exam dates and times of the modules
-     * if there are any.
+     * Iterates through the module list stored by the user and creates an event from each exam information found
+     * if any. This event is added to the exams list. Hence, at the end of this method, exams will be populated
+     * with events that are created by the exam information of all modules stored by the user.
      */
     private void retrieveModuleExams() {
-        String[] arguments = new String[4];
+        String[] arguments = new String[EVENT_ARGUMENTS];
         for (ModuleDetails module : moduleList.getMyModules()) {
+            // for modules that do not have an official final exam
             if (module.getExamDateTime() == null) {
                 continue;
             }
