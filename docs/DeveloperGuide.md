@@ -548,3 +548,29 @@ should be able to accomplish most of the tasks faster using commands than using 
        Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
        operation. Entering `y` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will repeat the prompt.
 
+
+
+### Finding Bus Routes
+
+1. Finding routes.
+  
+  * Test case: `bus /IT /UTown`
+     
+     Expected: Shows a direct bus route.
+
+  * Test case: `bus /UTown /KR Bus Terminal`
+      
+      Expected: Shows an indirect route where user will need to change buses at an intermediate stop.
+      
+  * Test case: `bus /PGPR /KR MRT`
+     
+      Expected: Shows alternate direct route from the opposite bus stop.
+  
+  * Note: Bus stop names are not case sensitive.
+      
+2. List all bus stops
+   
+   * Test case: `bus stop list`
+    
+      Expected: Shows the list of all bus stops.
+  
