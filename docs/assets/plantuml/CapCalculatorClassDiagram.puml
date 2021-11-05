@@ -59,6 +59,7 @@ class "CalculatorModuleList" MODULE_COLOR {
 "ModuleList" ^-- CalculatorModuleList
 
 "ABSTRACT \n CapCalculator" --> "1" "CalculatorModuleList"
+"CapCalculatorByCode" --> "1" "CalculatorModuleList"
 
 
 @enduml

@@ -7,9 +7,9 @@ hide footbox
 
 participant ":CapCalculatorByCode" as calculator CAPCALCULATOR_COLOR
 participant "modules:CalculatorModuleList" as modules MODULE_COLOR
+participant "invalidSuModules:ArrayList" as invalidSuModules MODULE_COLOR
 participant "invalidModules:ArrayList" as invalidModules MODULE_COLOR
 participant "repeatedModules:CalculatorModuleList" as repeatedModules MODULE_COLOR
-participant ":ModuleDb" as moduleDb MODULE_COLOR
 
 group sd createCalculator
 
@@ -19,6 +19,13 @@ activate modules
 
 modules --> calculator
 deactivate modules
+
+create invalidSuModules
+calculator -> invalidSuModules : new ArrayList<>()
+activate invalidSuModules
+
+invalidSuModules --> calculator
+deactivate invalidSuModules
 
 create invalidModules
 calculator -> invalidModules : new ArrayList<>()
@@ -34,27 +41,22 @@ activate repeatedModules
 repeatedModules --> calculator
 deactivate repeatedModules
 
-create moduleDb
-calculator -> moduleDb : new ModuleDb()
-activate moduleDb
-
-moduleDb --> calculator : moduleDb
-deactivate moduleDb
-
-calculator -> moduleDb : getPreInitModuleDb()
-activate moduleDb
-
-moduleDb --> calculator
-deactivate moduleDb
-
 calculator -> calculator : getInputModules(input)
 activate calculator
 
 loop for all input modules
 
-alt contains invalid format/invalid code/invalid grade
+alt contains invalid SU grade
 
-calculator -> invalidModules : add(commandDescriptions[i + 2])
+calculator -> invalidSuModules : add(moduleDescription)
+activate invalidSuModules
+
+invalidSuModules --> calculator
+deactivate invalidSuModules
+
+else contains invalid format/invalid code/invalid grade
+
+calculator -> invalidModules : add(moduleDescription)
 activate invalidModules
 
 invalidModules --> calculator
