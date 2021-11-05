@@ -78,8 +78,7 @@ public class ModuleCommand extends Command {
                 || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT)) {
             return null;
         }
-        if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE)
-                || moduleGrade.equals(CU_GRADE)) {
+        if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(U_GRADE)) {
             return module.isSuAble() ? null : INVALID_SU_GRADE_MESSAGE;
         }
         return INVALID_GRADE_LETTER_MESSAGE;

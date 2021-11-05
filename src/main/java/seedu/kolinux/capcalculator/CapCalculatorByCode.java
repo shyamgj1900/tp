@@ -56,8 +56,7 @@ public class CapCalculatorByCode extends CapCalculator {
                 || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE) || moduleGrade.equals(W_GRADE)) {
             return VALID_GRADE;
         }
-        if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) 
-                || moduleGrade.equals(CU_GRADE)) {
+        if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(U_GRADE)) {
             return module.isSuAble() ? VALID_GRADE : INVALID_SU_GRADE;
         }
         return INVALID_GRADE;        
