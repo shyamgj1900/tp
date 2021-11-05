@@ -167,7 +167,7 @@ public class Planner {
         if (withId) {
             filteredEventStrings = (ArrayList<String>) filterPlanner(date)
                     .stream()
-                    .filter(event -> !event.getIsLesson())
+                    .filter(event -> !event.getIsIntegratedEvent())
                     .map(event -> event.toStringWithId())
                     .collect(Collectors.toList());
         } else {

@@ -477,7 +477,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 * *Mainstream OS*: Windows, Linux, Unix, OS-X
 * *Event*: Personal event added to the Planner by the user
-* *Lesson*: Class (Lecture, Tutorial, or Lab) for a particular module added to the Timetable by the user
+* *Lesson*: Class (Lecture, Tutorial, Sectional, or Lab) for a particular module added to the Timetable by the user
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
@@ -505,46 +505,120 @@ should be able to accomplish most of the tasks faster using commands than using 
    
    
 
-### Adding an event to Planner
+### Testing the Planner feature
 
 1. Adding an event with no time conflicts with any existing events, lessons, or exams to the Planner.
    
+    * Prerequisites: Choose a date that has no exams, lessons, or events planned to ensure no conflicts will occur. You may use `planner clear` to clear all existing events stored in planner.
 
-   * Test case: `planner add watch movie/2021-10-20/1800/2100`
+    * Test case: `planner add watch movie/2021-10-20/1800/2100`
    
       Expected: Event is added to the list. Success message printed as output.
 
-
-   * Test case: `planner add project meeting/20211020/0700/0800`
+    * Test case: `planner add project meeting/20211020/0700/0800`
      
-      Expected: Event is not added to the list. Error message regarding date and time format printed as output.
+      Expected: Event is not added to the list. Error message regarding date format printed as output.
+   
+    * Test case: `planner add project meeting/2021-02-29/0700/0800`
+   
+      Expected: Event is not added to the list. Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
+    * Test case: `planner add go run/2021-10-20/6pm/10pm`
+    
+      Expected: Event is not added to the list. Error message regarding time format printed as output.
+   
+    * Test case: `planner add go run/2021-10-20/1800/2260`
+   
+      Expected: Event is not added to the list. Error message regarding invalid time is printed as output.
 
-   * Test case: `planner add go back in time/2021-10-20/1400/1300`
+    * Test case: `planner add go back in time/2021-10-20/1400/1300`
    
       Expected: Event is not added to the list. Error message regarding wrong time order printed as output.
 
+    * Test case: `planner add study for test/2021-10-20/1400/1400`
 
-   * Other incorrect commands to try: `planner add something wrong//`, `planner add something amazing/ 3pm to 4pm`
+      Expected: Event is not added to the list. Error message regarding same start and end time printed as output.
+
+    * Test case: `planner add /2021-10-20/1400/1600`
+
+      Expected: Event is not added to the list. Error message regarding empty description is printed as output. 
+
+    * Other incorrect commands to try: `planner add something wrong//`, `planner add something amazing/ 3pm to 4pm`
      
       Expected: Similar to previous cases where an error message regarding the format of command is printed as output.
 
 2. Adding an event with time conflicts with at least one existing event, lesson, or exam to the Planner.
 
+    * Prerequisites: Add the event by `planner add pop quiz/2021-11-30/1300/1500`. Add the module `module add cs2113t` and add a lesson `timetable add cs2113t/lec/tuesday/1600/1800`. _Do note 2021-11-30 is a Tuesday._
+    
+    * Test case: `planner list 2021-11-30`
 
-  * Prerequisites: Add the event by `planner add conflict test/2022-05-05/0800/1100`. Add the module
-    `module add cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
-    _Do note 2021-05-05 is a Thursday._
+      Expected: The event `pop quiz`, lesson `CS2113T LEC`, exam `CS2113T Exam` are displayed as output. This tests whether the integration among planner, timetable, and module manager is working.
 
+    * Test case: `planner add conflict/2021-11-30/xxxx/yyyy` where `xxxx` and `yyyy` are start times and end times respectively which overlaps with any of the events listed.
+    
+      Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the operation. Entering `y` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will repeat the prompt.
+  
+3. Listing events on the Planner.
 
-  * Test case: `planner list 2022-05-05`
+    * Test case: `planner list 2021-10-10`
 
-     Expected: The event `conflict test`, lesson `CS2113T LEC`, exam `CS2113T Exam` are displayed as output.
+      Expected: If there are events stored on `2021-10-10`, the events will be listed (including any lessons or exams). Otherwise, a message will be printed stating that there are no events planned for the day.
 
-
-  * Test case: `planner add love conflicts/2022-05-05/xxxx/yyyy` where `xxxx` and `yyyy` are start times and end
-    times respectively which overlaps with any of the events listed.
+    * Test case: `planner list 20211010`
    
-       Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
-       operation. Entering `y` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will repeat the prompt.
+      Expected: Error message regarding wrong date format is printed as output.
 
+    * Test case: `planner list 2021-02-29`
+   
+      Expected: Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
+
+4. Deleting events from the Planner.
+
+    * Prerequisites: Go through point 2 in the Planner section first.
+
+    * Test case: `planner delete 2021-11-30`
+
+      Expected: List of events shown, which only contain the events added via the planner, since users are not supposed to delete exams and lessons from the planner. The corresponding `id` of `pop quiz` is also printed. Entering that `id` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will lead to an invalid id read, abandoning the operation.
+
+    * Test case: `planner delete 20211010`
+    
+      Expected: Error message regarding wrong date format is printed as output.
+
+    * Test case: `planner delete 2021-02-29`
+
+      Expected: Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
+
+5. Handling the user data in `data/planner.txt`
+
+    * Test case: Add some events using `planner add` command and the corresponding data should be written to `data/planner.txt` after each addition. The user data includes the description, date, start time, and end time of the event separated by `|`.
+
+    * Test case: Delete some events using `planner delete` command and the corresponding data should be removed from `data/planner.txt` after each deletion.
+    
+    * Test case: Corrupt some data lines in `data/planner.txt` by changing the dates or times to an invalid format and start the program again. You should be notified of the data corruption and the corrupted data lines in `data/planner.txt` will be removed, leaving only those that are still considered valid.
+    
+
+### Finding Bus Routes
+
+1. Finding routes.
+  
+  * Test case: `bus /IT /UTown`
+     
+     Expected: Shows a direct bus route.
+
+  * Test case: `bus /UTown /KR Bus Terminal`
+      
+      Expected: Shows an indirect route where user will need to change buses at an intermediate stop.
+      
+  * Test case: `bus /PGPR /KR MRT`
+     
+      Expected: Shows alternate direct route from the opposite bus stop.
+  
+  * Note: Bus stop names are not case sensitive.
+      
+2. List all bus stops
+   
+   * Test case: `bus stop list`
+    
+      Expected: Shows the list of all bus stops.
+   

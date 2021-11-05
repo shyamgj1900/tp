@@ -23,7 +23,7 @@ public class Event {
     private LocalTime startTime;
     private LocalTime endTime;
     private int id;
-    private boolean isLesson = false;
+    private boolean isIntegratedEvent = false;
 
     private static final String EMPTY_DESCRIPTION_ERROR =
             "Please provide a description for your event!";
@@ -75,15 +75,15 @@ public class Event {
     }
 
     /**
-     * This method is called only when constructing an Event from a given Lesson. Otherwise, the
-     * default value of isLesson is false upon construction of this object.
+     * This method is called only when constructing an Event from a given lesson or exam information. Otherwise, the
+     * default value of isIntegratedEvent is false upon construction of this object.
      */
-    public void setIsLesson() {
-        this.isLesson = true;
+    public void setIsIntegratedEvent() {
+        this.isIntegratedEvent = true;
     }
 
-    public boolean getIsLesson() {
-        return this.isLesson;
+    public boolean getIsIntegratedEvent() {
+        return this.isIntegratedEvent;
     }
 
     public String getDate() {
