@@ -21,7 +21,7 @@ public abstract class CapCalculator {
     protected static final String TWO_DECIMAL_FORMAT = "%.2f";
     
     protected CalculatorModuleList modules;
-    protected ArrayList<String> invalidSuModules;
+    protected ArrayList<String> invalidGradeModules;
     protected ArrayList<String> invalidModules;
 
     /**
@@ -29,7 +29,7 @@ public abstract class CapCalculator {
      */
     public CapCalculator() {
         modules = new CalculatorModuleList();
-        invalidSuModules = new ArrayList<>();
+        invalidGradeModules = new ArrayList<>();
         invalidModules = new ArrayList<>();
     }
 
