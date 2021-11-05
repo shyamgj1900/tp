@@ -594,5 +594,31 @@ should be able to accomplish most of the tasks faster using commands than using 
     * Test case: Add some events using `planner add` command and the corresponding data should be written to `data/planner.txt` after each addition. The user data includes the description, date, start time, and end time of the event separated by `|`.
 
     * Test case: Delete some events using `planner delete` command and the corresponding data should be removed from `data/planner.txt` after each deletion.
-
+    
     * Test case: Corrupt some data lines in `data/planner.txt` by changing the dates or times to an invalid format and start the program again. You should be notified of the data corruption and the corrupted data lines in `data/planner.txt` will be removed, leaving only those that are still considered valid.
+    
+
+### Finding Bus Routes
+
+1. Finding routes.
+  
+  * Test case: `bus /IT /UTown`
+     
+     Expected: Shows a direct bus route.
+
+  * Test case: `bus /UTown /KR Bus Terminal`
+      
+      Expected: Shows an indirect route where user will need to change buses at an intermediate stop.
+      
+  * Test case: `bus /PGPR /KR MRT`
+     
+      Expected: Shows alternate direct route from the opposite bus stop.
+  
+  * Note: Bus stop names are not case sensitive.
+      
+2. List all bus stops
+   
+   * Test case: `bus stop list`
+    
+      Expected: Shows the list of all bus stops.
+   
