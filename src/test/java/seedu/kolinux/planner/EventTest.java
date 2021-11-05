@@ -11,10 +11,7 @@ public class EventTest {
     private static final String CORRUPTED_DATA_STRING = "some corrupted data||0x|[]*";
     private static final String EVENT_FROM_DATA = "12:00 - 15:00 Some data";
 
-    private static final String DATETIME_ERROR =
-            "Please provide a valid date and time!\n"
-                    + "Date: yyyy-mm-dd\n"
-                    + "Time: hhMM";
+    private static final String DATE_FORMAT_ERROR = "Please provide a valid date format. Format: yyyy-mm-dd";
 
     @Test
     public void constructEvent_eventDataString_eventConstructed() throws KolinuxException {
@@ -28,7 +25,7 @@ public class EventTest {
         try {
             new Event(CORRUPTED_DATA_STRING);
         } catch (KolinuxException exception) {
-            assertEquals(DATETIME_ERROR, exception.getMessage());
+            assertEquals(DATE_FORMAT_ERROR, exception.getMessage());
         }
     }
 }

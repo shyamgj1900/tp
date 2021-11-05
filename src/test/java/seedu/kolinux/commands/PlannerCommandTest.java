@@ -21,7 +21,7 @@ public class PlannerCommandTest {
 
     private static final String ADD_EVENT_MESSAGE
             = "An event has been added to your schedule successfully: 2021-10-26 15:00 - 15:15 Pop Quiz 3";
-    private static final String LIST_EVENTS_TEST = "2021-10-26\n"
+    private static final String LIST_EVENTS_TEST = "2021-10-26 TUESDAY\n"
             + "15:00 - 15:15 Pop Quiz 3\n"
             + "15:30 - 20:00 Pop Quiz 4\n"
             + "20:00 - 21:30 Pop Quiz 5";

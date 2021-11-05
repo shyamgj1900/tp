@@ -19,9 +19,14 @@ planner add CG2028 lab/2021-10-05/1500/1800
 planner add Project Meeting/2021-10-05/1900/2300
 planner add GEA1000 Tutorial/2021-10-07/0900/1200
 planner add some random stuff
-planner add CS2101 OP2 Rehearsal/29 Oct 21/7pm/9pm
+planner add wrong date format/29 Oct 21/1900/2100
+planner add invalid date/2021-02-29/1900/2100
+planner add wrong time format/2021-10-10/7pm/9pm
+planner add invalid time/2021-10-10/1900/1960
 planner add Family dinner/2021-02-05/2000/1800
 planner list 2021-10-05
+planner list 555
+planner list 2021-11-31
 module add CS1010
 timetable add CS1010/TUT/tuesday/1000/1100
 planner list 2021-10-19
