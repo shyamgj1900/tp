@@ -157,7 +157,8 @@ public class CapCalculatorByCode extends CapCalculator {
     protected void checkInvalidModules() throws KolinuxException {
         StringBuilder invalidModulesMessage = new StringBuilder("Invalid module info format found: ");
         StringBuilder invalidSuModulesMessage = new StringBuilder("The following module(s) don't allow S/U grade: ");
-        StringBuilder repeatedModulesMessage = new StringBuilder("The following module(s) are entered multiple times: ");
+        StringBuilder repeatedModulesMessage = 
+                new StringBuilder("The following module(s) are entered multiple times: ");
         boolean hasInvalidModules = false;
         boolean hasInvalidSuModules = false;
         boolean hasRepeatedModules = false;
