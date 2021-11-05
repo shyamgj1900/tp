@@ -477,7 +477,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 * *Mainstream OS*: Windows, Linux, Unix, OS-X
 * *Event*: Personal event added to the Planner by the user
-* *Lesson*: Class (Lecture, Tutorial, or Lab) for a particular module added to the Timetable by the user
+* *Lesson*: Class (Lecture, Tutorial, Sectional, or Lab) for a particular module added to the Timetable by the user
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
