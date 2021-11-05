@@ -19,9 +19,13 @@ These features are powered by the NUSMods API. Written in Java, Kolinux and prov
   * Justification: This enhancement allows the user to conveniently calculate their overall CAP using a short, simple command without having to refer to another feature.
   * Highlights: This feature has a different approach in retrieving the modules and grades from the user, thus making it necessary to introduce an additional class dedicated for extracting and calculating the overall CAP from module description with different data type than the basic calculator.
 * **Enhancement added**: Grade suggestion based on stored modules in Module Manager feature
-  * Functionality: Calculate the overall CAP of the user's stored module and compare the value with the user's desired CAP. Then, based on the user's other modules with no assigned grade, calculate and suggest the minimum overall grade needed to achieve the desired CAP to the user.
+  * What it does: Calculate the overall CAP of the user's stored module and compare the value with the user's desired CAP. Then, based on the user's other modules with no assigned grade, calculate and suggest the minimum overall grade needed to achieve the desired CAP to the user.
   * Justification: This allows the user to estimate their effort needed to achieve their desired result, which would allow the user to manage their study plan and get prepared for their upcoming modules.
   * Highlights: Despite similar functionality with the cap calculator from module list, this functionality needs to be implemented using a different class in order to compare the grade point value back into a letter grade form to show to the user.
+* **Enhancement added**: Check whether if a module accept S/U grade
+  * What it does: Initially, the users was able to put in S/U grade for any modules, which should not be the case as most of the modules offered in NUS do not accept these grade. This enhancement checks for the validity of S/U grade with the input module from the user.
+  * Justification: If the S/U grade is allowed for every module, it can cause confusion to the users who do not understand the S/U system of NUS. Also, it can make the cap calculator become inaccurate.
+  * Highlights: This enhancement requires some adjustments to the way each module is stored as `ModuleDetails`, as the S/U-compatibility has to be stored as an additional attribute of the object.
 * **Contributions to UG**:
   * Added documentation for the feature `cap` which includes `cap mc` and `cap code`
   * Added documentation for the subcommand of `module` feature, which are `module cap` and `module cap DESIRED_CAP`
