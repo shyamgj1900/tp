@@ -582,7 +582,7 @@ This is what you should observe on the terminal when you list the events in your
 
 ```
 planner list 2021-10-10
-2021-10-10
+2021-10-10 SUNDAY
 15:30 - 17:30 Watch movie
 17:00 - 18:00 MA1508E quiz
 ....................................................................
@@ -616,7 +616,7 @@ Please enter the ID of the event you wish to delete (Enter 'n' to terminate this
 An event has been deleted from your schedule successfully: 2021-11-05 10:00 - 12:00 Attend career talk
 ....................................................................
 planner list 2021-11-05
-2021-11-05
+2021-11-05 FRIDAY
 07:00 - 07:30 10km run
 15:00 - 17:00 Watch movie
 ....................................................................
