@@ -35,12 +35,20 @@ public class CapCalculatorByCode extends CapCalculator {
     private static final int VALID_GRADE = 0;
     private static final int INVALID_SU_GRADE = 1;
     private static final int INVALID_GRADE = 2;
+    private static final int INVALID_CSCU_MODULE_MESSAGE = 3;
 
     protected ModuleDb moduleDb;
     
     private CalculatorModuleList repeatedModules;
     
     private int containsValidGrade(String moduleCode, String moduleGrade) {
+        ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
+        if (module.isCsCuModule()) {
+            if (moduleGrade.equals(CS_GRADE) || moduleGrade.equals(CU_GRADE)) {
+                return VALID_GRADE;
+            }
+            return INVALID_CSCU_MODULE_MESSAGE;
+        }
         if (moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
                 || moduleGrade.equals(B_PLUS_GRADE) || moduleGrade.equals(B_GRADE) || moduleGrade.equals(B_MINUS_GRADE)
                 || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
@@ -50,7 +58,6 @@ public class CapCalculatorByCode extends CapCalculator {
         }
         if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) 
                 || moduleGrade.equals(CU_GRADE)) {
-            ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
             return module.isSuAble() ? VALID_GRADE : INVALID_SU_GRADE;
         }
         return INVALID_GRADE;        
@@ -79,8 +86,8 @@ public class CapCalculatorByCode extends CapCalculator {
             }
             String grade = moduleDescriptions[1];
             int checkGradeResult = containsValidGrade(moduleCode, grade);
-            if (checkGradeResult == INVALID_SU_GRADE) {
-                invalidSuModules.add(moduleCode);
+            if (checkGradeResult == INVALID_SU_GRADE || checkGradeResult == INVALID_CSCU_MODULE_MESSAGE) {
+                invalidGradeModules.add(moduleCode);
             }
             if (checkGradeResult == INVALID_GRADE) {
                 invalidModules.add(moduleDescription);
@@ -156,7 +163,8 @@ public class CapCalculatorByCode extends CapCalculator {
     @Override
     protected void checkInvalidModules() throws KolinuxException {
         StringBuilder invalidModulesMessage = new StringBuilder("Invalid module info format found: ");
-        StringBuilder invalidSuModulesMessage = new StringBuilder("The following module(s) don't allow S/U grade: ");
+        StringBuilder invalidSuModulesMessage = 
+                new StringBuilder("The following module(s) contain invalid grading basis: ");
         StringBuilder repeatedModulesMessage = 
                 new StringBuilder("The following module(s) are entered multiple times: ");
         boolean hasInvalidModules = false;
@@ -169,9 +177,9 @@ public class CapCalculatorByCode extends CapCalculator {
                 invalidModulesMessage.append(module).append(" ");
             }
         }
-        if (!invalidSuModules.isEmpty()) {
+        if (!invalidGradeModules.isEmpty()) {
             hasInvalidSuModules = true;
-            for (String module : invalidSuModules) {
+            for (String module : invalidGradeModules) {
                 invalidSuModulesMessage.append(module).append(" ");
             }
         }

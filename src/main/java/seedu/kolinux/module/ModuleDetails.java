@@ -298,6 +298,11 @@ public class ModuleDetails {
             return false;
         }
     }
+    
+    public boolean isCsCuModule() {
+        return description.contains("CS/CU") || moduleCode.contains("GEQ1000") || moduleCode.contains("DMX")
+                || moduleCode.equals("CP2106") || moduleCode.equals("CFG1002");
+    }
 
     /**
      * Returns a String object that is formatted for printing in CLI.

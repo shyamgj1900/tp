@@ -46,6 +46,7 @@ public class ModuleCommand extends Command {
     public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
     public static final String INVALID_SU_GRADE_MESSAGE = "This module doesn't allow S/U grade";
+    public static final String INVALID_CSCU_MODULE_MESSAGE = "This module only accept CS or CU grade";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
             + "1. module add CODE\n"
             + "2. module delete CODE\n"
@@ -61,6 +62,14 @@ public class ModuleCommand extends Command {
     }
 
     private String containsValidGrade(String moduleCode, String moduleGrade) {
+        ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
+        if (module.isCsCuModule()) {
+            if (moduleGrade.equals(CS_GRADE) || moduleGrade.equals(CU_GRADE) 
+                    || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT)) {
+                return null;
+            }
+            return INVALID_CSCU_MODULE_MESSAGE;
+        }
         if (moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
                 || moduleGrade.equals(B_PLUS_GRADE) || moduleGrade.equals(B_GRADE) || moduleGrade.equals(B_MINUS_GRADE)
                 || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
@@ -71,7 +80,6 @@ public class ModuleCommand extends Command {
         }
         if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE)
                 || moduleGrade.equals(CU_GRADE)) {
-            ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
             return module.isSuAble() ? null : INVALID_SU_GRADE_MESSAGE;
         }
         return INVALID_GRADE_LETTER_MESSAGE;
