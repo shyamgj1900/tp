@@ -12,7 +12,7 @@ public abstract class CapCalculator {
     
     private static final int CLASSNAME_POSITION = 3;
     
-    protected static final int INVALID_GRADE = -1;
+    protected static final int INVALID_STORED_GRADE = -1;
     
     protected static final double MAX_CAP = 5.0;
 
@@ -21,6 +21,7 @@ public abstract class CapCalculator {
     protected static final String TWO_DECIMAL_FORMAT = "%.2f";
     
     protected CalculatorModuleList modules;
+    protected ArrayList<String> invalidSuModules;
     protected ArrayList<String> invalidModules;
 
     /**
@@ -28,6 +29,7 @@ public abstract class CapCalculator {
      */
     public CapCalculator() {
         modules = new CalculatorModuleList();
+        invalidSuModules = new ArrayList<>();
         invalidModules = new ArrayList<>();
     }
 

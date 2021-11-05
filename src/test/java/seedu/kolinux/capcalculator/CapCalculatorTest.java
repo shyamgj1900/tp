@@ -25,7 +25,7 @@ public class CapCalculatorTest {
     private static final String BLANK_DESCRIPTION_EXCEPTION_MESSAGE = 
             "Please enter valid module description. Example: CG2027/A+";
     private static final String INVALID_MODULES_EXCEPTION_MESSAGE = 
-            "Invalid module info format found: ABCDE CG2027/Z CS0000/B 12345 ";
+            "Invalid module info format found: ABCDE CG2027/Z CS0000/B 12345";
     private static final String GRADES_NOT_AVAILABLE_MESSAGE = "There is no module with available grade at the moment";
     private static final String CAP_UNACHIEVABLE_MESSAGE = "UNACHIEVABLE";
     private static final String INVALID_CAP_MESSAGE = "CAP cannot exceed 5.0";

@@ -31,25 +31,29 @@ import static seedu.kolinux.module.Grade.W_GRADE;
  * Represents CAP calculator used when the user's input module descriptions are based on module code.
  */
 public class CapCalculatorByCode extends CapCalculator {
+    
+    private static final int VALID_GRADE = 0;
+    private static final int INVALID_SU_GRADE = 1;
+    private static final int INVALID_GRADE = 2;
 
     protected ModuleDb moduleDb;
     
     private CalculatorModuleList repeatedModules;
     
-    private boolean containsValidGrade(String moduleCode, String moduleGrade) {
+    private int containsValidGrade(String moduleCode, String moduleGrade) {
         if (moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
                 || moduleGrade.equals(B_PLUS_GRADE) || moduleGrade.equals(B_GRADE) || moduleGrade.equals(B_MINUS_GRADE)
                 || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
                 || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(EXE_GRADE) 
                 || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE) || moduleGrade.equals(W_GRADE)) {
-            return true;
+            return VALID_GRADE;
         }
         if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) 
                 || moduleGrade.equals(CU_GRADE)) {
             ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
-            return module.isSuAble();
+            return module.isSuAble() ? VALID_GRADE : INVALID_SU_GRADE;
         }
-        return false;        
+        return INVALID_GRADE;        
     }
 
     /**
@@ -74,9 +78,12 @@ public class CapCalculatorByCode extends CapCalculator {
                 continue;
             }
             String grade = moduleDescriptions[1];
-            if (!containsValidGrade(moduleCode, grade)) {
+            int checkGradeResult = containsValidGrade(moduleCode, grade);
+            if (checkGradeResult == INVALID_SU_GRADE) {
+                invalidSuModules.add(moduleCode);
+            }
+            if (checkGradeResult == INVALID_GRADE) {
                 invalidModules.add(moduleDescription);
-                continue;
             }
             if (!modules.storeModuleCodeGrade(moduleCode, grade, moduleDb)) {
                 repeatedModules.storeModuleCodeGrade(moduleCode, grade, moduleDb);
@@ -149,14 +156,22 @@ public class CapCalculatorByCode extends CapCalculator {
     @Override
     protected void checkInvalidModules() throws KolinuxException {
         StringBuilder invalidModulesMessage = new StringBuilder("Invalid module info format found: ");
-        StringBuilder repeatedModulesMessage = new StringBuilder("These modules are entered multiple times: ");
+        StringBuilder invalidSuModulesMessage = new StringBuilder("The following module(s) don't allow S/U grade: ");
+        StringBuilder repeatedModulesMessage = new StringBuilder("The following module(s) are entered multiple times: ");
         boolean hasInvalidModules = false;
+        boolean hasInvalidSuModules = false;
         boolean hasRepeatedModules = false;
         
         if (!invalidModules.isEmpty()) {
             hasInvalidModules = true;
             for (String module : invalidModules) {
                 invalidModulesMessage.append(module).append(" ");
+            }
+        }
+        if (!invalidSuModules.isEmpty()) {
+            hasInvalidSuModules = true;
+            for (String module : invalidSuModules) {
+                invalidSuModulesMessage.append(module).append(" ");
             }
         }
         if (!(repeatedModules.getMyModulesSize() == 0)) {
@@ -166,17 +181,11 @@ public class CapCalculatorByCode extends CapCalculator {
             }
         }
         
-        if (hasInvalidModules && hasRepeatedModules) {
-            String errorMessage = repeatedModulesMessage.toString() + "\n" + invalidModulesMessage.toString();
-            throw new KolinuxException(errorMessage);
-        }
-        if (hasInvalidModules) {
-            String errorMessage = invalidModulesMessage.toString();
-            throw new KolinuxException(errorMessage);
-        }
-        if (hasRepeatedModules) {
-            String errorMessage = repeatedModulesMessage.toString();
-            throw new KolinuxException(errorMessage);
-        }
+        if (hasInvalidModules || hasInvalidSuModules || hasRepeatedModules) {
+            String errorMessage = (hasInvalidModules ? invalidModulesMessage.toString() + "\n" : "")
+                    + (hasRepeatedModules ? repeatedModulesMessage.toString() + "\n" : "")
+                    + (hasInvalidSuModules ? invalidSuModulesMessage.toString() : "");
+            throw new KolinuxException(errorMessage.trim());
+        }    
     }
 }
