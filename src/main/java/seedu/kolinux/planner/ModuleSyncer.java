@@ -83,7 +83,7 @@ public class ModuleSyncer {
 
         try {
             event = new Event(arguments);
-            event.setIsLesson();
+            event.setIsIntegratedEvent();
         } catch (KolinuxException exception) {
             // Should not be executed since the necessary checks of the arguments were done before constructing
             // the Lesson object.
