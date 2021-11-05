@@ -1,10 +1,10 @@
 package seedu.kolinux.planner;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.util.Parser;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
 /** Represents an event in the schedule. */
 public class Event {
@@ -27,10 +27,6 @@ public class Event {
 
     private static final String EMPTY_DESCRIPTION_ERROR =
             "Please provide a description for your event!";
-    private static final String DATETIME_ERROR =
-            "Please provide a valid date and time!\n"
-                    + "Date: yyyy-mm-dd\n"
-                    + "Time: hhMM";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
     private static final String TIME_SAME_ERROR =
@@ -49,19 +45,15 @@ public class Event {
         if (parsedArguments.length != EVENT_ARGUMENTS_LENGTH) {
             throw new KolinuxException(FORMAT_ERROR);
         }
-
-        try {
-            this.description = parsedArguments[0];
-            this.date = LocalDate.parse(parsedArguments[1]);
-            this.startTime = LocalTime.parse(parsedArguments[2].replaceFirst("..", "$0:"));
-            this.endTime = LocalTime.parse(parsedArguments[3].replaceFirst("..", "$0:"));
-        } catch (DateTimeParseException exception) {
-            throw new KolinuxException(DATETIME_ERROR);
-        }
-
-        if (description.isEmpty()) {
+        if (parsedArguments[0].isEmpty()) {
             throw new KolinuxException(EMPTY_DESCRIPTION_ERROR);
         }
+
+        this.description = parsedArguments[0];
+        this.date = Parser.verifyDate(parsedArguments[1]);
+        this.startTime = Parser.verifyTime(parsedArguments[2]);
+        this.endTime = Parser.verifyTime(parsedArguments[3]);
+
         if (startTime.compareTo(endTime) > 0) {
             throw new KolinuxException(TIME_ORDER_ERROR);
         }
