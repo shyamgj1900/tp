@@ -2,6 +2,9 @@ package seedu.kolinux.timetable.lesson;
 
 import seedu.kolinux.exceptions.KolinuxException;
 
+/**
+ * Represents a {@code Lesson} of type Lab.
+ */
 public class Lab extends Lesson {
 
     public Lab(String[] parsedArguments) throws KolinuxException {

@@ -2,6 +2,9 @@ package seedu.kolinux.timetable.lesson;
 
 import seedu.kolinux.exceptions.KolinuxException;
 
+/**
+ * Represents a {@code Lesson} of type Tutorial.
+ */
 public class Tutorial extends Lesson {
 
     public Tutorial(String[] parsedArguments) throws KolinuxException {

@@ -5,44 +5,55 @@ import seedu.kolinux.timetable.lesson.Lesson;
 
 import java.util.Objects;
 
+import static seedu.kolinux.commands.TimetableCommand.timetable;
 import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 public class UpdateSubCommand extends SubCommand {
 
-    private AddSubCommand addSubcommand = new AddSubCommand();
-    private DeleteSubCommand deleteSubcommand = new DeleteSubCommand();
+    DeleteSubCommand deleteSubcommand = new DeleteSubCommand();
+    AddSubCommand addSubcommand = new AddSubCommand();
 
     public UpdateSubCommand() {
 
     }
 
-    public void updateTimetable(String[] lessonDetails) throws KolinuxException {
-        try {
-            String moduleCode = lessonDetails[0].toUpperCase();
-            String lessonType = lessonDetails[1].toUpperCase();
-            String oldDay = lessonDetails[2].toLowerCase();
-            String oldStartTiming = lessonDetails[3];
-            String newDay = lessonDetails[4].toLowerCase();
-            String newStartTiming = lessonDetails[5];
-            int startIndex = getIndex(newStartTiming, schoolHours);
-            int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay, oldStartTiming);
-            String newEndTiming = schoolHours[endIndex - 1];
-            checkUpdateTiming(moduleCode, lessonType, oldDay, newDay, oldStartTiming, newStartTiming, newEndTiming);
-            String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
-
-            if (isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
-                deleteSubcommand.deleteLesson(lessonDetails);
-                addSubcommand.inputLesson(parameters);
-            } else {
-                throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
-            }
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_UPDATE_FORMAT);
+    /**
+     * Updates the lesson to a different timing on the timetable.
+     *
+     * @param moduleCode Module code of lesson to be updated
+     * @param lessonType Lesson type of lesson to be updated
+     * @param oldDay Old day of lesson to be updated
+     * @param oldStartTiming Old starting time of lesson to be updated
+     * @param newDay New day which the lesson is getting updated to
+     * @param newStartTiming New starting time which the lesson is getting updated to
+     * @throws KolinuxException If the lesson to be updated is not found in the timetable
+     */
+    public void updateTimetable(String moduleCode, String lessonType, String oldDay,
+            String oldStartTiming, String newDay, String newStartTiming) throws KolinuxException {
+        if (!isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
+            throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
         }
+        int startIndex = getIndex(newStartTiming, schoolHours);
+        int endIndex = startIndex + getOldLessonHours(moduleCode, lessonType, oldDay, oldStartTiming);
+        String newEndTiming = schoolHours[endIndex - 1];
+        checkUpdateTiming(moduleCode, lessonType, oldDay, newDay, oldStartTiming, newStartTiming, newEndTiming);
+        String[] parameters = new String[] {moduleCode, lessonType, newDay, newStartTiming, newEndTiming};
+        deleteSubcommand.deleteLesson(moduleCode, lessonType, oldDay, oldStartTiming);
+        addSubcommand.inputLesson(parameters, true, false);
     }
 
+
+    /**
+     * Gets the duration of the lesson which is to be updated.
+     *
+     * @param moduleCode Module code of lesson to be updated
+     * @param lessonType Lesson type of lesson to be updated
+     * @param day Old day of lesson to be updated
+     * @param oldStartTiming Old starting time of lesson to be updated
+     * @return The duration of the lesson which is to be updated
+     */
     private int getOldLessonHours(String moduleCode, String lessonType, String day, String oldStartTiming) {
         for (Lesson lesson : lessonStorage) {
             if (lesson.getModuleCode().equals(moduleCode) && lesson.getLessonType().equals(lessonType)
@@ -53,6 +64,15 @@ public class UpdateSubCommand extends SubCommand {
         return -1;
     }
 
+    /**
+     * Gets the old ending time of the lesson to be updated.
+     *
+     * @param moduleCode Module code of lesson to be updated
+     * @param lessonType Lesson type of lesson to be updated
+     * @param day Old day of lesson to be updated
+     * @param startTime Old starting time of lesson to be updated
+     * @return The old ending time of the lesson to be updated
+     */
     private String getOldEndTiming(String moduleCode, String lessonType, String day, String startTime) {
         String oldEndTime = null;
         for (Lesson lesson : lessonStorage) {
@@ -64,6 +84,18 @@ public class UpdateSubCommand extends SubCommand {
         return oldEndTime;
     }
 
+    /**
+     * Checks if the lesson is getting updated to the same timing.
+     *
+     * @param moduleCode Module code of lesson to be updated
+     * @param lessonType Lesson type of lesson to be updated
+     * @param oldDay Old day of lesson to be updated
+     * @param newDay New day which the lesson is getting updated to
+     * @param oldStartTiming Old starting time of lesson to be updated
+     * @param newStartTiming New starting time which the lesson is getting updated to
+     * @param newEndTiming New ending time which the lesson is getting updated to
+     * @throws KolinuxException If the lesson is getting updated to the same timing
+     */
     private void checkUpdateTiming(String moduleCode, String lessonType, String oldDay, String newDay,
             String oldStartTiming, String newStartTiming, String newEndTiming) throws KolinuxException {
         String oldEndTiming = getOldEndTiming(moduleCode, lessonType, oldDay, oldStartTiming);
@@ -72,5 +104,7 @@ public class UpdateSubCommand extends SubCommand {
             throw new KolinuxException(UPDATING_TO_SAME_TIMING);
         }
     }
+
+
 
 }

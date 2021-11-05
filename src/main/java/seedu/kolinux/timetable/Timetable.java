@@ -4,19 +4,18 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.subcommand.AddSubCommand;
-import seedu.kolinux.timetable.subcommand.ViewSubCommand;
 import seedu.kolinux.timetable.subcommand.DeleteSubCommand;
 import seedu.kolinux.timetable.subcommand.UpdateSubCommand;
+import seedu.kolinux.timetable.subcommand.ViewSubCommand;
+import seedu.kolinux.timetable.subcommand.SubCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static seedu.kolinux.timetable.lesson.Lesson.days;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
-import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 /**
  * Timetable class that represents the methods to interact with the 2D timetable array and Array list for storage.
@@ -75,26 +74,71 @@ public class Timetable {
     private void loadContent(ArrayList<String> fileContents) throws KolinuxException {
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
-            executeAdd(content);
+            addSubCommand.inputLesson(content, false, true);
         }
     }
 
+    /**
+     * Executes the view subcommand for timetable which displays the timetable on CLI.
+     */
     public void executeView() {
         viewSubCommand.viewTimetable();
     }
 
-    public void executeAdd(String[] lessonDetails) throws KolinuxException {
-        addSubCommand.inputLesson(lessonDetails);
+    /**
+     * Executes the add subcommand for timetable which adds a lesson to the timetable.
+     *
+     * @param lessonDetails Details of the lesson to be added
+     * @param isAllowingAdd Boolean to check whether user allows adding to timetable despite exceeding workload
+     * @throws KolinuxException If it fails any of the checks in addSubCommand before performing add operation
+     */
+    public void executeAdd(String[] lessonDetails, boolean isAllowingAdd) throws KolinuxException {
+        addSubCommand.inputLesson(lessonDetails, isAllowingAdd, false);
     }
 
+    /**
+     * Executes the delete subcommand for timetable which deletes a lesson from the timetable.
+     *
+     * @param lessonDetails Details of the lesson to be deleted
+     * @throws KolinuxException If it fails any of the checks in DeleteSubCommand before performing delete operation
+     */
     public void executeDelete(String[] lessonDetails) throws KolinuxException {
-        deleteSubCommand.deleteLesson(lessonDetails);
+        try {
+            String moduleCode = lessonDetails[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String day = lessonDetails[2].toLowerCase();
+            String startTime = lessonDetails[3];
+            deleteSubCommand.deleteLesson(moduleCode, lessonType, day, startTime);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(SubCommand.INVALID_DELETE_FORMAT);
+        }
     }
 
+    /**
+     * Executes the update subcommand for timetable which updates a lesson to a different timing in the timetable.
+     *
+     * @param lessonDetails Details of the lesson to be updated
+     * @throws KolinuxException If it fails any of the checks in UpdateSubCommand before performing update operation
+     */
     public void executeUpdate(String[] lessonDetails) throws KolinuxException {
-        updateSubCommand.updateTimetable(lessonDetails);
+        try {
+            String moduleCode = lessonDetails[0].toUpperCase();
+            String lessonType = lessonDetails[1].toUpperCase();
+            String oldDay = lessonDetails[2].toLowerCase();
+            String oldStartTiming = lessonDetails[3];
+            String newDay = lessonDetails[4].toLowerCase();
+            String newStartTiming = lessonDetails[5];
+            updateSubCommand.updateTimetable(moduleCode, lessonType, oldDay, oldStartTiming, newDay, newStartTiming);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KolinuxException(SubCommand.INVALID_UPDATE_FORMAT);
+        }
     }
 
+    /**
+     * Deletes all lessons of a specific module code in the timetable.
+     *
+     * @param moduleCode Module code lessons which needs to be deleted
+     */
     public void deleteByModuleList(String moduleCode) {
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COLUMN_SIZE; j++) {
@@ -107,26 +151,26 @@ public class Timetable {
         timetableStorage.writeToFile();
     }
 
+    /**
+     * Lists the lessons and their timings in the timetable for a specific weekday.
+     *
+     * @param day The day of the lessons to be listed from
+     * @throws KolinuxException If invalid day entered
+     */
     public void listTimetable(String day) throws KolinuxException {
         boolean doesLessonExist = false;
-        int dayIndex = getIndex(day, days);
-        String[] lessonList = new String[30];
-        if (dayIndex == -1) {
+        String[] lessonList = new String[ROW_SIZE];
+        if (getIndex(day, days) == -1) {
             throw new KolinuxException("Please enter a valid weekday from monday to friday spelt fully");
         }
         for (Lesson lesson: lessonStorage) {
             if (lesson.getDay().equals(day)) {
-                String moduleCode = lesson.getModuleCode();
-                String lessonType = lesson.getLessonType();
-                String startingTime = lesson.getStartTime();
-                String endingTime = lesson.getEndTime();
-                int startTimeIndex = lesson.getStartTimeIndex();
                 doesLessonExist = true;
-                lessonList[startTimeIndex - 1] = moduleCode + " " + lessonType + " " + startingTime
-                        + " - " + endingTime;
+                lessonList[lesson.getStartTimeIndex() - 1] = lesson.getStartTime() + " - " + lesson.getEndTime()
+                        + " " + lesson.getModuleCode() + " " + lesson.getLessonType();
             }
         }
-        for (int i = 0; i < 29; i++) {
+        for (int i = 0; i < ROW_SIZE - 1; i++) {
             if (lessonList[i] != null) {
                 System.out.println(lessonList[i]);
             }
