@@ -35,15 +35,21 @@ public class CapCalculatorByCode extends CapCalculator {
     protected ModuleDb moduleDb;
     
     private CalculatorModuleList repeatedModules;
-
-    private boolean isValidGrade(String moduleGrade) {
-        return moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
+    
+    private boolean containsValidGrade(String moduleCode, String moduleGrade) {
+        if (moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
                 || moduleGrade.equals(B_PLUS_GRADE) || moduleGrade.equals(B_GRADE) || moduleGrade.equals(B_MINUS_GRADE)
                 || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
-                || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(S_GRADE)
-                || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) || moduleGrade.equals(CU_GRADE)
-                || moduleGrade.equals(EXE_GRADE) || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE)
-                || moduleGrade.equals(W_GRADE);
+                || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(EXE_GRADE) 
+                || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE) || moduleGrade.equals(W_GRADE)) {
+            return true;
+        }
+        if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(U_GRADE) 
+                || moduleGrade.equals(CU_GRADE)) {
+            ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
+            return module.isSuAble();
+        }
+        return false;        
     }
 
     /**
@@ -68,7 +74,7 @@ public class CapCalculatorByCode extends CapCalculator {
                 continue;
             }
             String grade = moduleDescriptions[1];
-            if (!isValidGrade(grade)) {
+            if (!containsValidGrade(moduleCode, grade)) {
                 invalidModules.add(moduleDescription);
                 continue;
             }
