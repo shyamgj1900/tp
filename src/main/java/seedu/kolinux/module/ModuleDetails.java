@@ -1,6 +1,7 @@
 package seedu.kolinux.module;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.gcardone.junidecode.Junidecode;
 
 import static seedu.kolinux.module.Grade.A_PLUS_GRADE;
@@ -43,13 +44,14 @@ public class ModuleDetails {
     private double projectHours;
     private double preparationHours;
     private JsonArray semesterData;
+    private JsonObject attributes;
     private static final int OFFSET = 8;
     private static final int SEMESTER_1 = 0;
     private static final int SEMESTER_2 = 1;
     private static final int WORD_LIMIT = 50;
 
     public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
-            String title, String department, double[] workload, JsonArray semesterData) {
+            String title, String department, double[] workload, JsonArray semesterData, JsonObject attributes) {
 
         /*Attributes read from the NUSmods JSON may contain unicode characters. For proper printing in standard output,
         these characters are converted to their ASCII equivalent.*/
@@ -62,6 +64,7 @@ public class ModuleDetails {
         this.workload = workload;
         this.semesterData = semesterData;
         this.grade = RESET_GRADE;
+        this.attributes = attributes;
         assert Integer.parseInt(this.moduleCredit) > 0 : "Modular Credits must be positive";
     }
 
@@ -77,6 +80,7 @@ public class ModuleDetails {
         this.workload = null;
         this.semesterData = null;
         this.grade = grade;
+        this.attributes = null;
     }
     
     public ModuleDetails(String moduleCode, String grade) {
@@ -89,6 +93,7 @@ public class ModuleDetails {
         this.workload = null;
         this.semesterData = null;
         this.grade = grade;
+        this.attributes = null;
     }
 
     public void setGrade(String newGrade) {
@@ -285,6 +290,19 @@ public class ModuleDetails {
         grade = RESET_GRADE;
         return moduleCode + " grade reset";
     }
+    
+    public boolean isSuAble() {
+        try {
+            return attributes.get("su").getAsBoolean();
+        } catch (NullPointerException exception) {
+            return false;
+        }
+    }
+    
+    public boolean isCsCuModule() {
+        return description.contains("CS/CU") || moduleCode.contains("GEQ1000") || moduleCode.contains("DMX")
+                || moduleCode.equals("CP2106") || moduleCode.equals("CFG1002");
+    }
 
     /**
      * Returns a String object that is formatted for printing in CLI.
@@ -307,7 +325,7 @@ public class ModuleDetails {
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
                 + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals(RESET_GRADE) ? "N/A" : grade) + "\n"
-                + formattedDescription;
+                + "Has S/U option: " + (isSuAble() ? "Yes" : "No") + "\n" + formattedDescription;
     }
 
 }

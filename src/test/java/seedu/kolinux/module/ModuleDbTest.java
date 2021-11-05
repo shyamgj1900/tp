@@ -1,6 +1,8 @@
 package seedu.kolinux.module;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -13,6 +15,7 @@ class ModuleDbTest {
     private static final ModuleDb moduleDb = new ModuleDb();
     private static final double[] workload = new double[] {2,1,1,3,3};
     private static JsonArray semesterData = new JsonArray();
+    private static JsonObject attributes = new JsonObject();
     private final ModuleDetails testModule = new ModuleDetails("CS2101", "4", "Computing",
             "This module aims to equip students with the skills needed to communicate technical "
                     +
@@ -30,7 +33,7 @@ class ModuleDbTest {
                     +
                     "software guides, oral presentations, software demonstrations and project blogs.",
             "Effective Communication for Computing Professionals",
-            "Center for Engl Lang Comms", workload, semesterData);
+            "Center for Engl Lang Comms", workload, semesterData, attributes);
 
     private final String invalidModuleCode = "x";
 
@@ -38,6 +41,7 @@ class ModuleDbTest {
     @BeforeAll
     public static void setUp() {
         moduleDb.initModuleDb();
+        attributes.addProperty("su", true);
     }
 
     @Test

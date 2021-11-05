@@ -41,11 +41,12 @@ public class ModuleCommand extends Command {
     public static final String VIEW_SUBCOMMAND = "view";
     public static final String LIST_SUBCOMMAND = "list";
     public static final String SET_GRADE_SUBCOMMAND = "grade";
-
-
     private static final String CAP_SUBCOMMAND = "cap";
+    
     public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
+    public static final String INVALID_SU_GRADE_MESSAGE = "This module doesn't allow S/U grade";
+    public static final String INVALID_CSCU_MODULE_MESSAGE = "This module only accept CS or CU grade";
     public static final String INVALID_ARGUMENT_MESSAGE = "Ensure command has one of the following formats:\n"
             + "1. module add CODE\n"
             + "2. module delete CODE\n"
@@ -59,27 +60,42 @@ public class ModuleCommand extends Command {
         this.subCommand = subCommand;
         this.parsedArguments = parsedArguments;
     }
-    
-    private boolean isValidGrade(String moduleGrade) {
-        return moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
+
+    private String containsValidGrade(String moduleCode, String moduleGrade) {
+        ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
+        if (module.isCsCuModule()) {
+            if (moduleGrade.equals(CS_GRADE) || moduleGrade.equals(CU_GRADE) 
+                    || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT)) {
+                return null;
+            }
+            return INVALID_CSCU_MODULE_MESSAGE;
+        }
+        if (moduleGrade.equals(A_PLUS_GRADE) || moduleGrade.equals(A_GRADE) || moduleGrade.equals(A_MINUS_GRADE)
                 || moduleGrade.equals(B_PLUS_GRADE) || moduleGrade.equals(B_GRADE) || moduleGrade.equals(B_MINUS_GRADE)
                 || moduleGrade.equals(C_PLUS_GRADE) || moduleGrade.equals(C_GRADE) || moduleGrade.equals(D_PLUS_GRADE)
-                || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(S_GRADE)
-                || moduleGrade.equals(U_GRADE) || moduleGrade.equals(CS_GRADE) || moduleGrade.equals(CU_GRADE)
-                || moduleGrade.equals(EXE_GRADE) || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE)
-                || moduleGrade.equals(W_GRADE) || moduleGrade.equals(RESET_GRADE) 
-                || moduleGrade.equals(RESET_GRADE_ARGUMENT);
+                || moduleGrade.equals(D_GRADE) || moduleGrade.equals(F_GRADE) || moduleGrade.equals(EXE_GRADE)
+                || moduleGrade.equals(IC_GRADE) || moduleGrade.equals(IP_GRADE) || moduleGrade.equals(W_GRADE)
+                || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT)) {
+            return null;
+        }
+        if (moduleGrade.equals(S_GRADE) || moduleGrade.equals(U_GRADE)) {
+            return module.isSuAble() ? null : INVALID_SU_GRADE_MESSAGE;
+        }
+        return INVALID_GRADE_LETTER_MESSAGE;
     }
 
     private CommandResult setModuleGrade(String[] parsedArguments) throws KolinuxException {
+        String moduleCode;
         String moduleGrade;
         try {
+            moduleCode = parsedArguments[0].toUpperCase();
             moduleGrade = parsedArguments[1].toUpperCase();
         } catch (IndexOutOfBoundsException exception) {
             throw new KolinuxException(INVALID_GRADE_FORMAT_MESSAGE);
         }
-        if (!isValidGrade(moduleGrade)) {
-            throw new KolinuxException(INVALID_GRADE_LETTER_MESSAGE);
+        String gradeResultMessage = containsValidGrade(moduleCode, moduleGrade);
+        if (!(gradeResultMessage == null)) {
+            throw new KolinuxException(gradeResultMessage);
         }
         String message = moduleList.setModuleGrade(moduleCode, moduleGrade);
         logger.log(Level.INFO, message);

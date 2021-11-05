@@ -37,7 +37,7 @@ Your overall CAP will be 4.19 if you get your desired grades!
 ....................................................................
 Your overall CAP will be 3.00 if you get your desired grades!
 ....................................................................
-Invalid module info format found: invalid_info_1 invalid_info_2 
+Invalid module info format found: invalid_info_1 invalid_info_2
 ....................................................................
 This command is not recognised, please enter "help" for the list of commands...
 ....................................................................
@@ -46,6 +46,7 @@ Department: Center for Engl Lang Comms
 Faculty: Computing
 Credits: 4
 Grade: N/A
+Has S/U option: Yes
 This module aims to equip students with the skills
 needed to communicate technical information to technical
 and nontechnical audiences, and to create comprehensible
