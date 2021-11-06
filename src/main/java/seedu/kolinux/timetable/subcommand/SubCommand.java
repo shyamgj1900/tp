@@ -4,7 +4,9 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.timetable.lesson.Lesson;
 
 import static seedu.kolinux.timetable.Timetable.lessonStorage;
-import static seedu.kolinux.timetable.lesson.Lesson.*;
+import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
+import static seedu.kolinux.timetable.lesson.Lesson.days;
+import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
 
 public class SubCommand {
 
@@ -118,7 +120,7 @@ public class SubCommand {
     protected void checkStartTimeAndDay(String day, String startTime, String correctFormat) throws KolinuxException {
         int dayIndex = getIndex(day, days);
         int startTimeIndex = getIndex(startTime, schoolHours);
-        if (startTimeIndex == -1 || dayIndex == -1 ) {
+        if (startTimeIndex == -1 || dayIndex == -1) {
             throw new KolinuxException(correctFormat + "\n\n" + INVALID_DAY_START_TIME);
         }
     }
