@@ -3,24 +3,53 @@
 
 !include Style.puml
 
+participant ":TimetableCommand" as command COMMANDS_COLOR
+participant ":TimetablePromptHandler" as prompt TIMETABLE_COLOR
+participant ":Timetable" as table TIMETABLE_COLOR
 participant ":AddSubCommand" as subCommand TIMETABLE_COLOR
 participant ":Lesson" as lesson TIMETABLE_COLOR
 participant ":TimetableStorage" as storage TIMETABLE_COLOR
 
+
+
 hide footbox
 
-group sd Timetable checks before adding
+group sd handleExceedWorkload
+subCommand -> subCommand : checkExceedWorkload
+activate subCommand
+subCommand --> subCommand : exceedWorkload
+deactivate subCommand
+opt hasExceedWorkload && !allowAdding
+subCommand --> command : exception
 
+create prompt
+command -> prompt:
+activate prompt
+prompt --> command
+deactivate prompt
 
-alt isLessonInModuleList(moduleList, moduleCode) || \n isPeriodFree(start, end, day)
+command -> prompt: handleExceedWorkload
+activate prompt
+loop reply is "y" or "n"
+prompt -> prompt : getReplyFromPrompt()
+activate prompt
+prompt --> prompt : reply
+deactivate prompt
+alt reply is "y"
+prompt -> table : executeAdd(lessonDetails, allowAdding)
+activate table
+table -> subCommand : inputLesson(lessonDetails, allowAdding)
+activate subCommand
 create lesson
 subCommand -> lesson : new Lesson()
 activate lesson
 lesson --> subCommand
 deactivate lesson
-
+deactivate subCommand
+deactivate table
 
 subCommand -> subCommand : addToTimetable(lesson)
+
 activate subCommand
 subCommand -> storage : writeToFile()
 activate storage
@@ -29,10 +58,19 @@ deactivate storage
 subCommand -->[
 deactivate subCommand
 
+else reply is "n"
+prompt -->[ : exception
 else else
+prompt -> prompt : changeMessage(INVALID_REPLY)
+activate prompt
 
-subCommand -->[ : exception
+prompt --> prompt
+deactivate prompt
 
 end
 end
+deactivate prompt
+destroy prompt
+end
+
 @enduml

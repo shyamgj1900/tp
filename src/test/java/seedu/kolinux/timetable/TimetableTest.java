@@ -232,7 +232,6 @@ public class TimetableTest {
         System.setIn(in);
         timetablePromptHandler = new TimetablePromptHandler(EXCEED_WORKLOAD, timetable);
         timetablePromptHandler.handleExceedWorkload(EXCEED_ADD_TUTORIAL_ARGUMENTS);
-
         assertEquals(EXCEED_WORKLOAD, timetablePromptHandler.toString());
         timetable.clearTimetable();
     }
