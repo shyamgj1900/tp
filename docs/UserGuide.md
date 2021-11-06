@@ -521,9 +521,9 @@ You have no lessons on monday
 Your lessons for monday has been listed above
 ....................................................................
 timetable list friday
-CS1010 TUT 0700 - 0800
-CS1101S TUT 1600 - 1700
-CS1010 LEC 1900 - 2000
+0700 - 0800 CS1010 TUT 
+1600 - 1700 CS1101S TUT 
+1900 - 2000 CS1010 LEC 
 
 Your lessons for friday has been listed above
 ....................................................................

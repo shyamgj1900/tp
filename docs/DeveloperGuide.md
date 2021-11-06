@@ -222,39 +222,33 @@ file via `TimetableStorage#writeToFile()`
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram2.png)
 
-* There are checks done before adding to the timetable and one of them is the 
-`AddSubCommand#isLessonInModuleList(moduleList, moduleCode)`. This integrates `Timetable` and `ModuleList` which 
-ensures a module's lessons being added to the timetable has its `moduleCode` first added to the `ModuleList` 
-else it will throw an exception to add the module.
+* Due to a few inaccuracies in the api for the prescribed workload for certain modules, users are given the liberty to
+exceed the workload whilst displaying a warning as to what the prescribed workload is. For this we have made use of the 
+`PromptHandler` just like we did in `planner` to get a reply from the user in order to continue adding with the lesson.
+* The following code illustrates how to check if the lesson inputted exceeds the workload.
 
 ```
-    private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
-        for (ModuleDetails module : moduleList.myModules) {
-            if (Objects.equals(module.moduleCode, moduleCode)) {
-                return true;
-            }
-        }
-        return false;
+private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
+        throws KolinuxException {
+    String lessonType = lessonDetails[1].toUpperCase();
+    String moduleCode = lessonDetails[0].toUpperCase();
+    double requiredHours = getRequiredHours(moduleList, moduleCode, lessonType);
+    double inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
+    double storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
+    if (storageHours > requiredHours && !isAllowingAdd && !isStorageAdd) {
+        throw new ExceedWorkloadException("Input hours for " + moduleCode + " " + lessonType
+                +
+                " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n"
+                +
+                "Do you want to continue adding the lesson despite\n"
+                +
+                "exceeding the workload? Please enter y or n");
     }
+}
 ```
-* Another check done is to check if the slot between `START_TIME` and `END_TIME` is not occupied by another lesson,
-likewise it will throw an exception.
 
-```
-    private boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
-        try {
-            for (int i = startIndex; i < endIndex; i++) {
-                if (timetableData[i][dayIndex] != null) {
-                    return false;
-                }
-            }
-            return true;
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_HOURS_INPUT);
-        }
-    }
-```
-* The following sequence diagram illustrates both these checks.
+* The following sequence diagram illustrates what happens when input hours exceed the workload and what the program
+does to handle this exception before adding the lesson to the timetable.
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram3.png)
 
@@ -654,5 +648,89 @@ should be able to accomplish most of the tasks faster using commands than using 
    
    * Test case: `bus stop list`
     
-      Expected: Shows the list of all bus stops.
+       Expected: Shows the list of all bus stops.
+
+### Testing the Timetable feature
+
+1. Adding to timetable without exceeding workload
+
+   * Prerequisites : Ensure to follow the prescribed workload in `module list`
+   * Test case: `timetable add CS1010/LEC/monday/1300/1400`
+       
+       Expected: Lesson will be added without any errors
+   * Test case: `timetable add CS1010/lecture/monday/1500/1600`
    
+       Expected: Lesson will not be added as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+   * Test case: `timetable add CS1010/LEC/sat/1500/1600`
+   
+       Expected: Lesson will not be added as timetable only accepts days from monday to friday spelt fully.
+   * Test case: `timetable add CS1010/LEC/monday/1515/1600`
+
+       Expected: Lesson will not be added as timetable only timings in multiples of 30 mins
+   * Test case: `timetable add CS1010/LEC/sat/1500/1600` followed by `timetable add CS1231/LEC/sat/1500/1600`
+
+       Expected: Lesson will not be added as timetable does not accept 2 lessons to be added in the same timeslot
+   * Test case: `timetable add CS1010/LEC/monday/2100/2200`
+   
+       Expected: Lesson wil not be added as the allowed school hours are 0600 - 2100, the starting time of a lesson cannot be earlier than 0600 and the ending time cannot be later than 2100
+ 
+2. Adding lesson to timetable which exceeds the workload
+
+    * Test case: `timetable add CS1010/LEC/monday/1300/1900` followed by `y`
+
+      Expected: Program will output a prompt to confirm if you want to continue adding despite exceeding workload and by entering `y` after this prompt will add the lesson to the timetable
+    * Test case: `timetable add CS1010/LEC/monday/1300/1900` followed by `n`
+
+      Expected: Program will output a prompt to confirm if you want to continue adding despite exceeding workload and by entering `n` after this prompt will cancel the operation of adding the lesson
+    * Test case: `timetable add CS1010/LEC/monday/1300/1900` followed by `sus`
+
+      Expected: Program will output a prompt to confirm if you want to continue adding despite exceeding workload and by entering a key which is not `y` or `n` after this prompt will display an invalid key error message until you input one of the valid keys: `y` or `n`
+
+
+3. Deleting lesson from timetable
+
+   * Test case: `timetable delete CS1231/tut/monday/1200`
+       
+       Expected: Lesson will be deleted from timetable
+   * Test case: `timetable delete CS1231/tut/monday/1200` but lesson not added to timetable in the first place
+     
+       Expected: Lesson will not be deleted from timetable as the lesson does not exist in timetable
+   * Test case: `timetable delete CS1231/tut/mon/1200`
+
+       Expected: Lesson will not be deleted from timetable as timetable only accepts days from monday to friday spelt fully.
+   * Test case: `timetable delete CS1231/tutorial/monday/1200`
+
+       Expected: Lesson will not be deleted as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+
+4. Update timetable 
+
+    * Test case: `timetable update CS1231/tut/monday/1200/tuesday/1200`
+
+        Expected: Lesson will be updated 
+    * Test case: `timetable update CS1231/tut/monday/1200/tuesday/1200` but lesson not added to timetable in the first place
+
+        Expected: Lesson will not be updated as the lesson does not exist in timetable
+    * Test case: `timetable update CS1231/tut/mon/1200/tuesday/1200`
+
+        Expected: Lesson will not be updated as timetable only accepts days from monday to friday spelt fully
+    * Test case: `timetable update CS1231/tutorial/monday/1200/tuesday/1200`
+
+        Expected: Lesson will not be updated as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+    * Test case: `timetable update CS1231/tut/monday/1200/monday/1200`
+
+        Expected: Lesson will not be updated as the timing and day given is updating the lesson to the same timing and day
+
+5. View timetable
+
+   * Test case: `timetable view`
+       
+       Expected: Timetable will be printed onto the CLI
+
+6. List timetable
+
+   * Test case: `timetable list monday`
+
+       Expected: The lessons occurring on monday and their timings will be listed on the CLI
+   * Test case: `timetable list sat`
+      
+       Expected: Lessons will not be listed as the day needs to be from monday to firday and spelt fully

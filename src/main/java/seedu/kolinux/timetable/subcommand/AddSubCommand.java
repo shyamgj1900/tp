@@ -67,8 +67,8 @@ public class AddSubCommand extends SubCommand {
             throws KolinuxException {
         try {
             checkLessonInModuleList(moduleList, lessonDetails[0].toUpperCase());
-            checkLessonType(lessonDetails[1].toUpperCase());
-            checkTimeAndDay(lessonDetails[2].toLowerCase(), lessonDetails[3], lessonDetails[4]);
+            checkLessonType(lessonDetails[1].toUpperCase(), INVALID_ADD_FORMAT);
+            checkTimeAndDayForAdd(lessonDetails[2].toLowerCase(), lessonDetails[3], lessonDetails[4]);
             checkExceedingWorkload(lessonDetails, isAllowingAdd, isStorageAdd);
             sortLessonsToAdd(lessonDetails[1].toUpperCase(), lessonDetails);
         } catch (ArrayIndexOutOfBoundsException exception) {
@@ -208,7 +208,7 @@ public class AddSubCommand extends SubCommand {
             }
             return true;
         } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_DAY_TIME);
+            throw new KolinuxException(INVALID_DAY_TIME_FOR_ADD);
         }
     }
 
@@ -220,25 +220,13 @@ public class AddSubCommand extends SubCommand {
      * @param endTime The ending time of the lesson to be added
      * @throws KolinuxException If the day or timings entered are invalid
      */
-    private void checkTimeAndDay(String day, String startTime, String endTime) throws KolinuxException {
+    private void checkTimeAndDayForAdd(String day, String startTime, String endTime)
+            throws KolinuxException {
         int dayIndex = getIndex(day, days);
         int startTimeIndex = getIndex(startTime, schoolHours);
         int endTimeIndex = getIndex(endTime, schoolHours);
         if (startTimeIndex == -1 || dayIndex == -1 || endTimeIndex == -1 || startTimeIndex >= endTimeIndex) {
-            throw new KolinuxException(INVALID_ADD_FORMAT + "\n\n" + INVALID_DAY_TIME);
-        }
-    }
-
-    /**
-     * Checks if the lesson type entered is valid.
-     *
-     * @param lessonType The lesson type of the lesson entered to add to timetable
-     * @throws KolinuxException If the lesson type entered is invalid
-     */
-    private void checkLessonType(String lessonType) throws KolinuxException {
-        if (!(lessonType.equals("TUT") || lessonType.equals("LEC") || lessonType.equals("LAB")
-                || lessonType.equals("SEC"))) {
-            throw new KolinuxException(INVALID_ADD_FORMAT + "\n\n" + INVALID_LESSON_FORMAT);
+            throw new KolinuxException(INVALID_ADD_FORMAT + "\n\n" + INVALID_DAY_TIME_FOR_ADD);
         }
     }
 
