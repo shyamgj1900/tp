@@ -298,7 +298,13 @@ public class ModuleDetails {
             return false;
         }
     }
-    
+
+    /**
+     * Check if a module is graded using a CS/CU basis. This is a workaround method as there is no official "CS/CU" 
+     * property indicated within NUSMods API.
+     * 
+     * @return True if the module is graded with CS/CU basis, false otherwise.
+     */
     public boolean isCsCuModule() {
         return description.contains("CS/CU") || moduleCode.contains("GEQ1000") || moduleCode.contains("DMX")
                 || moduleCode.equals("CP2106") || moduleCode.equals("CFG1002");
@@ -325,7 +331,8 @@ public class ModuleDetails {
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
                 + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals(RESET_GRADE) ? "N/A" : grade) + "\n"
-                + "Has S/U option: " + (isSuAble() ? "Yes" : "No") + "\n" + formattedDescription;
+                + "Has S/U option: " + (isCsCuModule() ? "Compulsory CS/CU" : isSuAble() ? "Yes" : "No") + "\n" 
+                + formattedDescription;
     }
 
 }
