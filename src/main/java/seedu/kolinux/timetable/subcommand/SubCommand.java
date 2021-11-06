@@ -1,8 +1,10 @@
 package seedu.kolinux.timetable.subcommand;
 
+import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.timetable.lesson.Lesson;
 
 import static seedu.kolinux.timetable.Timetable.lessonStorage;
+import static seedu.kolinux.timetable.lesson.Lesson.*;
 
 public class SubCommand {
 
@@ -28,7 +30,7 @@ public class SubCommand {
             "Please ensure the timing for the "
             +
             "lesson falls within the school hours: 0600 - 2100";
-    public static final String MISSING_LESSON_TO_DELETE = " does not exist in timetable.\n"
+    public static final String MISSING_LESSON_TO_DELETE = "Specified lesson does not exist in timetable.\n"
             +
             "Please input valid lesson to remove.";
     public static final String INVALID_ADD_FORMAT = "Please check the format of adding to timetable:\n"
@@ -39,7 +41,7 @@ public class SubCommand {
     public static final String INACCESSIBLE_PERIOD = "Please choose another slot as the "
             +
             "period is already occupied by another lesson";
-    public static final String MISSING_LESSON_TO_UPDATE = "Lesson does not exist in timetable.\n"
+    public static final String MISSING_LESSON_TO_UPDATE = "Specified lesson does not exist in timetable.\n"
             +
             "Try adding lesson to timetable with: timetable add";
     public static final String TIMETABLE_HEADER = "+-------------+--------------------+---------"
@@ -57,7 +59,7 @@ public class SubCommand {
     public static final String INVALID_LESSON_FORMAT = "Please ensure the LESSON_TYPE entered is in one of "
             +
             "the following format:\n1. LEC\n2. TUT\n3. LAB\n4. SEC";
-    public static final String INVALID_DAY_TIME = "1. Please ensure the days are within Monday to Friday "
+    public static final String INVALID_DAY_TIME_FOR_ADD = "1. Please ensure the days are within Monday to Friday "
             +
             "and spelt fully.\n2. Please ensure the timings are within the school hours: 0600 - 2100\n"
             +
@@ -68,6 +70,14 @@ public class SubCommand {
             "   readability of timetable view on CLI.\n"
             +
             "4. Please ensure the START_TIME is earlier than the END_TIME";
+    public static final String INVALID_DAY_START_TIME = "1. Please ensure the days are within Monday to Friday "
+            +
+            "and spelt fully.\n2. Please ensure the timings are in multiples of 30 mins.\n"
+            +
+            "   Timings like 1245 or 1110 are not accepted in order to maintain\n"
+            +
+            "   readability of timetable view on CLI.";
+
     public static final int TABLE_COLUMN_WIDTH = 20;
     public static final int TABLE_FIRST_COLUMN_WIDTH = 13;
 
@@ -96,6 +106,34 @@ public class SubCommand {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if the time and day entered when inputting the lesson is valid.
+     *
+     * @param day The day of the lesson to be added
+     * @param startTime The starting time of the lesson to be added
+     * @throws KolinuxException If the day or timings entered are invalid
+     */
+    protected void checkStartTimeAndDay(String day, String startTime, String correctFormat) throws KolinuxException {
+        int dayIndex = getIndex(day, days);
+        int startTimeIndex = getIndex(startTime, schoolHours);
+        if (startTimeIndex == -1 || dayIndex == -1 ) {
+            throw new KolinuxException(correctFormat + "\n\n" + INVALID_DAY_START_TIME);
+        }
+    }
+
+    /**
+     * Checks if the lesson type entered is valid.
+     *
+     * @param lessonType The lesson type of the lesson entered to add to timetable
+     * @throws KolinuxException If the lesson type entered is invalid
+     */
+    protected void checkLessonType(String lessonType, String correctFormat) throws KolinuxException {
+        if (!(lessonType.equals("TUT") || lessonType.equals("LEC") || lessonType.equals("LAB")
+                || lessonType.equals("SEC"))) {
+            throw new KolinuxException(correctFormat + "\n\n" + INVALID_LESSON_FORMAT);
+        }
     }
 
 }

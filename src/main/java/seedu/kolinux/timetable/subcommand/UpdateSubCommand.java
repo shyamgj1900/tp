@@ -5,7 +5,6 @@ import seedu.kolinux.timetable.lesson.Lesson;
 
 import java.util.Objects;
 
-import static seedu.kolinux.commands.TimetableCommand.timetable;
 import static seedu.kolinux.timetable.Timetable.lessonStorage;
 import static seedu.kolinux.timetable.lesson.Lesson.getIndex;
 import static seedu.kolinux.timetable.lesson.Lesson.schoolHours;
@@ -32,6 +31,9 @@ public class UpdateSubCommand extends SubCommand {
      */
     public void updateTimetable(String moduleCode, String lessonType, String oldDay,
             String oldStartTiming, String newDay, String newStartTiming) throws KolinuxException {
+        checkLessonType(lessonType, INVALID_UPDATE_FORMAT);
+        checkStartTimeAndDay(oldDay, oldStartTiming, INVALID_UPDATE_FORMAT);
+        checkStartTimeAndDay(newDay, newStartTiming, INVALID_UPDATE_FORMAT);
         if (!isLessonInTimetable(moduleCode, lessonType, oldDay, oldStartTiming)) {
             throw new KolinuxException(MISSING_LESSON_TO_UPDATE);
         }
@@ -43,7 +45,6 @@ public class UpdateSubCommand extends SubCommand {
         deleteSubcommand.deleteLesson(moduleCode, lessonType, oldDay, oldStartTiming);
         addSubcommand.inputLesson(parameters, true, false);
     }
-
 
     /**
      * Gets the duration of the lesson which is to be updated.
@@ -104,7 +105,5 @@ public class UpdateSubCommand extends SubCommand {
             throw new KolinuxException(UPDATING_TO_SAME_TIMING);
         }
     }
-
-
 
 }

@@ -10,16 +10,15 @@ participant ":AddSubCommand" as subCommand TIMETABLE_COLOR
 participant ":Lesson" as lesson TIMETABLE_COLOR
 participant ":TimetableStorage" as storage TIMETABLE_COLOR
 
-
-
 hide footbox
 
 group sd handleExceedWorkload
-subCommand -> subCommand : checkExceedWorkload
+subCommand -> subCommand : checkExceedingWorkload
 activate subCommand
-subCommand --> subCommand : exceedWorkload
+subCommand --> subCommand : Lesson exceeds workload
 deactivate subCommand
 opt hasExceedWorkload && !allowAdding
+
 subCommand --> command : exception
 
 create prompt
@@ -30,47 +29,66 @@ deactivate prompt
 
 command -> prompt: handleExceedWorkload
 activate prompt
+
 loop reply is "y" or "n"
+
 prompt -> prompt : getReplyFromPrompt()
 activate prompt
 prompt --> prompt : reply
 deactivate prompt
+
 alt reply is "y"
-prompt -> table : executeAdd(lessonDetails, allowAdding)
+
+prompt -> table : executeAdd(lessonDetails,\nallowAdding)
 activate table
-table -> subCommand : inputLesson(lessonDetails, allowAdding)
+
+table -> subCommand : inputLesson(lessonDetails,\nallowAdding)
 activate subCommand
+
 create lesson
 subCommand -> lesson : new Lesson()
 activate lesson
+
 lesson --> subCommand
 deactivate lesson
 deactivate subCommand
-deactivate table
+
 
 subCommand -> subCommand : addToTimetable(lesson)
 
 activate subCommand
+
 subCommand -> storage : writeToFile()
 activate storage
+
 storage --> subCommand
 deactivate storage
-subCommand -->[
+subCommand --> table
 deactivate subCommand
+table --> prompt
+deactivate table
 
 else reply is "n"
+
 prompt -->[ : exception
+
 else else
-prompt -> prompt : changeMessage(INVALID_REPLY)
+
+prompt -> prompt : changeMessage(INVALID_KEY)
 activate prompt
 
 prompt --> prompt
 deactivate prompt
 
 end
+
 end
+
 deactivate prompt
 destroy prompt
+
+end
+
 end
 
 @enduml

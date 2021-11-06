@@ -43,6 +43,8 @@ public class DeleteSubCommand extends SubCommand {
             throws KolinuxException {
         int removeIndex = -1;
         int endIndex = -1;
+        checkLessonType(lessonType, INVALID_DELETE_FORMAT);
+        checkStartTimeAndDay(day,startTime,INVALID_DELETE_FORMAT);
         for (int j = 0; j < lessonStorage.size(); j++) {
             String typeInStorage = lessonStorage.get(j).getLessonType();
             String codeInStorage = lessonStorage.get(j).getModuleCode();
@@ -54,7 +56,6 @@ public class DeleteSubCommand extends SubCommand {
                 endIndex = lessonStorage.get(j).getEndTimeIndex();
             }
         }
-        String description = moduleCode + " " + lessonType;
         if (removeIndex != -1) {
             assert endIndex != -1;
             int startIndex = getIndex(startTime, schoolHours);
@@ -62,7 +63,7 @@ public class DeleteSubCommand extends SubCommand {
             lessonStorage.remove(removeIndex);
             timetableStorage.writeToFile();
         } else {
-            throw new KolinuxException(description + MISSING_LESSON_TO_DELETE);
+            throw new KolinuxException(MISSING_LESSON_TO_DELETE);
         }
     }
 
