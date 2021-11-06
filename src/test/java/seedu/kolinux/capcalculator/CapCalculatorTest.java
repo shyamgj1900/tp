@@ -25,7 +25,7 @@ public class CapCalculatorTest {
     private static final String BLANK_DESCRIPTION_EXCEPTION_MESSAGE = 
             "Please enter valid module description. Example: CG2027/A+";
     private static final String INVALID_MODULES_EXCEPTION_MESSAGE = 
-            "Invalid module info format found: ABCDE CG2027/Z CS0000/B 12345 \n"
+            "Invalid module info found: ABCDE CG2027/Z CS0000/B 12345 \n"
             + "The following module(s) are entered multiple times: CG2027 \n"
             + "The following module(s) contain invalid grading basis: CG2027";
     private static final String GRADES_NOT_AVAILABLE_MESSAGE = "There is no module with available grade at the moment";

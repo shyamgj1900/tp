@@ -596,7 +596,41 @@ should be able to accomplish most of the tasks faster using commands than using 
     * Test case: Delete some events using `planner delete` command and the corresponding data should be removed from `data/planner.txt` after each deletion.
     
     * Test case: Corrupt some data lines in `data/planner.txt` by changing the dates or times to an invalid format and start the program again. You should be notified of the data corruption and the corrupted data lines in `data/planner.txt` will be removed, leaving only those that are still considered valid.
-    
+
+
+### Testing CAP Calculator
+
+1. Calculate CAP from modular credit and grade
+
+    * Test case: `cap mc 4/A 2/B 4/C 4/F`
+
+      Expected: The overall CAP is calculated.
+
+    * Test case: `cap mc 4/A 4/B 4/U 2/S`
+
+      Expected: The overall CAP is calculated while ignoring modules with non-calculating grade.
+
+    * Test case: `cap mc 4/A 4/B 4/ABC 0/C ABCDE`
+
+      Expected: Error message regarding invalid modules will be shown to user.
+
+2. Calculate CAP from module code and grade
+
+    * Test case: `cap code CS1010/A CG2027/B CS2113T/C CS2101/F`
+
+      Expected: The overall CAP is calculated.
+
+    * Test case: `cap mc CS1231/A CS1010/S GEQ1000/CS`
+
+      Expected: The overall CAP is calculated while ignoring modules with non-calculating grade.
+
+    * Test case: `cap mc CS1010/A CS0000/B CS2113T/Z`
+
+      Expected: Error message regarding invalid modules will be shown to user.
+
+    * Test case: `cap mc CS2113T/S CS2101/A GEQ1000/A`
+
+      Expected: Error message regarding modules with invalid grading basis assigned will be shown to the user.
 
 ### Finding Bus Routes
 
