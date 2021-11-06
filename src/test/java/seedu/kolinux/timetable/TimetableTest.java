@@ -83,7 +83,7 @@ public class TimetableTest {
             addSubCommand.addToTimetable(lesson);
             timetable.clearTimetable();
         } catch (KolinuxException exception) {
-            assertEquals(SubCommand.INVALID_ADD_FORMAT + "\n\n" + SubCommand.INVALID_DAY_TIME,
+            assertEquals(SubCommand.INVALID_ADD_FORMAT + "\n\n" + SubCommand.INVALID_DAY_TIME_FOR_ADD,
                     exception.getMessage());
         }
     }
@@ -170,7 +170,7 @@ public class TimetableTest {
             timetable.executeDelete(VALID_ADD_TUTORIAL_ARGUMENTS);
             timetable.clearTimetable();
         } catch (KolinuxException e) {
-            assertEquals("CS1231 TUT" + SubCommand.MISSING_LESSON_TO_DELETE, e.getMessage());
+            assertEquals(SubCommand.MISSING_LESSON_TO_DELETE, e.getMessage());
         }
     }
 
@@ -181,7 +181,8 @@ public class TimetableTest {
             timetable.executeDelete(INVALID_DELETE_ARGUMENT);
             timetable.clearTimetable();
         } catch (KolinuxException e) {
-            assertEquals("CS1010 LESSON" + SubCommand.MISSING_LESSON_TO_DELETE, e.getMessage());
+            assertEquals(SubCommand.INVALID_DELETE_FORMAT + "\n\n" + SubCommand.INVALID_LESSON_FORMAT,
+                    e.getMessage());
         }
     }
 
@@ -232,7 +233,6 @@ public class TimetableTest {
         System.setIn(in);
         timetablePromptHandler = new TimetablePromptHandler(EXCEED_WORKLOAD, timetable);
         timetablePromptHandler.handleExceedWorkload(EXCEED_ADD_TUTORIAL_ARGUMENTS);
-
         assertEquals(EXCEED_WORKLOAD, timetablePromptHandler.toString());
         timetable.clearTimetable();
     }

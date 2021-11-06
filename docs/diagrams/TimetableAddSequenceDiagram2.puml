@@ -5,13 +5,15 @@ hide footbox
 
 !include Style.puml
 
+participant ":TimetableCommand" as command COMMANDS_COLOR
 participant ":Timetable" as table TIMETABLE_COLOR
 participant ":AddSubCommand" as subCommand TIMETABLE_COLOR
 participant ":TimetableStorage" as storage TIMETABLE_COLOR
 
+
 group sd Timetable add operation
 
-table -> table : executeAdd(lessonDetails)
+activate command
 activate table
 create subCommand
 table -> subCommand : new addSubCommand()
@@ -19,8 +21,7 @@ activate subCommand
 
 subCommand --> table
 deactivate subCommand
-table -> table : executeAdd(lessonDetails)
-activate table
+command -> table : executeAdd(lessonDetails)
 activate subCommand
 
 create storage
@@ -31,16 +32,16 @@ storage --> subCommand
 deactivate storage
 
 table -> subCommand : inputLesson(lessonDetails)
-ref over subCommand, storage : Timetable checks before adding
 deactivate storage
 
 subCommand --> table
 deactivate subCommand
-table --> table
-deactivate table
 
-table -->[
+
+table --> command
 deactivate table
+ref over command, subCommand, storage : handleExceedWorkload
+
 end
 
 
