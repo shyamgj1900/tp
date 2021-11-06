@@ -1,10 +1,10 @@
 package seedu.kolinux.planner;
 
 import seedu.kolinux.exceptions.KolinuxException;
+import seedu.kolinux.util.Parser;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
 /** Represents an event in the schedule. */
 public class Event {
@@ -23,14 +23,10 @@ public class Event {
     private LocalTime startTime;
     private LocalTime endTime;
     private int id;
-    private boolean isLesson = false;
+    private boolean isIntegratedEvent = false;
 
     private static final String EMPTY_DESCRIPTION_ERROR =
             "Please provide a description for your event!";
-    private static final String DATETIME_ERROR =
-            "Please provide a valid date and time!\n"
-                    + "Date: yyyy-mm-dd\n"
-                    + "Time: hhMM";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
     private static final String TIME_SAME_ERROR =
@@ -49,19 +45,15 @@ public class Event {
         if (parsedArguments.length != EVENT_ARGUMENTS_LENGTH) {
             throw new KolinuxException(FORMAT_ERROR);
         }
-
-        try {
-            this.description = parsedArguments[0];
-            this.date = LocalDate.parse(parsedArguments[1]);
-            this.startTime = LocalTime.parse(parsedArguments[2].replaceFirst("..", "$0:"));
-            this.endTime = LocalTime.parse(parsedArguments[3].replaceFirst("..", "$0:"));
-        } catch (DateTimeParseException exception) {
-            throw new KolinuxException(DATETIME_ERROR);
-        }
-
-        if (description.isEmpty()) {
+        if (parsedArguments[0].isEmpty()) {
             throw new KolinuxException(EMPTY_DESCRIPTION_ERROR);
         }
+
+        this.description = parsedArguments[0];
+        this.date = Parser.verifyDate(parsedArguments[1]);
+        this.startTime = Parser.verifyTime(parsedArguments[2]);
+        this.endTime = Parser.verifyTime(parsedArguments[3]);
+
         if (startTime.compareTo(endTime) > 0) {
             throw new KolinuxException(TIME_ORDER_ERROR);
         }
@@ -83,15 +75,15 @@ public class Event {
     }
 
     /**
-     * This method is called only when constructing an Event from a given Lesson. Otherwise, the
-     * default value of isLesson is false upon construction of this object.
+     * This method is called only when constructing an Event from a given lesson or exam information. Otherwise, the
+     * default value of isIntegratedEvent is false upon construction of this object.
      */
-    public void setIsLesson() {
-        this.isLesson = true;
+    public void setIsIntegratedEvent() {
+        this.isIntegratedEvent = true;
     }
 
-    public boolean getIsLesson() {
-        return this.isLesson;
+    public boolean getIsIntegratedEvent() {
+        return this.isIntegratedEvent;
     }
 
     public String getDate() {

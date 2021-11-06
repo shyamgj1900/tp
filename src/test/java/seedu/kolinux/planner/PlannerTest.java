@@ -61,12 +61,9 @@ public class PlannerTest {
             = "\n16:00 - 18:00 CS2113T LEC";
     private static final String VALID_LIST_7
             = "\n09:00 - 11:00 CS2113T Exam";
-    private static final String DATETIME_ERROR
-            = "Please provide a valid date and time!\n"
-                    + "Date: yyyy-mm-dd\n"
-                    + "Time: hhMM";
     private static final String FORMAT_ERROR =
             "Please check the format of your input! Format: planner add DESCRIPTION/DATE/START_TIME/END_TIME";
+    private static final String DATE_FORMAT_ERROR = "Please provide a valid date format. Format: yyyy-mm-dd";
     private static final String TIME_ORDER_ERROR =
             "Please check the format of the time! The end time is earlier than the start time...";
     private static final String TIME_SAME_ERROR =
@@ -78,7 +75,6 @@ public class PlannerTest {
                     + "Or you may enter 'y' to add the event";
     private static final String EMPTY_DESCRIPTION_ERROR =
             "Please provide a description for your event!";
-    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
@@ -97,7 +93,7 @@ public class PlannerTest {
             Event invalidEvent = new Event(INVALID_EVENT_DATE_ARGUMENTS);
             planner.addEvent(invalidEvent, false);
         } catch (KolinuxException exception) {
-            assertEquals(DATETIME_ERROR, exception.getMessage());
+            assertEquals(DATE_FORMAT_ERROR, exception.getMessage());
         }
     }
 
@@ -252,16 +248,6 @@ public class PlannerTest {
         planner.addEvent(event, true);
         assertEquals(VALID_LIST_5 + " (id: " + event.getId() + ")",
                 planner.listEvents("2021-10-22", true));
-    }
-
-    @Test
-    public void listEvent_invalidDate_exceptionThrown() {
-        planner.clearEvents();
-        try {
-            planner.listEvents("2021-13-01", false);
-        } catch (KolinuxException exception) {
-            assertEquals(INVALID_DATE_MESSAGE, exception.getMessage());
-        }
     }
 
     @Test

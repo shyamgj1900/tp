@@ -4,6 +4,7 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.planner.Event;
 import seedu.kolinux.planner.Planner;
 import seedu.kolinux.planner.PlannerPromptHandler;
+import seedu.kolinux.util.Parser;
 
 import java.util.logging.Level;
 
@@ -77,9 +78,11 @@ public class PlannerCommand extends Command {
      * @throws KolinuxException If the arguments are invalid or there are no events happening on the date
      */
     private CommandResult handleListCommand() throws KolinuxException {
+        Parser.verifyDate(parsedArguments[0]);
+        String dayOfWeek = Parser.getDayOfWeek(parsedArguments[0]);
         String eventList = planner.listEvents(parsedArguments[0], false);
         logger.log(Level.INFO, "User listed events on " + parsedArguments[0]);
-        return new CommandResult(parsedArguments[0] + eventList);
+        return new CommandResult(parsedArguments[0] + " " + dayOfWeek + eventList);
     }
 
     /**
@@ -91,6 +94,7 @@ public class PlannerCommand extends Command {
      * @throws KolinuxException If the id is not recognised or the user cancels the operation
      */
     private CommandResult handleDeleteCommand() throws KolinuxException {
+        Parser.verifyDate(parsedArguments[0]);
         String idList = planner.listEvents(parsedArguments[0], true);
         String id = new PlannerPromptHandler(planner, ENTER_ID_PROMPT + idList).promptForEventId();
         Event deletedEvent = planner.deleteEvent(id);
