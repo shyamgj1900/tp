@@ -161,7 +161,7 @@ public class CapCalculatorByCode extends CapCalculator {
 
     @Override
     protected void checkInvalidModules() throws KolinuxException {
-        StringBuilder invalidModulesMessage = new StringBuilder("Invalid module info format found: ");
+        StringBuilder invalidModulesMessage = new StringBuilder("Invalid module info found: ");
         StringBuilder invalidSuModulesMessage = 
                 new StringBuilder("The following module(s) contain invalid grading basis: ");
         StringBuilder repeatedModulesMessage = 
