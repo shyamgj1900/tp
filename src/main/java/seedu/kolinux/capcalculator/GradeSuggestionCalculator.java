@@ -77,13 +77,16 @@ public class GradeSuggestionCalculator extends CapCalculatorByCode {
         double totalMc = 0.0;
         for (String module : invalidModules) {
             String moduleCode = module.split(DIVIDER)[0];
+            if (moduleDb.getModuleInfo(moduleCode).isCsCuModule()) {
+                continue;
+            }
             String moduleCredit = moduleDb.getModuleInfo(moduleCode).getModuleCredit();
             double mc = Double.parseDouble(moduleCredit);
             totalMc += mc;
         }
         if (totalMc == 0) {
             String errorMessage = "Grade suggestion is not available as "
-                    + "every modules already have their grade available";
+                    + "every valid modules already have their grade available";
             throw new KolinuxException(errorMessage);
         }
         return totalMc;

@@ -325,7 +325,8 @@ public class ModuleDetails {
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
                 + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals(RESET_GRADE) ? "N/A" : grade) + "\n"
-                + "Has S/U option: " + (isSuAble() ? "Yes" : "No") + "\n" + formattedDescription;
+                + "Has S/U option: " + (isCsCuModule() ? "Compulsory CS/CU" : isSuAble() ? "Yes" : "No") + "\n" 
+                + formattedDescription;
     }
 
 }
