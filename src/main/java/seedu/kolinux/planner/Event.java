@@ -23,6 +23,7 @@ public class Event {
     private LocalTime startTime;
     private LocalTime endTime;
     private int id;
+    // true if and only if the event is created from a lesson or exam.
     private boolean isIntegratedEvent = false;
 
     private static final String EMPTY_DESCRIPTION_ERROR =
