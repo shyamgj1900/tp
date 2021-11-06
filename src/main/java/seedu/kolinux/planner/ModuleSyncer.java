@@ -9,7 +9,7 @@ import seedu.kolinux.util.Parser;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-/** Represents the methods needed to sync with the module list to fetch lessons and exams data. */
+/** Represents the methods needed to sync with the module list and timetable to fetch lessons and exams data. */
 public class ModuleSyncer {
 
     private String date;

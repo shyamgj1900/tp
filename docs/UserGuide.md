@@ -24,9 +24,9 @@ The following explains the use of different icons in this user guide:
 
 ### Latest Releases
 
-* 💥 `v2.1` _Coming soon_
-* 💥 [`v2.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases) Released on Oct 26, 2021.
-* 💥 `v1.0` Released on Oct 12, 2021.
+* 💥 [`v2.1`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases/tag/v2.1) Released on Nov 8, 2021.
+* 💥 [`v2.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases/tag/v2.0) Released on Oct 26, 2021.
+* 💥 [`v1.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases/tag/v1.0) Released on Oct 12, 2021.
 
 ## Table of Contents
 
@@ -573,6 +573,7 @@ give additional confirmation if you wish to proceed.
 **Format:** `planner list DATE`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
+* Adding extraneous parameters separated by `/` will be ignored. For example: `planner list 2021-10-10/something` will be treated the same as `planner list 2021-10-10`.
 
 **Example of usage:**
 
@@ -604,6 +605,11 @@ This command has two steps:
 3. Input the ID to delete the event.
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
+* Adding extraneous parameters separated by `/` will be ignored. For example: `planner delete 2021-10-10/something` will be treated the same as `planner delete 2021-10-10`.
+
+**Example of usage:**
+
+* `planner delete 2021-12-31` will prompt you to delete an event on `2021-12-31`.
 
 This is what you should observe on the terminal when you delete an event on a specific date:
 ```
