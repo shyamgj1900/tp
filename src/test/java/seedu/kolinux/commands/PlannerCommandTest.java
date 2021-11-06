@@ -119,7 +119,7 @@ public class PlannerCommandTest {
         planner.clearEvents();
         PlannerCommand command = new PlannerCommand(ADD_SUBCOMMAND, VALID_EVENT_ARGUMENTS[0]);
         command.executeCommand();
-        Event placeholder = new Event(VALID_EVENT_ARGUMENTS[1]);
+        final Event placeholder = new Event(VALID_EVENT_ARGUMENTS[1]);
         command = new PlannerCommand(ADD_SUBCOMMAND, VALID_EVENT_ARGUMENTS[1]);
         command.executeCommand();
         command = new PlannerCommand(ADD_SUBCOMMAND, VALID_EVENT_ARGUMENTS[2]);

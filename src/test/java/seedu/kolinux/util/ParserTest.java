@@ -6,8 +6,10 @@ import seedu.kolinux.exceptions.KolinuxException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParserTest {
 
@@ -32,6 +34,11 @@ public class ParserTest {
         assertEquals(7, day);
         day = Parser.findDayFromDate("2021-10-31");
         assertEquals(1, day);
+    }
+
+    @Test
+    public void findDayFromDate_invalidDate_exceptionThrown() {
+        assertThrows(ParseException.class, () -> Parser.findDayFromDate("21 January 2021"));
     }
 
     @Test
