@@ -33,14 +33,20 @@ public class TimetableTest {
             "0600", "1000"};
     private static final String[] INVALID_ADD_TUTORIAL_TIMING = new String[] {"CS1231", "TUT", "monday",
             "1300", "1200"};
+    private static final String[] INVALID_ADD_TUTORIAL_TIMING_1 = new String[] {"CS1231", "TUT", "monday",
+            "1200", "1315"};
     private static final String[] INACCESSIBLE_ADD_PERIOD = new String[] {"CS1010", "TUT", "monday", "0600", "0700"};
     private static final String[] VALID_ADD_LECTURE_ARGUMENTS = new String[] {"CS2113T", "LEC", "friday", "1900",
             "2100"};
     private static final String[] VALID_ADD_LAB_ARGUMENTS = new String[] {"CS2040", "LAB", "monday", "0600",
             "0700"};
+    private static final String[] VALID_ADD_SEC_ARGUMENTS = new String[] {"CS1101S", "SEC", "monday", "1000", "1100"};
     private static final String[] INVALID_DELETE_ARGUMENT = new String[] {"CS1010", "LESSON", "monday","0600"};
     private static final String[] UPDATE_LESSON_ARGUMENTS = new String[] {"CS1231", "TUT", "monday","0600","tuesday",
             "1500"};
+    private static final String[] UPDATE_LESSON_SAME_TIMING = new String[] {"CS1231", "TUT", "monday","0600","monday",
+            "0600"};
+    private static final String[] MISSING_ARGUMENTS = new String[]{"CS1231"};
     private static final String EXCEED_WORKLOAD = "Input hours for CS1231 TUT exceeds the total workload\n"
             +
             "It exceeds 1.0 hours\n"
@@ -48,6 +54,8 @@ public class TimetableTest {
             "Do you want to continue adding the lesson despite\n"
             +
             "exceeding the workload? Please enter y or n";
+    private static final String CANCEL_MESSAGE = "Adding to timetable operation cancelled";
+    private static final String INVALID_KEY = "Invalid key. Please enter y or n";
     private static final ModuleDb moduleDb = new ModuleDb();
     private ModuleList moduleList = new ModuleList();
     private Timetable timetable = new Timetable(moduleList);
@@ -72,6 +80,8 @@ public class TimetableTest {
         addSubCommand.addToTimetable(lesson);
         assertEquals(timetable.timetableData[getIndex("0600", schoolHours)][getIndex("monday", days)],
                 "CS1231 TUT");
+        assertEquals(lesson.getLessonType(),"TUT");
+        assertEquals(lesson.getFileContent(),"CS1231/TUT/monday/0600/0700");
         timetable.clearTimetable();
     }
 
@@ -153,6 +163,40 @@ public class TimetableTest {
     }
 
     @Test
+    public void inputLesson_incorrectMultipleOfTiming_lessonNotAdded() {
+        try {
+            timetable.clearTimetable();
+            moduleList.addModuleByCode("CS1231", moduleDb);
+            timetable.executeAdd(INVALID_ADD_TUTORIAL_TIMING_1, false);
+            timetable.clearTimetable();
+        } catch (KolinuxException exception) {
+            assertEquals(SubCommand.INVALID_ADD_FORMAT + "\n\n" + SubCommand.INVALID_DAY_TIME_FOR_ADD,
+                    exception.getMessage());
+        }
+    }
+
+    @Test
+    public void inputSectional_validSectionalArguments_sectionalAdded() throws KolinuxException {
+        timetable.clearTimetable();
+        moduleList.addModuleByCode("CS1101S", moduleDb);
+        timetable.executeAdd(VALID_ADD_SEC_ARGUMENTS, false);
+        timetable.clearTimetable();
+    }
+
+    @Test
+    public void addLesson_missingArguments_lessonNotAdded() {
+        try {
+            timetable.clearTimetable();
+            moduleList.addModuleByCode("CS1231", moduleDb);
+            timetable.executeAdd(MISSING_ARGUMENTS,false);
+            timetable.clearTimetable();
+        } catch (KolinuxException e) {
+            assertEquals(SubCommand.INVALID_ADD_FORMAT, e.getMessage());
+        }
+    }
+
+
+    @Test
     public void deleteLesson_validLesson_lessonDeleted() throws KolinuxException {
         timetable.clearTimetable();
         Lesson lesson = new Tutorial(VALID_ADD_TUTORIAL_ARGUMENTS);
@@ -187,6 +231,17 @@ public class TimetableTest {
     }
 
     @Test
+    public void deleteLesson_missingArguments_lessonNotDeleted() {
+        try {
+            timetable.clearTimetable();
+            timetable.executeDelete(MISSING_ARGUMENTS);
+            timetable.clearTimetable();
+        } catch (KolinuxException e) {
+            assertEquals(SubCommand.INVALID_DELETE_FORMAT, e.getMessage());
+        }
+    }
+
+    @Test
     public void updateLesson_validLesson_lessonUpdated() throws KolinuxException {
         timetable.clearTimetable();
         moduleList.addModuleByCode("CS1231", moduleDb);
@@ -212,6 +267,30 @@ public class TimetableTest {
     }
 
     @Test
+    public void updateLesson_updateToSameTiming_lessonNotUpdated() {
+        try {
+            timetable.clearTimetable();
+            moduleList.addModuleByCode("CS1231", moduleDb);
+            timetable.executeAdd(VALID_ADD_TUTORIAL_ARGUMENTS, false);
+            timetable.executeUpdate(UPDATE_LESSON_SAME_TIMING);
+            timetable.clearTimetable();
+        } catch (KolinuxException e) {
+            assertEquals(SubCommand.UPDATING_TO_SAME_TIMING, e.getMessage());
+        }
+    }
+
+    @Test
+    public void updateLesson_missingArguments_lessonNotUpdated() {
+        try {
+            timetable.clearTimetable();
+            timetable.executeUpdate(MISSING_ARGUMENTS);
+            timetable.clearTimetable();
+        } catch (KolinuxException e) {
+            assertEquals(SubCommand.INVALID_UPDATE_FORMAT, e.getMessage());
+        }
+    }
+
+    @Test
     public void deleteModule_moduleInModuleList_moduleLessonsDeletedFromTimetable() throws KolinuxException {
         timetable.clearTimetable();
         moduleList.addModuleByCode("CS1231",moduleDb);
@@ -225,7 +304,7 @@ public class TimetableTest {
     }
 
     @Test
-    public void handleExceedWorkload_validLessonDetails_validReply() throws KolinuxException {
+    public void handleExceedWorkload_validLessonDetails_validYesReply() throws KolinuxException {
         timetable.clearTimetable();
         moduleList.addModuleByCode("CS1231",moduleDb);
         String input = "y";
@@ -234,6 +313,37 @@ public class TimetableTest {
         timetablePromptHandler = new TimetablePromptHandler(EXCEED_WORKLOAD, timetable);
         timetablePromptHandler.handleExceedWorkload(EXCEED_ADD_TUTORIAL_ARGUMENTS);
         assertEquals(EXCEED_WORKLOAD, timetablePromptHandler.toString());
+        timetable.clearTimetable();
+    }
+
+    @Test
+    public void handleExceedWorkload_validLessonDetails_validNoReply() throws KolinuxException {
+        try {
+            timetable.clearTimetable();
+            moduleList.addModuleByCode("CS1231", moduleDb);
+            String input = "n";
+            InputStream in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+            timetablePromptHandler = new TimetablePromptHandler(EXCEED_WORKLOAD, timetable);
+            timetablePromptHandler.handleExceedWorkload(EXCEED_ADD_TUTORIAL_ARGUMENTS);
+            timetable.clearTimetable();
+        } catch (KolinuxException e) {
+            assertEquals(CANCEL_MESSAGE, e.getMessage());
+        }
+    }
+
+    @Test
+    public void handleExceedWorkload_validLessonDetails_invalidReplyButAddedAfterwards() throws KolinuxException {
+        timetable.clearTimetable();
+        moduleList.addModuleByCode("CS1231", moduleDb);
+        String input = "whatever" + System.getProperty("line.separator") + "y";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        timetablePromptHandler = new TimetablePromptHandler(EXCEED_WORKLOAD, timetable);
+        timetablePromptHandler.handleExceedWorkload(EXCEED_ADD_TUTORIAL_ARGUMENTS);
+        assertEquals(INVALID_KEY, timetablePromptHandler.toString());
+        assertEquals(timetable.timetableData[getIndex("0600", schoolHours)][getIndex("monday", days)],
+                "CS1231 TUT");
         timetable.clearTimetable();
     }
 
