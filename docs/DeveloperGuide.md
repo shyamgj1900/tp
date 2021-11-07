@@ -18,7 +18,7 @@ of implementations.
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module add/delete`](#add/delete-a-module-by-module-code-feature)
+  * [`module add & delete`](#add-&-delete-a-module-by-module-code-feature)
   * [`cap code`](#cap-calculator-by-module-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
@@ -33,6 +33,7 @@ of implementations.
 * User Guide and Developer Guide of [AddressBook Level-3](https://se-education.org/addressbook-level3/)
 * [NUSMods API](https://api.nusmods.com/v2/) 
 * [GSON](https://github.com/google/gson)
+* [JUnidecode](https://github.com/gcardone/junidecode)
 
 ## Setting up and getting started
 
@@ -109,7 +110,7 @@ The class diagram below models the structure of the `module` component
 
 The `ModuleCommand` class is responsible for the execution of all `module` related commands. It inherits references 
 to instances of `ModuleList` and `ModuleDb` from `Command`  which are utilized for maintaining a list of
-`ModuleDetails` instances and operating a database of `moduleDetails`( `ModuleDb`) respectively. `ModuleCommand` 
+`ModuleDetails` instances and operating a repository of `moduleDetails`( `ModuleDb`) respectively. `ModuleCommand` 
 also interacts with `ModuleListStorage` to facilitate the persistent storage of the contents of `ModuleList`. 
 
 #### Timetable Component
@@ -222,39 +223,33 @@ file via `TimetableStorage#writeToFile()`
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram2.png)
 
-* There are checks done before adding to the timetable and one of them is the 
-`AddSubCommand#isLessonInModuleList(moduleList, moduleCode)`. This integrates `Timetable` and `ModuleList` which 
-ensures a module's lessons being added to the timetable has its `moduleCode` first added to the `ModuleList` 
-else it will throw an exception to add the module.
+* Due to a few inaccuracies in the api for the prescribed workload for certain modules, users are given the liberty to
+exceed the workload whilst displaying a warning as to what the prescribed workload is. For this we have made use of the 
+`PromptHandler` just like we did in `planner` to get a reply from the user in order to continue adding with the lesson.
+* The following code illustrates how to check if the lesson inputted exceeds the workload.
 
 ```
-    private boolean isLessonInModuleList(ModuleList moduleList, String moduleCode) {
-        for (ModuleDetails module : moduleList.myModules) {
-            if (Objects.equals(module.moduleCode, moduleCode)) {
-                return true;
-            }
-        }
-        return false;
+private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
+        throws KolinuxException {
+    String lessonType = lessonDetails[1].toUpperCase();
+    String moduleCode = lessonDetails[0].toUpperCase();
+    double requiredHours = getRequiredHours(moduleList, moduleCode, lessonType);
+    double inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
+    double storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
+    if (storageHours > requiredHours && !isAllowingAdd && !isStorageAdd) {
+        throw new ExceedWorkloadException("Input hours for " + moduleCode + " " + lessonType
+                +
+                " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n"
+                +
+                "Do you want to continue adding the lesson despite\n"
+                +
+                "exceeding the workload? Please enter y or n");
     }
+}
 ```
-* Another check done is to check if the slot between `START_TIME` and `END_TIME` is not occupied by another lesson,
-likewise it will throw an exception.
 
-```
-    private boolean isPeriodFree(int startIndex, int endIndex, int dayIndex) throws KolinuxException {
-        try {
-            for (int i = startIndex; i < endIndex; i++) {
-                if (timetableData[i][dayIndex] != null) {
-                    return false;
-                }
-            }
-            return true;
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KolinuxException(INVALID_HOURS_INPUT);
-        }
-    }
-```
-* The following sequence diagram illustrates both these checks.
+* The following sequence diagram illustrates what happens when input hours exceed the workload and what the program
+does to handle this exception before adding the lesson to the timetable.
 
 ![Sequence Diagram2](assets/images/TimetableAddSequenceDiagram3.png)
 
@@ -328,16 +323,16 @@ one `ModuleDetails`, and one `Event` stored in `Timetable`, `ModuleList`, and `P
 
 ![Planner After Object Diagram](assets/images/PlannerObjectDiagramAfter.png)
 
-### Add/delete a module by module code feature
+### Add & delete a module by module code feature
 
-The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
+The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed on a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
 
 - `ModuleList#addModuleByCode(String code, ModuleDb moduleDb)`
 - `ModuleList#deleteModuleByCode(String code)`
 
 ❕ Notes about the methods:
 
-`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to list in `moduleList`
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to the list in `moduleList`.
 
 The input format for storage and deletion of modules is as follows:
 
@@ -369,7 +364,7 @@ The following sequence diagram models how the `module add` operation works:
 
 ![Module Add Sequence Diagram](assets/images/ModuleAddSequenceDiagram.png)
 
-The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
+The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. Internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
 
 
 
@@ -477,12 +472,12 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 * *Mainstream OS*: Windows, Linux, Unix, OS-X
 * *Event*: Personal event added to the Planner by the user
-* *Lesson*: Class (Lecture, Tutorial, or Lab) for a particular module added to the Timetable by the user
+* *Lesson*: Class (Lecture, Tutorial, Sectional, or Lab) for a particular module added to the Timetable by the user
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
 
-### Storing a module by module code
+### Testing Module Manager
 
 1. Storing a new module with a valid code
 
@@ -502,49 +497,262 @@ should be able to accomplish most of the tasks faster using commands than using 
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
    
-   
-   
+4. Deleting a pre-existing module from the module list
 
-### Adding an event to Planner
+   - Test case: `module delete CS2113T`
+
+     Expected: Since the module list contains `CS2113T`, it is deleted and a successful deletion message is printed to standard output.
+
+5. Listing all modules stored in the list
+
+   - Test case: `module list`
+
+     Expected: Key attributes of each module stored in the list are printed to standard output
+
+6. Viewing information about a particular module offered by NUS (not necessarily stored in the module list)
+
+   - Test case: `module view CFG1002`
+
+     Expected: Information regarding CFG1002 is printed to standard output.
+
+7. Setting a grade for module stored in the user's module list
+
+   - Test case: `module grade CS2113T/A+`
+
+     Expected: The module list already contains `CS2113T`. Upon setting its grade to `A+`, a message indicating successful update of the grade is printed to standard output.
+
+### Testing the Planner feature
 
 1. Adding an event with no time conflicts with any existing events, lessons, or exams to the Planner.
    
+    * Prerequisites: Choose a date that has no exams, lessons, or events planned to ensure no conflicts will occur. You may use `planner clear` to clear all existing events stored in planner.
 
-   * Test case: `planner add watch movie/2021-10-20/1800/2100`
-   
+    * Test case: `planner add watch movie/2021-10-20/1800/2100`
+     
       Expected: Event is added to the list. Success message printed as output.
 
-
-   * Test case: `planner add project meeting/20211020/0700/0800`
+    * Test case: `planner add project meeting/20211020/0700/0800`
+    
+      Expected: Event is not added to the list. Error message regarding date format printed as output.
      
-      Expected: Event is not added to the list. Error message regarding date and time format printed as output.
+    * Test case: `planner add project meeting/2021-02-29/0700/0800`
+     
+      Expected: Event is not added to the list. Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
+    * Test case: `planner add go run/2021-10-20/6pm/10pm`
+    
+      Expected: Event is not added to the list. Error message regarding time format printed as output.
+     
+    * Test case: `planner add go run/2021-10-20/1800/2260`
+     
+      Expected: Event is not added to the list. Error message regarding invalid time is printed as output.
 
-   * Test case: `planner add go back in time/2021-10-20/1400/1300`
-   
+    * Test case: `planner add go back in time/2021-10-20/1400/1300`
+     
       Expected: Event is not added to the list. Error message regarding wrong time order printed as output.
 
+    * Test case: `planner add study for test/2021-10-20/1400/1400`
 
-   * Other incorrect commands to try: `planner add something wrong//`, `planner add something amazing/ 3pm to 4pm`
-     
+      Expected: Event is not added to the list. Error message regarding same start and end time printed as output.
+
+    * Test case: `planner add /2021-10-20/1400/1600`
+
+      Expected: Event is not added to the list. Error message regarding empty description is printed as output. 
+
+    * Other incorrect commands to try: `planner add something wrong//`, `planner add something amazing/ 3pm to 4pm`
+    
       Expected: Similar to previous cases where an error message regarding the format of command is printed as output.
 
 2. Adding an event with time conflicts with at least one existing event, lesson, or exam to the Planner.
 
+    * Prerequisites: Add the event by `planner add pop quiz/2021-11-30/1300/1500`. Add the module `module add cs2113t` and add a lesson `timetable add cs2113t/lec/tuesday/1600/1800`. _Do note 2021-11-30 is a Tuesday._
+    
+    * Test case: `planner list 2021-11-30`
 
-  * Prerequisites: Add the event by `planner add conflict test/2022-05-05/0800/1100`. Add the module
-    `module add cs2113t` and add a lesson `timetable add cs2113t/lec/thursday/1600/1800`.
-    _Do note 2021-05-05 is a Thursday._
+      Expected: The event `pop quiz`, lesson `CS2113T LEC`, exam `CS2113T Exam` are displayed as output. This tests whether the integration among planner, timetable, and module manager is working.
+
+    * Test case: `planner add conflict/2021-11-30/xxxx/yyyy` where `xxxx` and `yyyy` are start times and end times respectively which overlaps with any of the events listed.
+    
+      Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the operation. Entering `y` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will repeat the prompt.
+  
+3. Listing events on the Planner.
+
+    * Test case: `planner list 2021-10-10`
+
+      Expected: If there are events stored on `2021-10-10`, the events will be listed (including any lessons or exams). Otherwise, a message will be printed stating that there are no events planned for the day.
+
+    * Test case: `planner list 20211010`
+     
+      Expected: Error message regarding wrong date format is printed as output.
+
+    * Test case: `planner list 2021-02-29`
+     
+      Expected: Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
+
+4. Deleting events from the Planner.
+
+    * Prerequisites: Go through point 2 in the Planner section first.
+
+    * Test case: `planner delete 2021-11-30`
+
+      Expected: List of events shown, which only contain the events added via the planner, since users are not supposed to delete exams and lessons from the planner. The corresponding `id` of `pop quiz` is also printed. Entering that `id` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will lead to an invalid id read, abandoning the operation.
+
+    * Test case: `planner delete 20211010`
+    
+      Expected: Error message regarding wrong date format is printed as output.
+
+    * Test case: `planner delete 2021-02-29`
+
+      Expected: Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
+
+5. Handling the user data in `data/planner.txt`
+
+    * Test case: Add some events using `planner add` command and the corresponding data should be written to `data/planner.txt` after each addition. The user data includes the description, date, start time, and end time of the event separated by `|`.
+
+    * Test case: Delete some events using `planner delete` command and the corresponding data should be removed from `data/planner.txt` after each deletion.
+    
+    * Test case: Corrupt some data lines in `data/planner.txt` by changing the dates or times to an invalid format and start the program again. You should be notified of the data corruption and the corrupted data lines in `data/planner.txt` will be removed, leaving only those that are still considered valid.
 
 
-  * Test case: `planner list 2022-05-05`
+### Testing CAP Calculator
 
-     Expected: The event `conflict test`, lesson `CS2113T LEC`, exam `CS2113T Exam` are displayed as output.
+1. Calculate CAP from modular credit and grade
 
+    * Test case: `cap mc 4/A 2/B 4/C 4/F`
 
-  * Test case: `planner add love conflicts/2022-05-05/xxxx/yyyy` where `xxxx` and `yyyy` are start times and end
-    times respectively which overlaps with any of the events listed.
+      Expected: The overall CAP is calculated.
+
+    * Test case: `cap mc 4/A 4/B 4/U 2/S`
+
+      Expected: The overall CAP is calculated while ignoring modules with non-calculating grade.
+
+    * Test case: `cap mc 4/A 4/B 4/ABC 0/C ABCDE`
+
+      Expected: Error message regarding invalid modules will be shown to user.
+
+2. Calculate CAP from module code and grade
+
+    * Test case: `cap code CS1010/A CG2027/B CS2113T/C CS2101/F`
+
+      Expected: The overall CAP is calculated.
+
+    * Test case: `cap mc CS1231/A CS1010/S GEQ1000/CS`
+
+      Expected: The overall CAP is calculated while ignoring modules with non-calculating grade.
+
+    * Test case: `cap mc CS1010/A CS0000/B CS2113T/Z`
+
+      Expected: Error message regarding invalid modules will be shown to user.
+
+    * Test case: `cap mc CS2113T/S CS2101/A GEQ1000/A`
+
+      Expected: Error message regarding modules with invalid grading basis assigned will be shown to the user.
+
+### Finding Bus Routes
+
+1. Finding routes.
+
+  * Test case: `bus /IT /UTown`
+    
+     Expected: Shows a direct bus route.
+
+  * Test case: `bus /UTown /KR Bus Terminal`
+    
+      Expected: Shows an indirect route where user will need to change buses at an intermediate stop.
+      
+  * Test case: `bus /PGPR /KR MRT`
+    
+      Expected: Shows alternate direct route from the opposite bus stop.
+  
+  * Note: Bus stop names are not case sensitive.
+    
+2. List all bus stops
    
-       Expected: Event is not added to the list. A message will be shown seeking permission to proceed with the
-       operation. Entering `y` will lead to a success message, while entering 'n' will lead to the operation cancelled. Entering anything else will repeat the prompt.
+   * Test case: `bus stop list`
+   
+       Expected: Shows the list of all bus stops.
 
+### Testing the Timetable feature
+
+1. Adding to timetable without exceeding workload
+
+   * Prerequisites : Ensure to follow the prescribed workload in `module list`
+   * Test case: `timetable add CS1010/LEC/monday/1300/1400`
+     
+       Expected: Lesson will be added without any errors
+   * Test case: `timetable add CS1010/lecture/monday/1500/1600`
+   
+       Expected: Lesson will not be added as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+   * Test case: `timetable add CS1010/LEC/sat/1500/1600`
+   
+       Expected: Lesson will not be added as timetable only accepts days from monday to friday spelt fully.
+   * Test case: `timetable add CS1010/LEC/monday/1515/1600`
+
+       Expected: Lesson will not be added as timetable only timings in multiples of 30 mins
+   * Test case: `timetable add CS1010/LEC/sat/1500/1600` followed by `timetable add CS1231/LEC/sat/1500/1600`
+
+       Expected: Lesson will not be added as timetable does not accept 2 lessons to be added in the same timeslot
+   * Test case: `timetable add CS1010/LEC/monday/2100/2200`
+   
+       Expected: Lesson wil not be added as the allowed school hours are 0600 - 2100, the starting time of a lesson cannot be earlier than 0600 and the ending time cannot be later than 2100
+
+2. Adding lesson to timetable which exceeds the workload
+
+    * Test case: `timetable add CS1010/LEC/monday/1300/1900` followed by `y`
+
+      Expected: Program will output a prompt to confirm if you want to continue adding despite exceeding workload and by entering `y` after this prompt will add the lesson to the timetable
+    * Test case: `timetable add CS1010/LEC/monday/1300/1900` followed by `n`
+
+      Expected: Program will output a prompt to confirm if you want to continue adding despite exceeding workload and by entering `n` after this prompt will cancel the operation of adding the lesson
+    * Test case: `timetable add CS1010/LEC/monday/1300/1900` followed by `sus`
+
+      Expected: Program will output a prompt to confirm if you want to continue adding despite exceeding workload and by entering a key which is not `y` or `n` after this prompt will display an invalid key error message until you input one of the valid keys: `y` or `n`
+
+
+3. Deleting lesson from timetable
+
+   * Test case: `timetable delete CS1231/tut/monday/1200`
+     
+       Expected: Lesson will be deleted from timetable
+   * Test case: `timetable delete CS1231/tut/monday/1200` but lesson not added to timetable in the first place
+     
+       Expected: Lesson will not be deleted from timetable as the lesson does not exist in timetable
+   * Test case: `timetable delete CS1231/tut/mon/1200`
+
+       Expected: Lesson will not be deleted from timetable as timetable only accepts days from monday to friday spelt fully.
+   * Test case: `timetable delete CS1231/tutorial/monday/1200`
+
+       Expected: Lesson will not be deleted as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+
+4. Update timetable 
+
+    * Test case: `timetable update CS1231/tut/monday/1200/tuesday/1200`
+
+        Expected: Lesson will be updated 
+    * Test case: `timetable update CS1231/tut/monday/1200/tuesday/1200` but lesson not added to timetable in the first place
+
+        Expected: Lesson will not be updated as the lesson does not exist in timetable
+    * Test case: `timetable update CS1231/tut/mon/1200/tuesday/1200`
+
+        Expected: Lesson will not be updated as timetable only accepts days from monday to friday spelt fully
+    * Test case: `timetable update CS1231/tutorial/monday/1200/tuesday/1200`
+
+        Expected: Lesson will not be updated as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+    * Test case: `timetable update CS1231/tut/monday/1200/monday/1200`
+
+        Expected: Lesson will not be updated as the timing and day given is updating the lesson to the same timing and day
+
+5. View timetable
+
+   * Test case: `timetable view`
+     
+       Expected: Timetable will be printed onto the CLI
+
+6. List timetable
+
+   * Test case: `timetable list monday`
+
+       Expected: The lessons occurring on monday and their timings will be listed on the CLI
+   * Test case: `timetable list sat`
+     
+       Expected: Lessons will not be listed as the day needs to be from monday to firday and spelt fully

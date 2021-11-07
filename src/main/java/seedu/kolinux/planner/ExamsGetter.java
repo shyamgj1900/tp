@@ -47,7 +47,7 @@ public class ExamsGetter {
 
             try {
                 Event event = new Event(arguments);
-                event.setIsLesson();
+                event.setIsIntegratedEvent();
                 exams.add(event);
             } catch (KolinuxException exception) {
                 // Should not execute this

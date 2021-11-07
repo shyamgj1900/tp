@@ -4,8 +4,6 @@ import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleList;
 import seedu.kolinux.util.Parser;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Pattern;
@@ -27,7 +25,6 @@ public class Planner {
                     + "planned on that day\n"
                     + "Or you may enter 'y' to add the event";
     private static final String EMPTY_LIST_MESSAGE = "There are no events planned for this date yet!";
-    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String INVALID_ID_ERROR = "Invalid ID given, no events were deleted.";
 
     private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
@@ -164,18 +161,13 @@ public class Planner {
      */
     public String listEvents(String date, boolean withId) throws KolinuxException {
 
-        try {
-            LocalDate.parse(date);
-        } catch (DateTimeParseException exception) {
-            throw new KolinuxException(INVALID_DATE_MESSAGE);
-        }
         assert Pattern.matches(DATE_PATTERN, date);
 
         ArrayList<String> filteredEventStrings;
         if (withId) {
             filteredEventStrings = (ArrayList<String>) filterPlanner(date)
                     .stream()
-                    .filter(event -> !event.getIsLesson())
+                    .filter(event -> !event.getIsIntegratedEvent())
                     .map(event -> event.toStringWithId())
                     .collect(Collectors.toList());
         } else {

@@ -24,9 +24,9 @@ The following explains the use of different icons in this user guide:
 
 ### Latest Releases
 
-* 💥 `v2.1` _Coming soon_
-* 💥 [`v2.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases) Released on Oct 26, 2021.
-* 💥 `v1.0` Released on Oct 12, 2021.
+* 💥 [`v2.1`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases/tag/v2.1) Released on Nov 8, 2021.
+* 💥 [`v2.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases/tag/v2.0) Released on Oct 26, 2021.
+* 💥 [`v1.0`](https://github.com/AY2122S1-CS2113T-W11-1/tp/releases/tag/v1.0) Released on Oct 12, 2021.
 
 ## Table of Contents
 
@@ -270,7 +270,7 @@ the grade letter and the suffix. E.g. `A+` instead of `A +`
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to find out more!
 
-### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
+#### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
 
 **Format:** `module cap`
 
@@ -328,6 +328,7 @@ that day.
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
   * `LAB` refers to lab
+  * `SEC` refers to sectional
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours 
 `0600` and `2100`
 * `DAY` must be from between `Monday` and `Friday`
@@ -373,6 +374,7 @@ the modules added to module list can be added to the timetable
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
   * `LAB` refers to lab
+  * `SEC` refers to sectional
 * `DAY` must be from between `Monday` and `Friday`
 * `MODULE_CODE`,`LESSON_TYPE` and `DAY`  are not case-sensitive
   * i.e. `CS1010` is the same as `cs1010`
@@ -390,6 +392,7 @@ timetable delete cs1010/lec/tuesday/1800
 CS1010 LEC 1800 tuesday has been deleted from timetable
 ....................................................................
 ```
+
 #### 3.2.3 View timetable on CLI : `timetable view`
 
 **Format:** `timetable view`
@@ -471,6 +474,7 @@ Timetable has been printed above
 ....................................................................
 ```
 >⚠️ Note: Please expand your CLI to view the timetable clearly if the timetable appears skewed.
+>⚠️ Note: Extraneous parameters after `view` will be ignored
 
 #### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
 
@@ -480,6 +484,7 @@ Timetable has been printed above
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
   * `LAB` refers to lab
+  * `SEC` refers to sectional
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours
   `0600` and `2100`
 * `DAY` must be from between `Monday` and `Friday`
@@ -521,9 +526,9 @@ You have no lessons on monday
 Your lessons for monday has been listed above
 ....................................................................
 timetable list friday
-CS1010 TUT 0700 - 0800
-CS1101S TUT 1600 - 1700
-CS1010 LEC 1900 - 2000
+0700 - 0800 CS1010 TUT 
+1600 - 1700 CS1101S TUT 
+1900 - 2000 CS1010 LEC 
 
 Your lessons for friday has been listed above
 ....................................................................
@@ -573,6 +578,7 @@ give additional confirmation if you wish to proceed.
 **Format:** `planner list DATE`
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
+* Adding extraneous parameters separated by `/` will be ignored. For example: `planner list 2021-10-10/something` will be treated the same as `planner list 2021-10-10`.
 
 **Example of usage:**
 
@@ -582,7 +588,7 @@ This is what you should observe on the terminal when you list the events in your
 
 ```
 planner list 2021-10-10
-2021-10-10
+2021-10-10 SUNDAY
 15:30 - 17:30 Watch movie
 17:00 - 18:00 MA1508E quiz
 ....................................................................
@@ -604,6 +610,11 @@ This command has two steps:
 3. Input the ID to delete the event.
 
 * The `DATE` needs to follow the following format: `yyyy-mm-dd`
+* Adding extraneous parameters separated by `/` will be ignored. For example: `planner delete 2021-10-10/something` will be treated the same as `planner delete 2021-10-10`.
+
+**Example of usage:**
+
+* `planner delete 2021-12-31` will prompt you to delete an event on `2021-12-31`.
 
 This is what you should observe on the terminal when you delete an event on a specific date:
 ```
@@ -616,7 +627,7 @@ Please enter the ID of the event you wish to delete (Enter 'n' to terminate this
 An event has been deleted from your schedule successfully: 2021-11-05 10:00 - 12:00 Attend career talk
 ....................................................................
 planner list 2021-11-05
-2021-11-05
+2021-11-05 FRIDAY
 07:00 - 07:30 10km run
 15:00 - 17:00 Watch movie
 ....................................................................

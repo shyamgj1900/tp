@@ -6,17 +6,15 @@ import seedu.kolinux.timetable.lesson.Lesson;
 import seedu.kolinux.timetable.Timetable;
 import seedu.kolinux.util.Parser;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-/** Represents the methods needed to sync with the module list to fetch lessons and exams data. */
+/** Represents the methods needed to sync with the module list and timetable to fetch lessons and exams data. */
 public class ModuleSyncer {
 
     private String date;
 
     private static final int EVENT_ARGUMENTS = 4;
-    private static final String INVALID_DATE_MESSAGE = "Please provide a valid date. Format: yyyy-mm-dd";
     private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
 
     private ArrayList<Lesson> lessonsOnDate = new ArrayList<>();
@@ -62,16 +60,7 @@ public class ModuleSyncer {
      * the date attribute of this class.
      */
     private void getLessonsOnDate() {
-        int dayAsInteger;
-        try {
-            dayAsInteger = Parser.findDayFromDate(date);
-        } catch (ParseException exception) {
-            System.out.println(INVALID_DATE_MESSAGE);
-            return;
-        }
-
-        assert ((dayAsInteger >= 1) && (dayAsInteger <= 7));
-        String day = Parser.parseDay(dayAsInteger);
+        String day = Parser.getDayOfWeek(date);
         lessonsOnDate = (ArrayList<Lesson>) Timetable.lessonStorage
                 .stream()
                 .filter(lesson -> day.equalsIgnoreCase(lesson.getDay()))
@@ -94,7 +83,7 @@ public class ModuleSyncer {
 
         try {
             event = new Event(arguments);
-            event.setIsLesson();
+            event.setIsIntegratedEvent();
         } catch (KolinuxException exception) {
             // Should not be executed since the necessary checks of the arguments were done before constructing
             // the Lesson object.

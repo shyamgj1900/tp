@@ -14,8 +14,12 @@ import seedu.kolinux.exceptions.KolinuxException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -35,6 +39,13 @@ public class Parser {
     private static final String ILLEGAL_CHAR = "|"; // Use of pipe may corrupt the storage files
 
     private static final String ILLEGAL_CHAR_MESSAGE = "Please avoid using '|' in your input, please try again.";
+    private static final String FATAL_ERROR = "Fatal error occurred, please restart Kolinux.";
+    private static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
+    private static final String DATE_FORMAT_ERROR = "Please provide a valid date format. Format: yyyy-mm-dd";
+    private static final String DATE_VALIDITY_ERROR = "This date does not exist. Please try again.";
+    private static final String TIME_PATTERN = "\\d\\d\\d\\d";
+    private static final String TIME_FORMAT_ERROR = "Please provide a valid time format. Format: hhMM";
+    private static final String TIME_VALIDITY_ERROR = "This time is not valid. Please try again.";
 
     /**
      * Removes leading and trailing white spaces from all the elements in a String array.
@@ -186,5 +197,73 @@ public class Parser {
         default:
             return "";
         }
+    }
+
+    /**
+     * This method gets the day of the week in string given a specific date. It is important to conduct any relevant
+     * checks for the format and validity of the date before this method is invoked.
+     *
+     * @param date Date
+     * @return Day of the week in string
+     */
+    public static String getDayOfWeek(String date) {
+        int dayInInt = 0;
+        try {
+            dayInInt = findDayFromDate(date);
+        } catch (ParseException exception) {
+            System.out.println(FATAL_ERROR);
+            System.exit(0);
+        }
+        assert ((dayInInt >= 1) && (dayInInt <= 7));
+        String day = parseDay(dayInInt);
+        return day;
+    }
+
+    /**
+     * Verifies if a given date is of the proper format (yyyy-mm-dd) and is valid.
+     *
+     * @param date Date to be verified
+     * @return LocalDate object representing the date string
+     * @throws KolinuxException If the format is incorrect or the date does not exist
+     */
+    public static LocalDate verifyDate(String date) throws KolinuxException {
+
+        if (!Pattern.matches(DATE_PATTERN, date)) {
+            throw new KolinuxException(DATE_FORMAT_ERROR);
+        }
+
+        LocalDate parsedDate;
+        try {
+            parsedDate = LocalDate.parse(date);
+        } catch (DateTimeParseException exception) {
+            throw new KolinuxException(DATE_VALIDITY_ERROR);
+        }
+
+        return parsedDate;
+    }
+
+    /**
+     * Verifies if a given time is of the proper format (hhMM) and is valid.
+     *
+     * @param time Time to be verified
+     * @return LocalTime object representing the time string
+     * @throws KolinuxException If the format is incorrect or the time is not valid
+     */
+    public static LocalTime verifyTime(String time) throws KolinuxException {
+
+        if (!Pattern.matches(TIME_PATTERN, time)) {
+            throw new KolinuxException(TIME_FORMAT_ERROR);
+        }
+
+        // Adds a colon between hh and MM for it to be parsed by the LocalTime class
+        time = time.replaceFirst("..", "$0:");
+        LocalTime parsedTime;
+        try {
+            parsedTime = LocalTime.parse(time);
+        } catch (DateTimeParseException exception) {
+            throw new KolinuxException(TIME_VALIDITY_ERROR);
+        }
+
+        return parsedTime;
     }
 }

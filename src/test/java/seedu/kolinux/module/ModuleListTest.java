@@ -30,8 +30,8 @@ public class ModuleListTest {
             workload, semesterData, attributes);
 
     private static final String INVALID_MODULE_CODE = "x";
-    private static final ModuleDb moduleDb = new ModuleDb();
-    private static final ModuleList moduleList = new ModuleList();
+    private static ModuleDb moduleDb = new ModuleDb();
+    private static ModuleList moduleList = new ModuleList();
 
     @BeforeAll
     public static void initModuleDb() {

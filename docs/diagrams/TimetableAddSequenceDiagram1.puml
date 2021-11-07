@@ -45,7 +45,7 @@ activate table
 table--> command
 deactivate table
 
-ref over table : Timetable add operation
+ref over command, table : Timetable add operation
 
 
 create result
