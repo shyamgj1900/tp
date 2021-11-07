@@ -695,7 +695,7 @@ should be able to accomplish most of the tasks faster using commands than using 
        Expected: Lesson will be added without any errors
    * Test case: `timetable add CS1010/lecture/monday/1500/1600`
    
-       Expected: Lesson will not be added as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+       Expected: Lesson will not be added as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`,`REC`.
    * Test case: `timetable add CS1010/LEC/sat/1500/1600`
    
        Expected: Lesson will not be added as timetable only accepts days from monday to friday spelt fully.
@@ -735,7 +735,7 @@ should be able to accomplish most of the tasks faster using commands than using 
        Expected: Lesson will not be deleted from timetable as timetable only accepts days from monday to friday spelt fully.
    * Test case: `timetable delete CS1231/tutorial/monday/1200`
 
-       Expected: Lesson will not be deleted as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+       Expected: Lesson will not be deleted as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`,`REC`.
 
 4. Update timetable 
 
@@ -750,7 +750,7 @@ should be able to accomplish most of the tasks faster using commands than using 
         Expected: Lesson will not be updated as timetable only accepts days from monday to friday spelt fully
     * Test case: `timetable update CS1231/tutorial/monday/1200/tuesday/1200`
 
-        Expected: Lesson will not be updated as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+        Expected: Lesson will not be updated as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`,`REC`.
     * Test case: `timetable update CS1231/tut/monday/1200/monday/1200`
 
         Expected: Lesson will not be updated as the timing and day given is updating the lesson to the same timing and day
