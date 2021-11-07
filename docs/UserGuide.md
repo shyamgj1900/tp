@@ -89,8 +89,6 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 ....................................................................
 ```
 
-![startUp](assets/images/start_up.png)
-
 ## 2. List of Commands 
 
 ![tableOfCommands](assets/images/table_of_commands.png)
@@ -134,8 +132,6 @@ Successfully added module: CS2113T
 ....................................................................
 ```
 
-![moduleAdd](assets/images/module_add.png)
-
 #### 3.1.2 Delete modules from module list by code: `module delete`
 
 **Format:** `module delete MODULE_CODE `
@@ -152,8 +148,6 @@ This is what you should observe on the terminal after successfully deleting a mo
 Successfully deleted module: CS2113T
 ....................................................................
 ```
-
-![moduleDelete](assets/images/module_delete.png)
 
 >⚠️ Note: When you delete a module from module list, all the data relating to this module will be deleted from 
 > timetable as well
@@ -180,8 +174,6 @@ Preparation: 4.0 hours
 Remember to add the module's lessons to the timetable based on the workload
 ....................................................................
 ```
-
-![moduleList](assets/images/module_list.png)
 
 #### 3.1.4 View module details: `module view`
 
@@ -217,8 +209,6 @@ composite data types), basic sorting, and recursion.
 ....................................................................
 ```
 
-![moduleView](assets/images/module_view.png)
-
 #### 3.1.5 Set a module's grade in module list: `module grade`
 
 **Format:** `module grade CODE/GRADE `
@@ -238,8 +228,6 @@ CS2113T grade set to A
 ....................................................................
 ```
 
-![moduleGrade](assets/images/module_grade.png)
-
 You can also enter `reset` or simply `0` in place of your grade to reset the module's grade.
 
 **Example of usage:**
@@ -253,8 +241,6 @@ module grade CS2113T/reset
 CS2113T grade reset
 ....................................................................
 ```
-
-![moduleGradeReset](assets/images/module_grade_reset.png)
 
 >⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between 
 the grade letter and the suffix. E.g. `A+` instead of `A +`
@@ -279,8 +265,6 @@ Based on your available grade, your overall CAP is 5.00
 ....................................................................
 ```
 
-![moduleCap](assets/images/module_cap.png)
-
 This feature can also be used to show you the minimum grade to get for the other modules in order to achieve your 
 desired CAP by including the CAP at the end of the command.
 
@@ -297,8 +281,6 @@ Based on your modules, you have to get an average grade of B+ or higher
 in order to achieve your desired CAP
 ....................................................................
 ```
-
-![moduleCapWithArg](assets/images/module_cap_with_arg.png)
 
 >🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
@@ -348,8 +330,6 @@ Lesson has been added to timetable
 ....................................................................
 ```
 
-![timetableAdd](assets/images/timetable_add.png)
-
 >⚠️ Note: Ensure `MODULE_CODE` is stored in the module list using
 [`module add`](#311-add-modules-to-module-list-by-code-module-add) first before adding to timetable as only
 the modules added to module list can be added to the timetable
@@ -368,7 +348,6 @@ the modules added to module list can be added to the timetable
 > Do you want to continue adding the lesson despite
 > exceeding the workload? Please enter y or n
 > ```
-> ![timetablePrompt](assets/images/timetable_prompt.png)
 
 >⚠️ Note: NUSMods api stores the prescribed workload in a 5-tuple of numbers, 
 > describing the estimated number of hours per week the student is expected to put in for the module for 
@@ -414,8 +393,6 @@ timetable delete cs1010/lec/tuesday/1800
 CS1010 LEC 1800 tuesday has been deleted from timetable
 ....................................................................
 ```
-
-![timetableDelete](assets/images/timetable_delete.png)
 
 #### 3.2.3 View timetable on CLI : `timetable view`
 
@@ -463,8 +440,6 @@ CS1010 LEC has been updated
 ....................................................................
 ```
 
-![timetableUpdate](assets/images/timetable_update.png)
-
 #### 3.2.5 List the lessons and their timings on a specific day: `timetable list`
 
 **Format:** `timetable list DAY`
@@ -493,8 +468,6 @@ timetable list friday
 Your lessons for friday has been listed above
 ....................................................................
 ```
-
-![timetableList](assets/images/timetable_list.png)
 
 >🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
@@ -545,8 +518,6 @@ planner list 2021-10-10
 17:00 - 18:00 MA1508E quiz
 ....................................................................
 ```
-
-![plannerList](assets/images/planner_list.png)
 
 >⚠️ Note: The `list` will include all the events, lessons, and exams occurring on the `DATE` specified.
 
@@ -608,8 +579,6 @@ Bus [D2] goes from PGP to MUSEUM
 ....................................................................
 ```
 
-![bus](assets/images/bus.png)
-
 >🔗 The naming convention of `START_LOCATION` and `END_LOCATION` should follow [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list).
 
 #### 3.4.2 List of all bus stop names: `bus stop list`
@@ -658,8 +627,6 @@ Your overall CAP will be 4.09 if you get your desired grades!
 ....................................................................
 ```
 
-![capMc](assets/images/cap_mc.png)
-
 >⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between
 the grade letter and the suffix. E.g. `A+` instead of `A +`
 
@@ -681,8 +648,6 @@ cap code CS2113T/A CS2101/C CG2027/B-
 Your overall CAP will be 3.40 if you get your desired grades!
 ....................................................................
 ```
-
-![capCode](assets/images/cap_code.png)
 
 >⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between
 the grade letter and the suffix. E.g. `A+` instead of `A +`
@@ -710,8 +675,6 @@ bye
 Bye! Thank you for using Kolinux
 ....................................................................
 ```
-
-![exit](assets/images/exit.png)
 
 >🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
