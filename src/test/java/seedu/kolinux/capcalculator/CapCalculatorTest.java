@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CapCalculatorTest {
 
     private static final String[] VALID_INPUTS_BY_MC = {"4/A+", "6/A-", "2/C", "4/U", "3/D+"};
-    private static final  String[] VALID_INPUTS_BY_CODE = {"CG2027/A+", "CS2101/S", "ST2334/C", "CS1231/F", "GEQ1000/CS"};
+    private static final  String[] VALID_INPUTS_BY_CODE = {
+            "CG2027/A+", "CS2101/S", "ST2334/C", "CS1231/F", "GEQ1000/CS"};
     private static final String[] INVALID_INPUT_NO_MODULES = {""};
     private static final String[] INVALID_INPUT_MODULES_BY_MC = {
             "4/A", "ABC", "A/A", "4/4", "4.5/A"};
