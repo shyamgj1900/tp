@@ -481,45 +481,58 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 1. Storing a new module with a valid code
 
-   - Test case: `module add CS2113T`
+   * Test case: `module add CS2113T`
 
      Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
 
 2. Storing a module with an invalid code (non-existent module)
 
-   - Test case: `module add invalid_module`
+   * Test case: `module add invalid_module`
 
      Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
 
 3. Storing a pre-existing module in the list
 
-   - Test case: `module add CS2113T`
+   * Test case: `module add CS2113T`
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
    
 4. Deleting a pre-existing module from the module list
 
-   - Test case: `module delete CS2113T`
+   * Test case: `module delete CS2113T`
 
      Expected: Since the module list contains `CS2113T`, it is deleted and a successful deletion message is printed to standard output.
 
 5. Listing all modules stored in the list
 
-   - Test case: `module list`
+   * Test case: `module list`
 
      Expected: Key attributes of each module stored in the list are printed to standard output
 
 6. Viewing information about a particular module offered by NUS (not necessarily stored in the module list)
 
-   - Test case: `module view CFG1002`
+   * Test case: `module view CFG1002`
 
      Expected: Information regarding CFG1002 is printed to standard output.
 
 7. Setting a grade for module stored in the user's module list
 
-   - Test case: `module grade CS2113T/A+`
+   * Test case: `module grade CS2113T/A+`
 
      Expected: The module list already contains `CS2113T`. Upon setting its grade to `A+`, a message indicating successful update of the grade is printed to standard output.
+
+8. Calculate overall CAP of module stored in user's module list
+
+    * Test case: `module cap`
+
+      Expected: If there are modules stored in the module list, the overall CAP is calculated and shown to the user.
+
+9. Suggest grade for user to achieve desired CAP
+
+    * Test case: `module cap 3.5`
+
+      Expected: If there are valid modules with no assigned grade stored in the module list, the suggested overall grade to achieve is calculated and shown to user.
+
 
 ### Testing the Planner feature
 
