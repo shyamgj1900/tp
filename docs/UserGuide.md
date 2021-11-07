@@ -329,6 +329,7 @@ that day.
   * `LEC` refers to lecture
   * `LAB` refers to lab
   * `SEC` refers to sectional
+  * `REC` refers to recitation
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours 
 `0600` and `2100`
 * `DAY` must be from between `Monday` and `Friday`
@@ -360,7 +361,26 @@ the modules added to module list can be added to the timetable
 
 >⚠️ Note: Due to a few inaccuracies in the prescribed workload hours in NUSMods, you can now add lessons which exceed 
 > the workload hours, but you will be given a warning and asked to confirm if you would like to carry out with adding 
-> the lesson.
+> the lesson as shown in the example below:
+> ```
+> Input hours for CS1010 TUT exceeds the total workload
+> It exceeds 1.0 hours
+> Do you want to continue adding the lesson despite
+> exceeding the workload? Please enter y or n
+> ```
+
+>⚠️ Note: NUSMods api stores the prescribed workload in a 5-tuple of numbers, 
+> describing the estimated number of hours per week the student is expected to put in for the module for 
+> lectures, tutorials, laboratory, projects/fieldwork, and preparatory work respectively. 
+> For example, a workload of [2, 1, 1, 3, 3] means the student should spend every week:
+> * 2 hours in lectures
+> * 1 hour in tutorials 
+> * 1 hour at the lab
+> * 3 hours doing project work
+> * 3 hours preparing for classes
+>
+> Due to this limitation, for lesson types `SEC` (usually replaces `LEC` for certain modules) and `REC`, 
+> users have to ensure the lesson hours are accurate before adding the lesson.
 
 >🔗 Visit [`module`](#31-module-manager-module) for more information on the command formats.
 
@@ -375,6 +395,7 @@ the modules added to module list can be added to the timetable
   * `LEC` refers to lecture
   * `LAB` refers to lab
   * `SEC` refers to sectional
+  * `REC` refers to recitation
 * `DAY` must be from between `Monday` and `Friday`
 * `MODULE_CODE`,`LESSON_TYPE` and `DAY`  are not case-sensitive
   * i.e. `CS1010` is the same as `cs1010`
@@ -485,6 +506,7 @@ Timetable has been printed above
   * `LEC` refers to lecture
   * `LAB` refers to lab
   * `SEC` refers to sectional
+  * `REC` refers to recitation
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours
   `0600` and `2100`
 * `DAY` must be from between `Monday` and `Friday`

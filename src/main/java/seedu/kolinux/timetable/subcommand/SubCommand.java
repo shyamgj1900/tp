@@ -60,7 +60,7 @@ public class SubCommand {
             "----------+--------------------+--------------------+--------------------+";
     public static final String INVALID_LESSON_FORMAT = "Please ensure the LESSON_TYPE entered is in one of "
             +
-            "the following format:\n1. LEC\n2. TUT\n3. LAB\n4. SEC";
+            "the following format:\n1. LEC\n2. TUT\n3. LAB\n4. SEC\n5. REC";
     public static final String INVALID_DAY_TIME_FOR_ADD = "1. Please ensure the days are within Monday to Friday "
             +
             "and spelt fully.\n2. Please ensure the timings are within the school hours: 0600 - 2100\n"
@@ -133,7 +133,7 @@ public class SubCommand {
      */
     protected void checkLessonType(String lessonType, String correctFormat) throws KolinuxException {
         if (!(lessonType.equals("TUT") || lessonType.equals("LEC") || lessonType.equals("LAB")
-                || lessonType.equals("SEC"))) {
+                || lessonType.equals("SEC") || lessonType.equals("REC"))) {
             throw new KolinuxException(correctFormat + "\n\n" + INVALID_LESSON_FORMAT);
         }
     }

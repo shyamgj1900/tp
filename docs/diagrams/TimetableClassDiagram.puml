@@ -14,6 +14,9 @@ class DeleteSubCommand
 class "ABSTRACT \n Lesson"
 class Tutorial
 class Lecture
+class Lab
+class Recitation
+class Sectional
 class TimetableStorage
 class Timetable
 
@@ -26,6 +29,8 @@ UpdateSubCommand --^ SubCommand
 "ABSTRACT \n Lesson" ^-- Lecture
 "ABSTRACT \n Lesson" ^-- Tutorial
 "ABSTRACT \n Lesson" ^-- Lab
+"ABSTRACT \n Lesson" ^-- Sectional
+"ABSTRACT \n Lesson" ^-- Recitation
 
 AddSubCommand ..> "1..*" "ABSTRACT \n Lesson" : lesson
 DeleteSubCommand ..> "1..*" "ABSTRACT \n Lesson" : lesson
@@ -94,6 +99,14 @@ class Lecture TIMETABLE_COLOR {
 }
 
 class Lab TIMETABLE_COLOR {
+
+}
+
+class Sectional TIMETABLE_COLOR {
+
+}
+
+class Recitation TIMETABLE_COLOR {
 
 }
 
