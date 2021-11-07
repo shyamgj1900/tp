@@ -13,7 +13,7 @@ for freshmen to manage their modules and view information about them, a **timeta
 for the NUS internal shuttle bus.
 
 This user guide brings you on a tour around _Kolinux_ and gives you step-by-step instructions on using its features.
-Alternatively, you may visit the [Table of Contents](#table-of-contents) for quick access to any of the features. You
+Alternatively, you may visit the [Table of Contents](#table-of-contents) to go back to the table of contents! for quick access to any of the features. You
 may also navigate to the [List of Commands](#2-list-of-commands) to view a summary of all our available commands and
 their usages.
 
@@ -90,33 +90,8 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 ```
 
 ## 2. List of Commands 
-<font size="1"> 
 
-|    Command    	|                     Action                     	              |               Command Format               	       |
-|:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
-| [`module add`](#311-add-modules-to-module-list-by-code-module-add)	| Store a module in the module list			                      | `module add MODULE_CODE`			               |
-| [`module delete`](#312-delete-modules-from-module-list-by-code-module-delete)	| Delete a module from the module list			                  | `module delete MODULE_CODE`			               |
-| [`module list`](#313-list-modules-from-module-list-module-list)     | List all stored modules from the module list                    | `module list`                                      |
-| [`module view`](#314-view-module-details-module-view)     | View module information                                         | `module view MODULE_CODE`                          |
-| [`module grade`](#315-set-a-modules-grade-in-module-list-module-grade)    | Set the grade of a module in the module list by its module code | `module grade MODULE_CODE/GRADE`                          |
-| [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap)      | Calculate CAP given modules and grades in the module list       | `module cap`                                       |
-| [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap)      | Get average grade needed to get desired CAP from module list    | `module cap DESIRED_CAP`                           |
-| [`timetable add`](#321-add-lessons-to-timetable--timetable-add)   | Add a lesson to your timetable                                  | `timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME`|
-| [`timetable delete`](#322-delete-lessons-from-timetable--timetable-delete)| Delete a lesson from your timetable                             | `timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME`     |
-| [`timetable view`](#323-view-timetable-on-cli--timetable-view)  | View timetable                                                  | `timetable view`                                   |
-| [`timetable update`](#324-update-a-lesson-to-another-timing-your-timetable--timetable-update)| Update a lesson to another timing on your timetable             | `timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME`|
-| [`timetable list`](#325-list-the-lessons-and-their-timings-on-a-specific-day-timetable-list)| List all the lessons with their timings on a specified day of the week             | `timetable list DAY` |
-| [`planner add`](#331-add-an-event-to-planner-planner-add) 	| Add a new event to your planner on a particular date           | `planner add DESCRIPTION/DATE/START_TIME/END_TIME` |
-| [`planner list`](#332-list-events-on-a-specific-date-planner-list)	| List the events in your planner on a particular date                            | `planner list DATE`                                |
-| [`planner delete`](#333-delete-an-event-from-planner-planner-delete) 	| Delete an event from your planner on a particular date                            | `planner delete DATE`                              |
-| [`bus`](#341-bus-route-search-bus)        	| Check for an NUS bus route from one stop to another 	          | `bus /START_LOCATION /END_LOCATION`                |
-| [`bus stop list`](#342-list-of-all-bus-stop-names-bus-stop-list)   | Lists all the bus stops in the NUS shuttle bus routes           | `bus stop list`                                    |
-| [`cap mc`](#351-calculate-cap-using-modular-credit-cap-mc)         	| Calculate CAP using a set of modular credits and grades         | `cap mc MC/GRADE`                            	   |
-| [`cap code`](#352-calculate-cap-using-module-code-cap-code)        | Calculate CAP using a set of module codes and grades            | `cap code MODULE_CODE/GRADE`                              |
-| [`help`](#36-view-menu-help)       	| View the different commands available          	              | `help`                                     	       |
-| [`bye`](#37-exit-bye)      	| Exit _Kolinux_                                   	              | `bye`                                      	       |
-
-</font>
+![tableOfCommands](assets/images/table_of_commands.png)
 
 >⚠️Note: Words in uppercase are parameters that you should supply to the program.
 
@@ -306,7 +281,7 @@ in order to achieve your desired CAP
 ....................................................................
 ```
 
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
 ### 3.2 Timetable: `timetable`
 
@@ -427,81 +402,7 @@ CS1010 LEC 1800 tuesday has been deleted from timetable
 
 This is what you should observe on your terminal when you want to view the timetable:
 
-<font size="1">
-
-```
-timetable add CS1010/lec/monday/1900/2000
-CS1010 LEC has been added to timetable
-....................................................................
-timetable view
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|             |       MONDAY       |       TUESDAY      |      WEDNESDAY     |      THURSDAY      |       FRIDAY       |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0600 - 0630  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0630 - 0700  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0700 - 0730  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0730 - 0800  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0800 - 0830  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0830 - 0900  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0900 - 0930  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|0930 - 1000  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1000 - 1030  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1030 - 1100  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1100 - 1130  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1130 - 1200  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1200 - 1230  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1230 - 1300  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1300 - 1330  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1330 - 1400  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1400 - 1430  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1430 - 1500  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1500 - 1530  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1530 - 1600  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1600 - 1630  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1630 - 1700  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1700 - 1730  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1730 - 1800  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1800 - 1830  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1830 - 1900  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1900 - 1930  |     CS1010 LEC     |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|1930 - 2000  |     CS1010 LEC     |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|2000 - 2030  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-|2030 - 2100  |                    |                    |                    |                    |                    |
-+-------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-Timetable has been printed above
-....................................................................
-```
-
-</font>
+![timetableView](assets/images/timetable_view.png)
 
 >⚠️ Note: Please expand your CLI to view the timetable clearly if the timetable appears skewed.
 
@@ -566,7 +467,7 @@ Your lessons for friday has been listed above
 ....................................................................
 ```
 
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
 ### 3.3 Event Planner: `planner`
 
@@ -589,22 +490,8 @@ manager so that you will also be able to view your lessons and exams on specific
 
 This is what you should observe on your terminal when adding an event to your planner:
 
-<font size="1">
+![plannerAdd](assets/images/planner_add_image.png)
 
-```
-planner add MA1508E quiz/2021-10-10/1700/1800
-An event has been added to your schedule successfully: 2021-10-10 17:00 - 18:00 MA1508E quiz
-....................................................................
-planner add Watch movie/2021-10-10/1530/1730
-You already have an event ongoing for that time period, do you still want to add?
-You may enter 'n' to cancel and proceed to list the events on the date to see what you already planned on that day
-Or you may enter 'y' to add the event
-y
-An event has been added to your schedule successfully: 2021-10-10 15:30 - 17:30 Watch movie
-....................................................................
-```
-
-</font>
 
 >⚠️ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
 give additional confirmation if you wish to proceed.
@@ -654,25 +541,7 @@ This command has two steps:
 
 This is what you should observe on the terminal when you delete an event on a specific date:
 
-<font size="1">
-
-```
-planner delete 2021-11-05
-Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):
-07:00 - 07:30 10km run (id: 7)
-10:00 - 12:00 Attend career talk (id: 9)
-15:00 - 17:00 Watch movie (id: 1)
-9
-An event has been deleted from your schedule successfully: 2021-11-05 10:00 - 12:00 Attend career talk
-....................................................................
-planner list 2021-11-05
-2021-11-05 FRIDAY
-07:00 - 07:30 10km run
-15:00 - 17:00 Watch movie
-....................................................................
-```
-
-</font>
+![plannerDelete](assets/images/planner_delete.png)
 
 >⚠️ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, you are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
@@ -681,7 +550,7 @@ Hence, you are not allowed to delete lessons added via the `timetable` and exams
 
 >🔗 Exams will be automatically deleted as modules are deleted from the [`module`](#31-module-manager-module) manager.
 
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
 ### 3.4 NUS Bus Route Finder: `bus`
 
@@ -720,36 +589,13 @@ Bus [D2] goes from PGP to MUSEUM
 
 This is what you should observe on the terminal when you list all the bus stop names in NUS:
 
-<font size="1">
+![busStopList](assets/images/bus_stop_list.png)
 
-```
-._______________________________________________________________________________________________________.
-|_____BUS_A1_____|_____BUS_A2_____|_____BUS_D1_____|_____BUS_D2_____|_____BUS_E_____|_______BUS_K_______|
-|KR BUS TERMINAL |KR BUS TERMINAL |OPP HSSML       |PGP             |KENT VALE      |PGP                |
-|LT13            |IT              |OPP NUSS        |KR MRT          |EA             |KR MRT             |
-|AS 5            |OPP YIH         |COM 2           |LT27            |SDE 3          |LT27               |
-|COM 2           |MUSEUM          |VENTUS          |UHALL           |IT             |UHALL              |
-|BIZ 2           |UHC             |IT              |OPP UHC         |OPP YIH        |OPP UHC            |
-|OPP TCOMS       |OPP UHALL       |OPP YIH         |MUSEUM          |UTOWN          |YIH                |
-|PGP             |S 17            |MUSEUM          |UTOWN           |RAFFLES HALL   |CLB                |
-|KR MRT          |OPP KR MRT      |UTOWN           |UHC             |               |OPP SDE 3          |
-|LT27            |PGPR            |YIH             |OPP UHALL       |               |JAPANESE PRI SCHOOL|
-|UHALL           |TCOMS           |CLB             |S 17            |               |KENT VALE          |
-|OPP UHC         |OPP HSSML       |LT13            |OPP KR MRT      |               |MUSEUM             |
-|YIH             |OPP NUSS        |AS 5            |PGPR            |               |UHC                |
-|CLB             |COM 2           |BIZ 2           |                |               |OPP UHALL          |
-|                |VENTUS          |                |                |               |S 17               |
-|                |                |                |                |               |OPP KR MRT         |
-|________________|________________|________________|________________|_______________|PGPR_______________|
-....................................................................
-```
-
-</font>
 
 >⚠️ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
 where the user needs to change and board another bus (only single change routes are recommended).
 
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
 ### 3.5 CAP Calculator: `cap`
 
@@ -804,7 +650,7 @@ Your overall CAP will be 3.40 if you get your desired grades!
 >⚠️ Note: For grades with plus (+) or minus (-) suffix, it is crucial to ensure that there is no empty space between
 the grade letter and the suffix. E.g. `A+` instead of `A +`
 
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
 ### 3.6 View menu: `help`
 
@@ -812,40 +658,9 @@ Views the different commands available.
 
 This is what you should observe on the terminal when you send a help command:
 
-<font size="1">
+![helpCommand](assets/images/help_image.png)
 
-```
-help
-Here are the list of commands:
-1. cap mc MC/GRADE - Calculates the overall cap from MC
-2. cap code MODULE_CODE/GRADE - Calculates the overall cap from MODULE_CODE
-3. bus /START_POINT /END_POINT - Check for a NUS bus route from stop to another
-4. bus stop list - List all the bus stop names
-5. module view MODULE_CODE - View the module details
-6. module add MODULE_CODE - Add a module to your module list
-7. module delete MODULE_CODE - Delete a module from your module list
-8. module list - List all modules stored in your module list
-9. module grade CODE/GRADE - Update the module CODE from your module list with a new grade GRADE
-10. module cap - Calculate the overall CAP of modules stored in your module list
-11. module cap DESIRED_CAP - Calculate the average minimum grade for the other modules needed
-    to achieve DESIRED_CAP
-12. planner add DESCRIPTION/DATE/START_TIME/END_TIME - Add an event to your schedule
-13. planner list DATE - Lists events on a certain date
-14. planner delete DATE - Delete an event on a certain date
-15. timetable add MODULE_CODE/LESSON_TYPE/DAY/START_TIME/END_TIME - Add lesson to timetable
-16. timetable update MODULE_CODE/LESSON_TYPE/OLD_DAY/OLD_START_TIME/NEW_DAY/NEW_START_TIME
-    - shift a lesson to another timing with the same duration
-17. timetable delete MODULE_CODE/LESSON_TYPE/DAY/START_TIME - delete a specific lesson
-18. timetable view - Print the timetable on CLI
-19. timetable list DAY - List the lessons taking place on a specific day with their timings
-20. help - View this menu again
-21. bye - Exit Kolinux
-....................................................................
-```
-
-</font>
-
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
 ### 3.7 Exit: `bye`
 
@@ -859,7 +674,7 @@ Bye! Thank you for using Kolinux
 ....................................................................
 ```
 
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
 
 
 ## 4. Current limitations 
@@ -917,4 +732,4 @@ also open to any suggestions that you may have to improve _Kolinux_. 😃
 
 You may find our contact information [here](AboutUs.md).
 
->🔗 Click [here](#2-list-of-commands) to return to the list of commands!
+>🔗 Click [here](#table-of-contents) to go back to the table of contents!
