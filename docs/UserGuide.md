@@ -89,7 +89,8 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 ....................................................................
 ```
 
-## 2. List of Commands
+## 2. List of Commands 
+<font size="1"> 
 
 |    Command    	|                     Action                     	              |               Command Format               	       |
 |:-------------:	|:----------------------------------------------:	              |:------------------------------------------:	       |
@@ -114,6 +115,8 @@ Welcome to Kolinux! Enter "help" to view the list of commands
 | [`cap code`](#352-calculate-cap-using-module-code-cap-code)        | Calculate CAP using a set of module codes and grades            | `cap code MODULE_CODE/GRADE`                              |
 | [`help`](#36-view-menu-help)       	| View the different commands available          	              | `help`                                     	       |
 | [`bye`](#37-exit-bye)      	| Exit _Kolinux_                                   	              | `bye`                                      	       |
+
+</font>
 
 >⚠️Note: Words in uppercase are parameters that you should supply to the program.
 
@@ -423,6 +426,9 @@ CS1010 LEC 1800 tuesday has been deleted from timetable
 * `timetable add CS1010/LEC/monday/1900/2000` followed by `timetable view`
 
 This is what you should observe on your terminal when you want to view the timetable:
+
+<font size="1">
+
 ```
 timetable add CS1010/lec/monday/1900/2000
 CS1010 LEC has been added to timetable
@@ -494,7 +500,11 @@ timetable view
 Timetable has been printed above
 ....................................................................
 ```
+
+</font>
+
 >⚠️ Note: Please expand your CLI to view the timetable clearly if the timetable appears skewed.
+
 >⚠️ Note: Extraneous parameters after `view` will be ignored
 
 #### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
@@ -579,6 +589,8 @@ manager so that you will also be able to view your lessons and exams on specific
 
 This is what you should observe on your terminal when adding an event to your planner:
 
+<font size="1">
+
 ```
 planner add MA1508E quiz/2021-10-10/1700/1800
 An event has been added to your schedule successfully: 2021-10-10 17:00 - 18:00 MA1508E quiz
@@ -591,6 +603,8 @@ y
 An event has been added to your schedule successfully: 2021-10-10 15:30 - 17:30 Watch movie
 ....................................................................
 ```
+
+</font>
 
 >⚠️ Note: If you attempt to add an event that has a time conflict with another event/lesson/exam, you will need to 
 give additional confirmation if you wish to proceed.
@@ -639,6 +653,9 @@ This command has two steps:
 * `planner delete 2021-12-31` will prompt you to delete an event on `2021-12-31`.
 
 This is what you should observe on the terminal when you delete an event on a specific date:
+
+<font size="1">
+
 ```
 planner delete 2021-11-05
 Please enter the ID of the event you wish to delete (Enter 'n' to terminate this operation):
@@ -654,6 +671,8 @@ planner list 2021-11-05
 15:00 - 17:00 Watch movie
 ....................................................................
 ```
+
+</font>
 
 >⚠️ Note: Only events added via the `planner` will be displayed on the list in step 2.
 Hence, you are not allowed to delete lessons added via the `timetable` and exams from the `planner`.
@@ -701,6 +720,8 @@ Bus [D2] goes from PGP to MUSEUM
 
 This is what you should observe on the terminal when you list all the bus stop names in NUS:
 
+<font size="1">
+
 ```
 ._______________________________________________________________________________________________________.
 |_____BUS_A1_____|_____BUS_A2_____|_____BUS_D1_____|_____BUS_D2_____|_____BUS_E_____|_______BUS_K_______|
@@ -722,6 +743,8 @@ This is what you should observe on the terminal when you list all the bus stop n
 |________________|________________|________________|________________|_______________|PGPR_______________|
 ....................................................................
 ```
+
+</font>
 
 >⚠️ Note: Routes implemented cover Buses A1, A2, D1, D2, E and K. Also routes are recommended if there is direct route or an indirect route
 where the user needs to change and board another bus (only single change routes are recommended).
@@ -789,6 +812,8 @@ Views the different commands available.
 
 This is what you should observe on the terminal when you send a help command:
 
+<font size="1">
+
 ```
 help
 Here are the list of commands:
@@ -817,6 +842,8 @@ Here are the list of commands:
 21. bye - Exit Kolinux
 ....................................................................
 ```
+
+</font>
 
 >🔗 Click [here](#2-list-of-commands) to return to the list of commands!
 
