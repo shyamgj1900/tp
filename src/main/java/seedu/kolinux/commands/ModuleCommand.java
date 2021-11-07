@@ -3,6 +3,7 @@ package seedu.kolinux.commands;
 import seedu.kolinux.exceptions.KolinuxException;
 import seedu.kolinux.module.ModuleDetails;
 import seedu.kolinux.module.ModuleListStorage;
+import seedu.kolinux.module.ModuleList;
 
 import java.util.logging.Level;
 
@@ -42,7 +43,7 @@ public class ModuleCommand extends Command {
     public static final String LIST_SUBCOMMAND = "list";
     public static final String SET_GRADE_SUBCOMMAND = "grade";
     private static final String CAP_SUBCOMMAND = "cap";
-    
+
     public static final String INVALID_GRADE_FORMAT_MESSAGE = "Please use the format: module grade CODE/GRADE";
     public static final String INVALID_GRADE_LETTER_MESSAGE = "Please enter a valid grade";
     public static final String INVALID_SU_GRADE_MESSAGE = "This module doesn't allow S/U grade";
@@ -61,10 +62,14 @@ public class ModuleCommand extends Command {
         this.parsedArguments = parsedArguments;
     }
 
+    public static ModuleList getModuleList() {
+        return moduleList;
+    }
+
     private String containsValidGrade(String moduleCode, String moduleGrade) {
         ModuleDetails module = moduleDb.getModuleInfo(moduleCode);
         if (module.isCsCuModule()) {
-            if (moduleGrade.equals(CS_GRADE) || moduleGrade.equals(CU_GRADE) 
+            if (moduleGrade.equals(CS_GRADE) || moduleGrade.equals(CU_GRADE)
                     || moduleGrade.equals(RESET_GRADE) || moduleGrade.equals(RESET_GRADE_ARGUMENT)) {
                 return null;
             }
@@ -102,7 +107,7 @@ public class ModuleCommand extends Command {
         ModuleListStorage.writeModulesToFile(moduleList);
         return new CommandResult(message);
     }
-    
+
     private CommandResult showModuleCap(String[] parsedArguments) throws KolinuxException {
         ModuleListCapCommand command = new ModuleListCapCommand(parsedArguments);
         return command.executeCommand();
