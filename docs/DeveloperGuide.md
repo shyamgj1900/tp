@@ -228,29 +228,47 @@ exceed the workload whilst displaying a warning as to what the prescribed worklo
 `PromptHandler` just like we did in `planner` to get a reply from the user in order to continue adding with the lesson.
 * The following code illustrates how to check if the lesson inputted exceeds the workload.
 
-<font size="1">
 
-```
-private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
-        throws KolinuxException {
-    String lessonType = lessonDetails[1].toUpperCase();
-    String moduleCode = lessonDetails[0].toUpperCase();
-    double requiredHours = getRequiredHours(moduleList, moduleCode, lessonType);
-    double inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
-    double storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
-    if (storageHours > requiredHours && !isAllowingAdd && !isStorageAdd) {
-        throw new ExceedWorkloadException("Input hours for " + moduleCode + " " + lessonType
-                +
-                " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n"
-                +
-                "Do you want to continue adding the lesson despite\n"
-                +
-                "exceeding the workload? Please enter y or n");
-    }
-}
-```
+[comment]: <> (```)
 
-</font>
+[comment]: <> (private void checkExceedingWorkload&#40;String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd&#41;)
+
+[comment]: <> (        throws KolinuxException {)
+
+[comment]: <> (    String lessonType = lessonDetails[1].toUpperCase&#40;&#41;;)
+
+[comment]: <> (    String moduleCode = lessonDetails[0].toUpperCase&#40;&#41;;)
+
+[comment]: <> (    double requiredHours = getRequiredHours&#40;moduleList, moduleCode, lessonType&#41;;)
+
+[comment]: <> (    double inputHours = getIndex&#40;lessonDetails[4], schoolHours&#41; - getIndex&#40;lessonDetails[3], schoolHours&#41;;)
+
+[comment]: <> (    double storageHours = getStorageHours&#40;moduleCode, lessonType&#41; + inputHours;)
+
+[comment]: <> (    if &#40;storageHours > requiredHours && !isAllowingAdd && !isStorageAdd&#41; {)
+
+[comment]: <> (        throw new ExceedWorkloadException&#40;"Input hours for " + moduleCode + " " + lessonType)
+
+[comment]: <> (                +)
+
+[comment]: <> (                " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n")
+
+[comment]: <> (                +)
+
+[comment]: <> (                "Do you want to continue adding the lesson despite\n")
+
+[comment]: <> (                +)
+
+[comment]: <> (                "exceeding the workload? Please enter y or n"&#41;;)
+
+[comment]: <> (    })
+
+[comment]: <> (})
+
+[comment]: <> (```)
+
+![exceedWorkloadCode](assets/images/exceed_workload_code_image.png)
+
 
 * The following sequence diagram illustrates what happens when input hours exceed the workload and what the program
 does to handle this exception before adding the lesson to the timetable.
@@ -294,23 +312,35 @@ shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(
 `filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
 is to be added.
 
-<font size="1">
 
-```
-private boolean hasTimeConflict(Event eventToBeAdded) {
-    ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
-    String startTime = eventToBeAdded.getStartTime();
-    String endTime = eventToBeAdded.getEndTime();
-    for (Event event : filteredPlanner) {
-        if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
-            return true;
-        }
-    }
-    return false;
-}
-```
 
-</font>
+[comment]: <> (```)
+
+[comment]: <> (private boolean hasTimeConflict&#40;Event eventToBeAdded&#41; {)
+
+[comment]: <> (    ArrayList<Event> filteredPlanner = filterPlanner&#40;eventToBeAdded.getDate&#40;&#41;&#41;;)
+
+[comment]: <> (    String startTime = eventToBeAdded.getStartTime&#40;&#41;;)
+
+[comment]: <> (    String endTime = eventToBeAdded.getEndTime&#40;&#41;;)
+
+[comment]: <> (    for &#40;Event event : filteredPlanner&#41; {)
+
+[comment]: <> (        if &#40;!&#40;startTime.compareTo&#40;event.getEndTime&#40;&#41;&#41; >= 0 || endTime.compareTo&#40;event.getStartTime&#40;&#41;&#41; <= 0&#41;&#41; {)
+
+[comment]: <> (            return true;)
+
+[comment]: <> (        })
+
+[comment]: <> (    })
+
+[comment]: <> (    return false;)
+
+[comment]: <> (})
+
+[comment]: <> (```)
+
+![hasTimeConflict](assets/images/has_time_confict_image.png)
 
 The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
 1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of `Event`s that are
