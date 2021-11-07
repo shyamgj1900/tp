@@ -328,6 +328,7 @@ that day.
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
   * `LAB` refers to lab
+  * `SEC` refers to sectional
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours 
 `0600` and `2100`
 * `DAY` must be from between `Monday` and `Friday`
@@ -373,6 +374,7 @@ the modules added to module list can be added to the timetable
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
   * `LAB` refers to lab
+  * `SEC` refers to sectional
 * `DAY` must be from between `Monday` and `Friday`
 * `MODULE_CODE`,`LESSON_TYPE` and `DAY`  are not case-sensitive
   * i.e. `CS1010` is the same as `cs1010`
@@ -390,6 +392,7 @@ timetable delete cs1010/lec/tuesday/1800
 CS1010 LEC 1800 tuesday has been deleted from timetable
 ....................................................................
 ```
+
 #### 3.2.3 View timetable on CLI : `timetable view`
 
 **Format:** `timetable view`
@@ -471,6 +474,7 @@ Timetable has been printed above
 ....................................................................
 ```
 >⚠️ Note: Please expand your CLI to view the timetable clearly if the timetable appears skewed.
+>⚠️ Note: Extraneous parameters after `view` will be ignored
 
 #### 3.2.4 Update a lesson to another timing your timetable : `timetable update`
 
@@ -480,6 +484,7 @@ Timetable has been printed above
   * `TUT` refers to tutorial
   * `LEC` refers to lecture
   * `LAB` refers to lab
+  * `SEC` refers to sectional
 * `START_TIME` and `END_TIME` needs to follow the following format: `hhMM` and must be between the school hours
   `0600` and `2100`
 * `DAY` must be from between `Monday` and `Friday`
