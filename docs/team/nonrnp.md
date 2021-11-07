@@ -18,6 +18,9 @@ These features are powered by the NUSMods API. Written in Java, Kolinux and prov
   * What it does: Calculate the overall CAP directly from the stored modules and their respective grade within module manager without having to key in all the modules and grades in a separate command.
   * Justification: This enhancement allows the user to conveniently calculate their overall CAP using a short, simple command without having to refer to another feature.
   * Highlights: This feature has a different approach in retrieving the modules and grades from the user, thus making it necessary to introduce an additional class dedicated for extracting and calculating the overall CAP from module description with different data type than the basic calculator.
+
+<div style="page-break-after: always;"></div>
+  
 * **Enhancement added**: Grade suggestion based on stored modules in Module Manager feature
   * What it does: Calculate the overall CAP of the user's stored module and compare the value with the user's desired CAP. Then, based on the user's other modules with no assigned grade, calculate and suggest the minimum overall grade needed to achieve the desired CAP to the user.
   * Justification: This allows the user to estimate their effort needed to achieve their desired result, which would allow the user to manage their study plan and get prepared for their upcoming modules.
