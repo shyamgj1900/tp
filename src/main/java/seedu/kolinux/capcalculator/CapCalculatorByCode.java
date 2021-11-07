@@ -86,7 +86,7 @@ public class CapCalculatorByCode extends CapCalculator {
             String grade = moduleDescriptions[1];
             int checkGradeResult = containsValidGrade(moduleCode, grade);
             if (checkGradeResult == INVALID_SU_GRADE || checkGradeResult == INVALID_CSCU_MODULE_MESSAGE) {
-                invalidGradeModules.add(moduleCode);
+                invalidGradeModules.add(moduleDescription);
             }
             if (checkGradeResult == INVALID_GRADE) {
                 invalidModules.add(moduleDescription);
