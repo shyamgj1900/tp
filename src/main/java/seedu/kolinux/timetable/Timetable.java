@@ -71,7 +71,7 @@ public class Timetable {
      * @param fileContents Array list of the contents of the timetable text file
      * @throws KolinuxException If the format of the file content for timetable inputting is incorrect
      */
-    private void loadContent(ArrayList<String> fileContents) throws KolinuxException {
+    protected void loadContent(ArrayList<String> fileContents) throws KolinuxException {
         for (String fileContent : fileContents) {
             String[] content = fileContent.split("/");
             addSubCommand.inputLesson(content, false, true);

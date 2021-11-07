@@ -228,6 +228,8 @@ exceed the workload whilst displaying a warning as to what the prescribed worklo
 `PromptHandler` just like we did in `planner` to get a reply from the user in order to continue adding with the lesson.
 * The following code illustrates how to check if the lesson inputted exceeds the workload.
 
+<font size="1">
+
 ```
 private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
         throws KolinuxException {
@@ -247,6 +249,8 @@ private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAd
     }
 }
 ```
+
+</font>
 
 * The following sequence diagram illustrates what happens when input hours exceed the workload and what the program
 does to handle this exception before adding the lesson to the timetable.
@@ -290,19 +294,23 @@ shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(
 `filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
 is to be added.
 
+<font size="1">
+
 ```
-    private boolean hasTimeConflict(Event eventToBeAdded) {
-        ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
-        String startTime = eventToBeAdded.getStartTime();
-        String endTime = eventToBeAdded.getEndTime();
-        for (Event event : filteredPlanner) {
-            if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
-                return true;
-            }
+private boolean hasTimeConflict(Event eventToBeAdded) {
+    ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
+    String startTime = eventToBeAdded.getStartTime();
+    String endTime = eventToBeAdded.getEndTime();
+    for (Event event : filteredPlanner) {
+        if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
+            return true;
         }
-        return false;
     }
+    return false;
+}
 ```
+
+</font>
 
 The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
 1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of `Event`s that are
