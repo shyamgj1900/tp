@@ -18,7 +18,7 @@ of implementations.
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module add/delete`](#add/delete-a-module-by-module-code-feature)
+  * [`module add & delete`](#add-&-delete-a-module-by-module-code-feature)
   * [`cap code`](#cap-calculator-by-module-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
@@ -33,6 +33,7 @@ of implementations.
 * User Guide and Developer Guide of [AddressBook Level-3](https://se-education.org/addressbook-level3/)
 * [NUSMods API](https://api.nusmods.com/v2/) 
 * [GSON](https://github.com/google/gson)
+* [JUnidecode](https://github.com/gcardone/junidecode)
 
 ## Setting up and getting started
 
@@ -109,7 +110,7 @@ The class diagram below models the structure of the `module` component
 
 The `ModuleCommand` class is responsible for the execution of all `module` related commands. It inherits references 
 to instances of `ModuleList` and `ModuleDb` from `Command`  which are utilized for maintaining a list of
-`ModuleDetails` instances and operating a database of `moduleDetails`( `ModuleDb`) respectively. `ModuleCommand` 
+`ModuleDetails` instances and operating a repository of `moduleDetails`( `ModuleDb`) respectively. `ModuleCommand` 
 also interacts with `ModuleListStorage` to facilitate the persistent storage of the contents of `ModuleList`. 
 
 #### Timetable Component
@@ -322,16 +323,16 @@ one `ModuleDetails`, and one `Event` stored in `Timetable`, `ModuleList`, and `P
 
 ![Planner After Object Diagram](assets/images/PlannerObjectDiagramAfter.png)
 
-### Add/delete a module by module code feature
+### Add & delete a module by module code feature
 
-The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed of a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
+The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed on a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
 
 - `ModuleList#addModuleByCode(String code, ModuleDb moduleDb)`
 - `ModuleList#deleteModuleByCode(String code)`
 
 ❕ Notes about the methods:
 
-`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to list in `moduleList`
+`moduleDb` is an instance of `ModuleDb` that contains a hashmap, relating each module's code (key) to its respective `ModuleDetails` (value). For storing a module, a `ModuleDetails` instance corresponding to a module code is appended to the list in `moduleList`.
 
 The input format for storage and deletion of modules is as follows:
 
@@ -363,7 +364,7 @@ The following sequence diagram models how the `module add` operation works:
 
 ![Module Add Sequence Diagram](assets/images/ModuleAddSequenceDiagram.png)
 
-The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
+The `module delete` operation follows a similar sequence. Instead of calling the ModuleCommand#storeModule() method, the ModuleCommand#deleteModule() method is invoked. Internally, this calls the `deleteModuleByCode` method from `moduleList`. All other steps remain the same. 
 
 
 
@@ -471,33 +472,67 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 * *Mainstream OS*: Windows, Linux, Unix, OS-X
 * *Event*: Personal event added to the Planner by the user
-* *Lesson*: Class (Lecture, Tutorial, Sectional, or Lab) for a particular module added to the Timetable by the user
+* *Lesson*: Class (Lecture, Tutorial, Sectional, Recitation, or Lab) for a particular module added to the Timetable by the user
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
 
-### Storing a module by module code
+### Testing Module Manager
 
 1. Storing a new module with a valid code
 
-   - Test case: `module add CS2113T`
+   * Test case: `module add CS2113T`
 
      Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
 
 2. Storing a module with an invalid code (non-existent module)
 
-   - Test case: `module add invalid_module`
+   * Test case: `module add invalid_module`
 
      Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
 
 3. Storing a pre-existing module in the list
 
-   - Test case: `module add CS2113T`
+   * Test case: `module add CS2113T`
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
    
-   
-   
+4. Deleting a pre-existing module from the module list
+
+   * Test case: `module delete CS2113T`
+
+     Expected: Since the module list contains `CS2113T`, it is deleted and a successful deletion message is printed to standard output.
+
+5. Listing all modules stored in the list
+
+   * Test case: `module list`
+
+     Expected: Key attributes of each module stored in the list are printed to standard output
+
+6. Viewing information about a particular module offered by NUS (not necessarily stored in the module list)
+
+   * Test case: `module view CFG1002`
+
+     Expected: Information regarding CFG1002 is printed to standard output.
+
+7. Setting a grade for module stored in the user's module list
+
+   * Test case: `module grade CS2113T/A+`
+
+     Expected: The module list already contains `CS2113T`. Upon setting its grade to `A+`, a message indicating successful update of the grade is printed to standard output.
+
+8. Calculate overall CAP of module stored in user's module list
+
+    * Test case: `module cap`
+
+      Expected: If there are modules stored in the module list, the overall CAP is calculated and shown to the user.
+
+9. Suggest grade for user to achieve desired CAP
+
+    * Test case: `module cap 3.5`
+
+      Expected: If there are valid modules with no assigned grade stored in the module list, the suggested overall grade to achieve is calculated and shown to user.
+
 
 ### Testing the Planner feature
 
@@ -506,27 +541,27 @@ should be able to accomplish most of the tasks faster using commands than using 
     * Prerequisites: Choose a date that has no exams, lessons, or events planned to ensure no conflicts will occur. You may use `planner clear` to clear all existing events stored in planner.
 
     * Test case: `planner add watch movie/2021-10-20/1800/2100`
-   
+     
       Expected: Event is added to the list. Success message printed as output.
 
     * Test case: `planner add project meeting/20211020/0700/0800`
-     
+    
       Expected: Event is not added to the list. Error message regarding date format printed as output.
-   
+     
     * Test case: `planner add project meeting/2021-02-29/0700/0800`
-   
+     
       Expected: Event is not added to the list. Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
     * Test case: `planner add go run/2021-10-20/6pm/10pm`
     
       Expected: Event is not added to the list. Error message regarding time format printed as output.
-   
+     
     * Test case: `planner add go run/2021-10-20/1800/2260`
-   
+     
       Expected: Event is not added to the list. Error message regarding invalid time is printed as output.
 
     * Test case: `planner add go back in time/2021-10-20/1400/1300`
-   
+     
       Expected: Event is not added to the list. Error message regarding wrong time order printed as output.
 
     * Test case: `planner add study for test/2021-10-20/1400/1400`
@@ -538,7 +573,7 @@ should be able to accomplish most of the tasks faster using commands than using 
       Expected: Event is not added to the list. Error message regarding empty description is printed as output. 
 
     * Other incorrect commands to try: `planner add something wrong//`, `planner add something amazing/ 3pm to 4pm`
-     
+    
       Expected: Similar to previous cases where an error message regarding the format of command is printed as output.
 
 2. Adding an event with time conflicts with at least one existing event, lesson, or exam to the Planner.
@@ -560,11 +595,11 @@ should be able to accomplish most of the tasks faster using commands than using 
       Expected: If there are events stored on `2021-10-10`, the events will be listed (including any lessons or exams). Otherwise, a message will be printed stating that there are no events planned for the day.
 
     * Test case: `planner list 20211010`
-   
+     
       Expected: Error message regarding wrong date format is printed as output.
 
     * Test case: `planner list 2021-02-29`
-   
+     
       Expected: Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
 4. Deleting events from the Planner.
@@ -629,25 +664,25 @@ should be able to accomplish most of the tasks faster using commands than using 
 ### Finding Bus Routes
 
 1. Finding routes.
-  
+
   * Test case: `bus /IT /UTown`
-     
+    
      Expected: Shows a direct bus route.
 
   * Test case: `bus /UTown /KR Bus Terminal`
-      
+    
       Expected: Shows an indirect route where user will need to change buses at an intermediate stop.
       
   * Test case: `bus /PGPR /KR MRT`
-     
+    
       Expected: Shows alternate direct route from the opposite bus stop.
   
   * Note: Bus stop names are not case sensitive.
-      
+    
 2. List all bus stops
    
    * Test case: `bus stop list`
-    
+   
        Expected: Shows the list of all bus stops.
 
 ### Testing the Timetable feature
@@ -656,7 +691,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
    * Prerequisites : Ensure to follow the prescribed workload in `module list`
    * Test case: `timetable add CS1010/LEC/monday/1300/1400`
-       
+     
        Expected: Lesson will be added without any errors
    * Test case: `timetable add CS1010/lecture/monday/1500/1600`
    
@@ -673,7 +708,7 @@ should be able to accomplish most of the tasks faster using commands than using 
    * Test case: `timetable add CS1010/LEC/monday/2100/2200`
    
        Expected: Lesson wil not be added as the allowed school hours are 0600 - 2100, the starting time of a lesson cannot be earlier than 0600 and the ending time cannot be later than 2100
- 
+
 2. Adding lesson to timetable which exceeds the workload
 
     * Test case: `timetable add CS1010/LEC/monday/1300/1900` followed by `y`
@@ -690,7 +725,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 3. Deleting lesson from timetable
 
    * Test case: `timetable delete CS1231/tut/monday/1200`
-       
+     
        Expected: Lesson will be deleted from timetable
    * Test case: `timetable delete CS1231/tut/monday/1200` but lesson not added to timetable in the first place
      
@@ -723,7 +758,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 5. View timetable
 
    * Test case: `timetable view`
-       
+     
        Expected: Timetable will be printed onto the CLI
 
 6. List timetable
@@ -732,5 +767,5 @@ should be able to accomplish most of the tasks faster using commands than using 
 
        Expected: The lessons occurring on monday and their timings will be listed on the CLI
    * Test case: `timetable list sat`
-      
+     
        Expected: Lessons will not be listed as the day needs to be from monday to firday and spelt fully
