@@ -41,6 +41,7 @@ public class TimetableTest {
     private static final String[] VALID_ADD_LAB_ARGUMENTS = new String[] {"CS2040", "LAB", "monday", "0600",
             "0700"};
     private static final String[] VALID_ADD_SEC_ARGUMENTS = new String[] {"CS1101S", "SEC", "monday", "1000", "1100"};
+    private static final String[] VALID_ADD_REC_ARGUMENTS = new String[] {"CS1101S", "REC", "monday", "1000", "1100"};
     private static final String[] INVALID_DELETE_ARGUMENT = new String[] {"CS1010", "LESSON", "monday","0600"};
     private static final String[] UPDATE_LESSON_ARGUMENTS = new String[] {"CS1231", "TUT", "monday","0600","tuesday",
             "1500"};
@@ -335,15 +336,15 @@ public class TimetableTest {
     @Test
     public void handleExceedWorkload_validLessonDetails_invalidReplyButAddedAfterwards() throws KolinuxException {
         timetable.clearTimetable();
-        moduleList.addModuleByCode("CS1231", moduleDb);
+        moduleList.addModuleByCode("CS1101S", moduleDb);
         String input = "whatever" + System.getProperty("line.separator") + "y";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         timetablePromptHandler = new TimetablePromptHandler(EXCEED_WORKLOAD, timetable);
-        timetablePromptHandler.handleExceedWorkload(EXCEED_ADD_TUTORIAL_ARGUMENTS);
+        timetablePromptHandler.handleExceedWorkload(VALID_ADD_REC_ARGUMENTS);
         assertEquals(INVALID_KEY, timetablePromptHandler.toString());
-        assertEquals(timetable.timetableData[getIndex("0600", schoolHours)][getIndex("monday", days)],
-                "CS1231 TUT");
+        assertEquals(timetable.timetableData[getIndex("1000", schoolHours)][getIndex("monday", days)],
+                "CS1101S REC");
         timetable.clearTimetable();
     }
 
