@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.gcardone.junidecode.Junidecode;
 
+import java.util.Arrays;
+
 import static seedu.kolinux.module.Grade.A_PLUS_GRADE;
 import static seedu.kolinux.module.Grade.A_MINUS_GRADE;
 import static seedu.kolinux.module.Grade.A_GRADE;
@@ -50,8 +52,8 @@ public class ModuleDetails {
     private static final int SEMESTER_2 = 1;
     private static final int WORD_LIMIT = 50;
 
-    public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description,
-            String title, String department, double[] workload, JsonArray semesterData, JsonObject attributes) {
+    public ModuleDetails(String moduleCode, String moduleCredit, String faculty, String description, String title,
+                         String department, double[] workload, JsonArray semesterData, JsonObject attributes) {
 
         /*Attributes read from the NUSmods JSON may contain unicode characters. For proper printing in standard output,
         these characters are converted to their ASCII equivalent.*/
@@ -70,7 +72,7 @@ public class ModuleDetails {
 
     public ModuleDetails(int moduleCredit, String grade) {
         String mc = Integer.toString(moduleCredit);
-        
+
         this.moduleCode = null;
         this.moduleCredit = mc;
         this.faculty = null;
@@ -82,7 +84,7 @@ public class ModuleDetails {
         this.grade = grade;
         this.attributes = null;
     }
-    
+
     public ModuleDetails(String moduleCode, String grade) {
         this.moduleCode = moduleCode;
         this.moduleCredit = null;
@@ -243,7 +245,7 @@ public class ModuleDetails {
 
     /**
      * Return a grade point corresponding to the grade of this object.
-     * 
+     *
      * @return Grade point in double type
      */
     public double getGradePoint() {
@@ -273,16 +275,16 @@ public class ModuleDetails {
             return -1; // Invalid grade
         }
     }
-    
+
     public boolean containsNonCalculatingGrade() {
         return grade.equals(S_GRADE) || grade.equals(CS_GRADE) || grade.equals(U_GRADE) || grade.equals(CU_GRADE)
                 || grade.equals(EXE_GRADE) || grade.equals(IC_GRADE) || grade.equals(IP_GRADE) || grade.equals(W_GRADE);
     }
-    
+
     public boolean containsNullGrade() {
         return grade.equals(RESET_GRADE);
     }
-    
+
     public String resetGrade() {
         if (grade.equals(RESET_GRADE)) {
             return moduleCode + " does not have final grade stored";
@@ -290,7 +292,7 @@ public class ModuleDetails {
         grade = RESET_GRADE;
         return moduleCode + " grade reset";
     }
-    
+
     public boolean isSuAble() {
         try {
             return attributes.get("su").getAsBoolean();
@@ -300,9 +302,9 @@ public class ModuleDetails {
     }
 
     /**
-     * Check if a module is graded using a CS/CU basis. This is a workaround method as there is no official "CS/CU" 
+     * Check if a module is graded using a CS/CU basis. This is a workaround method as there is no official "CS/CU"
      * property indicated within NUSMods API.
-     * 
+     *
      * @return True if the module is graded with CS/CU basis, false otherwise.
      */
     public boolean isCsCuModule() {
@@ -331,8 +333,42 @@ public class ModuleDetails {
         String formattedDescription = descriptionSequence.toString();
         return moduleCode + ": " + title + "\n" + "Department: " + department + "\n" + "Faculty: " + faculty + "\n"
                 + "Credits: " + moduleCredit + "\n" + "Grade: " + (grade.equals(RESET_GRADE) ? "N/A" : grade) + "\n"
-                + "Has S/U option: " + (isCsCuModule() ? "Compulsory CS/CU" : isSuAble() ? "Yes" : "No") + "\n" 
+                + "Has S/U option: " + (isCsCuModule() ? "Compulsory CS/CU" : isSuAble() ? "Yes" : "No") + "\n"
                 + formattedDescription;
     }
 
+    /**
+     * Override equals() to compare two ModuleDetails objects.
+     *
+     * @return True if all attributes of the two ModuleDetails match, false otherwise.
+     */
+    @Override
+    public boolean equals(Object other) {
+
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ModuleDetails)) {
+            return false;
+        }
+
+        ModuleDetails castOther = (ModuleDetails) other;
+
+        return moduleCode.equals(castOther.moduleCode)
+                && title.equals(castOther.title)
+                && description.equals(castOther.description)
+                && department.equals(castOther.department)
+                && moduleCredit.equals(castOther.moduleCredit)
+                && faculty.equals(castOther.faculty)
+                && grade.equals(castOther.grade)
+                && Arrays.equals(workload, castOther.workload)
+                && Double.valueOf(lectureHours).equals(castOther.lectureHours)
+                && Double.valueOf(tutorialHours).equals(castOther.tutorialHours)
+                && Double.valueOf(labHours).equals(castOther.labHours)
+                && Double.valueOf(projectHours).equals(castOther.projectHours)
+                && Double.valueOf(preparationHours).equals(castOther.preparationHours)
+                && semesterData.equals(castOther.semesterData)
+                && attributes.equals(castOther.attributes);
+    }
 }

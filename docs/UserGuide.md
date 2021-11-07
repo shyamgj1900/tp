@@ -270,7 +270,7 @@ the grade letter and the suffix. E.g. `A+` instead of `A +`
 You may choose to enter real grades to calculate your current CAP and/or enter target grades to calculate a CAP goal.
 Visit [`module cap`](#316-calculate-overall-cap-from-modules-in-module-list-module-cap) to find out more!
 
-### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
+#### 3.1.6 Calculate overall CAP from modules in module list: `module cap`
 
 **Format:** `module cap`
 
