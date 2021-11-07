@@ -228,45 +228,6 @@ exceed the workload whilst displaying a warning as to what the prescribed worklo
 `PromptHandler` just like we did in `planner` to get a reply from the user in order to continue adding with the lesson.
 * The following code illustrates how to check if the lesson inputted exceeds the workload.
 
-
-[comment]: <> (```)
-
-[comment]: <> (private void checkExceedingWorkload&#40;String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd&#41;)
-
-[comment]: <> (        throws KolinuxException {)
-
-[comment]: <> (    String lessonType = lessonDetails[1].toUpperCase&#40;&#41;;)
-
-[comment]: <> (    String moduleCode = lessonDetails[0].toUpperCase&#40;&#41;;)
-
-[comment]: <> (    double requiredHours = getRequiredHours&#40;moduleList, moduleCode, lessonType&#41;;)
-
-[comment]: <> (    double inputHours = getIndex&#40;lessonDetails[4], schoolHours&#41; - getIndex&#40;lessonDetails[3], schoolHours&#41;;)
-
-[comment]: <> (    double storageHours = getStorageHours&#40;moduleCode, lessonType&#41; + inputHours;)
-
-[comment]: <> (    if &#40;storageHours > requiredHours && !isAllowingAdd && !isStorageAdd&#41; {)
-
-[comment]: <> (        throw new ExceedWorkloadException&#40;"Input hours for " + moduleCode + " " + lessonType)
-
-[comment]: <> (                +)
-
-[comment]: <> (                " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n")
-
-[comment]: <> (                +)
-
-[comment]: <> (                "Do you want to continue adding the lesson despite\n")
-
-[comment]: <> (                +)
-
-[comment]: <> (                "exceeding the workload? Please enter y or n"&#41;;)
-
-[comment]: <> (    })
-
-[comment]: <> (})
-
-[comment]: <> (```)
-
 ![exceedWorkloadCode](assets/images/exceed_workload_code_image.png)
 
 
@@ -312,33 +273,6 @@ shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(
 `filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
 is to be added.
 
-
-
-[comment]: <> (```)
-
-[comment]: <> (private boolean hasTimeConflict&#40;Event eventToBeAdded&#41; {)
-
-[comment]: <> (    ArrayList<Event> filteredPlanner = filterPlanner&#40;eventToBeAdded.getDate&#40;&#41;&#41;;)
-
-[comment]: <> (    String startTime = eventToBeAdded.getStartTime&#40;&#41;;)
-
-[comment]: <> (    String endTime = eventToBeAdded.getEndTime&#40;&#41;;)
-
-[comment]: <> (    for &#40;Event event : filteredPlanner&#41; {)
-
-[comment]: <> (        if &#40;!&#40;startTime.compareTo&#40;event.getEndTime&#40;&#41;&#41; >= 0 || endTime.compareTo&#40;event.getStartTime&#40;&#41;&#41; <= 0&#41;&#41; {)
-
-[comment]: <> (            return true;)
-
-[comment]: <> (        })
-
-[comment]: <> (    })
-
-[comment]: <> (    return false;)
-
-[comment]: <> (})
-
-[comment]: <> (```)
 
 ![hasTimeConflict](assets/images/has_time_confict_image.png)
 
