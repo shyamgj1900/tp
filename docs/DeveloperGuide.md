@@ -18,7 +18,7 @@ of implementations.
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module add & delete`](#add-&-delete-a-module-by-module-code-feature)
+  * [`module add & delete`](#add-and-delete-a-module-by-module-code-feature)
   * [`cap code`](#cap-calculator-by-module-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
@@ -331,7 +331,7 @@ one `ModuleDetails`, and one `Event` stored in `Timetable`, `ModuleList`, and `P
 
 ![Planner After Object Diagram](assets/images/PlannerObjectDiagramAfter.png)
 
-### Add & delete a module by module code feature
+### Add and delete a module by module code feature
 
 The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed on a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
 
@@ -549,27 +549,27 @@ should be able to accomplish most of the tasks faster using commands than using 
     * Prerequisites: Choose a date that has no exams, lessons, or events planned to ensure no conflicts will occur. You may use `planner clear` to clear all existing events stored in planner.
 
     * Test case: `planner add watch movie/2021-10-20/1800/2100`
-     
+    
       Expected: Event is added to the list. Success message printed as output.
 
     * Test case: `planner add project meeting/20211020/0700/0800`
     
       Expected: Event is not added to the list. Error message regarding date format printed as output.
-     
+    
     * Test case: `planner add project meeting/2021-02-29/0700/0800`
-     
+    
       Expected: Event is not added to the list. Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
     * Test case: `planner add go run/2021-10-20/6pm/10pm`
     
       Expected: Event is not added to the list. Error message regarding time format printed as output.
-     
+    
     * Test case: `planner add go run/2021-10-20/1800/2260`
-     
+    
       Expected: Event is not added to the list. Error message regarding invalid time is printed as output.
 
     * Test case: `planner add go back in time/2021-10-20/1400/1300`
-     
+    
       Expected: Event is not added to the list. Error message regarding wrong time order printed as output.
 
     * Test case: `planner add study for test/2021-10-20/1400/1400`
@@ -603,11 +603,11 @@ should be able to accomplish most of the tasks faster using commands than using 
       Expected: If there are events stored on `2021-10-10`, the events will be listed (including any lessons or exams). Otherwise, a message will be printed stating that there are no events planned for the day.
 
     * Test case: `planner list 20211010`
-     
+    
       Expected: Error message regarding wrong date format is printed as output.
 
     * Test case: `planner list 2021-02-29`
-     
+    
       Expected: Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
 4. Deleting events from the Planner.
