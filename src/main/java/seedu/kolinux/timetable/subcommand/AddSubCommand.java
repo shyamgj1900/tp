@@ -9,6 +9,7 @@ import seedu.kolinux.timetable.lesson.Tutorial;
 import seedu.kolinux.timetable.lesson.Lecture;
 import seedu.kolinux.timetable.lesson.Lab;
 import seedu.kolinux.timetable.lesson.Sectional;
+import seedu.kolinux.timetable.lesson.Recitation;
 
 import java.util.Objects;
 
@@ -97,6 +98,9 @@ public class AddSubCommand extends SubCommand {
         case "SEC":
             addToTimetable(new Sectional(lessonDetails));
             break;
+        case "REC":
+            addToTimetable(new Recitation(lessonDetails));
+            break;
         default:
             throw new KolinuxException(INVALID_LESSON_FORMAT);
         }
@@ -130,12 +134,13 @@ public class AddSubCommand extends SubCommand {
      */
     private double getRequiredHours(ModuleList moduleList, String moduleCode, String lessonType) {
         for (ModuleDetails module : moduleList.myModules) {
-            if (lessonType.equals("TUT") && module.moduleCode.equals(moduleCode)) {
+            if ((lessonType.equals("TUT") || lessonType.equals("REC")) && module.moduleCode.equals(moduleCode)) {
                 return module.getTutorialHours() * 2;
             } else if ((lessonType.equals("LEC") || lessonType.equals("SEC"))
                     && module.moduleCode.equals(moduleCode)) {
                 return module.getLectureHours() * 2;
-            } else if (lessonType.equals("LAB") && module.moduleCode.equals(moduleCode)) {
+            } else if ((lessonType.equals("LAB") || lessonType.equals("REC"))
+                    && module.moduleCode.equals(moduleCode)) {
                 return module.getLabHours() * 2;
             }
         }
