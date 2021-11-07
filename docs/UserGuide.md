@@ -59,9 +59,9 @@ The following explains the use of different icons in this user guide:
   * 3.6 [`help`](#36-view-menu-help)
   * 3.7 [`bye`](#37-exit-bye)
 * 4 [Limitations](#4-current-limitations)
-* 5 [FAQ](#4-faq)
-* 6 [Data Storage](#5-data-storage)
-* 7 [Contact Us](#6-contact-us)
+* 5 [FAQ](#5-faq)
+* 6 [Data Storage](#6-data-storage)
+* 7 [Contact Us](#7-contact-us)
 
 ## 1. Quick Start
 
