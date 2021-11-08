@@ -2,10 +2,40 @@ package seedu.kolinux.capcalculator;
 
 import seedu.kolinux.module.ModuleDetails;
 
+import static seedu.kolinux.module.Grade.A_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.A_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.A_GRADE;
+import static seedu.kolinux.module.Grade.B_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.B_MINUS_GRADE;
+import static seedu.kolinux.module.Grade.B_GRADE;
+import static seedu.kolinux.module.Grade.C_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.C_GRADE;
+import static seedu.kolinux.module.Grade.D_PLUS_GRADE;
+import static seedu.kolinux.module.Grade.D_GRADE;
+import static seedu.kolinux.module.Grade.F_GRADE;
+import static seedu.kolinux.module.Grade.S_GRADE;
+import static seedu.kolinux.module.Grade.U_GRADE;
+import static seedu.kolinux.module.Grade.CS_GRADE;
+import static seedu.kolinux.module.Grade.CU_GRADE;
+import static seedu.kolinux.module.Grade.EXE_GRADE;
+import static seedu.kolinux.module.Grade.IC_GRADE;
+import static seedu.kolinux.module.Grade.IP_GRADE;
+import static seedu.kolinux.module.Grade.W_GRADE;
+
 /**
  * Represents CAP calculator used when the user's input module descriptions are based on modular credit.
  */
 public class CapCalculatorByMc extends CapCalculator {
+    
+    private boolean isValidGrade(String grade) {
+        return grade.equals(A_PLUS_GRADE) || grade.equals(A_GRADE) || grade.equals(A_MINUS_GRADE)
+                || grade.equals(B_PLUS_GRADE) || grade.equals(B_GRADE) || grade.equals(B_MINUS_GRADE)
+                || grade.equals(C_PLUS_GRADE) || grade.equals(C_GRADE) || grade.equals(D_PLUS_GRADE)
+                || grade.equals(D_GRADE) || grade.equals(F_GRADE) || grade.equals(S_GRADE)
+                || grade.equals(CS_GRADE) || grade.equals(U_GRADE) || grade.equals(CU_GRADE)
+                || grade.equals(EXE_GRADE) || grade.equals(IC_GRADE) || grade.equals(IP_GRADE)
+                || grade.equals(W_GRADE);
+    }
 
     /**
      * Read and store the modules from user's input into this calculator.
@@ -26,7 +56,15 @@ public class CapCalculatorByMc extends CapCalculator {
                     continue;
                 }
                 int mc = (int) moduleCredit;
+                if (mc < 1) {
+                    invalidModules.add(moduleDescription);
+                    continue;
+                }
                 String grade = moduleDescriptions[1];
+                if (!isValidGrade(grade)) {
+                    invalidModules.add(moduleDescription);
+                    continue;
+                }
                 modules.storeModuleMcGrade(mc, grade);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception) {
                 invalidModules.add(moduleDescription);
@@ -55,10 +93,6 @@ public class CapCalculatorByMc extends CapCalculator {
             }
             int mc = Integer.parseInt(module.getModuleCredit());
             double gradePoint = module.getGradePoint();
-            if (gradePoint == INVALID_STORED_GRADE || mc < 1) {
-                invalidModules.add(module.getModuleCredit() + DIVIDER + module.getGrade());
-                continue;
-            }
             cap = calculateCurrentCap(totalMc, cap, mc, gradePoint);
             totalMc += mc;
             assert cap <= MAX_CAP;

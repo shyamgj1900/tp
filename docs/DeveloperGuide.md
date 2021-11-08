@@ -18,7 +18,7 @@ of implementations.
 * [Implementation](#implementation)
   * [`timetable add`](#add-to-timetable-feature)
   * [`planner add`](#add-to-planner-feature)
-  * [`module add & delete`](#add-&-delete-a-module-by-module-code-feature)
+  * [`module add & delete`](#add-and-delete-a-module-by-module-code-feature)
   * [`cap code`](#cap-calculator-by-module-code-feature)
   * [`bus`](#bus-routes-feature)
 * [Product Scope](#product-scope)
@@ -228,25 +228,8 @@ exceed the workload whilst displaying a warning as to what the prescribed worklo
 `PromptHandler` just like we did in `planner` to get a reply from the user in order to continue adding with the lesson.
 * The following code illustrates how to check if the lesson inputted exceeds the workload.
 
-```
-private void checkExceedingWorkload(String[] lessonDetails, boolean isAllowingAdd, boolean isStorageAdd)
-        throws KolinuxException {
-    String lessonType = lessonDetails[1].toUpperCase();
-    String moduleCode = lessonDetails[0].toUpperCase();
-    double requiredHours = getRequiredHours(moduleList, moduleCode, lessonType);
-    double inputHours = getIndex(lessonDetails[4], schoolHours) - getIndex(lessonDetails[3], schoolHours);
-    double storageHours = getStorageHours(moduleCode, lessonType) + inputHours;
-    if (storageHours > requiredHours && !isAllowingAdd && !isStorageAdd) {
-        throw new ExceedWorkloadException("Input hours for " + moduleCode + " " + lessonType
-                +
-                " exceeds the total workload\nIt exceeds " + requiredHours / 2 + " hours\n"
-                +
-                "Do you want to continue adding the lesson despite\n"
-                +
-                "exceeding the workload? Please enter y or n");
-    }
-}
-```
+![exceedWorkloadCode](assets/images/exceed_workload_code_image.png)
+
 
 * The following sequence diagram illustrates what happens when input hours exceed the workload and what the program
 does to handle this exception before adding the lesson to the timetable.
@@ -290,19 +273,8 @@ shows how `Planner#hasTimeConflict(Event event)` invokes `Planner#filterPlanner(
 `filteredPlanner` will contain all the existing events/lessons/exams occurring on the date of the `event` that 
 is to be added.
 
-```
-    private boolean hasTimeConflict(Event eventToBeAdded) {
-        ArrayList<Event> filteredPlanner = filterPlanner(eventToBeAdded.getDate());
-        String startTime = eventToBeAdded.getStartTime();
-        String endTime = eventToBeAdded.getEndTime();
-        for (Event event : filteredPlanner) {
-            if (!(startTime.compareTo(event.getEndTime()) >= 0 || endTime.compareTo(event.getStartTime()) <= 0)) {
-                return true;
-            }
-        }
-        return false;
-    }
-```
+
+![hasTimeConflict](assets/images/has_time_confict_image.png)
 
 The main working mechanism of `Planner#filterPlanner(String date)` is as follows:
 1. Construct a `ModuleSyncer` object with the `date` specified. The object will populate a list of `Event`s that are
@@ -323,7 +295,7 @@ one `ModuleDetails`, and one `Event` stored in `Timetable`, `ModuleList`, and `P
 
 ![Planner After Object Diagram](assets/images/PlannerObjectDiagramAfter.png)
 
-### Add & delete a module by module code feature
+### Add and delete a module by module code feature
 
 The `ModuleCommand` class extends the `Command` class and handles all module related commands. In the context of storage and deletion, operations are performed on a list of `ModuleDetails` encapsulated in an instance of  `ModuleList` (`moduleList`). The `ModuleList` class implements the following methods to achieve this:
 
@@ -472,7 +444,7 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 * *Mainstream OS*: Windows, Linux, Unix, OS-X
 * *Event*: Personal event added to the Planner by the user
-* *Lesson*: Class (Lecture, Tutorial, Sectional, or Lab) for a particular module added to the Timetable by the user
+* *Lesson*: Class (Lecture, Tutorial, Sectional, Recitation, or Lab) for a particular module added to the Timetable by the user
 * *Exam*: Official final examination for a particular module
 
 ## Instructions for manual testing
@@ -481,45 +453,58 @@ should be able to accomplish most of the tasks faster using commands than using 
 
 1. Storing a new module with a valid code
 
-   - Test case: `module add CS2113T`
+   * Test case: `module add CS2113T`
 
      Expected:  Initially the module list is empty. One module is added and a success message is printed to standard output.
 
 2. Storing a module with an invalid code (non-existent module)
 
-   - Test case: `module add invalid_module`
+   * Test case: `module add invalid_module`
 
      Expected:  There is no module in the database with a code `invalid_module`. An error message is shown, prompting the user to enter a valid module's code.
 
 3. Storing a pre-existing module in the list
 
-   - Test case: `module add CS2113T`
+   * Test case: `module add CS2113T`
 
      Expected:  The module list already contains `CS2113T`. Upon encountering a module with a duplicate code, an error message is shown, prompting the user to enter a new module's code.
    
 4. Deleting a pre-existing module from the module list
 
-   - Test case: `module delete CS2113T`
+   * Test case: `module delete CS2113T`
 
      Expected: Since the module list contains `CS2113T`, it is deleted and a successful deletion message is printed to standard output.
 
 5. Listing all modules stored in the list
 
-   - Test case: `module list`
+   * Test case: `module list`
 
      Expected: Key attributes of each module stored in the list are printed to standard output
 
 6. Viewing information about a particular module offered by NUS (not necessarily stored in the module list)
 
-   - Test case: `module view CFG1002`
+   * Test case: `module view CFG1002`
 
      Expected: Information regarding CFG1002 is printed to standard output.
 
 7. Setting a grade for module stored in the user's module list
 
-   - Test case: `module grade CS2113T/A+`
+   * Test case: `module grade CS2113T/A+`
 
      Expected: The module list already contains `CS2113T`. Upon setting its grade to `A+`, a message indicating successful update of the grade is printed to standard output.
+
+8. Calculate overall CAP of module stored in user's module list
+
+    * Test case: `module cap`
+
+      Expected: If there are modules stored in the module list, the overall CAP is calculated and shown to the user.
+
+9. Suggest grade for user to achieve desired CAP
+
+    * Test case: `module cap 3.5`
+
+      Expected: If there are valid modules with no assigned grade stored in the module list, the suggested overall grade to achieve is calculated and shown to user.
+
 
 ### Testing the Planner feature
 
@@ -528,27 +513,27 @@ should be able to accomplish most of the tasks faster using commands than using 
     * Prerequisites: Choose a date that has no exams, lessons, or events planned to ensure no conflicts will occur. You may use `planner clear` to clear all existing events stored in planner.
 
     * Test case: `planner add watch movie/2021-10-20/1800/2100`
-     
+    
       Expected: Event is added to the list. Success message printed as output.
 
     * Test case: `planner add project meeting/20211020/0700/0800`
     
       Expected: Event is not added to the list. Error message regarding date format printed as output.
-     
+    
     * Test case: `planner add project meeting/2021-02-29/0700/0800`
-     
+    
       Expected: Event is not added to the list. Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
     * Test case: `planner add go run/2021-10-20/6pm/10pm`
     
       Expected: Event is not added to the list. Error message regarding time format printed as output.
-     
+    
     * Test case: `planner add go run/2021-10-20/1800/2260`
-     
+    
       Expected: Event is not added to the list. Error message regarding invalid time is printed as output.
 
     * Test case: `planner add go back in time/2021-10-20/1400/1300`
-     
+    
       Expected: Event is not added to the list. Error message regarding wrong time order printed as output.
 
     * Test case: `planner add study for test/2021-10-20/1400/1400`
@@ -582,11 +567,11 @@ should be able to accomplish most of the tasks faster using commands than using 
       Expected: If there are events stored on `2021-10-10`, the events will be listed (including any lessons or exams). Otherwise, a message will be printed stating that there are no events planned for the day.
 
     * Test case: `planner list 20211010`
-     
+    
       Expected: Error message regarding wrong date format is printed as output.
 
     * Test case: `planner list 2021-02-29`
-     
+    
       Expected: Error message regarding invalid date is printed as output, since 2021-02-29 does not exist.
 
 4. Deleting events from the Planner.
@@ -682,7 +667,7 @@ should be able to accomplish most of the tasks faster using commands than using 
        Expected: Lesson will be added without any errors
    * Test case: `timetable add CS1010/lecture/monday/1500/1600`
    
-       Expected: Lesson will not be added as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+       Expected: Lesson will not be added as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`,`REC`.
    * Test case: `timetable add CS1010/LEC/sat/1500/1600`
    
        Expected: Lesson will not be added as timetable only accepts days from monday to friday spelt fully.
@@ -722,7 +707,7 @@ should be able to accomplish most of the tasks faster using commands than using 
        Expected: Lesson will not be deleted from timetable as timetable only accepts days from monday to friday spelt fully.
    * Test case: `timetable delete CS1231/tutorial/monday/1200`
 
-       Expected: Lesson will not be deleted as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+       Expected: Lesson will not be deleted as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`,`REC`.
 
 4. Update timetable 
 
@@ -737,7 +722,7 @@ should be able to accomplish most of the tasks faster using commands than using 
         Expected: Lesson will not be updated as timetable only accepts days from monday to friday spelt fully
     * Test case: `timetable update CS1231/tutorial/monday/1200/tuesday/1200`
 
-        Expected: Lesson will not be updated as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`.
+        Expected: Lesson will not be updated as timetable only accepts lesson type of the following formats: `LEC`, `TUT`, `SEC`, `LAB`,`REC`.
     * Test case: `timetable update CS1231/tut/monday/1200/monday/1200`
 
         Expected: Lesson will not be updated as the timing and day given is updating the lesson to the same timing and day
